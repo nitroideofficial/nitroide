@@ -1,48 +1,72 @@
 <div align="center">
-  <img src="https://nitroideofficial.github.io/nitroide/logo/logo_black.png" alt="NitroIDE Logo" width="200"/>
 
-# NitroIDE
+<img src="https://nitroideofficial.github.io/nitroide/logo/logo_black.png" width="180"/>
 
-**Code locally. Execute instantly.**
+# ⚡ NitroIDE
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-00e5ff?style=for-the-badge\&logo=vercel\&logoColor=black)](https://nitroideofficial.github.io/nitroide/)
-[![Documentation](https://img.shields.io/badge/Docs_&_Guides-bb9af7?style=for-the-badge)](https://nitroideofficial.github.io/nitroide/docs.html)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+### Code locally. Execute instantly.
+
+<p>
+  <a href="https://nitroideofficial.github.io/nitroide/">
+    <img src="https://img.shields.io/badge/Live-Demo-00e5ff?style=for-the-badge&logo=vercel&logoColor=black"/>
+  </a>
+  <a href="https://nitroideofficial.github.io/nitroide/docs.html">
+    <img src="https://img.shields.io/badge/Documentation-bb9af7?style=for-the-badge"/>
+  </a>
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Made%20with-JavaScript-yellow?style=for-the-badge"/>
+</p>
 
 </div>
 
 ---
 
-## 🚀 Overview
+## 🚀 What is NitroIDE?
 
-**NitroIDE** is a zero-latency, entirely client-side web development environment.
+NitroIDE is a **zero-latency, browser-based IDE** that runs entirely on the client side.
 
-Your code runs directly in your browser using native capabilities — meaning:
+No installs. No backend. No delays.
 
-* ⚡ Instant execution
-* 🔒 100% privacy
-* 🌐 No backend required
+> Your code runs instantly inside your browser — just like it should.
 
 ---
 
-## ✨ Core Features
+## ✨ Features
 
-* ⚡ Zero-latency execution
-* 🔥 Hot Module Replacement (HMR)
-* 📦 Virtual File System (VFS)
-* 💻 Integrated CLI Console
-* 📱 Device emulation
-* 👁️ State visualizer
-* 🔒 Absolute privacy
-* 💾 One-click export
+* ⚡ Instant execution (no server round-trip)
+* 🔥 Live preview
+* 💻 Monaco Editor (VS Code engine)
+* 📦 Virtual File System (multi-file support)
+* 🧠 Built-in CLI console
+* 📱 Device preview (responsive testing)
+* 🔒 100% client-side privacy
+* 💾 Export as ZIP or single HTML
 
 ---
 
-## 🛠️ Developer Console (CLI)
+## 🖥️ Live Demo
 
-Run commands directly inside NitroIDE:
+👉 https://nitroideofficial.github.io/nitroide/
 
-```bash
+---
+
+## 🧠 How It Works
+
+NitroIDE uses:
+
+* `iframe + srcdoc` for live execution
+* Monaco for editing
+* local browser memory instead of servers
+
+Result:
+👉 ⚡ zero latency
+👉 🔒 full privacy
+
+---
+
+## 🛠️ CLI Commands
+
+```bash id="cmds01"
 > install tailwind
 > install react
 > export zip
@@ -53,48 +77,49 @@ Run commands directly inside NitroIDE:
 
 ---
 
-## 💻 Local Setup & Development
+## 💻 Run Locally
 
-Since NitroIDE is fully client-side, setup is simple:
-
-### Clone the repository
-
-```bash
+```bash id="local01"
 git clone https://github.com/nitroideofficial/nitroide.git
 cd nitroide
 ```
 
-### Serve locally
-
-```bash
+```bash id="local02"
 # Python
 python -m http.server 8000
 
-# Node.js
+# Node
 npx serve .
 ```
 
-### Open in browser
-
-👉 http://localhost:8000
+👉 Open: http://localhost:8000
 
 ---
 
-## 🏗️ Architecture & Dependencies
+## 🏗️ Tech Stack
 
-NitroIDE uses:
-
-* **Monaco Editor** – VS Code engine
-* **JSZip** – export system
-* **Phosphor Icons** – UI icons
-* **Emmet-Monaco-ES** – Emmet support
+* HTML5
+* CSS3
+* JavaScript (ES6+)
+* Monaco Editor
+* JSZip
+* Phosphor Icons
 
 ---
 
-## 🤝 Community & Support
+## 🤝 Contributing
 
-* 🌐 Website: https://nitroideofficial.github.io/nitroide/
-* 📘 Docs: https://nitroideofficial.github.io/nitroide/docs.html
+Want to improve NitroIDE?
+
+* Fork the repo
+* Make changes
+* Open a PR
+
+---
+
+## 🌐 Connect
+
+* 🌍 Website: https://nitroideofficial.github.io/nitroide/
 * 🐦 X: https://x.com/trynitroide
 * 📸 Instagram: https://instagram.com/nitroideofficial
 
@@ -103,3 +128,11 @@ NitroIDE uses:
 ## 📜 License
 
 MIT License © 2026 NitroIDE
+
+---
+
+<div align="center">
+
+⭐ If you like NitroIDE, give it a star
+
+</div>
