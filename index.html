@@ -718,35 +718,44 @@
     });
   });
   
-// --- BULLETPROOF VISITOR COUNTER ---
+// --- BULLETPROOF VISITOR COUNTER (Powered by Abacus) ---
   const hasVisited = localStorage.getItem('nitroide_visited');
-  const getUrl = "https://api.counterapi.dev/v1/nitroide/visits";
-  const upUrl = "https://api.counterapi.dev/v1/nitroide/visits/up";
+  
+  // Abacus is a free, no-registration clone of the original CountAPI
+  const getUrl = "https://abacus.jasoncameron.dev/get/nitroide/visits";
+  const hitUrl = "https://abacus.jasoncameron.dev/hit/nitroide/visits";
 
-  const getNum = (data) => data.count || data.value || data.up_count || (data.data && data.data.up_count) || 0;
-
-  fetch(hasVisited ? getUrl : upUrl)
-    .then(res => {
-      if (!res.ok && res.status === 404) return fetch(upUrl).then(r => r.json());
-      return res.json();
-    })
+  // 1. Initial Load (Checks if you are unique, or just grabbing the current number)
+  fetch(hasVisited ? getUrl : hitUrl)
+    .then(res => res.json())
     .then(data => {
       const countEl = document.getElementById("visitor-count");
-      const num = getNum(data);
-      if (countEl && num > 0) countEl.innerText = Number(num).toLocaleString();
-      if (!hasVisited && num > 0) localStorage.setItem('nitroide_visited', 'true');
+      if (countEl && data.value !== undefined) {
+        countEl.innerText = data.value.toLocaleString();
+        
+        // Give the receipt so you don't double-count on refresh
+        if (!hasVisited) localStorage.setItem('nitroide_visited', 'true');
+      }
     })
-    .catch(err => console.error("Counter Initial Load Error:", err));
+    .catch(() => {
+      const countEl = document.getElementById("visitor-count");
+      if (countEl) countEl.innerText = "—";
+    });
 
+  // 2. Live Update Loop (Every 15 Seconds)
   setInterval(() => {
     fetch(getUrl)
-      .then(res => res.ok ? res.json() : null)
+      .then(res => res.json())
       .then(data => {
-        if (!data) return;
         const countEl = document.getElementById("visitor-count");
-        const num = getNum(data);
-        if (countEl && num > 0 && countEl.innerText !== "—") {
-          countEl.innerText = Number(num).toLocaleString();
+        if (countEl && data.value !== undefined) {
+          const currentText = countEl.innerText;
+          const newText = data.value.toLocaleString();
+          
+          // Only update visually if the number actually went up
+          if (currentText !== "—" && currentText !== newText) {
+            countEl.innerText = newText;
+          }
         }
       })
       .catch(() => {});
