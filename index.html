@@ -500,16 +500,24 @@
     }, 100);
   }).catch(() => { document.body.classList.add('site-loaded'); });
 
-// Fetch and display visitor count (Using CounterAPI.dev)
-  fetch("https://api.counterapi.dev/v1/nitroide/visits/up")
+// Fetch and display UNIQUE visitor count
+  const hasVisited = localStorage.getItem('nitroide_visited');
+  
+  const apiUrl = hasVisited 
+    ? "https://api.counterapi.dev/v1/nitroide/visits" 
+    : "https://api.counterapi.dev/v1/nitroide/visits/up";
+
+  fetch(apiUrl)
     .then(res => res.json())
     .then(data => {
       const countEl = document.getElementById("visitor-count");
-      // Extracts the count number and formats it with commas
       if (countEl) countEl.innerText = (data.count || data.value).toLocaleString();
+      
+      if (!hasVisited) {
+        localStorage.setItem('nitroide_visited', 'true');
+      }
     })
     .catch(() => {
-      // Failsafe in case API is down, keeps the layout clean
       const countEl = document.getElementById("visitor-count");
       if (countEl) countEl.innerText = "—";
     });
