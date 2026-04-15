@@ -1,67 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="./logo/logo_white.png">
-<meta name="description" content="NitroIDE is a free browser-based IDE with live preview, Monaco editor, and instant execution. Write and run HTML, CSS, and JavaScript directly in your browser with zero latency.">
-<meta name="keywords" content="online IDE, browser IDE, free code editor, Monaco editor, HTML CSS JS editor, live preview IDE, web IDE, NitroIDE">
-<meta name="google-site-verification" content="L2teoiwOSf06xjer7Aw_c4bdvd7XiETXI87t0q9eEdk" />
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>NitroIDE - Free Browser IDE with Live Preview & Monaco Editor</title>
-<meta property="og:title" content="NitroIDE - Browser IDE">
-<meta property="og:description" content="Code instantly in your browser with NitroIDE.">
-<meta property="og:image" content="https://nitroideofficial.github.io/nitroide/logo/logo_white.png">
-<meta property="og:url" content="https://nitroideofficial.github.io/nitroide/">
-<script src="https://unpkg.com/@phosphor-icons/web"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<style>
-  body { opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
-  body.site-loaded { opacity: 1; visibility: visible; }
-  [class*="reveal-"] { opacity: 0; animation-fill-mode: forwards; }
-  #techMarquee { opacity: 0; transition: opacity 0.5s ease; }
-  #techMarquee.loaded { opacity: 0.6; }
-  
-  @keyframes textShimmer {
-    0% { background-position: 200% center; }
-    100% { background-position: -200% center; }
-  }
-  @keyframes subtleFloat {
-    0%, 100% { translate: 0 0px; }
-    50% { translate: 0 -12px; }
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NitroIDE - Free Online IDE with Live Preview for HTML, CSS & JavaScript</title>
+  <meta name="description" content="NitroIDE is a free online IDE with live preview and Monaco editor. Write and run HTML, CSS, and JavaScript instantly in your browser with zero latency.">
+  <meta name="keywords" content="online IDE, browser IDE, free code editor, Monaco editor, HTML CSS JS editor, live preview IDE, web IDE, frontend IDE, NitroIDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
 
-  .hero-title-main { 
-    font-size: 5rem;
-    font-weight: 800; letter-spacing: -3px; line-height: 1.05; 
-    margin-bottom: 15px;
-    position: relative; z-index: 1; color: var(--text); 
-    animation: subtleFloat 6s ease-in-out infinite;
-  }
-  .hollow-text { 
-    color: transparent; 
-    -webkit-text-stroke: 1px rgba(255,255,255,0.4); 
-    position: relative; 
-    display: inline-block;
-  }
-  html.light-mode .hollow-text { -webkit-text-stroke: 1px rgba(0,0,0,0.4); }
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="google-site-verification" content="L2teoiwOSf06xjer7Aw_c4bdvd7XiETXI87t0q9eEdk">
+  <link rel="canonical" href="https://nitroideofficial.github.io/nitroide/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nitroideofficial.github.io/nitroide/">
+  <meta property="og:title" content="NitroIDE | Free Online Web IDE with Live Preview">
+  <meta property="og:description" content="Code faster with NitroIDE, a free online IDE featuring a Monaco editor and live preview. Write HTML, CSS, and JS client-side with zero latency.">
+  <meta property="og:image" content="https://nitroideofficial.github.io/nitroide/logo/logo_white.png">
+  <meta property="og:image:alt" content="NitroIDE Logo">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="og:locale" content="en_US">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroideofficial.github.io/nitroide/">
+  <meta name="twitter:title" content="NitroIDE | Free Online Web IDE with Live Preview">
+  <meta name="twitter:description" content="Code faster with NitroIDE, a free online IDE featuring a Monaco editor and live preview. Write HTML, CSS, and JS client-side with zero latency.">
+  <meta name="twitter:image" content="https://nitroideofficial.github.io/nitroide/logo/logo_white.png">
+  <meta name="twitter:image:alt" content="NitroIDE Logo">
+
+  <link rel="icon" type="image/png" href="./logo/logo_white.png">
+  <link rel="apple-touch-icon" href="./logo/logo_white.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
-  .hollow-text .fill-layer {
-    position: absolute; left: 0; top: 0; width: 100%; height: 100%; 
-    background: linear-gradient(90deg, #00e5ff, #bb9af7, #00e5ff); 
-    background-size: 200% auto;
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    animation: textShimmer 5s linear infinite;
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <style>
+    body { opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
+    body.site-loaded { opacity: 1; visibility: visible; }
+    [class*="reveal-"] { opacity: 0; animation-fill-mode: forwards; }
+    #techMarquee { opacity: 0; transition: opacity 0.5s ease; }
+    #techMarquee.loaded { opacity: 0.6; }
+    
+    @keyframes textShimmer {
+      0% { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+    @keyframes subtleFloat {
+      0%, 100% { translate: 0 0px; }
+      50% { translate: 0 -12px; }
+    }
+
+    .hero-title-main { 
+      font-size: 5rem;
+      font-weight: 800; letter-spacing: -3px; line-height: 1.05; 
+      margin-bottom: 15px;
+      position: relative; z-index: 1; color: var(--text); 
+      animation: subtleFloat 6s ease-in-out infinite;
+    }
+    .hollow-text { 
+      color: transparent; 
+      -webkit-text-stroke: 1px rgba(255,255,255,0.4); 
+      position: relative; 
+      display: inline-block;
+    }
+    html.light-mode .hollow-text { -webkit-text-stroke: 1px rgba(0,0,0,0.4); }
+    
+    .hollow-text .fill-layer {
+      position: absolute; left: 0; top: 0; width: 100%; height: 100%; 
+      background: linear-gradient(90deg, #00e5ff, #bb9af7, #00e5ff); 
+      background-size: 200% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: textShimmer 5s linear infinite;
+    }
+    .hollow-text .glow-layer {
+      position: absolute; left: 0; top: 0; width: 100%; height: 100%; 
+      background: linear-gradient(90deg, #00e5ff, #bb9af7, #00e5ff); 
+      background-size: 200% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+      opacity: 0.8; filter: blur(12px); z-index: -1;
+      animation: textShimmer 5s linear infinite;
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "NitroIDE",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web",
+  "url": "https://nitroideofficial.github.io/nitroide/",
+  "description": "NitroIDE is a free online IDE with live preview and Monaco editor for HTML, CSS, and JavaScript.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
   }
-  .hollow-text .glow-layer {
-    position: absolute; left: 0; top: 0; width: 100%; height: 100%; 
-    background: linear-gradient(90deg, #00e5ff, #bb9af7, #00e5ff); 
-    background-size: 200% auto;
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-    opacity: 0.8; filter: blur(12px); z-index: -1;
-    animation: textShimmer 5s linear infinite;
-  }
-</style>
+}
+</script>
 </head>
 <body>
 
@@ -78,6 +118,8 @@
 <div class="global-spotlight" id="globalSpotlight"></div>
 
 <button class="fab" id="fab" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="ph-bold ph-arrow-up"></i></button>
+
+<button class="fab" id="fab" aria-label="Scroll to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="ph-bold ph-arrow-up"></i></button>
 
 <nav class="floating-nav" id="floatingNav">
   <div class="logo">
@@ -103,6 +145,8 @@
   <div class="nav-actions">
     <button class="theme-toggle hide-in-mobile" onclick="toggleCmdK()"><i class="ph-bold ph-magnifying-glass"></i> <span>Search...</span> <span class="cmd-badge">⌘K</span></button>
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn"><i class="ph-bold ph-sun"></i></button>
+
+<button class="theme-toggle" id="themeBtn" aria-label="Toggle Dark Mode" onclick="toggleTheme()"><i class="ph-bold ph-sun"></i></button>
     <a href="tools/codebox.html" class="btn btn-compact primary-btn">Open Workspace</a>
   </div>
 </div>
@@ -131,6 +175,10 @@
       <p class="reveal-3 hero-subtitle">
         The ultimate client-side IDE. Zero servers, absolute privacy. Built on the Monaco engine, running directly in your browser's memory.
       </p>
+	  
+	  <div class="reveal-4 visitor-counter">
+        <span id="visitor-count">—</span><span class="visitor-label"> developers visited</span>
+      </div>
 
       <div class="reveal-4 execution-pipeline magnetic-btn hide-in-mobile">
          <div class="pipe-left">
@@ -386,8 +434,9 @@
         </div>
         <div class="footer-col">
           <h4>Community</h4>
-          <a href="https://github.com" target="_blank">GitHub Repository</a>
-          <a href="#">X / Twitter</a>
+          <a href="https://github.com/nitroideofficial/nitroide" target="_blank">GitHub Repository</a>
+          <a href="https://x.com/trynitroide" target="_blank">X / Twitter</a>
+          <a href="https://www.instagram.com/nitroideofficial/" target="_blank">Instagram</a>
         </div>
         <div class="footer-col">
           <h4>Legal</h4>
@@ -451,6 +500,19 @@
     }, 100);
   }).catch(() => { document.body.classList.add('site-loaded'); });
 
+// Fetch and display visitor count
+  fetch("https://api.countapi.xyz/hit/nitroide/visits")
+    .then(res => res.json())
+    .then(data => {
+      const countEl = document.getElementById("visitor-count");
+      if (countEl) countEl.innerText = data.value.toLocaleString();
+    })
+    .catch(() => {
+      // Failsafe in case API is down, keeps the layout clean
+      const countEl = document.getElementById("visitor-count");
+      if (countEl) countEl.innerText = "—";
+    });
+
   function showToast(msg) { 
     const toast = document.getElementById("toast"); 
     toast.innerHTML = msg; 
@@ -494,7 +556,7 @@
     btnText.style.display = 'none';
     spinner.style.display = 'block';
 
-    fetch("https://formsubmit.co/ajax/maacwork1202@gmail.com", {
+    fetch("https://formsubmit.co/ajax/nitroideofficial@gmail.com", {
         method: "POST",
         headers: { 
             'Content-Type': 'application/json',
