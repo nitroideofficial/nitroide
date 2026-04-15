@@ -8,6 +8,33 @@
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<meta name="description" content="Official documentation for NitroIDE. Learn how to use the Virtual File System, Developer Console, CDN Injector, and local execution engine.">
+  <link rel="canonical" href="https://nitroideofficial.github.io/nitroide/docs.html">
+  <meta property="og:title" content="Documentation | NitroIDE">
+  <meta property="og:description" content="Official documentation for NitroIDE. Learn how to use the Virtual File System, Developer Console, and local execution engine.">
+  <meta property="og:url" content="https://nitroideofficial.github.io/nitroide/docs.html">
+  <meta property="og:image" content="https://nitroideofficial.github.io/nitroide/logo/logo_white.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "NitroIDE Documentation & Guide",
+  "description": "Learn how to use NitroIDE's zero-latency, client-side web development environment.",
+  "author": {
+    "@type": "Organization",
+    "name": "NitroIDE"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "NitroIDE",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://nitroideofficial.github.io/nitroide/logo/logo_white.png"
+    }
+  }
+}
+</script>
 </head>
 <body>
 
@@ -38,7 +65,7 @@
     <a href="#cdn" class="nav-link">Dependency Injection</a>
     
     <div class="sidebar-heading">Workspace & Layout</div>
-    <a href="#layout" class="nav-link">Floating PiP & Emulation</a>
+    <a href="#layout" class="nav-link">Device Emulation</a>
     <a href="#shortcuts" class="nav-link">Keyboard Shortcuts</a>
     <a href="#export" class="nav-link">Exporting Projects</a>
   </div>
@@ -81,8 +108,14 @@ console.log(document.querySelector('.hero-title'));</div>
 > install tailwind
 <span style="color: #27c93f;">⚡ Success: Injected tailwind.</span>
 
-> theme tokyo-night
+> theme dark <span style="color: #8b949e;">// Accepts 'dark', 'light', or 'toggle'</span>
 <span style="color: #27c93f;">🎨 Theme updated.</span>
+
+> export zip
+<span style="color: #27c93f;">📦 Bundling ZIP...</span>
+
+> format
+<span style="color: #27c93f;">✨ Code Formatted!</span>
 
 > clear
 <span style="color: #8b949e;">// Clears the console history</span></div>
@@ -116,12 +149,8 @@ setInterval(() => {
     </section>
 
     <section id="layout">
-      <h2>Floating PiP & Emulation</h2>
-      <h3><i class="ph-bold ph-browsers"></i> Floating Picture-in-Picture</h3>
-      <p>If you need more screen real estate, click the <strong>Pop Out</strong> button in the Output toolbar. This extracts your live website into a draggable window that floats above your code.</p>
-      
-      <h3><i class="ph-bold ph-devices"></i> Device Emulation</h3>
-      <p>In the Preferences menu, you can instantly toggle the iframe dimensions between Desktop, Tablet, and Mobile views. This allows you to test your CSS media queries seamlessly.</p>
+      <h2>Device Emulation</h2>
+      <p>In the Preferences menu, you can instantly toggle the live iframe dimensions between Desktop, Tablet, and Mobile views. This allows you to test your CSS media queries and responsive breakpoints seamlessly without leaving the workspace.</p>
     </section>
 
     <section id="shortcuts">
