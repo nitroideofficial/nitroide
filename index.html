@@ -509,27 +509,7 @@
     }, 100);
   }).catch(() => { document.body.classList.add('site-loaded'); });
 
-// Fetch and display UNIQUE visitor count
-  const hasVisited = localStorage.getItem('nitroide_visited');
-  
-  const apiUrl = hasVisited 
-    ? "https://api.counterapi.dev/v1/nitroide/visits" 
-    : "https://api.counterapi.dev/v1/nitroide/visits/up";
 
-  fetch(apiUrl)
-    .then(res => res.json())
-    .then(data => {
-      const countEl = document.getElementById("visitor-count");
-      if (countEl) countEl.innerText = (data.count || data.value).toLocaleString();
-      
-      if (!hasVisited) {
-        localStorage.setItem('nitroide_visited', 'true');
-      }
-    })
-    .catch(() => {
-      const countEl = document.getElementById("visitor-count");
-      if (countEl) countEl.innerText = "—";
-    });
 
   function showToast(msg) { 
     const toast = document.getElementById("toast"); 
@@ -738,25 +718,39 @@
     });
   });
   
-  // --- LIVE UPDATE LOOP ---
-  // Silently check the database every 15 seconds and update the UI
+// --- BULLETPROOF VISITOR COUNTER ---
+  const hasVisited = localStorage.getItem('nitroide_visited');
+  const getUrl = "https://api.counterapi.dev/v1/nitroide/visits";
+  const upUrl = "https://api.counterapi.dev/v1/nitroide/visits/up";
+
+  const getNum = (data) => data.count || data.value || data.up_count || (data.data && data.data.up_count) || 0;
+
+  fetch(hasVisited ? getUrl : upUrl)
+    .then(res => {
+      if (!res.ok && res.status === 404) return fetch(upUrl).then(r => r.json());
+      return res.json();
+    })
+    .then(data => {
+      const countEl = document.getElementById("visitor-count");
+      const num = getNum(data);
+      if (countEl && num > 0) countEl.innerText = Number(num).toLocaleString();
+      if (!hasVisited && num > 0) localStorage.setItem('nitroide_visited', 'true');
+    })
+    .catch(err => console.error("Counter Initial Load Error:", err));
+
   setInterval(() => {
-    fetch("https://api.counterapi.dev/v1/nitroide/visits")
-      .then(res => res.json())
+    fetch(getUrl)
+      .then(res => res.ok ? res.json() : null)
       .then(data => {
+        if (!data) return;
         const countEl = document.getElementById("visitor-count");
-        if (countEl) {
-          // Only update the DOM if the number actually changed
-          const currentText = countEl.innerText;
-          const newText = (data.count || data.value).toLocaleString();
-          
-          if (currentText !== newText && currentText !== "—") {
-             countEl.innerText = newText;
-          }
+        const num = getNum(data);
+        if (countEl && num > 0 && countEl.innerText !== "—") {
+          countEl.innerText = Number(num).toLocaleString();
         }
       })
-      .catch(() => { /* Silently fail on background updates to prevent console errors */ });
-  }, 15000); // 15000 milliseconds = 15 seconds
+      .catch(() => {});
+  }, 15000);
   
 </script>
 </body>
