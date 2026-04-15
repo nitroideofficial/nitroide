@@ -161,6 +161,42 @@ html.light-mode .global-spotlight { background: radial-gradient(circle, rgba(0,0
 .badge-secondary { border-color: rgba(187, 154, 247, 0.3); color: #bb9af7; background: rgba(187, 154, 247, 0.05); margin: 0; }
 .hero-subtitle { font-size: 1.1rem; max-width: 650px; margin: 0 auto 25px auto; line-height: 1.5; font-weight: 400; color: var(--text-muted); }
 
+/* VISITOR COUNTER */
+.visitor-counter {
+  text-align: center;
+  margin-bottom: 25px; /* Preserves spacing above the pipeline/CTAs */
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  position: relative;
+  z-index: 1;
+}
+
+#visitor-count {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+.visitor-label {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-left: 6px;
+  font-weight: 400;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .visitor-counter {
+    margin-bottom: 20px;
+  }
+  #visitor-count {
+    font-size: 1.2rem;
+  }
+  .visitor-label {
+    font-size: 0.85rem;
+  }
+}
+
 /* SCROLL TO TOP FAB */
 .fab { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.05); border: 1px solid var(--border); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(20px); transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 html.light-mode .fab { background: rgba(0,0,0,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
