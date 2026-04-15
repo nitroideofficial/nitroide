@@ -500,12 +500,13 @@
     }, 100);
   }).catch(() => { document.body.classList.add('site-loaded'); });
 
-// Fetch and display visitor count
-  fetch("https://api.countapi.xyz/hit/nitroide/visits")
+// Fetch and display visitor count (Using CounterAPI.dev)
+  fetch("https://api.counterapi.dev/v1/nitroide/visits/up")
     .then(res => res.json())
     .then(data => {
       const countEl = document.getElementById("visitor-count");
-      if (countEl) countEl.innerText = data.value.toLocaleString();
+      // Extracts the count number and formats it with commas
+      if (countEl) countEl.innerText = (data.count || data.value).toLocaleString();
     })
     .catch(() => {
       // Failsafe in case API is down, keeps the layout clean
