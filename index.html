@@ -728,6 +728,27 @@
       else fab.classList.remove('visible');
     });
   });
+  
+  // --- LIVE UPDATE LOOP ---
+  // Silently check the database every 15 seconds and update the UI
+  setInterval(() => {
+    fetch("https://api.counterapi.dev/v1/nitroide/visits")
+      .then(res => res.json())
+      .then(data => {
+        const countEl = document.getElementById("visitor-count");
+        if (countEl) {
+          // Only update the DOM if the number actually changed
+          const currentText = countEl.innerText;
+          const newText = (data.count || data.value).toLocaleString();
+          
+          if (currentText !== newText && currentText !== "—") {
+             countEl.innerText = newText;
+          }
+        }
+      })
+      .catch(() => { /* Silently fail on background updates to prevent console errors */ });
+  }, 15000); // 15000 milliseconds = 15 seconds
+  
 </script>
 </body>
 </html>
