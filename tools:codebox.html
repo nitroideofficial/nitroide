@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>NitroIDE - Premium Workspace</title>
+<script>if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/emmet-monaco-es@5.3.0/dist/emmet-monaco.min.js"></script>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="workspace-body">
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="container-ide">
+  <div id="codebox" class="view active" style="display: flex; flex-direction: row; height: 100vh;">
+    
+    <div class="card ide-card" style="flex: 1;">
+      
+      <header class="ws-header">
+        
+        <div class="ws-left">
+          <button class="ws-btn ws-icon-btn" onclick="toggleSidebar('toggle')" title="Toggle Explorer">
+            <i class="ph-bold ph-sidebar-simple"></i>
+          </button>
+          <a href="../index.html" class="ws-logo" title="Back to Home">
+            <img src="../logo/logo_white.png" alt="NitroIDE" class="logo-dark">
+            <img src="../logo/logo_black.png" alt="NitroIDE" class="logo-light">
+          </a>
+        </div>
+        
+        <div class="ws-right">
+          <button class="ws-btn ws-icon-text-btn" onclick="toggleOutputTabs()" title="Toggle Tabs">
+            <i class="ph-bold ph-arrows-out-line-vertical"></i>
+            <span class="ws-hide-mobile">Tabs</span>
+          </button>
+          <button class="ws-btn ws-icon-text-btn" onclick="toggleOptions()" id="optionsBtn" title="Preferences">
+            <i class="ph-bold ph-faders"></i>
+            <span class="ws-hide-mobile">Prefs</span>
+          </button>
+          <button class="ws-btn ws-compile-btn" onclick="smartRun()">
+            <i class="ph-fill ph-play"></i> Compile
+          </button>
+        </div>
+
+        <div id="optionsMenu" class="options-dropdown">
+          <label class="toggle-wrap" title="Slide-out code map">
+            <div style="display:flex; gap:8px; align-items:center;"><i class="ph-bold ph-map-trifold"></i> Code Minimap</div> 
+            <input type="checkbox" id="minimapToggle" onchange="toggleMinimap()">
+          </label>
+          <label class="toggle-wrap" title="Auto-run code">
+            <div style="display:flex; gap:8px; align-items:center;"><i class="ph-bold ph-lightning"></i> Auto-Run</div> 
+            <input type="checkbox" id="autoRunToggle" checked onchange="handleAutoRunToggle()">
+          </label>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="changeFontSize(2)"><i class="ph-bold ph-plus"></i> Increase Font Size</button>
+          <button class="dropdown-item" onclick="changeFontSize(-2)"><i class="ph-bold ph-minus"></i> Decrease Font Size</button>
+          <button class="dropdown-item" onclick="toggleWordWrap()"><i class="ph-bold ph-text-align-justify"></i> Toggle Word Wrap</button>
+          <button class="dropdown-item" onclick="formatCode()"><i class="ph-bold ph-magic-wand"></i> Format Code</button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="setDevice('desktop')"><i class="ph-bold ph-monitor"></i> Desktop View</button>
+          <button class="dropdown-item" onclick="setDevice('tablet')"><i class="ph-bold ph-device-tablet"></i> Tablet View</button>
+          <button class="dropdown-item" onclick="setDevice('mobile')"><i class="ph-bold ph-device-mobile"></i> Mobile View</button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="toggleCDN()"><i class="ph-bold ph-package"></i> Manage Dependencies</button>
+          <button class="dropdown-item" onclick="exportSingleFile()"><i class="ph-bold ph-file-code"></i> Export as 1-File</button>
+          <button class="dropdown-item" onclick="downloadZip()"><i class="ph-bold ph-file-archive"></i> Download ZIP</button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="toggleTheme()" id="themeBtn"><i class="ph-bold ph-sun"></i> Light Mode</button>
+        </div>
+
+      </header>
+
+      <div id="cdnManager" class="cdn-manager">
+        <div style="display: flex; gap: 10px; max-width: 600px;">
+          <input type="text" id="cdnInput" placeholder="Paste unpkg/cdnjs link here..." style="margin:0; padding: 8px; font-size: 0.8rem; border-radius: 4px;">
+          <button class="btn btn-compact" onclick="addCDN()">Add</button>
+        </div>
+        <div class="quick-add-cdns">
+          <span style="color: var(--text-muted); font-size: 0.75rem;">Quick Add:</span>
+          <button onclick="addSpecificCDN('https://cdn.tailwindcss.com')">+ Tailwind</button>
+          <button onclick="addSpecificCDN('https://code.jquery.com/jquery-3.7.1.min.js')">+ jQuery</button>
+          <button onclick="addSpecificCDN('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js')">+ GSAP</button>
+        </div>
+        <div id="cdnList" class="cdn-list" style="margin-top: 15px;"></div>
+      </div>
+
+      <div class="ide-workspace">
+        
+        <div id="sidebarBackdrop" class="sidebar-backdrop" onclick="toggleSidebar('close')"></div>
+
+        <div id="fileSidebar" class="file-sidebar collapsed">
+          <div class="sidebar-header">
+            <span>EXPLORER</span>
+            <button class="btn btn-compact btn-outline" onclick="toggleSidebar('close')" style="border:none; padding:2px;" title="Collapse"><i class="ph-bold ph-caret-left"></i></button>
+          </div>
+          <div class="file-list" id="vfsList"></div>
+        </div>
+
+        <div class="ide-split" id="ideMainSplit">
+
+          <div id="mobileTabs" class="mobile-vfs-tabs hide-on-desktop"></div>
+
+          <div class="editor-half" id="editorTopSplit">
+            <div id="htmlPanel" class="editor-panel">
+              <div class="editor-header-pill" onclick="togglePanel('htmlPanel')">
+                <i class="ph-fill ph-file-html" style="color:#e34c26;"></i> <span id="htmlPanelPillText">index.html</span>
+              </div>
+              <div id="htmlWrap" style="flex: 1; min-height: 0; width: 100%;"></div>
+            </div>
+
+            <div class="ide-resizer horiz"></div>
+
+            <div id="cssPanel" class="editor-panel">
+              <div class="editor-header-pill" onclick="togglePanel('cssPanel')">
+                <i class="ph-fill ph-file-css" style="color:#264de4;"></i> <span id="cssPanelPillText">style.css</span>
+              </div>
+              <div id="cssWrap" style="flex: 1; min-height: 0; width: 100%;"></div>
+            </div>
+
+            <div class="ide-resizer horiz"></div>
+
+            <div id="jsPanel" class="editor-panel">
+              <div class="editor-header-pill" onclick="togglePanel('jsPanel')">
+                <i class="ph-fill ph-file-js" style="color:#f7df1e;"></i> <span id="jsPanelPillText">script.js</span>
+              </div>
+              <div id="jsWrap" style="flex: 1; min-height: 0; width: 100%;"></div>
+            </div>
+          </div>
+
+          <div class="ide-resizer vert"></div>
+
+          <div class="output-half" id="outputBottomSplit">
+            
+            <div class="output-tabs">
+              <div class="out-tab-group">
+                <button class="out-tab active" onclick="switchOutputTab('preview', this)"><i class="ph-bold ph-browser"></i> Preview</button>
+                <button class="out-tab" onclick="switchOutputTab('console', this)"><i class="ph-bold ph-terminal"></i> Console <span id="consoleBadge" style="background:var(--error); color:white; padding:2px 6px; border-radius:10px; font-size:0.7rem; display:none;"><i class="ph-bold ph-warning"></i></span></button>
+                <button class="out-tab" onclick="switchOutputTab('state', this)"><i class="ph-bold ph-tree-structure"></i> State</button>
+              </div>
+              
+              
+            </div>
+
+            <div id="outPreview" class="iframe-wrap active">
+              <iframe id="liveIframe"></iframe>
+            </div>
+            
+            <div id="outConsole" class="console-wrap">
+              <div class="console-header">
+                 <div class="console-filters" style="display: flex; gap: 5px;">
+                   <button class="filter-btn active" onclick="filterConsole('all', this)">All</button>
+                   <button class="filter-btn" onclick="filterConsole('log', this)">Logs</button>
+                   <button class="filter-btn" onclick="filterConsole('warn', this)">Warnings</button>
+                   <button class="filter-btn" onclick="filterConsole('error', this)">Errors</button>
+                 </div>
+                 <button class="btn btn-compact btn-outline" onclick="clearConsole(true)" style="border:none; padding: 4px;" title="Clear Console"><i class="ph-bold ph-trash"></i></button>
+              </div>
+              <div id="consoleLogs" class="console-logs"><div class="console-entry con-log-line"><div class="console-content" style="color: var(--text-muted); font-style: italic;">// Developer Console initialized.</div></div></div>
+              <div class="console-input-wrap">
+                <span class="console-prompt"><i class="ph-bold ph-caret-right"></i></span>
+                <input type="text" id="consoleInput" class="console-input" placeholder="Execute JavaScript..." onkeydown="executeConsoleCmd(event)" autocomplete="off" spellcheck="false">
+              </div>
+            </div>
+
+            <div id="outState" class="console-wrap">
+              <div class="console-header">
+                  <div style="color: var(--text-muted); font-size: 0.8rem; font-style: italic;">
+                      <i class="ph-bold ph-info"></i> Bind variables via: <span style="color: var(--text); font-weight: bold;">Codebox.watch('Label', yourData)</span>
+                  </div>
+                  <button class="btn btn-compact btn-outline" onclick="clearState()" style="border:none; padding: 4px;" title="Clear State Cache"><i class="ph-bold ph-trash"></i></button>
+              </div>
+              <div id="stateVisualizer" style="padding: 15px; overflow: auto; flex: 1;"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="floating-preview" id="floatingPreview">
+  <div class="float-header" id="floatHeader">
+    <span><i class="ph-fill ph-browsers"></i> Live Preview</span>
+    <button class="btn btn-compact btn-outline" style="border:none; padding:4px; color:var(--text);" onclick="toggleFloatingPreview()"><i class="ph-bold ph-x"></i></button>
+  </div>
+  <div class="float-content" id="floatContent"></div>
+</div>
+
+<div class="cmd-palette-backdrop" id="cmdPalette">
+  <div class="cmd-palette">
+    <div class="cmd-input-wrap">
+      <i class="ph-bold ph-magnifying-glass"></i>
+      <input type="text" class="cmd-input" placeholder="Search commands..." id="cmdInput" autocomplete="off">
+    </div>
+    <div class="cmd-list" id="cmdList">
+      <a href="../docs.html" class="cmd-item"><div class="cmd-item-left"><i class="ph-bold ph-book"></i> View Documentation</div></a>
+      <a href="../index.html" class="cmd-item"><div class="cmd-item-left"><i class="ph-bold ph-arrow-left"></i> Back to Home</div></a>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="../script.js"></script>
+</body>
+</html>
