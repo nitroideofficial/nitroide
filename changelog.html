@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Changelog | NitroIDE</title>
+<script>if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');</script>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="header-row fixed-nav">
+  <a href="index.html" class="logo">
+    <img src="logo/logo_white.png" alt="NitroIDE" class="logo-dark">
+    <img src="logo/logo_black.png" alt="NitroIDE" class="logo-light">
+  </a>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn"><i class="ph-bold ph-sun"></i></button>
+    <a href="tools/codebox.html" class="btn btn-compact primary-btn">Launch Workspace</a>
+  </div>
+</div>
+
+<div class="changelog-container">
+  <h1 class="changelog-title">Changelog</h1>
+  
+  <div class="timeline">
+    
+    <div class="log-entry">
+      <div class="log-dot"></div>
+      <span class="log-date">April 2026</span>
+      <h2 class="log-version">v22.0 <span class="log-badge">The Nitro Update</span></h2>
+      <div class="log-content">
+        <p class="changelog-desc">A massive leap forward in both aesthetic and architectural stability. We've rebranded to NitroIDE and rebuilt the workspace interface from the ground up for ultimate performance.</p>
+        <ul>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Rebranded to NitroIDE:</strong> A fresh identity to reflect our zero-latency execution engine.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>State Visualizer:</strong> Introduced the global <code>Codebox.watch()</code> hook for real-time JSON debugging and state tracking.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Device Emulation:</strong> Test your CSS breakpoints instantly with Desktop, Tablet, and Mobile viewport toggles.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> <strong>Collapsible Output Drawer:</strong> Moved the Preview, Console, and State tabs to the bottom of the screen with a sleek minimize/expand chevron to maximize vertical code space.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> <strong>Bulletproof Mobile UI:</strong> Completely rewrote the workspace header architecture (<code>.ws-header</code>) to guarantee pixel-perfect responsiveness on all mobile devices without CSS bleed.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> <strong>Zip Export:</strong> Refined the export engine to instantly bundle your multi-file VFS into a production-ready `.zip` archive.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-dot dim"></div>
+      <span class="log-date">April 2026</span>
+      <h2 class="log-version dim-text">v18.0 <span class="log-badge dim-badge">The Polish Update</span></h2>
+      <div class="log-content">
+        <p class="changelog-desc">A leap forward in aesthetic engineering and core performance. We've stabilized the IDE while introducing powerful new workflow features.</p>
+        <ul>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Floating PiP Preview:</strong> You can now pop the live preview out of the IDE into a draggable, resizable glass window.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>In-App Feedback:</strong> A seamless, serverless feedback widget powered by FormSubmit allows direct communication with the developers.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-dot dim"></div>
+      <span class="log-date">February 2026</span>
+      <h2 class="log-version dim-text">v17.5 <span class="log-badge dim-badge">Engine Rewrite</span></h2>
+      <div class="log-content">
+        <ul>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> Replaced standard textareas with the official Monaco Editor (VS Code core), introducing Emmet support and syntax highlighting.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> Added magnetic resize sliders between code panels for custom layout geometries.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">FIX</span> The execution iframe no longer completely reloads when updating pure CSS, reducing flicker.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-dot dim"></div>
+      <span class="log-date">November 2025</span>
+      <h2 class="log-version dim-text">v17.0 <span class="log-badge dim-badge">The Architecture Update</span></h2>
+      <div class="log-content">
+        <ul>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Virtual File System (VFS):</strong> Migrated from a single-file view to a multi-file explorer. You can now create custom components and separate your logic into distinct modules.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Zip Exporting:</strong> Integrated <code>jszip</code> to allow downloading the entire VFS as a production-ready folder.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> Redesigned the Developer Console to capture unhandled promise rejections and structural DOM errors natively.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-dot dim"></div>
+      <span class="log-date">August 2025</span>
+      <h2 class="log-version dim-text">v16.0 <span class="log-badge dim-badge">Initial Beta</span></h2>
+      <div class="log-content">
+        <ul>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> Launched the initial zero-latency client-side execution engine.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> Added the integrated CDN manager for fetching unpkg modules directly into the iframe header.</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleTheme() { 
+    document.documentElement.classList.toggle('light-mode'); 
+    let isLight = document.documentElement.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark'); 
+    document.getElementById('themeBtn').innerHTML = isLight ? `<i class="ph-bold ph-moon"></i>` : `<i class="ph-bold ph-sun"></i>`; 
+  }
+  if (localStorage.getItem('theme') === 'light') document.getElementById('themeBtn').innerHTML = `<i class="ph-bold ph-moon"></i>`;
+</script>
+</body>
+</html>

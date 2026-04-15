@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Documentation | NitroIDE</title>
+<script>if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');</script>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="header-row fixed-nav">
+  <a href="index.html" class="logo">
+    <img src="logo/logo_white.png" alt="NitroIDE" class="logo-dark">
+    <img src="logo/logo_black.png" alt="NitroIDE" class="logo-light">
+  </a>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn"><i class="ph-bold ph-sun"></i></button>
+    <a href="tools/codebox.html" class="btn btn-compact">Launch Workspace</a>
+  </div>
+</div>
+
+<div class="docs-container">
+  
+  <div class="docs-sidebar" id="docsSidebar">
+    <div class="sidebar-heading" style="margin-top: 10px;">Overview</div>
+    <a href="#intro" class="nav-link">Introduction</a>
+    <a href="#vfs" class="nav-link">Virtual File System</a>
+    
+    <div class="sidebar-heading">Core Features</div>
+    <a href="#cli" class="nav-link">Developer Console</a>
+    <a href="#state" class="nav-link">State Visualizer</a>
+    <a href="#cdn" class="nav-link">Dependency Injection</a>
+    
+    <div class="sidebar-heading">Workspace & Layout</div>
+    <a href="#layout" class="nav-link">Floating PiP & Emulation</a>
+    <a href="#shortcuts" class="nav-link">Keyboard Shortcuts</a>
+    <a href="#export" class="nav-link">Exporting Projects</a>
+  </div>
+
+  <div class="docs-content">
+    <section id="intro">
+      <h1>Documentation</h1>
+      <p>NitroIDE is a zero-latency, entirely client-side web development environment. Because it uses your browser's native capabilities (via HTML5 <code>srcdoc</code> and local sandbox evaluation), your code never touches an external server. This guarantees 100% privacy, offline capability, and instantaneous execution speeds.</p>
+    </section>
+
+    <section id="vfs">
+      <h2>The Virtual File System (VFS)</h2>
+      <p>Unlike traditional playgrounds, NitroIDE supports a dynamic, multi-file architecture mimicking a real local environment.</p>
+      <p>Click the <strong>Explorer</strong> icon <i class="ph-bold ph-sidebar-simple" style="color:var(--text);"></i> in the workspace toolbar to open the sidebar. From here, you can:</p>
+      <ul>
+        <li><strong>Create:</strong> Click the <span class="key">+</span> icon to generate new <code>.html</code>, <code>.css</code>, or <code>.js</code> modules.</li>
+        <li><strong>Rename/Delete:</strong> Hover over any non-core file in the explorer to reveal the Edit and Trash actions.</li>
+        <li><strong>Compile:</strong> The execution engine automatically concatenates all files into the live preview DOM in real-time.</li>
+      </ul>
+      <div class="pro-tip">
+        <i class="ph-fill ph-lightbulb"></i>
+        <div>
+          <p><strong>Hot Module Replacement:</strong> When you edit CSS, the engine intelligently replaces the specific style block in the preview without reloading the iframe, preserving your current scroll position and JavaScript state.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="cli">
+      <h2>The Developer Console</h2>
+      <p>We built an integrated console directly into the IDE that supports native object serialization. This means if you log a complex JSON object, array, or HTML Node, it will render interactively exactly like Chrome DevTools.</p>
+      <div class="docs-code">
+<span style="color: #8b949e;">// Instead of seeing [object Object], see the real data:</span>
+console.log({ status: 200, user: { role: "Admin", id: 99 } });
+
+<span style="color: #8b949e;">// DOM Nodes are safely serialized and highlighted:</span>
+console.log(document.querySelector('.hero-title'));</div>
+
+      <p>The input bar at the bottom of the console acts as a true CLI. You can issue native commands to control the IDE:</p>
+      <div class="docs-code">
+> install tailwind
+<span style="color: #27c93f;">⚡ Success: Injected tailwind.</span>
+
+> theme tokyo-night
+<span style="color: #27c93f;">🎨 Theme updated.</span>
+
+> clear
+<span style="color: #8b949e;">// Clears the console history</span></div>
+    </section>
+
+    <section id="state">
+      <h2>The State Visualizer</h2>
+      <p>Debugging state changes in vanilla JS or React can be tedious. We built a global hook called <code>Codebox.watch()</code> to solve this.</p>
+      <p>If you pass a variable into this function, the IDE will render a live, syntax-highlighted JSON tree in the <strong>State</strong> tab.</p>
+      <div class="docs-code" style="position: relative;">
+<span style="color: #8b949e;">// Inside your script.js file</span>
+let playerState = { health: 100, level: 5, items: ['Sword'] };
+
+<span style="color: #8b949e;">// Bind it to the IDE visualizer</span>
+Codebox.watch('Player Data', playerState);
+
+<span style="color: #8b949e;">// Automatically updates the UI every second</span>
+setInterval(() => {
+  playerState.health -= 5;
+  Codebox.watch('Player Data', playerState);
+}, 1000);</div>
+    </section>
+
+    <section id="cdn">
+      <h2>Dependency Injection (CDN)</h2>
+      <p>NitroIDE manages dependencies natively without cluttering your HTML.</p>
+      <ul>
+        <li><strong>UI Method:</strong> Open the Preferences menu and click <strong>Manage Dependencies</strong> to paste any <code>unpkg</code> or <code>cdnjs</code> URL, or click the quick-add buttons.</li>
+        <li><strong>CLI Method:</strong> Type <code>install react</code> directly into the console to magically pull the latest minified build.</li>
+      </ul>
+    </section>
+
+    <section id="layout">
+      <h2>Floating PiP & Emulation</h2>
+      <h3><i class="ph-bold ph-browsers"></i> Floating Picture-in-Picture</h3>
+      <p>If you need more screen real estate, click the <strong>Pop Out</strong> button in the Output toolbar. This extracts your live website into a draggable window that floats above your code.</p>
+      
+      <h3><i class="ph-bold ph-devices"></i> Device Emulation</h3>
+      <p>In the Preferences menu, you can instantly toggle the iframe dimensions between Desktop, Tablet, and Mobile views. This allows you to test your CSS media queries seamlessly.</p>
+    </section>
+
+    <section id="shortcuts">
+      <h2>Keyboard Shortcuts</h2>
+      <p>Keep your hands on the keyboard with these shortcuts.</p>
+      <ul>
+        <li><span class="key">Cmd/Ctrl</span> + <span class="key">K</span> : Open the Command Palette / Universal Search.</li>
+        <li><span class="key">Cmd/Ctrl</span> + <span class="key">S</span> : Save buffers to VFS and force a hard re-compile.</li>
+        <li><span class="key">Esc</span> : Close open palettes or menus.</li>
+      </ul>
+    </section>
+
+    <section id="export">
+      <h2>Exporting Projects</h2>
+      <p>Because your code is local, exporting requires zero server communication.</p>
+      <ul>
+        <li><code>Download ZIP</code> : Utilizes client-side JSZip to download your full VFS as a cleanly separated folder.</li>
+        <li><code>Export as 1-File</code> : Bundles all of your CSS modules, JS modules, and CDN links into a single portable HTML file.</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<script>
+  function toggleTheme() { 
+    document.documentElement.classList.toggle('light-mode'); 
+    let isLight = document.documentElement.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark'); 
+    document.getElementById('themeBtn').innerHTML = isLight ? `<i class="ph-bold ph-moon"></i>` : `<i class="ph-bold ph-sun"></i>`; 
+  }
+  if (localStorage.getItem('theme') === 'light') document.getElementById('themeBtn').innerHTML = `<i class="ph-bold ph-moon"></i>`;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.docs-content section');
+    const navLinks = document.querySelectorAll('.docs-sidebar .nav-link');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if(targetSection) {
+          window.scrollTo({
+            top: targetSection.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const activeLink = document.querySelector(`.docs-sidebar a[href="#${entry.target.id}"]`);
+          if (activeLink) activeLink.classList.add('active');
+        }
+      });
+    }, { root: null, rootMargin: '-100px 0px -60% 0px', threshold: 0 });
+
+    sections.forEach(section => observer.observe(section));
+  });
+</script>
+</body>
+</html>
