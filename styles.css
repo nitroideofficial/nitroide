@@ -140,7 +140,7 @@ html.light-mode .fixed-nav { background: rgba(255,255,255,0.8); }
 @keyframes slideUpFade { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes pulseGlow { 0% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.8); } 50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.8); } }
 
-.ambient-glow { position: fixed; top: 0; left: 50%; width: 800px; height: 800px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%); transform: translate(-50%, -50%); z-index: 0; pointer-events: none; animation: pulseGlow 8s infinite ease-in-out; }
+.ambient-glow { position: fixed; top: 0; left: 50%; width: 800px; height: 800px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%); transform: translate(-50%, -50%); z-index: 0; pointer-events: none; animation: pulseGlow 8s infinite ease-in-out; will-change: transform, opacity; }
 .global-spotlight { position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 50%); border-radius: 50%; pointer-events: none; z-index: 0; transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.4s ease; }
 html.light-mode .global-spotlight { background: radial-gradient(circle, rgba(0,0,0,0.03) 0%, transparent 50%); }
 
@@ -378,7 +378,7 @@ html.light-mode .glass-mockup .mockup-header { border-bottom: 1px solid rgba(0,0
 
 /* FOOTER */
 .pro-footer { margin-top: 60px; padding: 40px 0 20px 0; border-top: 1px solid var(--border); background: transparent; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; text-align: left; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.5fr 1fr 1fr; gap: 30px; margin-bottom: 50px; text-align: left; }
 .footer-brand .logo { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--text); margin-bottom: 15px; }
 .footer-desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
 .footer-col h4 { color: var(--text); font-weight: 600; margin-bottom: 20px; font-size: 0.95rem; }
