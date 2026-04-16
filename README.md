@@ -23,116 +23,56 @@
 
 ## 🚀 What is NitroIDE?
 
-NitroIDE is a **zero-latency, browser-based IDE** that runs entirely on the client side.
+NitroIDE is a **zero-latency, browser-based IDE** that runs entirely on the client side. By utilizing HTML5 `srcdoc` iframes and local execution, there are no backend servers, no sign-ups, and absolutely zero delay.
 
-No installs. No backend. No delays.
+Write, test, and export your HTML, CSS, and JavaScript projects with the exact same editing engine that powers VS Code.
 
-> Your code runs instantly inside your browser — just like it should.
+> Your code runs instantly inside your browser's memory — just like it should.
 
 ---
 
 ## ✨ Features
 
-* ⚡ Instant execution (no server round-trip)
-* 🔥 Live preview
-* 💻 Monaco Editor (VS Code engine)
-* 📦 Virtual File System (multi-file support)
-* 🧠 Built-in CLI console
-* 📱 Device preview (responsive testing)
-* 🔒 100% client-side privacy
-* 💾 Export as ZIP or single HTML
+* ⚡ **Zero-Latency Execution:** Your code compiles and renders locally in 0ms.
+* 🔥 **Live DOM Preview:** Hot module replacement for CSS without reloading the iframe.
+* 💻 **Monaco Editor Engine:** Full syntax highlighting, Emmet abbreviations, and formatting.
+* 📦 **Virtual File System:** Manage multiple `.html`, `.css`, and `.js` modules natively.
+* 🧠 **Developer Console:** Built-in CLI for executing commands and a state visualizer for JSON debugging.
+* 📱 **Device Emulation:** Instantly test responsive breakpoints (Desktop, Tablet, Mobile).
+* 🔒 **100% Absolute Privacy:** Your code never leaves your machine. No telemetry, no tracking.
+* 💾 **1-Click Export:** Download your workspace as a production-ready `.zip` archive or a bundled single HTML file.
 
 ---
 
 ## 🖥️ Live Demo
 
-👉 https://nitroideofficial.github.io/nitroide/
+👉 **[Launch the Workspace](https://nitroideofficial.github.io/nitroide/)**
 
 ---
 
-## 🧠 How It Works
+## 🧠 Architectural Engine
 
-NitroIDE uses:
+Unlike traditional cloud playgrounds (CodePen, CodeSandbox) that rely on containerized backend servers to compile code, NitroIDE uses a purely serverless frontend architecture:
 
-* `iframe + srcdoc` for live execution
-* Monaco for editing
-* local browser memory instead of servers
+* **Execution:** `iframe + srcdoc` sandbox for secure, live evaluation.
+* **Text Engine:** Monaco Editor instance running inside Web Workers.
+* **Storage:** Local browser memory (`localStorage`) replaces databases.
 
 Result:
-👉 ⚡ zero latency
-👉 🔒 full privacy
+👉 ⚡ **Zero latency**
+👉 🔒 **Full privacy**
 
 ---
 
 ## 🛠️ CLI Commands
 
-```bash id="cmds01"
-> install tailwind
-> install react
-> export zip
-> export html
-> format
-> clear
-```
+Stop relying on UI buttons. Use the integrated command line to control your environment:
 
----
-
-## 💻 Run Locally
-
-```bash id="local01"
-git clone https://github.com/nitroideofficial/nitroide.git
-cd nitroide
-```
-
-```bash id="local02"
-# Python
-python -m http.server 8000
-
-# Node
-npx serve .
-```
-
-👉 Open: http://localhost:8000
-
----
-
-## 🏗️ Tech Stack
-
-* HTML5
-* CSS3
-* JavaScript (ES6+)
-* Monaco Editor
-* JSZip
-* Phosphor Icons
-
----
-
-## 🤝 Contributing
-
-Want to improve NitroIDE?
-
-* Fork the repo
-* Make changes
-* Open a PR
-
----
-
-## 🌐 Connect
-
-* 🌍 Website: https://nitroideofficial.github.io/nitroide/
-* 🐦 X: https://x.com/trynitroide
-* 📸 Instagram: https://instagram.com/nitroideofficial
-
----
-
-## 📜 License
-
-MIT License © 2026 NitroIDE
-
----
-
-<div align="center">
-
-⭐ If you like NitroIDE, give it a star
-
-</div>
+```bash
+> install tailwind  # Injects the Tailwind CDN
+> install react     # Fetches React 18 from unpkg
+> theme dark        # Toggles IDE aesthetic
+> export zip        # Bundles VFS into an archive
+> export html       # Exports a single-file build
+> format            # Prettifies active buffers
+> clear             # Wipes console history
