@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /tools/codebox.html
 Sitemap: https://nitroideofficial.github.io/nitroide/sitemap.xml
