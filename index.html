@@ -12,9 +12,10 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NitroIDE - Free Online IDE with Live Preview for HTML, CSS & JavaScript</title>
-  <meta name="description" content="NitroIDE is a free online IDE with live preview and Monaco editor. Write and run HTML, CSS, and JavaScript instantly in your browser with zero latency.">
-  <meta name="keywords" content="online IDE, browser IDE, free code editor, Monaco editor, HTML CSS JS editor, live preview IDE, web IDE, frontend IDE, NitroIDE">
+  <title>NitroIDE | Zero-Latency Browser IDE for HTML, CSS & JS</title>
+  <meta name="title" content="NitroIDE | Zero-Latency Browser IDE for HTML, CSS & JS">
+  <meta name="description" content="Code at the speed of thought. NitroIDE is a free, entirely client-side web IDE featuring the Monaco editor, live preview, and offline support. No servers, absolute privacy.">
+  <meta name="keywords" content="online IDE, browser IDE, Monaco editor online, client-side code editor, HTML CSS JS sandbox, zero latency IDE, free web IDE">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
 
@@ -24,19 +25,16 @@
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nitroideofficial.github.io/nitroide/">
-  <meta property="og:title" content="NitroIDE | Free Online Web IDE with Live Preview">
-  <meta property="og:description" content="Code faster with NitroIDE, a free online IDE featuring a Monaco editor and live preview. Write HTML, CSS, and JS client-side with zero latency.">
+  <meta property="og:title" content="NitroIDE | Zero-Latency Browser IDE">
+  <meta property="og:description" content="A free, 100% client-side web IDE with Monaco editor and instant live preview. Build frontend projects directly in your browser.">
   <meta property="og:image" content="https://nitroideofficial.github.io/nitroide/logo/logo_white.png">
-  <meta property="og:image:alt" content="NitroIDE Logo">
   <meta property="og:site_name" content="NitroIDE">
-  <meta property="og:locale" content="en_US">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://nitroideofficial.github.io/nitroide/">
-  <meta name="twitter:title" content="NitroIDE | Free Online Web IDE with Live Preview">
-  <meta name="twitter:description" content="Code faster with NitroIDE, a free online IDE featuring a Monaco editor and live preview. Write HTML, CSS, and JS client-side with zero latency.">
-  <meta name="twitter:image" content="https://nitroideofficial.github.io/nitroide/logo/logo_white.png">
-  <meta name="twitter:image:alt" content="NitroIDE Logo">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://nitroideofficial.github.io/nitroide/">
+  <meta property="twitter:title" content="NitroIDE | Zero-Latency Browser IDE">
+  <meta property="twitter:description" content="A free, 100% client-side web IDE with Monaco editor and instant live preview. Build frontend projects directly in your browser.">
+  <meta property="twitter:image" content="https://nitroideofficial.github.io/nitroide/logo/logo_white.png">
 
   <link rel="icon" type="image/png" href="./logo/logo_white.png">
   <link rel="apple-touch-icon" href="./logo/logo_white.png">
@@ -85,6 +83,7 @@
       background-size: 200% auto;
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       animation: textShimmer 5s linear infinite;
+      will-change: background-position;
     }
     .hollow-text .glow-layer {
       position: absolute; left: 0; top: 0; width: 100%; height: 100%; 
@@ -93,6 +92,7 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
       opacity: 0.8; filter: blur(12px); z-index: -1;
       animation: textShimmer 5s linear infinite;
+      will-change: background-position;
     }
   </style>
   <script type="application/ld+json">
@@ -101,14 +101,20 @@
   "@type": "SoftwareApplication",
   "name": "NitroIDE",
   "applicationCategory": "DeveloperApplication",
-  "operatingSystem": "Web",
+  "applicationSubCategory": "Web IDE",
+  "operatingSystem": "Web Browser",
   "url": "https://nitroideofficial.github.io/nitroide/",
-  "description": "NitroIDE is a free online IDE with live preview and Monaco editor for HTML, CSS, and JavaScript.",
+  "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
   "offers": {
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD"
-  }
+  },
+  "sameAs": [
+    "https://github.com/nitroideofficial/nitroide",
+    "https://x.com/trynitroide",
+    "https://www.instagram.com/nitroideofficial/"
+  ]
 }
 </script>
 </head>
@@ -126,8 +132,6 @@
 <div class="ambient-glow"></div>
 <div class="global-spotlight" id="globalSpotlight"></div>
 
-<button class="fab" id="fab" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="ph-bold ph-arrow-up"></i></button>
-
 <button class="fab" id="fab" aria-label="Scroll to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="ph-bold ph-arrow-up"></i></button>
 
 <nav class="floating-nav" id="floatingNav">
@@ -140,7 +144,7 @@
   </div>
   <div class="nav-actions">
     <button class="theme-toggle" onclick="toggleCmdK()" title="Command Palette"><i class="ph-bold ph-magnifying-glass"></i> <span class="hide-in-mobile" style="font-size:0.7rem; font-weight:700; opacity:0.7;">⌘K</span></button>
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtnFloat"><i class="ph-bold ph-sun"></i></button>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtnFloat" aria-label="Toggle Dark Mode"><i class="ph-bold ph-sun"></i></button>
     <a href="tools/codebox.html" class="btn btn-compact primary-btn hide-in-mobile" style="border-radius: 30px; padding: 8px 16px;">Open Workspace</a>
   </div>
 </nav>
@@ -165,7 +169,7 @@
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
         <div class="reveal-1 badge badge-primary">
-          <i class="ph-bold ph-rocket-launch"></i> v22.0 Live
+          <i class="ph-bold ph-rocket-launch"></i> v22.5 Live
         </div>
         <div class="reveal-1 badge badge-secondary">
           <i class="ph-bold ph-lightning"></i> Zero Latency
@@ -173,11 +177,11 @@
       </div>
       
       <h1 class="reveal-2 hero-title-main">
-        Code locally.<br>
+        NitroIDE.<br>
         <span class="hollow-text">
-          Execute instantly.
-          <span class="glow-layer">Execute instantly.</span>
-          <span class="fill-layer">Execute instantly.</span>
+          Zero-Latency IDE.
+          <span class="glow-layer">Zero-Latency IDE.</span>
+          <span class="fill-layer">Zero-Latency IDE.</span>
         </span>
       </h1>
       
@@ -235,16 +239,16 @@
     
     <div class="reveal-6 content-section">
       <div class="section-header">
-        <h2>Everything you need. Nothing you don't.</h2>
-        <p>We stripped away the bloat of traditional cloud IDEs to build a workspace that responds at the exact speed of your thoughts.</p>
+        <h2>A Complete Client-Side Web IDE.</h2>
+        <p>We stripped away the bloat of traditional cloud editors. Write HTML, CSS, and JavaScript in a zero-latency frontend workspace that responds at the speed of your thoughts.</p>
       </div>
       
       <div class="bento-grid">
         <div class="bento-card bento-large">
           <i class="ph-duotone ph-lightning bento-icon"></i>
-          <h3>Hot Module Replacement</h3>
+          <h2>Instant HTML, CSS & JS Preview</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">The execution engine watches your keystrokes and injects CSS and JS delta updates instantly without ever reloading the iframe.</p>
+            <p class="bento-text">The local execution engine watches your keystrokes and injects frontend code updates instantly without ever reloading the browser IDE iframe.</p>
             <div class="bento-code">
               <span class="code-keyword">import</span> { hot } <span class="code-keyword">from</span> <span class="code-string">'nitro-ide'</span>;<br><br>
               hot.accept(<span class="code-string">'./style.css'</span>, () => {<br>
@@ -256,9 +260,9 @@
         
         <div class="bento-card">
           <i class="ph-duotone ph-plugs-connected bento-icon"></i>
-          <h3>CDN Injector</h3>
+          <h2>React & CDN Playground</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Fetch any library from unpkg or cdnjs directly through the UI or CLI. No messy script tags required.</p>
+            <p class="bento-text">Fetch any library from unpkg directly through the UI or CLI. Prototype React or Tailwind applications with zero setup.</p>
             <div class="bento-code">
               <span class="code-prompt">&gt;</span> install tailwind<br>
               <span style="color: var(--success);">⚡ Success: Injected tailwind.</span><br><br>
@@ -269,9 +273,9 @@
         
         <div class="bento-card">
           <i class="ph-duotone ph-tree-structure bento-icon"></i>
-          <h3>State Visualizer</h3>
+          <h2>JavaScript State Visualizer</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Debug complex objects in real-time. Bind variables to the global hook and watch them update in the UI.</p>
+            <p class="bento-text">Debug complex JavaScript objects in real-time. Bind variables to our global hook and watch them update in the online workspace.</p>
             <div class="bento-code">
               <span class="code-comment">// Watch any variable</span><br>
               <span class="code-func">Codebox</span>.watch(<br>
@@ -283,9 +287,9 @@
         
         <div class="bento-card">
           <i class="ph-duotone ph-file-archive bento-icon"></i>
-          <h3>One-Click Export</h3>
+          <h2>Export Code to ZIP</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Download your entire Virtual File System as a production-ready ZIP or bundled HTML file.</p>
+            <p class="bento-text">Download your entire frontend workspace as a production-ready ZIP or bundled HTML file directly to your local machine.</p>
             <div class="bento-code">
               <span class="code-keyword">const</span> zip = <span class="code-keyword">new</span> JSZip();<br>
               zip.file(<span class="code-string">"index.html"</span>, code);<br>
@@ -297,9 +301,9 @@
         
         <div class="bento-card">
           <i class="ph-duotone ph-lock-key bento-icon"></i>
-          <h3>Absolute Privacy</h3>
+          <h2>100% Local Execution</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Your code never leaves your local machine. No telemetry, no tracking, no backend servers.</p>
+            <p class="bento-text">Your frontend code never leaves your local machine. No telemetry, no tracking, just a secure client-side sandbox.</p>
             <div class="bento-code">
               <span class="code-comment">// Local Execution Sandbox</span><br>
               <span class="code-keyword">const</span> frame = document.createElement(<span class="code-string">'iframe'</span>);<br>
@@ -314,7 +318,7 @@
     <div class="feature-showcase reveal-7">
       <div class="showcase-text">
         <div class="badge"><i class="ph-bold ph-terminal"></i> Command & Control</div>
-        <h2>The Developer Console.</h2>
+        <h2>The Native JavaScript Console.</h2>
         <p>Stop relying on basic <code>alert()</code> popups. We built a fully featured developer console directly into the IDE with native CLI commands.</p>
         <ul class="feature-list">
   <li>
@@ -356,7 +360,7 @@
     <div class="feature-showcase reveal-8 reverse">
       <div class="showcase-text">
         <div class="badge"><i class="ph-bold ph-drop"></i> Aesthetic Engineering</div>
-        <h2>Designed for Flow State.</h2>
+        <h2>A Lightning-Fast Monaco Workspace.</h2>
         <p>A clutter-free, edge-to-edge workspace that respects your screen real estate. Because a beautiful environment writes beautiful code.</p>
         <ul class="feature-list">
   <li>
@@ -392,7 +396,7 @@
     <div class="pricing-section reveal-8" id="statsRow">
       <div class="section-header">
         <h2>Enterprise Grade. Zero Cost.</h2>
-        <p>Other cloud IDEs charge you monthly just to keep your projects private. We built this for the community.</p>
+        <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
       </div>
 
       <div class="stats-grid">
@@ -433,20 +437,32 @@
             <img src="logo/logo_white.png" alt="NitroIDE" class="logo-dark">
             <img src="logo/logo_black.png" alt="NitroIDE" class="logo-light">
           </div>
-          <p class="footer-desc">Code at the exact speed of thought. <br>The open-source, zero-latency IDE built for modern frontend developers.</p>
+          <p class="footer-desc">The ultimate client-side code editor. <br>A free, open-source, zero-latency browser IDE built for modern frontend developers.</p>
         </div>
+        
         <div class="footer-col">
           <h4>Workspace</h4>
           <a href="tools/codebox.html">Launch IDE</a>
           <a href="docs.html">Documentation</a>
           <a href="changelog.html">Changelog</a>
         </div>
+        
+        <div class="footer-col">
+          <h4>Free Tools</h4>
+          <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
+          <a href="monaco-editor-online.html">Monaco Editor Online</a>
+          <a href="react-online-playground.html">React Online Playground</a>
+          <a href="responsive-design-tester.html">Responsive Design Tester</a>
+          <a href="export-code-to-zip.html">Export Code to ZIP</a>
+        </div>
+
         <div class="footer-col">
           <h4>Community</h4>
           <a href="https://github.com/nitroideofficial/nitroide" target="_blank">GitHub Repository</a>
           <a href="https://x.com/trynitroide" target="_blank">X / Twitter</a>
           <a href="https://www.instagram.com/nitroideofficial/" target="_blank">Instagram</a>
         </div>
+        
         <div class="footer-col">
           <h4>Legal</h4>
           <a href="legal.html">Privacy Policy</a>
@@ -461,13 +477,13 @@
   </div>
 </div>
 
-<button class="feedback-fab" onclick="toggleFeedbackModal()"><i class="ph-fill ph-chat-teardrop-text"></i></button>
+<button class="feedback-fab" onclick="toggleFeedbackModal()" aria-label="Open Feedback Form"><i class="ph-fill ph-chat-teardrop-text"></i></button>
 
 <div class="feedback-backdrop" id="feedbackModal" onclick="handleFeedbackClick(event)">
   <div class="feedback-card">
     <div class="feedback-header">
       <h3>Send Feedback</h3>
-      <button onclick="toggleFeedbackModal()"><i class="ph-bold ph-x"></i></button>
+      <button onclick="toggleFeedbackModal()" aria-label="Close Feedback Form"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="feedback-body">
       <p class="feedback-desc">Found a bug or have a suggestion? Let us know directly.</p>
