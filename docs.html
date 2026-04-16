@@ -3,37 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Documentation | NitroIDE</title>
+<title>NitroIDE Documentation: Zero-Latency Browser IDE Guide</title>
 <script>if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');</script>
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<meta name="description" content="Official documentation for NitroIDE. Learn how to use the Virtual File System, Developer Console, CDN Injector, and local execution engine.">
+<meta name="description" content="Master NitroIDE: The complete guide to using our free, zero-latency browser IDE. Learn about the Virtual File System, Monaco Editor, and CDN injection.">
+<meta name="keywords" content="NitroIDE docs, browser IDE guide, local code editor tutorial, Monaco editor online documentation, frontend workspace setup">
   <link rel="canonical" href="https://nitroideofficial.github.io/nitroide/docs.html">
-  <meta property="og:title" content="Documentation | NitroIDE">
-  <meta property="og:description" content="Official documentation for NitroIDE. Learn how to use the Virtual File System, Developer Console, and local execution engine.">
+  <meta property="og:title" content="NitroIDE Documentation: Zero-Latency Browser IDE Guide">
+  <meta property="og:description" content="The complete guide to using our free, zero-latency browser IDE. Learn about the Virtual File System, Monaco Editor, and CDN injection.">
   <meta property="og:url" content="https://nitroideofficial.github.io/nitroide/docs.html">
   <meta property="og:image" content="https://nitroideofficial.github.io/nitroide/logo/logo_white.png">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "NitroIDE Documentation & Guide",
-  "description": "Learn how to use NitroIDE's zero-latency, client-side web development environment.",
-  "author": {
-    "@type": "Organization",
-    "name": "NitroIDE"
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "NitroIDE Documentation: Local Browser IDE Guide",
+    "description": "Learn how to use NitroIDE's zero-latency, client-side web development environment.",
+    "author": { "@type": "Organization", "name": "NitroIDE" },
+    "publisher": { "@type": "Organization", "name": "NitroIDE", "logo": { "@type": "ImageObject", "url": "https://nitroideofficial.github.io/nitroide/logo/logo_white.png" } }
   },
-  "publisher": {
-    "@type": "Organization",
-    "name": "NitroIDE",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://nitroideofficial.github.io/nitroide/logo/logo_white.png"
-    }
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Is NitroIDE completely free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, NitroIDE is 100% free and open-source. Because it runs entirely in your browser's local memory, there are no server costs passed down to users." }
+    }, {
+      "@type": "Question",
+      "name": "Does NitroIDE require an internet connection?",
+      "acceptedAnswer": { "@type": "Answer", "text": "For vanilla HTML, CSS, and JS, NitroIDE works completely offline. An internet connection is only required if you need to fetch external libraries via the CDN injector." }
+    }, {
+      "@type": "Question",
+      "name": "How do I save my code in NitroIDE?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Code is auto-saved to your browser's local storage. To save files permanently to your machine, use the 'Export as 1-File' or 'Download ZIP' commands." }
+    }, {
+      "@type": "Question",
+      "name": "Can I use frameworks like React, Vue, or Tailwind CSS?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. While NitroIDE does not use a package.json file, you can instantly inject any NPM package using our CDN dependency manager via unpkg or cdnjs." }
+    }, {
+      "@type": "Question",
+      "name": "How do I share my code with other developers?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Because NitroIDE is a serverless environment, we do not host your code on a database to generate shareable URLs. To share your work, use the ZIP export feature and share the standalone files." }
+    }, {
+      "@type": "Question",
+      "name": "Can I use NitroIDE on my phone or tablet?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The NitroIDE interface is fully responsive. It is perfect for quickly reviewing code, testing CSS media queries with our device emulator, or debugging JavaScript on the go." }
+    }]
   }
-}
+]
 </script>
 </head>
 <body>
@@ -68,16 +90,20 @@
     <a href="#layout" class="nav-link">Device Emulation</a>
     <a href="#shortcuts" class="nav-link">Keyboard Shortcuts</a>
     <a href="#export" class="nav-link">Exporting Projects</a>
+    
+    <div class="sidebar-heading">Support</div>
+    <a href="#faq" class="nav-link">Frequently Asked Questions</a>
   </div>
 
   <div class="docs-content">
     <section id="intro">
-      <h1>Documentation</h1>
-      <p>NitroIDE is a zero-latency, entirely client-side web development environment. Because it uses your browser's native capabilities (via HTML5 <code>srcdoc</code> and local sandbox evaluation), your code never touches an external server. This guarantees 100% privacy, offline capability, and instantaneous execution speeds.</p>
+      <h1>NitroIDE Documentation</h1>
+      <p>Welcome to the official guide for NitroIDE, the zero-latency, entirely client-side <strong>browser IDE</strong>. Powered by the <strong>Monaco Editor engine</strong>, NitroIDE transforms your browser into a fully functioning frontend workspace.</p>
+      <p>Because it uses your browser's native capabilities (via HTML5 <code>srcdoc</code> and local sandbox evaluation), your code never touches an external server. This guarantees 100% absolute privacy, offline code editing, and instantaneous execution speeds.</p>
     </section>
 
     <section id="vfs">
-      <h2>The Virtual File System (VFS)</h2>
+      <h2>The Virtual File System: Your Local Workspace</h2>
       <p>Unlike traditional playgrounds, NitroIDE supports a dynamic, multi-file architecture mimicking a real local environment.</p>
       <p>Click the <strong>Explorer</strong> icon <i class="ph-bold ph-sidebar-simple" style="color:var(--text);"></i> in the workspace toolbar to open the sidebar. From here, you can:</p>
       <ul>
@@ -164,12 +190,34 @@ setInterval(() => {
     </section>
 
     <section id="export">
-      <h2>Exporting Projects</h2>
-      <p>Because your code is local, exporting requires zero server communication.</p>
+      <h2>Export HTML, CSS, & JS Projects</h2>
+      <p>Because your code lives in your local machine's memory, exporting requires zero server communication or backend processing.</p>
       <ul>
-        <li><code>Download ZIP</code> : Utilizes client-side JSZip to download your full VFS as a cleanly separated folder.</li>
+        <li><code>Download ZIP</code> : Utilizes client-side JSZip to download your full frontend project as a cleanly separated, production-ready folder.</li>
         <li><code>Export as 1-File</code> : Bundles all of your CSS modules, JS modules, and CDN links into a single portable HTML file.</li>
       </ul>
+    </section>
+
+    <section id="faq">
+      <h2>Frequently Asked Questions</h2>
+      
+      <h3>Is NitroIDE completely free to use?</h3>
+      <p>Yes. NitroIDE is a 100% free and open-source project. Because the entire IDE architecture relies on your browser's local memory to compile and execute code, there are no expensive backend cloud servers to maintain, allowing us to keep the tool free forever.</p>
+
+      <h3>Does this browser IDE require an internet connection?</h3>
+      <p>NitroIDE is designed to function as an offline code editor for vanilla HTML, CSS, and JavaScript. The only time an active internet connection is required is if you use the Developer Console to fetch external libraries (like React or Tailwind) via the CDN injector.</p>
+
+      <h3>Where is my code stored?</h3>
+      <p>Your code never leaves your computer. All keystrokes, modules, and virtual files are stored strictly within your browser's local <code>localStorage</code> API. We employ absolutely zero telemetry or tracking.</p>
+
+      <h3>Can I use frameworks like React, Vue, or Tailwind CSS?</h3>
+      <p>Absolutely. While NitroIDE does not use a <code>package.json</code> or a traditional node server, you can instantly inject any NPM package using our integrated CDN manager. Just type <code>install react</code> or <code>install tailwind</code> in the Developer Console to pull the minified builds directly into your workspace.</p>
+
+      <h3>How do I share my code with other developers?</h3>
+      <p>Because NitroIDE is a 100% serverless environment, we do not host your code on a database to generate shareable URLs (like traditional cloud editors). To share your work, simply use the <strong>Export Code to ZIP</strong> feature and send the standalone files, or push them directly to your own GitHub repository.</p>
+
+      <h3>Can I use NitroIDE on my phone or tablet?</h3>
+      <p>Yes! The NitroIDE interface is fully responsive. While typing complex logic on a mobile keyboard isn't always ideal, the workspace is perfect for quickly reviewing code, testing CSS media queries with our built-in device emulator, or debugging JavaScript on the go.</p>
     </section>
   </div>
 </div>
