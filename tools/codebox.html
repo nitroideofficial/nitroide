@@ -25,7 +25,7 @@
       <header class="ws-header">
         
         <div class="ws-left">
-          <button class="ws-btn ws-icon-btn" onclick="toggleSidebar('toggle')" title="Toggle Explorer">
+          <button class="ws-btn ws-icon-btn" onclick="toggleSidebar('toggle')" title="Toggle Explorer" aria-label="Toggle Explorer">
             <i class="ph-bold ph-sidebar-simple"></i>
           </button>
           <a href="../index.html" class="ws-logo" title="Back to Home">
@@ -68,6 +68,9 @@
           <button class="dropdown-item" onclick="setDevice('mobile')"><i class="ph-bold ph-device-mobile"></i> Mobile View</button>
           <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="toggleCDN()"><i class="ph-bold ph-package"></i> Manage Dependencies</button>
+          <button class="dropdown-item" onclick="document.getElementById('fileImportInput').click()"><i class="ph-bold ph-folder-open"></i> Import ZIP / Files</button>
+          <input type="file" id="fileImportInput" accept=".zip,.html,.css,.js" multiple style="display:none;" onchange="handleImport(event)">
+          <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="exportSingleFile()"><i class="ph-bold ph-file-code"></i> Export as 1-File</button>
           <button class="dropdown-item" onclick="downloadZip()"><i class="ph-bold ph-file-archive"></i> Download ZIP</button>
           <div class="dropdown-divider"></div>
@@ -171,7 +174,7 @@
             <div id="outState" class="console-wrap">
               <div class="console-header">
                   <div style="color: var(--text-muted); font-size: 0.8rem; font-style: italic;">
-                      <i class="ph-bold ph-info"></i> Bind variables via: <span style="color: var(--text); font-weight: bold;">Codebox.watch('Label', yourData)</span>
+                      <i class="ph-bold ph-info"></i> Bind variables via: <span style="color: var(--text); font-weight: bold;">Nitro.watch('Label', yourData)</span>
                   </div>
                   <button class="btn btn-compact btn-outline" onclick="clearState()" style="border:none; padding: 4px;" title="Clear State Cache"><i class="ph-bold ph-trash"></i></button>
               </div>
@@ -196,6 +199,11 @@
       <a href="../index.html" class="cmd-item"><div class="cmd-item-left"><i class="ph-bold ph-arrow-left"></i> Back to Home</div></a>
     </div>
   </div>
+</div>
+
+<div id="dragOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center; flex-direction:column; color:#00e5ff; font-size:2rem; backdrop-filter:blur(8px); border:4px dashed #00e5ff;">
+    <i class="ph-bold ph-download-simple" style="font-size:4rem; margin-bottom:15px; animation: subtleFloat 2s infinite;"></i>
+    <div style="font-weight: 700; font-family: 'Inter', sans-serif;">Drop ZIP or Files to Import</div>
 </div>
 
 <div id="toast" class="toast"></div>
