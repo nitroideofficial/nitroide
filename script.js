@@ -17,8 +17,10 @@ let files = {
   'script.js': `console.log("⚡ Workspace initialized.");\n\n// Write your JavaScript here...`
 };
 
-let vfs = { 'index.html': files['index.html'], 'style.css': files['style.css'], 'script.js': files['script.js'] };
-let activeFiles = { html: 'index.html', css: 'style.css', js: 'script.js' };
+let defaultVfs = { 'index.html': files['index.html'], 'style.css': files['style.css'], 'script.js': files['script.js'] };
+// Attempt to load previous session from memory, otherwise load defaults
+let vfs = JSON.parse(localStorage.getItem('nitro_vfs')) || defaultVfs;
+let activeFiles = JSON.parse(localStorage.getItem('nitro_active_files')) || { html: 'index.html', css: 'style.css', js: 'script.js' };
 
 if (localStorage.getItem('theme') === 'light') { 
   document.documentElement.classList.add('light-mode'); 
@@ -724,6 +726,10 @@ function smartRun() {
   vfs[activeFiles.css] = cssMonaco ? cssMonaco.getValue() : '';
   vfs[activeFiles.js] = jsMonaco ? jsMonaco.getValue() : '';
 
+  // Silently backup the workspace to local storage to prevent data loss on refresh
+  localStorage.setItem('nitro_vfs', JSON.stringify(vfs));
+  localStorage.setItem('nitro_active_files', JSON.stringify(activeFiles));
+
   let combinedHTML = vfs['index.html'] || '';
   let combinedCSS = "";
   let combinedJS = "";
@@ -769,7 +775,7 @@ function forceRun(html, css, js, iframe) {
     console.clear = function() { window.parent.postMessage({type: 'clear'}, '*'); ogClear.apply(console); };
     
     // State Visualizer Hook
-    window.Codebox = {
+    window.Nitro = {
         watch: function(name, data) {
             window.parent.postMessage({type: 'state-watch', name: name, data: JSON.stringify(data)}, '*');
         }
