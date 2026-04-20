@@ -1,0 +1,21 @@
+{
+  "name": "NitroIDE",
+  "short_name": "NitroIDE",
+  "description": "Zero-latency, client-side browser IDE for HTML, CSS, and JS.",
+  "start_url": "./tools/codebox.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "./logo/logo_white.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./logo/logo_white.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
