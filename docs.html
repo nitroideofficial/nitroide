@@ -149,19 +149,19 @@ console.log(document.querySelector('.hero-title'));</div>
 
     <section id="state">
       <h2>The State Visualizer</h2>
-      <p>Debugging state changes in vanilla JS or React can be tedious. We built a global hook called <code>Codebox.watch()</code> to solve this.</p>
+      <p>Debugging state changes in vanilla JS or React can be tedious. We built a global hook called <code>Nitro.watch()</code> to solve this.</p>
       <p>If you pass a variable into this function, the IDE will render a live, syntax-highlighted JSON tree in the <strong>State</strong> tab.</p>
       <div class="docs-code" style="position: relative;">
 <span style="color: #8b949e;">// Inside your script.js file</span>
 let playerState = { health: 100, level: 5, items: ['Sword'] };
 
 <span style="color: #8b949e;">// Bind it to the IDE visualizer</span>
-Codebox.watch('Player Data', playerState);
+Nitro.watch('Player Data', playerState);
 
 <span style="color: #8b949e;">// Automatically updates the UI every second</span>
 setInterval(() => {
   playerState.health -= 5;
-  Codebox.watch('Player Data', playerState);
+  Nitro.watch('Player Data', playerState);
 }, 1000);</div>
     </section>
 
