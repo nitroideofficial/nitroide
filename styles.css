@@ -938,3 +938,24 @@ html.light-mode .logo-dark { display: none !important; }
   max-width: 200px !important; 
   object-fit: contain !important;
 }
+
+/* --- VFS Long Filename Fix --- */
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden; /* Prevents container from expanding */
+}
+
+.vfs-filename {
+  flex: 1; /* Tells the text to take up available space */
+  white-space: nowrap; /* Prevents wrapping to a new line */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds the "..." */
+  min-width: 0; /* CRITICAL: Forces flexbox to respect the overflow */
+}
+
+.file-actions {
+  flex-shrink: 0; /* Prevents the buttons from being crushed */
+  display: flex;
+}
