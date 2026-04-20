@@ -18,9 +18,46 @@
 	};
 
 	let defaultVfs = { 'index.html': files['index.html'], 'style.css': files['style.css'], 'script.js': files['script.js'] };
-	// Attempt to load previous session from memory, otherwise load defaults
-	let vfs = JSON.parse(localStorage.getItem('nitro_vfs')) || defaultVfs;
-	let activeFiles = JSON.parse(localStorage.getItem('nitro_active_files')) || { html: 'index.html', css: 'style.css', js: 'script.js' };
+	// --- PROJECT MANAGER LOGIC ---
+let projects = JSON.parse(localStorage.getItem('nitro_projects')) || [];
+let currentProjectId = localStorage.getItem('nitro_current_project_id');
+
+if (projects.length === 0) {
+    let legacyVfs = JSON.parse(localStorage.getItem('nitro_vfs'));
+    let legacyActive = JSON.parse(localStorage.getItem('nitro_active_files'));
+    let initialProject = {
+        id: 'proj_' + Date.now(),
+        name: 'Default Workspace',
+        vfs: legacyVfs || defaultVfs,
+        activeFiles: legacyActive || { html: 'index.html', css: 'style.css', js: 'script.js' },
+        lastModified: Date.now()
+    };
+    projects.push(initialProject);
+    currentProjectId = initialProject.id;
+    localStorage.setItem('nitro_projects', JSON.stringify(projects));
+    localStorage.setItem('nitro_current_project_id', currentProjectId);
+}
+
+let currentProject = projects.find(p => p.id === currentProjectId) || projects[0];
+currentProjectId = currentProject.id;
+let vfs = currentProject.vfs;
+let activeFiles = currentProject.activeFiles;
+
+	// --- URL PARSER FOR SHARED CODE ---
+	const urlParams = new URLSearchParams(window.location.search);
+	const sharedCode = urlParams.get('code');
+	if (sharedCode && typeof LZString !== 'undefined') {
+    try {
+        const decompressed = LZString.decompressFromEncodedURIComponent(sharedCode);
+        const payload = JSON.parse(decompressed);
+        if (payload && payload.vfs) {
+            vfs = payload.vfs;
+            if (payload.activeFiles) activeFiles = payload.activeFiles;
+            // Clean the URL bar so it looks premium
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    } catch (e) { console.error("Failed to parse shared link."); }
+}
 
 	if (localStorage.getItem('theme') === 'light') { 
 	  document.documentElement.classList.add('light-mode'); 
@@ -148,7 +185,7 @@
 	  e.stopPropagation();
 	  if(confirm("Delete " + filename + "?")) {
 		  delete vfs[filename];
-		  if(activeFiles.js === filename) { activeFiles.js = 'script.js'; jsMonaco.setValue(vfs['script.js']); document.getElementById('jsPanelPillText').innerText = 'script.js'; }
+		  if(activeFiles.js === filename) { activeFiles.js = 'script.js'; if(typeof vfs['script.js'] === 'undefined') vfs['script.js'] = ''; jsMonaco.setValue(vfs['script.js']); document.getElementById('jsPanelPillText').innerText = 'script.js'; }
 		  else if(activeFiles.css === filename) { activeFiles.css = 'style.css'; cssMonaco.setValue(vfs['style.css']); document.getElementById('cssPanelPillText').innerText = 'style.css'; }
 		  else if(activeFiles.html === filename) { activeFiles.html = 'index.html'; htmlMonaco.setValue(vfs['index.html']); document.getElementById('htmlPanelPillText').innerText = 'index.html'; }
 		  
@@ -168,7 +205,7 @@
 		  
 		  if(mobList) mobHtml += `<button class="mob-tab ${isActive}" onclick="switchFile('${filename}')"><i class="ph-fill ${icon}" style="color:${color};"></i> ${filename}</button>`;
 		  
-		  return `<div class="file-item ${isActive}" onclick="switchFile('${filename}')"><i class="ph-fill ${icon}" style="color:${color};"></i> ${filename} ${actions}</div>`;
+		  return `<div class="file-item ${isActive}" onclick="switchFile('${filename}')"><i class="ph-fill ${icon}" style="color:${color};"></i> <span class="vfs-filename" title="${filename}">${filename}</span> ${actions}</div>`;
 	  };
 
 	  html += createVfsItem('index.html', '#e34c26', 'ph-file-html');
@@ -312,7 +349,8 @@
 
 
 	// --- EDITOR SETTINGS ---
-	let currentFontSize = 14; let isWordWrap = false;
+	let currentFontSize = parseInt(localStorage.getItem('nitro_font')) || 14; 
+	let isWordWrap = false;
 
 	function toggleMinimap() {
 	  const isEnabled = document.getElementById('minimapToggle').checked;
@@ -333,6 +371,7 @@
 
 	function changeFontSize(delta) {
 	  currentFontSize += delta; if (currentFontSize < 8) currentFontSize = 8; if (currentFontSize > 32) currentFontSize = 32;
+	  localStorage.setItem('nitro_font', currentFontSize);
 	  const opts = { fontSize: currentFontSize };
 	  if(htmlMonaco) htmlMonaco.updateOptions(opts); if(cssMonaco) cssMonaco.updateOptions(opts); if(jsMonaco) jsMonaco.updateOptions(opts);
 	  showToast(`<i class="ph-bold ph-text-aa" style="margin-right:6px;"></i> Font Size: ${currentFontSize}px`);
@@ -727,8 +766,13 @@
 	  vfs[activeFiles.js] = jsMonaco ? jsMonaco.getValue() : '';
 
 	  // Silently backup the workspace to local storage to prevent data loss on refresh
-	  localStorage.setItem('nitro_vfs', JSON.stringify(vfs));
-	  localStorage.setItem('nitro_active_files', JSON.stringify(activeFiles));
+	  currentProject.vfs = vfs;
+  currentProject.activeFiles = activeFiles;
+  currentProject.lastModified = Date.now();
+  let projIndex = projects.findIndex(p => p.id === currentProjectId);
+  if (projIndex > -1) projects[projIndex] = currentProject;
+  localStorage.setItem('nitro_projects', JSON.stringify(projects));
+	  
 
 	  let combinedHTML = vfs['index.html'] || '';
 	  let combinedCSS = "";
@@ -747,7 +791,7 @@
 	  document.getElementById('consoleLogs').innerHTML = ""; 
 	  let cdnTags = cdnLinks.map(link => link.endsWith('.css') ? `<link rel="stylesheet" href="${link}">` : `<script src="${link}"><\/script>`).join('\n');
 	  
-	  let headAndCss = `<!DOCTYPE html>\n<html>\n<head>\n${cdnTags}\n<style id="live-css-inject">\n${css}\n</style>\n`;
+	  let headAndCss = `<!DOCTYPE html>\n<html>\n<head>\n${cdnTags}\n<style id="live-css-inject">\n::-webkit-scrollbar { width: 6px; height: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(161, 161, 170, 0.4); border-radius: 10px; } ::-webkit-scrollbar-thumb:hover { background: rgba(161, 161, 170, 0.6); }\n${css}\n</style>\n`;
 	  
 	  const interceptor = `<script>
 		const JS_OFFSET = ${headAndCss.split('\n').length + 30}; 
@@ -790,10 +834,139 @@
 	  const bodyStart = `</head>\n<body>\n${html}\n<script>\n`;
 	  if(iframe) iframe.srcdoc = headAndCss + interceptor + bodyStart + js + `\n<\/script>\n</body>\n</html>`;
 	}
+	
+	// --- SERVERLESS SHARE LOGIC ---
+function generateShareLink() {
+  if (typeof LZString === 'undefined') {
+      return showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Compression library missing.");
+  }
+  
+  showToast("<i class='ph-bold ph-spinner-gap' style='margin-right:6px;'></i> Generating link...");
+  
+  // Compress the entire VFS and active file states
+  const payload = JSON.stringify({ vfs: vfs, activeFiles: activeFiles });
+  const compressed = LZString.compressToEncodedURIComponent(payload);
+  
+  // Build the URL
+  const shareUrl = window.location.origin + window.location.pathname + "?code=" + compressed;
+  
+  // Copy to clipboard
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    showToast("<i class='ph-bold ph-check-circle' style='color:var(--success); margin-right:6px;'></i> Link copied to clipboard!");
+  }).catch(err => {
+    console.error("Clipboard error:", err);
+    showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Failed to copy link.");
+  });
+}
 
-	window.onload = () => { 
-	  if (document.getElementById('codebox')) { initIDE(); }
-	};
+	function openDashboard() {
+    renderDashboard();
+    document.getElementById('projectDashboard').classList.add('active');
+    document.getElementById('optionsMenu').classList.remove('active');
+}
+
+function closeDashboard() { document.getElementById('projectDashboard').classList.remove('active'); }
+
+function renderDashboard() {
+    const grid = document.getElementById('projectGrid');
+    if(!grid) return;
+    grid.innerHTML = '';
+    projects.sort((a,b) => b.lastModified - a.lastModified).forEach(p => {
+        let isActive = p.id === currentProjectId;
+        let date = new Date(p.lastModified).toLocaleString();
+        grid.innerHTML += `
+            <div class="proj-card ${isActive ? 'active' : ''}">
+                <h3>${p.name}</h3><p>Edited: ${date}</p>
+                <div class="proj-actions">
+                    ${isActive ? '<span class="proj-badge">Active</span>' : `<button class="btn btn-compact" onclick="switchProject('${p.id}')">Open</button>`}
+                    ${projects.length > 1 ? `<button class="btn btn-compact btn-outline" style="color:var(--error); border-color:var(--error);" onclick="deleteProject('${p.id}')"><i class="ph-bold ph-trash"></i></button>` : ''}
+                </div>
+            </div>`;
+    });
+}
+
+function createNewProject() {
+    let name = prompt("Enter project name:");
+    if(!name) return;
+    let newProj = { id: 'proj_' + Date.now(), name: name, vfs: JSON.parse(JSON.stringify(defaultVfs)), activeFiles: { html: 'index.html', css: 'style.css', js: 'script.js' }, lastModified: Date.now() };
+    projects.push(newProj);
+    localStorage.setItem('nitro_projects', JSON.stringify(projects));
+    switchProject(newProj.id);
+}
+
+function switchProject(id) {
+    smartRun();
+    localStorage.setItem('nitro_current_project_id', id);
+    window.location.reload();
+}
+
+function deleteProject(id) {
+    if(confirm("Delete this project?")) {
+        projects = projects.filter(p => p.id !== id);
+        localStorage.setItem('nitro_projects', JSON.stringify(projects));
+        if(currentProjectId === id) switchProject(projects[0].id); else renderDashboard();
+    }
+}
+
+// --- PHASE 4: MONACO INTELLISENSE & COMPILER ENGINE ---
+function enhanceMonaco() {
+    if (typeof monaco === 'undefined') return;
+    
+    // 1. Upgrade Monaco Compiler to support modern React JSX and ES6 natively without red squiggles
+    monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
+        target: monaco.languages.typescript.ScriptTarget.ES2020,
+        allowNonTsExtensions: true,
+        jsx: monaco.languages.typescript.JsxEmit.React,
+        moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+        module: monaco.languages.typescript.ModuleKind.CommonJS,
+        noEmit: true,
+        typeRoots: ["node_modules/@types"]
+    });
+
+    // 2. The Auto-Type Fetcher (IntelliSense Dictionary)
+    const typeDefinitions = {
+        'jquery': 'https://unpkg.com/@types/jquery/index.d.ts',
+        'react': 'https://unpkg.com/@types/react/index.d.ts',
+        'react-dom': 'https://unpkg.com/@types/react-dom/index.d.ts',
+        'lodash': 'https://unpkg.com/@types/lodash/index.d.ts',
+        'gsap': 'https://unpkg.com/@types/gsap/index.d.ts'
+    };
+
+    window.injectIntelliSense = async function(url) {
+        let lib = Object.keys(typeDefinitions).find(k => url.toLowerCase().includes(k));
+        if (lib && !window[`_typesLoaded_${lib}`]) {
+            try {
+                let res = await fetch(typeDefinitions[lib]);
+                let dts = await res.text();
+                monaco.languages.typescript.javascriptDefaults.addExtraLib(dts, `file:///node_modules/@types/${lib}/index.d.ts`);
+                window[`_typesLoaded_${lib}`] = true;
+                showToast(`<i class='ph-bold ph-magic-wand' style='color:#bb9af7; margin-right:6px;'></i> IntelliSense loaded for ${lib}`);
+            } catch(e) {}
+        }
+    };
+
+    // Intercept existing CDN additions to trigger IntelliSense automatically
+    const originalAddSpecificCDN = window.addSpecificCDN;
+    window.addSpecificCDN = function(url) {
+        if (originalAddSpecificCDN) originalAddSpecificCDN(url);
+        window.injectIntelliSense(url);
+    };
+    
+    const originalAddCDN = window.addCDN;
+    window.addCDN = function() {
+        let url = document.getElementById('cdnInput').value;
+        if (url) url = url.trim();
+        if (originalAddCDN) originalAddCDN();
+        if (url) window.injectIntelliSense(url);
+    };
+}
+
+window.onload = () => {
+    if (document.getElementById('codebox')) { 
+        initIDE(); 
+        setTimeout(enhanceMonaco, 1500); // Give Monaco time to boot up before injecting upgrades
+    }
+};
 
 
 // --- IMPORT & DRAG-AND-DROP LOGIC ---
@@ -858,6 +1031,10 @@ function handleImport(event) {
 // Desktop Drag-and-Drop Listeners
 const dragOverlay = document.getElementById('dragOverlay');
 let dragCounter = 0; // Fixes flickering when dragging over child elements
+
+// --- THE INVISIBLE DROP SHIELD ---
+window.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation(); });
+window.addEventListener('drop', (e) => { e.preventDefault(); e.stopPropagation(); });
 
 document.body.addEventListener('dragenter', (e) => {
   e.preventDefault(); dragCounter++;
