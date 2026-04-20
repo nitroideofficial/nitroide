@@ -38,6 +38,7 @@
 
   <link rel="icon" type="image/png" href="./logo/logo_white.png">
   <link rel="apple-touch-icon" href="./logo/logo_white.png">
+  <link rel="manifest" href="manifest.json">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -169,7 +170,7 @@
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
         <div class="reveal-1 badge badge-primary">
-          <i class="ph-bold ph-rocket-launch"></i> v22.5 Live
+          <i class="ph-bold ph-rocket-launch"></i> v23.0 Live
         </div>
         <div class="reveal-1 badge badge-secondary">
           <i class="ph-bold ph-lightning"></i> Zero Latency
@@ -278,7 +279,7 @@
             <p class="bento-text">Debug complex JavaScript objects in real-time. Bind variables to our global hook and watch them update in the online workspace.</p>
             <div class="bento-code">
               <span class="code-comment">// Watch any variable</span><br>
-              <span class="code-func">Codebox</span>.watch(<br>
+              <span class="code-func">Nitro</span>.watch(<br>
               &nbsp;&nbsp;<span class="code-string">'User Data'</span>, userObj<br>
               );
             </div>
@@ -570,7 +571,7 @@
     btnText.style.display = 'none';
     spinner.style.display = 'block';
 
-    fetch("https://formsubmit.co/ajax/nitroideofficial@gmail.com", {
+    fetch("https://formsubmit.co/ajax/contactnitroide@gmail.com", {
         method: "POST",
         headers: { 
             'Content-Type': 'application/json',
@@ -601,8 +602,20 @@
   function toggleTheme() { 
     document.documentElement.classList.toggle('light-mode'); 
     let isLight = document.documentElement.classList.contains('light-mode');
-    document.getElementById('themeBtnFloat').innerHTML = isLight ? `<i class="ph-bold ph-moon"></i>` : `<i class="ph-bold ph-sun"></i>`; 
-    document.getElementById('themeBtn').innerHTML = isLight ? `<i class="ph-bold ph-moon"></i>` : `<i class="ph-bold ph-sun"></i>`; 
+    const iconHTML = isLight ? `<i class="ph-bold ph-moon"></i>` : `<i class="ph-bold ph-sun"></i>`;
+    const floatBtn = document.getElementById('themeBtnFloat');
+    const mainBtn = document.getElementById('themeBtn');
+    if (floatBtn) floatBtn.innerHTML = iconHTML;
+    if (mainBtn) mainBtn.innerHTML = iconHTML;
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  }
+  
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.classList.add('light-mode');
+    const floatBtn = document.getElementById('themeBtnFloat');
+    const mainBtn = document.getElementById('themeBtn');
+    if (floatBtn) floatBtn.innerHTML = `<i class="ph-bold ph-moon"></i>`;
+    if (mainBtn) mainBtn.innerHTML = `<i class="ph-bold ph-moon"></i>`;
   }
 
   function toggleCmdK() {
@@ -775,7 +788,7 @@
         }
       })
       .catch(() => {});
-  }, 15000);
+}, 180000); // Changed from 15000 to 180000 (3 minutes)
   
 </script>
 </body>
