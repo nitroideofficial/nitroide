@@ -378,7 +378,7 @@ html.light-mode .glass-mockup .mockup-header { border-bottom: 1px solid rgba(0,0
 
 /* FOOTER */
 .pro-footer { margin-top: 60px; padding: 40px 0 20px 0; border-top: 1px solid var(--border); background: transparent; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.5fr 1fr 1fr; gap: 30px; margin-bottom: 50px; text-align: left; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.3fr 1.5fr 1.2fr 1fr; gap: 20px; margin-bottom: 50px; text-align: left; }
 .footer-brand .logo { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--text); margin-bottom: 15px; }
 .footer-desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
 .footer-col h4 { color: var(--text); font-weight: 600; margin-bottom: 20px; font-size: 0.95rem; }
@@ -958,4 +958,58 @@ html.light-mode .logo-dark { display: none !important; }
 .file-actions {
   flex-shrink: 0; /* Prevents the buttons from being crushed */
   display: flex;
+}
+
+/* =========================================================
+   THE NITRO CYBER GLITCH (v3 - "Random" Glitch + Breathing Neon)
+   ========================================================= */
+
+/* 1. Base Logo Settings */
+body:not(.workspace-body) .logo img {
+  /* Long 12s timeline creates the perfect illusion of unpredictable randomness */
+  animation: randomGlitch 12s infinite linear; 
+  /* Ultra-smooth bezier curve for when you hover/unhover */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. Hover State (Triggers the Smooth Breathing Glow) */
+body:not(.workspace-body) .logo:hover img {
+  transform: scale(1); /* Keeps the size perfectly locked */
+  /* Swaps the glitch for a smooth, pulsing neon animation */
+  animation: neonPulse 2s infinite alternate ease-in-out !important; 
+}
+
+/* 3. The Breathing Neon Pulse (Only Active on Hover) */
+@keyframes neonPulse {
+  0% { 
+    filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.5)) drop-shadow(0 0 2px rgba(0, 229, 255, 0.3)); 
+  }
+  100% { 
+    filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.9)) drop-shadow(0 0 6px rgba(0, 229, 255, 0.6)); 
+  }
+}
+
+/* 4. The "Randomized" Glitch Timeline */
+@keyframes randomGlitch {
+  /* The anchor points: 90% of the time, the logo is perfectly still */
+  0%, 10%, 15%, 40%, 46%, 70%, 75%, 88%, 100% {
+    transform: translate(0, 0); 
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  
+  /* Glitch Event 1: Tiny Cyan Twitch (around 12%) */
+  11% { transform: translate(-2px, 1px); filter: drop-shadow(2px 0 0 #00e5ff); }
+  13% { transform: translate(1px, -1px); filter: drop-shadow(-2px 0 0 #ff003c); }
+  
+  /* Glitch Event 2: Violent Horizontal Tear + Blur (around 43%) */
+  41% { transform: translate(-5px, 0) skewX(-10deg); filter: drop-shadow(5px 0 0 #00e5ff) drop-shadow(-5px 0 0 #ff003c); }
+  43% { transform: translate(5px, 0) skewX(10deg); filter: drop-shadow(-5px 0 0 #00e5ff) drop-shadow(5px 0 0 #ff003c) blur(1px); }
+  
+  /* Glitch Event 3: Vertical Drop & Color Invert (around 72%) */
+  71% { transform: translate(0, 3px); filter: drop-shadow(0 -3px 0 #00e5ff); }
+  72% { transform: translate(0, -3px); filter: drop-shadow(0 3px 0 #ff003c); }
+  
+  /* Glitch Event 4: Double Micro-Snap (around 90%) */
+  89% { transform: translate(-3px, 2px); filter: drop-shadow(3px 0 0 #00e5ff) drop-shadow(-2px 0 0 #ff003c); }
+  91% { transform: translate(3px, -2px); filter: drop-shadow(-3px 0 0 #00e5ff) drop-shadow(2px 0 0 #ff003c); }
 }
