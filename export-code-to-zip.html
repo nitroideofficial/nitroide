@@ -12,9 +12,9 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Export HTML, CSS, JS to ZIP Online | NitroIDE</title>
-  <meta name="title" content="Export HTML, CSS, JS to ZIP Online | NitroIDE">
-  <meta name="description" content="Build your frontend project online and download it instantly as a production-ready ZIP file or bundled single HTML file. Free and client-side.">
+  <title>Export HTML, CSS & JS to ZIP | Free Online Code Bundler (2026)</title>
+  <meta name="title" content="Export HTML, CSS & JS to ZIP | Free Online Code Bundler (2026)">
+  <meta name="description" content="Write your frontend project online and instantly bundle it into a production-ready ZIP file or single HTML document. 100% free and client-side.">
   <meta name="keywords" content="export html css js to zip online, download web project zip, bundle html css js, offline code export, client-side zip generator">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
@@ -45,7 +45,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="styles.css">
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
     body { opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
@@ -114,6 +114,22 @@
     "https://x.com/trynitroide",
     "https://www.instagram.com/nitroideofficial/"
   ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Code to ZIP Exporter - NitroIDE",
+  "url": "https://nitroideofficial.github.io/nitroide/export-code-to-zip.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0.00",
+    "priceCurrency": "USD"
+  },
+  "description": "Write your frontend project online and instantly bundle it into a production-ready ZIP file or single HTML document."
 }
 </script>
 </head>
@@ -236,6 +252,54 @@
       </div>
     </div>
     
+    <div class="reveal-7 content-section">
+      <div class="section-header">
+        <h2>From Browser to Production in One Click.</h2>
+        <p>Turn your online workspace into a deployable package instantly. Our engine compresses your HTML, CSS, and JS files into a clean .zip archive completely locally. No servers involved.</p>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-card bento-large">
+          <i class="ph-duotone ph-file-zip bento-icon"></i>
+          <h2>Client-Side Bundling</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">We utilize JSZip to process your files entirely within your device's memory. This guarantees zero network latency and ensures your proprietary code never touches an external database.</p>
+            <div class="bento-code">
+              <span class="code-comment">// Local archive generation</span><br>
+              <span class="code-keyword">const</span> zip = <span class="code-keyword">new</span> JSZip();<br>
+              zip.<span class="code-func">file</span>(<span class="code-string">"index.html"</span>, htmlContent);<br>
+              zip.<span class="code-func">generateAsync</span>({<span class="code-attr">type</span>:<span class="code-string">"blob"</span>});
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <i class="ph-duotone ph-folder-open bento-icon"></i>
+          <h2>Maintains Folder Structure</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Your Virtual File System hierarchy is preserved. The exported ZIP extracts perfectly into standard `index.html`, `style.css`, and `script.js` files, ready for GitHub Pages or Vercel.</p>
+            <div class="bento-code">
+              📁 nitroide-export/<br>
+              &nbsp;&nbsp;📄 index.html<br>
+              &nbsp;&nbsp;📄 style.css
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <i class="ph-duotone ph-file-html bento-icon"></i>
+          <h2>Single File Export</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Need to share a quick prototype? Compile your CSS and JS directly into the HTML file via inline tags for a highly portable, single-file deployment.</p>
+            <div class="bento-code">
+              <span class="code-prompt">&gt;</span> export html<br>
+              <span style="color: var(--success);">⚡ Downloaded single bundle.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="pro-footer reveal-8">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -254,13 +318,14 @@
         </div>
         
         <div class="footer-col">
-          <h4>Free Tools</h4>
-          <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
-          <a href="monaco-editor-online.html">Monaco Editor Online</a>
-          <a href="react-online-playground.html">React Online Playground</a>
-          <a href="responsive-design-tester.html">Responsive Design Tester</a>
-          <a href="export-code-to-zip.html">Export Code to ZIP</a>
-        </div>
+  <h4>Free Tools</h4>
+  <a href="tailwind-online-editor.html">Tailwind Online Editor</a>
+  <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
+  <a href="monaco-editor-online.html">Monaco Editor Online</a>
+  <a href="react-online-playground.html">React Online Playground</a>
+  <a href="responsive-design-tester.html">Responsive Design Tester</a>
+  <a href="export-code-to-zip.html">Export Code to ZIP</a>
+</div>
 
         <div class="footer-col">
           <h4>Community</h4>
