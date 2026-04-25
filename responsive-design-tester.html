@@ -12,9 +12,9 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Online Responsive Design Tester & Editor | NitroIDE</title>
-  <meta name="title" content="Online Responsive Design Tester & Editor | NitroIDE">
-  <meta name="description" content="Test CSS media queries and responsive breakpoints instantly inside the IDE. Toggle between mobile, tablet, and desktop views with zero latency.">
+  <title>Responsive Design Tester: Check CSS Media Queries Online (Free)</title>
+  <meta name="title" content="Responsive Design Tester: Check CSS Media Queries Online (Free)">
+  <meta name="description" content="Instantly test mobile, tablet, and desktop CSS breakpoints with our zero-latency responsive design simulator. No deployment required.">
   <meta name="keywords" content="test media queries online tool, frontend responsive tester, css breakpoint simulator, responsive design editor">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
@@ -45,7 +45,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="styles.css">
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
     body { opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
@@ -97,23 +97,38 @@
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "NitroIDE",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Which device breakpoints are supported in the tester?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The responsive design tester includes built-in viewports for Mobile, Tablet, and Desktop breakpoints, allowing you to test standard device widths instantly."
+    }
+  }, {
+    "@type": "Question",
+    "name": "How do I test CSS media queries online?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Write your mobile-first CSS or media queries in the NitroIDE editor, then toggle between the mobile, tablet, and desktop views. Changes are injected with zero latency so you can see your responsive layout update in real-time."
+    }
+  }]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Responsive Design Tester - NitroIDE",
+  "url": "https://nitroideofficial.github.io/nitroide/responsive-design-tester.html",
   "applicationCategory": "DeveloperApplication",
-  "applicationSubCategory": "Web IDE",
-  "operatingSystem": "Web Browser",
-  "url": "https://nitroideofficial.github.io/nitroide/",
-  "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+  "operatingSystem": "Any",
   "offers": {
     "@type": "Offer",
-    "price": "0",
+    "price": "0.00",
     "priceCurrency": "USD"
   },
-  "sameAs": [
-    "https://github.com/nitroideofficial/nitroide",
-    "https://x.com/trynitroide",
-    "https://www.instagram.com/nitroideofficial/"
-  ]
+  "description": "Instantly test mobile, tablet, and desktop CSS breakpoints with our zero-latency responsive design simulator."
 }
 </script>
 </head>
@@ -238,6 +253,53 @@
       </div>
     </div>
 
+    <div class="reveal-7 content-section">
+      <div class="section-header">
+        <h2>Pixel-Perfect Responsive Debugging.</h2>
+        <p>Stop dragging your browser window back and forth. Simulate mobile, tablet, and desktop viewports simultaneously to debug complex CSS media queries with absolute precision.</p>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-card bento-large">
+          <i class="ph-duotone ph-devices bento-icon"></i>
+          <h2>Live Viewport Emulation</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Toggle between standard breakpoints instantly. Our isolated iframe environment ensures your CSS behaves exactly as it would on real hardware, without interference from the editor UI.</p>
+            <div class="bento-code">
+              <span class="code-comment">/* Test breakpoints instantly */</span><br>
+              <span class="code-keyword">@media</span> (<span class="code-attr">max-width</span>: <span class="code-num">768px</span>) {<br>
+              &nbsp;&nbsp;<span class="code-tag">.grid</span> { <span class="code-attr">grid-template-columns</span>: <span class="code-num">1fr</span>; }<br>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <i class="ph-duotone ph-arrows-out-line-horizontal bento-icon"></i>
+          <h2>Fluid Resize Controls</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Identify layout breaks by smoothly dragging the viewport width. Pinpoint the exact pixel where your typography or flexbox layout starts to fail.</p>
+            <div class="bento-code">
+              <span class="code-prompt">&gt;</span> Current Width: <span class="code-num">428px</span><br>
+              <span style="color: var(--success);">📱 iPhone 14 Pro Layout</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <i class="ph-duotone ph-paint-brush bento-icon"></i>
+          <h2>Hot Module Reloading</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Tweak your media query variables in the CSS panel and watch the emulated viewport update without a page refresh. Unmatched speed for UI polishing.</p>
+            <div class="bento-code">
+              <span class="code-comment">/* DOM updates without reload */</span><br>
+              <span class="code-tag">body</span> { <span class="code-attr">background</span>: <span class="code-string">var(--bg)</span>; }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="pro-footer reveal-8">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -256,13 +318,14 @@
         </div>
         
         <div class="footer-col">
-          <h4>Free Tools</h4>
-          <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
-          <a href="monaco-editor-online.html">Monaco Editor Online</a>
-          <a href="react-online-playground.html">React Online Playground</a>
-          <a href="responsive-design-tester.html">Responsive Design Tester</a>
-          <a href="export-code-to-zip.html">Export Code to ZIP</a>
-        </div>
+  <h4>Free Tools</h4>
+  <a href="tailwind-online-editor.html">Tailwind Online Editor</a>
+  <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
+  <a href="monaco-editor-online.html">Monaco Editor Online</a>
+  <a href="react-online-playground.html">React Online Playground</a>
+  <a href="responsive-design-tester.html">Responsive Design Tester</a>
+  <a href="export-code-to-zip.html">Export Code to ZIP</a>
+</div>
 
         <div class="footer-col">
           <h4>Community</h4>
