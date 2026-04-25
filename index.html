@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
 	<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-SH02J5Q7MB');
+  gtag('config', 'G-1XL4PN2R0Z');
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NitroIDE | Zero-Latency Browser IDE for HTML, CSS & JS</title>
-  <meta name="title" content="NitroIDE | Zero-Latency Browser IDE for HTML, CSS & JS">
-  <meta name="description" content="Code at the speed of thought. NitroIDE is a free, entirely client-side web IDE featuring the Monaco editor, live preview, and offline support. No servers, absolute privacy.">
+  <title>NitroIDE | Zero-Latency Browser IDE & Online Code Editor</title>
+  <meta name="title" content="NitroIDE | Zero-Latency Browser IDE & Online Code Editor">
+  <meta name="description" content="Code at the speed of thought. NitroIDE is a free, entirely client-side web IDE featuring the Monaco editor, live preview, and secure offline support.">
   <meta name="keywords" content="online IDE, browser IDE, Monaco editor online, client-side code editor, HTML CSS JS sandbox, zero latency IDE, free web IDE">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
@@ -45,7 +45,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="styles.css">
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
     body { opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
@@ -240,7 +240,7 @@
     
     <div class="reveal-6 content-section">
       <div class="section-header">
-        <h2>A Complete Client-Side Web IDE.</h2>
+        <h2>A Complete Client-Side Web IDE for HTML, CSS, and JS.</h2>
         <p>We stripped away the bloat of traditional cloud editors. Write HTML, CSS, and JavaScript in a zero-latency frontend workspace that responds at the speed of your thoughts.</p>
       </div>
       
@@ -263,7 +263,7 @@
           <i class="ph-duotone ph-plugs-connected bento-icon"></i>
           <h2>React & CDN Playground</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Fetch any library from unpkg directly through the UI or CLI. Prototype React or Tailwind applications with zero setup.</p>
+            <p class="bento-text">Fetch any library from unpkg directly through the UI or CLI. Prototype <a href="react-online-playground.html" style="color: #00e5ff; text-decoration: none;">React applications</a> or Tailwind with zero setup.</p>
             <div class="bento-code">
               <span class="code-prompt">&gt;</span> install tailwind<br>
               <span style="color: var(--success);">⚡ Success: Injected tailwind.</span><br><br>
@@ -290,7 +290,7 @@
           <i class="ph-duotone ph-file-archive bento-icon"></i>
           <h2>Export Code to ZIP</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Download your entire frontend workspace as a production-ready ZIP or bundled HTML file directly to your local machine.</p>
+            <p class="bento-text">Download your entire frontend workspace as a <a href="export-code-to-zip.html" style="color: #00e5ff; text-decoration: none;">production-ready ZIP</a> or bundled HTML file directly to your local machine.</p>
             <div class="bento-code">
               <span class="code-keyword">const</span> zip = <span class="code-keyword">new</span> JSZip();<br>
               zip.file(<span class="code-string">"index.html"</span>, code);<br>
@@ -361,7 +361,7 @@
     <div class="feature-showcase reveal-8 reverse">
       <div class="showcase-text">
         <div class="badge"><i class="ph-bold ph-drop"></i> Aesthetic Engineering</div>
-        <h2>A Lightning-Fast Monaco Workspace.</h2>
+        <h2>An Offline-Ready Monaco Editor Sandbox.</h2>
         <p>A clutter-free, edge-to-edge workspace that respects your screen real estate. Because a beautiful environment writes beautiful code.</p>
         <ul class="feature-list">
   <li>
@@ -443,29 +443,46 @@
         
         <div class="footer-col">
           <h4>Workspace</h4>
-          <a href="tools/codebox.html">Launch IDE</a>
+          <a href="tools/codebox.html?env=vanilla">Launch IDE</a>
           <a href="docs.html">Documentation</a>
           <a href="changelog.html">Changelog</a>
         </div>
         
         <div class="footer-col">
-          <h4>Free Tools</h4>
-          <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
-          <a href="monaco-editor-online.html">Monaco Editor Online</a>
-          <a href="react-online-playground.html">React Online Playground</a>
+          <h4>Free Sandboxes</h4>
+          <a href="react-online-playground.html">React Playground</a>
+          <a href="tailwind-online-editor.html">Tailwind Editor</a>
+          <a href="test-tailwind-css-online.html">Tailwind CSS Sandbox</a>
+          <a href="vanilla-javascript-sandbox.html">Vanilla JS Sandbox</a>
+          <a href="html-css-js-editor.html">HTML/CSS/JS Editor</a>
+          <a href="monaco-editor-online.html">Monaco Engine Online</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Top Use Cases</h4>
+          <a href="run-react-in-browser-no-install.html">Run React in Browser</a>
+          <a href="offline-html-editor.html">Offline HTML Editor</a>
+          <a href="private-code-editor-no-tracking.html">Private Code Editor</a>
+          <a href="chromebook-code-editor-free.html">Chromebook IDE</a>
+          <a href="low-ram-code-editor.html">Low RAM Editor</a>
           <a href="responsive-design-tester.html">Responsive Design Tester</a>
           <a href="export-code-to-zip.html">Export Code to ZIP</a>
         </div>
 
         <div class="footer-col">
+          <h4>Compare</h4>
+          <a href="vscode-online-alternative.html">VS Code Alternative</a>
+          <a href="codesandbox-lightweight-alternative.html">CodeSandbox Alt</a>
+          <a href="codepen-alternative-no-login.html">CodePen Alternative</a>
+        </div>
+
+        <div class="footer-col">
           <h4>Community</h4>
-          <a href="https://github.com/nitroideofficial/nitroide" target="_blank">GitHub Repository</a>
+          <a href="https://github.com/nitroideofficial/nitroide" target="_blank">GitHub</a>
           <a href="https://x.com/trynitroide" target="_blank">X / Twitter</a>
           <a href="https://www.instagram.com/nitroideofficial/" target="_blank">Instagram</a>
-        </div>
-        
-        <div class="footer-col">
-          <h4>Legal</h4>
+          
+          <h4 style="margin-top: 25px;">Legal</h4>
           <a href="legal.html">Privacy Policy</a>
           <a href="legal.html#license">MIT License</a>
         </div>
