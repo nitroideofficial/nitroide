@@ -12,9 +12,9 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Monaco Editor Online Sandbox | NitroIDE</title>
-  <meta name="title" content="Free Monaco Editor Online Sandbox | NitroIDE">
-  <meta name="description" content="Experience the power of VS Code in your browser. NitroIDE uses the Monaco Editor engine for advanced syntax highlighting, Emmet, and code formatting.">
+  <title>Monaco Editor Online: Free Browser VS Code Sandbox</title>
+  <meta name="title" content="Monaco Editor Online: Free Browser VS Code Sandbox">
+  <meta name="description" content="Write, format, and debug code instantly in your browser using the Monaco Editor engine. Supports Emmet, syntax highlighting, and zero-latency preview.">
   <meta name="keywords" content="monaco editor online sandbox, browser based code editor offline, vs code online, emmet html editor, javascript code formatter">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
@@ -45,7 +45,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="styles.css">
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
     body { opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
@@ -97,23 +97,22 @@
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "NitroIDE",
-  "applicationCategory": "DeveloperApplication",
-  "applicationSubCategory": "Web IDE",
-  "operatingSystem": "Web Browser",
-  "url": "https://nitroideofficial.github.io/nitroide/",
-  "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "sameAs": [
-    "https://github.com/nitroideofficial/nitroide",
-    "https://x.com/trynitroide",
-    "https://www.instagram.com/nitroideofficial/"
-  ]
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Does this online Monaco editor support Emmet abbreviations?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, NitroIDE integrates the exact Monaco Editor engine used by VS Code, complete with native support for Emmet abbreviations, advanced syntax highlighting, and auto-formatting for HTML and CSS."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Can I use VS Code keyboard shortcuts in this browser sandbox?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Absolutely. Because it is powered by the Monaco engine, standard VS Code shortcuts, multi-cursor editing, and the command palette are fully supported right in your browser."
+    }
+  }]
 }
 </script>
 </head>
@@ -177,7 +176,7 @@
       </div>
       
       <h1 class="reveal-2 hero-title-main">
-        VS Code Power.<br>
+        Monaco Editor.<br>
         <span class="hollow-text">
           In Your Browser.
           <span class="glow-layer">In Your Browser.</span>
@@ -237,6 +236,52 @@
       </div>
     </div>
 	
+    <div class="reveal-7 content-section">
+      <div class="section-header">
+        <h2>The Power of VS Code. Zero Installation.</h2>
+        <p>We integrated Microsoft's core Monaco Editor directly into the browser. Experience syntax highlighting, intelligent code completion, and advanced formatting without downloading a single megabyte.</p>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-card bento-large">
+          <i class="ph-duotone ph-keyboard bento-icon"></i>
+          <h2>Native Emmet Support</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Stop typing out HTML tags. We have pre-configured Emmet abbreviations so you can scaffold complex DOM structures with just a few keystrokes, exactly like your desktop setup.</p>
+            <div class="bento-code">
+              <span class="code-comment">&lt;!-- Type: div.container>ul>li*3 --&gt;</span><br>
+              <span class="code-prompt">&gt;</span> <span class="code-keyword">Press Tab</span><br>
+              <span style="color: var(--success);">⚡ Auto-expands instantly.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <i class="ph-duotone ph-magnifying-glass-plus bento-icon"></i>
+          <h2>Advanced IntelliSense</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Enjoy deep JavaScript and CSS autocomplete. The editor understands your context and suggests native browser APIs, CSS properties, and DOM methods.</p>
+            <div class="bento-code">
+              <span class="code-comment">// Start typing doc...</span><br>
+              <span class="code-keyword">document</span>.<span class="code-func">getElementById</span>(<span class="code-string">'app'</span>);
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <i class="ph-duotone ph-terminal-window bento-icon"></i>
+          <h2>Command Palette Access</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Hit F1 to open the Monaco Command Palette. Access hundreds of built-in editor actions, from multi-cursor editing to document formatting, right from your keyboard.</p>
+            <div class="bento-code">
+              <span class="code-prompt">&gt;</span> Format Document<br>
+              <span style="color: var(--success);">⚡ Code beautifully aligned.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="pro-footer reveal-8">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -255,13 +300,14 @@
         </div>
         
         <div class="footer-col">
-          <h4>Free Tools</h4>
-          <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
-          <a href="monaco-editor-online.html">Monaco Editor Online</a>
-          <a href="react-online-playground.html">React Online Playground</a>
-          <a href="responsive-design-tester.html">Responsive Design Tester</a>
-          <a href="export-code-to-zip.html">Export Code to ZIP</a>
-        </div>
+  <h4>Free Tools</h4>
+  <a href="tailwind-online-editor.html">Tailwind Online Editor</a>
+  <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
+  <a href="monaco-editor-online.html">Monaco Editor Online</a>
+  <a href="react-online-playground.html">React Online Playground</a>
+  <a href="responsive-design-tester.html">Responsive Design Tester</a>
+  <a href="export-code-to-zip.html">Export Code to ZIP</a>
+</div>
 
         <div class="footer-col">
           <h4>Community</h4>
