@@ -12,9 +12,9 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>React Online Playground (No Setup Required) | NitroIDE</title>
-  <meta name="title" content="React Online Playground (No Setup Required) | NitroIDE">
-  <meta name="description" content="Prototype React applications instantly using our integrated CDN injector. Zero configuration, zero servers, full client-side execution.">
+  <title>React Online Playground | Browser IDE (No npm required)</title>
+  <meta name="title" content="React Online Playground | Instant Browser IDE (Free 2026)">
+  <meta name="description" content="Prototype React applications instantly with our built-in CDN injector. Zero configuration, zero servers, full client-side JSX execution in your browser.">
   <meta name="keywords" content="react cdn playground online, inject cdn links online editor, react browser ide, react sandbox zero latency">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
@@ -45,7 +45,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="styles.css">
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
 
   <style>
     body { opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
@@ -94,26 +94,41 @@
       animation: textShimmer 5s linear infinite;
     }
   </style>
-  <script type="application/ld+json">
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "NitroIDE",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "How can I test React code in the browser without npm?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "You can test React code instantly using NitroIDE's built-in CDN injector. It fetches React and ReactDOM directly from unpkg, allowing you to write JSX and see live results with zero build steps or npm installations."
+    }
+  }, {
+    "@type": "Question",
+    "name": "Does this online React playground support Tailwind CSS?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, you can inject Tailwind CSS directly into the React playground using the integrated package manager or CLI, allowing you to style your components instantly."
+    }
+  }]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "React Online Playground - NitroIDE",
+  "url": "https://nitroideofficial.github.io/nitroide/react-online-playground.html",
   "applicationCategory": "DeveloperApplication",
-  "applicationSubCategory": "Web IDE",
-  "operatingSystem": "Web Browser",
-  "url": "https://nitroideofficial.github.io/nitroide/",
-  "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+  "operatingSystem": "All",
   "offers": {
     "@type": "Offer",
-    "price": "0",
+    "price": "0.00",
     "priceCurrency": "USD"
   },
-  "sameAs": [
-    "https://github.com/nitroideofficial/nitroide",
-    "https://x.com/trynitroide",
-    "https://www.instagram.com/nitroideofficial/"
-  ]
+  "description": "Prototype React applications instantly with our built-in CDN injector. Zero configuration, zero servers, full client-side JSX execution in your browser."
 }
 </script>
 </head>
@@ -145,7 +160,7 @@
   <div class="nav-actions">
     <button class="theme-toggle" onclick="toggleCmdK()" title="Command Palette"><i class="ph-bold ph-magnifying-glass"></i> <span class="hide-in-mobile" style="font-size:0.7rem; font-weight:700; opacity:0.7;">⌘K</span></button>
     <button class="theme-toggle" onclick="toggleTheme()" id="themeBtnFloat"><i class="ph-bold ph-sun"></i></button>
-    <a href="tools/codebox.html" class="btn btn-compact primary-btn hide-in-mobile" style="border-radius: 30px; padding: 8px 16px;">Open Workspace</a>
+    <a href="tools/codebox.html?env=react" class="btn btn-compact primary-btn hide-in-mobile" style="border-radius: 30px; padding: 8px 16px;">Open Workspace</a>
   </div>
 </nav>
 
@@ -160,7 +175,7 @@
     
 
 <button class="theme-toggle" id="themeBtn" aria-label="Toggle Dark Mode" onclick="toggleTheme()"><i class="ph-bold ph-sun"></i></button>
-    <a href="tools/codebox.html" class="btn btn-compact primary-btn">Open Workspace</a>
+    <a href="tools/codebox.html?env=react" class="btn btn-compact primary-btn">Open Workspace</a>
   </div>
 </div>
   
@@ -215,7 +230,7 @@
       </div>
 
       <div class="reveal-5 hero-ctas">
-        <a href="tools/codebox.html" class="btn-launch magnetic-btn primary-btn">Launch Workspace <i class="ph-bold ph-terminal"></i></a>
+        <a href="tools/codebox.html?env=react" class="btn-launch magnetic-btn primary-btn">Launch Workspace <i class="ph-bold ph-terminal"></i></a>
         <a href="docs.html" class="btn-secondary magnetic-btn"><i class="ph-bold ph-book-open"></i> Read the Docs</a>
       </div>
 
@@ -237,6 +252,53 @@
       </div>
     </div>
     
+    <div class="reveal-7 content-section">
+      <div class="section-header">
+        <h2>A Lightning-Fast React Workspace.</h2>
+        <p>Skip the terminal. No npm installs, no webpack configuration. Write pure JSX and see your UI render instantly. Engineered for rapid component prototyping directly in the browser.</p>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-card bento-large">
+          <i class="ph-duotone ph-atom bento-icon"></i>
+          <h2>Native JSX Compilation</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Our engine transpiles your JSX in real-time, directly within your browser's memory. Test state hooks, effects, and complex component trees with absolute zero latency.</p>
+            <div class="bento-code">
+              <span class="code-keyword">function</span> <span class="code-func">App</span>() {<br>
+              &nbsp;&nbsp;<span class="code-keyword">const</span> [count, setCount] = React.useState(<span class="code-num">0</span>);<br>
+              &nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-tag">&lt;button</span> <span class="code-attr">onClick</span>={<span class="code-func">() =&gt; setCount(count + 1)</span>}<span class="code-tag">&gt;</span>{count}<span class="code-tag">&lt;/button&gt;</span>;<br>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <i class="ph-duotone ph-plugs-connected bento-icon"></i>
+          <h2>Instant Dependency Injection</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Fetch any React library from unpkg. Want to prototype an animation with Framer Motion? Just inject it via the developer console.</p>
+            <div class="bento-code">
+              <span class="code-prompt">&gt;</span> install framer-motion<br>
+              <span style="color: var(--success);">⚡ Framer Motion Injected.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <i class="ph-duotone ph-tree-structure bento-icon"></i>
+          <h2>Global State Visualizer</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Debugging React state is seamless. Bind your state objects to the NitroIDE visualizer and watch them update live as you interact with your app.</p>
+            <div class="bento-code">
+              <span class="code-comment">// Watch component state</span><br>
+              <span class="code-func">Nitro</span>.watch(<span class="code-string">'Counter'</span>, count);
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="pro-footer reveal-8">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -249,19 +311,20 @@
         
         <div class="footer-col">
           <h4>Workspace</h4>
-          <a href="tools/codebox.html">Launch IDE</a>
+          <a href="tools/codebox.html?env=react">Launch IDE</a>
           <a href="docs.html">Documentation</a>
           <a href="changelog.html">Changelog</a>
         </div>
         
         <div class="footer-col">
-          <h4>Free Tools</h4>
-          <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
-          <a href="monaco-editor-online.html">Monaco Editor Online</a>
-          <a href="react-online-playground.html">React Online Playground</a>
-          <a href="responsive-design-tester.html">Responsive Design Tester</a>
-          <a href="export-code-to-zip.html">Export Code to ZIP</a>
-        </div>
+  <h4>Free Tools</h4>
+  <a href="tailwind-online-editor.html">Tailwind Online Editor</a>
+  <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
+  <a href="monaco-editor-online.html">Monaco Editor Online</a>
+  <a href="react-online-playground.html">React Online Playground</a>
+  <a href="responsive-design-tester.html">Responsive Design Tester</a>
+  <a href="export-code-to-zip.html">Export Code to ZIP</a>
+</div>
 
         <div class="footer-col">
           <h4>Community</h4>
