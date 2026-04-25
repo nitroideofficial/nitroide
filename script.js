@@ -1,4 +1,4 @@
-	// --- 1. INCEPTION BLOCKER (Silent Safety Check) ---
+// --- 1. INCEPTION BLOCKER (Silent Safety Check) ---
 	if (window.self !== window.top) {
 		console.warn("NitroIDE detected it is running inside an iframe. Aborting to prevent infinite loop.");
 		throw new Error("Recursive load blocked");
@@ -17,34 +17,65 @@
 	  'script.js': `console.log("⚡ Workspace initialized.");\n\n// Write your JavaScript here...`
 	};
 
+	// --- CONTEXT-AWARE ROUTING ---
+	const urlParams = new URLSearchParams(window.location.search);
+	const targetEnv = urlParams.get('env');
+
+	if (targetEnv === 'react') {
+	    // Pre-load React & Babel CDNs
+	    cdnLinks = [
+	      'https://unpkg.com/react@18/umd/react.development.js', 
+	      'https://unpkg.com/react-dom@18/umd/react-dom.development.js', 
+	      'https://unpkg.com/@babel/standalone/babel.min.js'
+	    ];
+	    files['index.html'] = `<div id="root"></div>`;
+	    files['style.css'] = `body {\n  font-family: system-ui, sans-serif;\n  background: var(--bg, #09090b);\n  color: white;\n  display: grid;\n  place-items: center;\n  height: 100vh;\n  margin: 0;\n}`;
+	    files['script.js'] = `// React and Babel are pre-injected via CDN!\n\nfunction App() {\n  const [count, setCount] = React.useState(0);\n  \n  return (\n    <div style={{ textAlign: 'center' }}>\n      <h1 style={{ marginBottom: '20px' }}>NitroIDE + React ⚛️</h1>\n      <button \n        onClick={() => setCount(count + 1)} \n        style={{ padding: '10px 20px', fontSize: '16px', background: '#00e5ff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', color: '#000' }}>\n        Count: {count}\n      </button>\n    </div>\n  );\n}\n\nconst root = ReactDOM.createRoot(document.getElementById('root'));\nroot.render(<App />);`;
+	} 
+	else if (targetEnv === 'tailwind') {
+	    // Pre-load Tailwind CDN
+	    cdnLinks = ['https://cdn.tailwindcss.com'];
+	    files['index.html'] = `<div class="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-4">\n  <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-4">\n    NitroIDE + Tailwind\n  </h1>\n  <p class="text-zinc-400 text-lg mb-8">Edit this code and see changes instantly.</p>\n  <button class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-lg transition-colors font-medium">\n    Utility Button\n  </button>\n</div>`;
+	    files['style.css'] = `/* Tailwind handles the styling! */\n\nbody {\n  margin: 0;\n}`;
+	    files['script.js'] = `console.log("⚡ Tailwind CDN Injected Successfully.");`;
+	}
+
 	let defaultVfs = { 'index.html': files['index.html'], 'style.css': files['style.css'], 'script.js': files['script.js'] };
+
 	// --- PROJECT MANAGER LOGIC ---
-let projects = JSON.parse(localStorage.getItem('nitro_projects')) || [];
-let currentProjectId = localStorage.getItem('nitro_current_project_id');
+	let projects = JSON.parse(localStorage.getItem('nitro_projects')) || [];
+	let currentProjectId = localStorage.getItem('nitro_current_project_id');
 
-if (projects.length === 0) {
-    let legacyVfs = JSON.parse(localStorage.getItem('nitro_vfs'));
-    let legacyActive = JSON.parse(localStorage.getItem('nitro_active_files'));
-    let initialProject = {
-        id: 'proj_' + Date.now(),
-        name: 'Default Workspace',
-        vfs: legacyVfs || defaultVfs,
-        activeFiles: legacyActive || { html: 'index.html', css: 'style.css', js: 'script.js' },
-        lastModified: Date.now()
-    };
-    projects.push(initialProject);
-    currentProjectId = initialProject.id;
-    localStorage.setItem('nitro_projects', JSON.stringify(projects));
-    localStorage.setItem('nitro_current_project_id', currentProjectId);
-}
+	if (projects.length === 0) {
+	    let legacyVfs = JSON.parse(localStorage.getItem('nitro_vfs'));
+	    let legacyActive = JSON.parse(localStorage.getItem('nitro_active_files'));
+	    let initialProject = {
+	        id: 'proj_' + Date.now(),
+	        name: 'Default Workspace',
+	        vfs: legacyVfs || defaultVfs,
+	        activeFiles: legacyActive || { html: 'index.html', css: 'style.css', js: 'script.js' },
+	        lastModified: Date.now()
+	    };
+	    projects.push(initialProject);
+	    currentProjectId = initialProject.id;
+	    localStorage.setItem('nitro_projects', JSON.stringify(projects));
+	    localStorage.setItem('nitro_current_project_id', currentProjectId);
+	}
 
-let currentProject = projects.find(p => p.id === currentProjectId) || projects[0];
-currentProjectId = currentProject.id;
-let vfs = currentProject.vfs;
-let activeFiles = currentProject.activeFiles;
+	let currentProject = projects.find(p => p.id === currentProjectId) || projects[0];
+	currentProjectId = currentProject.id;
+	let vfs = currentProject.vfs;
+	let activeFiles = currentProject.activeFiles;
+
+	// --- FORCE TEMPLATE OVERRIDE ---
+	// If the user clicked a Side Door link, bypass their cached project and load the framework
+	if (targetEnv) {
+	    vfs = JSON.parse(JSON.stringify(defaultVfs));
+	    activeFiles = { html: 'index.html', css: 'style.css', js: 'script.js' };
+	}
 
 	// --- URL PARSER FOR SHARED CODE ---
-	const urlParams = new URLSearchParams(window.location.search);
+	
 	const sharedCode = urlParams.get('code');
 	if (sharedCode && typeof LZString !== 'undefined') {
     try {
@@ -595,7 +626,7 @@ let activeFiles = currentProject.activeFiles;
 	  let combinedHTML = vfs['index.html'] || '';
 	  Object.keys(vfs).forEach(k => { if(k !== 'index.html' && k.endsWith('.html')) combinedHTML += `\n\n` + vfs[k] + '\n'; });
 
-	  const htmlContent = `<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Exported Project</title>\n  ${cdnTags}\n<style>\n${combinedCSS}\n</style>\n</head>\n<body>\n${combinedHTML}\n<script>\n${combinedJS}\n<\/script>\n</body>\n</html>`;
+	  const htmlContent = `\n<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Exported Project</title>\n  ${cdnTags}\n<style>\n${combinedCSS}\n</style>\n</head>\n<body>\n${combinedHTML}\n<script>\n${combinedJS}\n<\/script>\n</body>\n</html>`;
 	  const blob = new Blob([htmlContent], { type: 'text/html' }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "dev-project.html"; 
 	  document.body.appendChild(a); a.click(); document.body.removeChild(a); document.getElementById('optionsMenu').classList.remove('active');
 	}
@@ -611,7 +642,7 @@ let activeFiles = currentProject.activeFiles;
 	  let combinedHTML = vfs['index.html'] || '';
 	  Object.keys(vfs).forEach(k => { if(k !== 'index.html' && k.endsWith('.html')) combinedHTML += `\n\n` + vfs[k] + '\n'; });
 
-	  const htmlContent = `<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Exported Project</title>\n  ${cdnTags}\n  <link rel="stylesheet" href="style.css">\n</head>\n<body>\n${combinedHTML}\n  <script src="script.js"><\/script>\n</body>\n</html>`;
+	  const htmlContent = `\n<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>Exported Project</title>\n  ${cdnTags}\n  <link rel="stylesheet" href="style.css">\n</head>\n<body>\n${combinedHTML}\n  <script src="script.js"><\/script>\n</body>\n</html>`;
 	  zip.file("index.html", htmlContent); 
 	  
 	  let combinedCSS = ""; let combinedJS = "";
