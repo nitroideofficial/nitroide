@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1XL4PN2R0Z');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanilla JavaScript Sandbox | Free Online Compiler</title>
+  <meta name="title" content="Vanilla JavaScript Sandbox | Free Online Compiler">
+  <meta name="description" content="A blazing-fast, client-side sandbox for Vanilla JS. Test ES6 functions, algorithms, and DOM manipulation without servers or setup.">
+  <meta name="keywords" content="online IDE, browser IDE, Monaco editor online, client-side code editor, HTML CSS JS sandbox, zero latency IDE, free web IDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="google-site-verification" content="L2teoiwOSf06xjer7Aw_c4bdvd7XiETXI87t0q9eEdk">
+  <link rel="canonical" href="https://nitroideofficial.github.io/nitroide/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nitroideofficial.github.io/nitroide/">
+  <meta property="og:title" content="NitroIDE | Zero-Latency Browser IDE">
+  <meta property="og:description" content="A free, 100% client-side web IDE with Monaco editor and instant live preview. Build frontend projects directly in your browser.">
+  <meta property="og:image" content="https://nitroideofficial.github.io/nitroide/logo/logo_white.png">
+  <meta property="og:site_name" content="NitroIDE">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://nitroideofficial.github.io/nitroide/">
+  <meta property="twitter:title" content="NitroIDE | Zero-Latency Browser IDE">
+  <meta property="twitter:description" content="A free, 100% client-side web IDE with Monaco editor and instant live preview. Build frontend projects directly in your browser.">
+  <meta property="twitter:image" content="https://nitroideofficial.github.io/nitroide/logo/logo_white.png">
+
+  <link rel="icon" type="image/png" href="./logo/logo_white.png">
+  <link rel="apple-touch-icon" href="./logo/logo_white.png">
+  <link rel="manifest" href="manifest.json">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <style>
+    body { opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
+    body.site-loaded { opacity: 1; visibility: visible; }
+    [class*="reveal-"] { opacity: 0; animation-fill-mode: forwards; }
+    #techMarquee { opacity: 0; transition: opacity 0.5s ease; }
+    #techMarquee.loaded { opacity: 0.6; }
+    
+    @keyframes textShimmer {
+      0% { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+    @keyframes subtleFloat {
+      0%, 100% { translate: 0 0px; }
+      50% { translate: 0 -12px; }
+    }
+
+    .hero-title-main { 
+      font-size: 5rem;
+      font-weight: 800; letter-spacing: -3px; line-height: 1.05; 
+      margin-bottom: 15px;
+      position: relative; z-index: 1; color: var(--text); 
+      animation: subtleFloat 6s ease-in-out infinite;
+    }
+    .hollow-text { 
+      color: transparent; 
+      -webkit-text-stroke: 1px rgba(255,255,255,0.4); 
+      position: relative; 
+      display: inline-block;
+    }
+    html.light-mode .hollow-text { -webkit-text-stroke: 1px rgba(0,0,0,0.4); }
+    
+    .hollow-text .fill-layer {
+      position: absolute; left: 0; top: 0; width: 100%; height: 100%; 
+      background: linear-gradient(90deg, #00e5ff, #bb9af7, #00e5ff); 
+      background-size: 200% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: textShimmer 5s linear infinite;
+      will-change: background-position;
+    }
+    .hollow-text .glow-layer {
+      position: absolute; left: 0; top: 0; width: 100%; height: 100%; 
+      background: linear-gradient(90deg, #00e5ff, #bb9af7, #00e5ff); 
+      background-size: 200% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+      opacity: 0.8; filter: blur(12px); z-index: -1;
+      animation: textShimmer 5s linear infinite;
+      will-change: background-position;
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "NitroIDE - Vanilla JavaScript Sandbox",
+  "url": "https://nitroideofficial.github.io/nitroide/vanilla-javascript-sandbox.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0.00",
+    "priceCurrency": "USD"
+  },
+  "description": "A blazing-fast, client-side sandbox for Vanilla JS. Test ES6 functions, algorithms, and DOM manipulation without servers or setup."
+}
+</script>
+</head>
+<body>
+
+<div class="nitro-alert-bar-wrapper">
+  <div class="nitro-alert-content-flex">
+    <span class="nitro-alert-badge-pill">BETA</span>
+    <span class="nitro-alert-message-text">NitroIDE is in active development. Help us shape the future of local coding!</span>
+    <button onclick="toggleFeedbackModal()" class="nitro-alert-action-btn">Share Feedback <i class="ph-bold ph-arrow-right"></i></button>
+  </div>
+</div>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+<div class="global-spotlight" id="globalSpotlight"></div>
+
+<button class="fab" id="fab" aria-label="Scroll to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="ph-bold ph-arrow-up"></i></button>
+
+<nav class="floating-nav" id="floatingNav">
+  <div class="logo">
+    <span>
+      <img src="logo/logo_white.png" alt="NitroIDE" class="logo-dark">
+      <img src="logo/logo_black.png" alt="NitroIDE" class="logo-light">
+    </span>
+    <div class="status-ping hide-in-mobile"><span class="ping-dot"></span> 0ms Latency</div>
+  </div>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleCmdK()" title="Command Palette"><i class="ph-bold ph-magnifying-glass"></i> <span class="hide-in-mobile" style="font-size:0.7rem; font-weight:700; opacity:0.7;">⌘K</span></button>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtnFloat" aria-label="Toggle Dark Mode"><i class="ph-bold ph-sun"></i></button>
+    <a href="tools/codebox.html?env=vanilla" class="btn btn-compact primary-btn hide-in-mobile" style="border-radius: 30px; padding: 8px 16px;">Open Workspace</a>
+  </div>
+</nav>
+
+<div class="container relative-z">
+  <div class="header-row">
+  <div class="logo">
+    <img src="logo/logo_white.png" alt="NitroIDE" class="logo-dark">
+    <img src="logo/logo_black.png" alt="NitroIDE" class="logo-light">
+  </div>
+  <div class="nav-actions">
+    <button class="theme-toggle hide-in-mobile" onclick="toggleCmdK()"><i class="ph-bold ph-magnifying-glass"></i> <span>Search...</span> <span class="cmd-badge">⌘K</span></button>
+    
+
+<button class="theme-toggle" id="themeBtn" aria-label="Toggle Dark Mode" onclick="toggleTheme()"><i class="ph-bold ph-sun"></i></button>
+    <a href="tools/codebox.html?env=vanilla" class="btn btn-compact primary-btn">Open Workspace</a>
+  </div>
+</div>
+  
+  <div id="home" class="view active">
+    
+    <div class="premium-hero" id="heroSection">
+      <div class="badge-row">
+        <div class="reveal-1 badge badge-primary">
+          <i class="ph-bold ph-rocket-launch"></i> v23.0 Live
+        </div>
+        <div class="reveal-1 badge badge-secondary">
+          <i class="ph-bold ph-lightning"></i> Zero Latency
+        </div>
+      </div>
+      
+      <h1 class="reveal-2 hero-title-main" style="font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; margin-bottom: 20px;">
+        The Ultimate Vanilla<br>
+        <span class="hollow-text">
+          JavaScript Sandbox.
+          <span class="glow-layer">JavaScript Sandbox.</span>
+          <span class="fill-layer">JavaScript Sandbox.</span>
+        </span>
+      </h1>
+      
+      <p class="reveal-3 hero-subtitle">
+        Test algorithms, API fetches, and complex DOM logic directly in your browser's memory. Features a native developer console for instant debugging.
+      </p>
+	  
+	  <div class="reveal-4 visitor-counter">
+        <span id="visitor-count">—</span><span class="visitor-label"> developers visited</span>
+      </div>
+
+      <div class="reveal-4 execution-pipeline magnetic-btn hide-in-mobile">
+         <div class="pipe-left">
+           <div class="code-block-anim">
+             <div class="code-keyword">function <span class="code-func">compile</span>() {</div>
+             <div class="ml-1 code-text">engine.<span class="code-func">run</span>({</div>
+             <div class="ml-2 code-string typewriter-line">target: "local_memory",</div>
+             <div class="ml-2 code-string">speed: "0ms"</div>
+             <div class="ml-1 code-text">});</div>
+             <div class="code-keyword">}</div>
+           </div>
+         </div>
+         
+         <div class="pipe-center">
+            <div class="energy-beam-track"><div class="energy-particle"></div></div>
+         </div>
+         
+         <div class="pipe-right">
+            <div class="engine-core"><i class="ph-fill ph-lightning core-icon"></i></div>
+         </div>
+      </div>
+
+      <div class="reveal-5 hero-ctas">
+        <a href="tools/codebox.html?env=vanilla" class="btn-launch magnetic-btn primary-btn">Launch Workspace <i class="ph-bold ph-terminal"></i></a>
+        <a href="docs.html" class="btn-secondary magnetic-btn"><i class="ph-bold ph-book-open"></i> Read the Docs</a>
+      </div>
+
+      <div class="reveal-6 marquee-wrapper" id="techMarquee">
+        <div class="marquee-content">
+          <span class="tech-logos"><i class="ph-fill ph-file-html"></i> HTML5</span>
+          <span class="tech-logos"><i class="ph-fill ph-file-css"></i> CSS3</span>
+          <span class="tech-logos"><i class="ph-fill ph-file-js"></i> ES6+</span>
+          <span class="tech-logos"><i class="ph-fill ph-wind"></i> Tailwind</span>
+          <span class="tech-logos"><i class="ph-fill ph-atom"></i> React</span>
+        </div>
+        <div class="marquee-content" aria-hidden="true">
+          <span class="tech-logos"><i class="ph-fill ph-file-html"></i> HTML5</span>
+          <span class="tech-logos"><i class="ph-fill ph-file-css"></i> CSS3</span>
+          <span class="tech-logos"><i class="ph-fill ph-file-js"></i> ES6+</span>
+          <span class="tech-logos"><i class="ph-fill ph-wind"></i> Tailwind</span>
+          <span class="tech-logos"><i class="ph-fill ph-atom"></i> React</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>A Real Developer Console.</h2>
+        <p>Standard online editors hide your console logs. Our custom engine intercepts and formats your arrays, objects, and errors exactly like Chrome DevTools.</p>
+      </div>
+      
+      <div class="bento-grid">
+        <div class="bento-card bento-large">
+          <i class="ph-duotone ph-code bento-icon"></i>
+          <h2>The Official Monaco Editor Engine</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">NitroIDE doesn't just look like VS Code; it runs on the exact same open-source text editing core (Monaco). You get the identical syntax highlighting, multi-cursor editing, and bracket matching you are used to.</p>
+            <div class="bento-code">
+              <span class="code-comment">// The exact same editing experience</span><br>
+              <span class="code-keyword">import</span> * <span class="code-keyword">as</span> monaco <span class="code-keyword">from</span> <span class="code-string">'monaco-editor'</span>;<br>
+              monaco.editor.<span class="code-func">create</span>(document.<span class="code-func">getElementById</span>(<span class="code-string">'container'</span>));
+            </div>
+          </div>
+        </div>
+        
+        <div class="bento-card">
+          <i class="ph-duotone ph-keyboard bento-icon"></i>
+          <h2>Native Emmet Pre-Installed</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">No extensions required. Emmet abbreviations are built natively into the compiler. Scaffold massive HTML trees and complex CSS properties with a single Tab press.</p>
+            <div class="bento-code">
+              <span class="code-comment">&lt;!-- Type: nav>ul>li*3>a --&gt;</span><br>
+              <span class="code-prompt">&gt;</span> <span class="code-keyword">Press Tab</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bento-card">
+          <i class="ph-duotone ph-cpu bento-icon"></i>
+          <h2>Zero RAM Spikes</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Tired of Electron apps consuming 4GB of RAM? NitroIDE runs exclusively within your browser's optimized V8 engine. Perfect for Chromebooks and older hardware.</p>
+            <div class="bento-code">
+              <span class="code-prompt">&gt;</span> Task Manager<br>
+              <span style="color: var(--success);">⚡ NitroIDE: 45MB Memory Usage</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bento-card">
+          <i class="ph-duotone ph-wifi-slash bento-icon"></i>
+          <h2>100% Offline Capable</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Unlike VS Code Online or GitHub Codespaces, NitroIDE doesn't require a continuous server ping. Once the page loads, you can code complex logic entirely offline.</p>
+            <div class="bento-code">
+              <span class="code-comment">// Network Status: Disconnected</span><br>
+              <span class="code-func">compileLocal</span>(<span class="code-string">'index.html'</span>);<br>
+              <span style="color: var(--success);">⚡ Rendered successfully.</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bento-card">
+          <i class="ph-duotone ph-plugs-connected bento-icon"></i>
+          <h2>No "node_modules" Blackhole</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Skip the heavy local setup. Use our integrated CDN manager to inject React, GSAP, or Tailwind directly into the browser without touching a terminal.</p>
+            <div class="bento-code">
+              <span class="code-prompt">&gt;</span> install react<br>
+              <span style="color: var(--success);">⚡ React Ready.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-showcase reveal-7">
+      <div class="showcase-text">
+        <div class="badge"><i class="ph-bold ph-terminal"></i> Command & Control</div>
+        <h2>Integrated Terminal Experience.</h2>
+        <p>You don't have to give up your integrated terminal. Our developer console mirrors the desktop experience, capturing native object serialization, network errors, and CLI commands directly in the browser.</p>
+        <ul class="feature-list">
+  <li>
+    <i class="ph-bold ph-check"></i> 
+    <span><strong>Native Object Serialization:</strong> Inspect deeply nested JSON arrays exactly like Chrome DevTools.</span>
+  </li>
+  <li>
+    <i class="ph-bold ph-check"></i> 
+    <span><strong>Syntax Highlighted Errors:</strong> Click any error to instantly jump to that exact line in the editor.</span>
+  </li>
+  <li>
+    <i class="ph-bold ph-check"></i> 
+    <span><strong>Integrated CLI:</strong> Type <code>install gsap</code>, <code>export zip</code>, or <code>format</code> directly into the console to control the workspace.</span>
+  </li>
+</ul>
+      </div>
+      <div class="showcase-visual">
+        <div class="mockup-window">
+          <div class="mockup-header mockup-header-flex">
+            <div class="mockup-dots">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            </div>
+            <div class="terminal-tabs">
+               <span class="term-tab active" onclick="switchTermTab('npm', this)">Terminal</span>
+            </div>
+          </div>
+          <div class="mockup-panel" id="terminalMockupBody">
+            <div class="terminal-comment">// Interactive CLI Session</div>
+            <div class="terminal-line"><span class="terminal-prompt">&gt;</span> <span id="termCmd1">install tailwind</span></div>
+            <div class="terminal-success">⚡ Success: Fetched tailwind from unpkg.</div>
+            <div class="terminal-line"><span class="terminal-prompt">&gt;</span> <span>export zip</span></div>
+            <div class="terminal-success">📦 Bundling ZIP...</div>
+            <div class="terminal-line"><span class="terminal-prompt">&gt;</span> <span class="cursor-blink">|</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-showcase reveal-8 reverse">
+      <div class="showcase-text">
+        <div class="badge"><i class="ph-bold ph-drop"></i> Aesthetic Engineering</div>
+        <h2>The Desktop Experience, Unshackled.</h2>
+        <p>We retained the premium, edge-to-edge dark mode aesthetic you love from desktop editors, but rebuilt the file system to be entirely virtual and draggable.</p>
+        <ul class="feature-list">
+  <li>
+    <i class="ph-bold ph-check"></i> 
+    <span><strong>Monaco Editor Engine:</strong> Powered by the exact same text-editing core as VS Code with Emmet support.</span>
+  </li>
+  <li>
+    <i class="ph-bold ph-check"></i> 
+    <span><strong>Device Emulation:</strong> Instantly toggle your live preview between Desktop, Tablet, and Mobile breakpoints.</span>
+  </li>
+  <li>
+    <i class="ph-bold ph-check"></i> 
+    <span><strong>Virtual File System:</strong> Manage multiple `.js` and `.css` modules in a clean, draggable slide-out sidebar.</span>
+  </li>
+</ul>
+      </div>
+      <div class="showcase-visual">
+         <div class="mockup-window glass-mockup">
+          <div class="mockup-header">
+            <div class="mockup-title">style.css</div>
+          </div>
+          <div class="mockup-panel code-panel">
+            <div class="code-line"><span class="code-tag">.workspace</span> <span class="code-text">{</span></div>
+            <div class="code-line ml-1"><span class="code-attr">backdrop-filter</span><span class="code-text">: </span><span class="code-str">blur(24px)</span><span class="code-text">;</span></div>
+            <div class="code-line ml-1"><span class="code-attr">border</span><span class="code-text">: </span><span class="code-str">1px solid rgba(255,255,255,0.1)</span><span class="code-text">;</span></div>
+            <div class="code-line ml-1"><span class="code-attr">box-shadow</span><span class="code-text">: </span><span class="code-str">0 30px 60px rgba(0,0,0,0.5)</span><span class="code-text">;</span></div>
+            <div class="code-line"><span class="code-text">}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pricing-section reveal-8" id="statsRow">
+      <div class="section-header">
+        <h2>Enterprise Grade. Zero Cost.</h2>
+        <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num" data-target="0" data-suffix="ms" data-start="150">--</div>
+          <div class="stat-label">Server Latency</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" data-target="100" data-suffix="%" data-start="0">--</div>
+          <div class="stat-label">Client-Side Privacy</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" data-target="999" data-suffix="+" data-start="600">--</div>
+          <div class="stat-label">Local Workspaces</div>
+        </div>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3>Community Plan</h3>
+          <div class="price">$0<span>/forever</span></div>
+          <p>Everything is unlocked. No credit card required.</p>
+        </div>
+        <div class="pricing-features">
+          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
+          <div><i class="ph-bold ph-check-circle"></i> Developer Command Line</div>
+          <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>
+        </div>
+        <a href="tools/codebox.html?env=vanilla" class="btn-launch primary-btn full-width">Launch Workspace</a>
+      </div>
+    </div>
+
+    <footer class="pro-footer reveal-8">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <img src="logo/logo_white.png" alt="NitroIDE" class="logo-dark">
+            <img src="logo/logo_black.png" alt="NitroIDE" class="logo-light">
+          </div>
+          <p class="footer-desc">The ultimate client-side code editor. <br>A free, open-source, zero-latency browser IDE built for modern frontend developers.</p>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Workspace</h4>
+          <a href="tools/codebox.html?env=vanilla">Launch IDE</a>
+          <a href="docs.html">Documentation</a>
+          <a href="changelog.html">Changelog</a>
+        </div>
+        
+        <div class="footer-col">
+  <h4>Free Tools</h4>
+  <a href="tailwind-online-editor.html">Tailwind Online Editor</a>
+  <a href="html-css-js-editor.html">HTML/CSS/JS Sandbox</a>
+  <a href="monaco-editor-online.html">Monaco Editor Online</a>
+  <a href="react-online-playground.html">React Online Playground</a>
+  <a href="responsive-design-tester.html">Responsive Design Tester</a>
+  <a href="export-code-to-zip.html">Export Code to ZIP</a>
+</div>
+
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="https://github.com/nitroideofficial/nitroide" target="_blank">GitHub Repository</a>
+          <a href="https://x.com/trynitroide" target="_blank">X / Twitter</a>
+          <a href="https://www.instagram.com/nitroideofficial/" target="_blank">Instagram</a>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="legal.html">Privacy Policy</a>
+          <a href="legal.html#license">MIT License</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 NitroIDE. Open Source and Free Forever.</p>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<button class="feedback-fab" onclick="toggleFeedbackModal()" aria-label="Open Feedback Form"><i class="ph-fill ph-chat-teardrop-text"></i></button>
+
+<div class="feedback-backdrop" id="feedbackModal" onclick="handleFeedbackClick(event)">
+  <div class="feedback-card">
+    <div class="feedback-header">
+      <h3>Send Feedback</h3>
+      <button onclick="toggleFeedbackModal()" aria-label="Close Feedback Form"><i class="ph-bold ph-x"></i></button>
+    </div>
+    <div class="feedback-body">
+      <p class="feedback-desc">Found a bug or have a suggestion? Let us know directly.</p>
+      <form id="feedbackForm" onsubmit="sendFeedback(event)">
+        <textarea id="feedbackText" placeholder="Tell us what you think..." required></textarea>
+        <button type="submit" id="feedbackBtn" class="btn-launch primary-btn full-width">
+          <span id="feedbackBtnText">Send Message</span>
+          <div id="feedbackSpinner" class="spinner" style="display: none;"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="cmd-palette-backdrop" id="cmdPalette">
+  <div class="cmd-palette">
+    <div class="cmd-input-wrap">
+      <i class="ph-bold ph-magnifying-glass"></i>
+      <input type="text" class="cmd-input" placeholder="Type a command or search..." id="cmdInput" autocomplete="off">
+    </div>
+    <div class="cmd-list" id="cmdList">
+      <a href="tools/codebox.html?env=vanilla" class="cmd-item"><div class="cmd-item-left"><i class="ph-fill ph-terminal-window"></i> Launch Workspace</div><div class="cmd-item-right">↵</div></a>
+      <div class="cmd-item" onclick="toggleTheme(); toggleCmdK();"><div class="cmd-item-left"><i class="ph-bold ph-sun"></i> Toggle Theme Aesthetic</div></div>
+      <a href="docs.html" class="cmd-item"><div class="cmd-item-left"><i class="ph-bold ph-book"></i> View Documentation</div></a>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+  document.fonts.ready.then(() => {
+    setTimeout(() => {
+      document.body.classList.add('site-loaded');
+      setTimeout(() => {
+        const tm = document.getElementById('techMarquee');
+        if(tm) tm.classList.add('loaded');
+      }, 300);
+    }, 100);
+  }).catch(() => { document.body.classList.add('site-loaded'); });
+
+
+
+  function showToast(msg) { 
+    const toast = document.getElementById("toast"); 
+    toast.innerHTML = msg; 
+    toast.classList.add("show"); 
+    setTimeout(() => toast.classList.remove("show"), 3000); 
+  }
+
+  window.switchTermTab = function(manager, btn) {
+    const tabs = btn.parentElement.querySelectorAll('.term-tab');
+    tabs.forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+
+    const panel = document.getElementById('terminalMockupBody');
+    panel.style.opacity = '0.3'; 
+    
+    setTimeout(() => {
+      const cmd1 = document.getElementById('termCmd1');
+      if (cmd1) {
+        if (manager === 'npm') cmd1.innerText = 'npm install tailwindcss';
+        else if (manager === 'yarn') cmd1.innerText = 'yarn add tailwindcss';
+      }
+      panel.style.opacity = '1'; 
+    }, 200);
+  };
+
+  function toggleFeedbackModal() {
+    document.getElementById('feedbackModal').classList.toggle('active');
+  }
+
+  function handleFeedbackClick(e) {
+    if(e.target.id === 'feedbackModal') toggleFeedbackModal();
+  }
+
+  function sendFeedback(e) {
+    e.preventDefault();
+    const btnText = document.getElementById('feedbackBtnText');
+    const spinner = document.getElementById('feedbackSpinner');
+    const form = document.getElementById('feedbackForm');
+    const message = document.getElementById('feedbackText').value;
+
+    btnText.style.display = 'none';
+    spinner.style.display = 'block';
+
+    fetch("https://formsubmit.co/ajax/contactnitroide@gmail.com", {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            _captcha: "false", 
+            subject: "New Feedback from NitroIDE",
+            message: message
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        toggleFeedbackModal();
+        showToast("<i class='ph-bold ph-check-circle' style='color:var(--success); margin-right:6px;'></i> Feedback sent securely!");
+        form.reset();
+    })
+    .catch(error => {
+        showToast("<i class='ph-bold ph-warning-circle' style='color:var(--error); margin-right:6px;'></i> Error sending feedback.");
+        console.error(error);
+    })
+    .finally(() => {
+        btnText.style.display = 'block';
+        spinner.style.display = 'none';
+    });
+  }
+
+  function toggleTheme() { 
+    document.documentElement.classList.toggle('light-mode'); 
+    let isLight = document.documentElement.classList.contains('light-mode');
+    const iconHTML = isLight ? `<i class="ph-bold ph-moon"></i>` : `<i class="ph-bold ph-sun"></i>`;
+    const floatBtn = document.getElementById('themeBtnFloat');
+    const mainBtn = document.getElementById('themeBtn');
+    if (floatBtn) floatBtn.innerHTML = iconHTML;
+    if (mainBtn) mainBtn.innerHTML = iconHTML;
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  }
+  
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.classList.add('light-mode');
+    const floatBtn = document.getElementById('themeBtnFloat');
+    const mainBtn = document.getElementById('themeBtn');
+    if (floatBtn) floatBtn.innerHTML = `<i class="ph-bold ph-moon"></i>`;
+    if (mainBtn) mainBtn.innerHTML = `<i class="ph-bold ph-moon"></i>`;
+  }
+
+  function toggleCmdK() {
+    const p = document.getElementById('cmdPalette');
+    p.classList.toggle('active');
+    if (p.classList.contains('active')) {
+      setTimeout(() => {
+        const input = document.getElementById('cmdInput');
+        input.focus(); input.value = ''; 
+        document.querySelectorAll('.cmd-item').forEach(item => item.style.display = 'flex');
+      }, 100);
+    }
+  }
+
+  document.getElementById('cmdInput').addEventListener('input', function(e) {
+    const term = e.target.value.toLowerCase();
+    document.querySelectorAll('.cmd-item').forEach(item => {
+      if (item.textContent.toLowerCase().includes(term)) item.style.display = 'flex'; 
+      else item.style.display = 'none'; 
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); toggleCmdK(); }
+    if (e.key === 'Escape') document.getElementById('cmdPalette').classList.remove('active');
+  });
+
+  document.getElementById('cmdPalette').addEventListener('click', (e) => {
+    if(e.target.id === 'cmdPalette') toggleCmdK();
+  });
+  
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.mockup-window').forEach(windowEl => {
+      windowEl.addEventListener('mousemove', (e) => {
+        const rect = windowEl.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((y - centerY) / centerY) * -4; 
+        const rotateY = ((x - centerX) / centerX) * 4;
+
+        windowEl.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        windowEl.style.transition = 'none'; 
+      });
+
+      windowEl.addEventListener('mouseleave', () => {
+        windowEl.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        windowEl.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'; 
+      });
+    });
+	
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          obs.unobserve(entry.target); 
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('[class*="reveal-"]').forEach(el => observer.observe(el));
+
+    const globalSpotlight = document.getElementById('globalSpotlight');
+    window.addEventListener('mousemove', (e) => {
+      globalSpotlight.style.opacity = '1';
+      globalSpotlight.style.left = `${e.clientX}px`;
+      globalSpotlight.style.top = `${e.clientY}px`;
+    });
+    window.addEventListener('mouseleave', () => globalSpotlight.style.opacity = '0');
+
+    function animateValue(obj, start, end, duration, suffix="") {
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = Math.floor(progress * (end - start) + start) + suffix;
+        if (progress < 1) window.requestAnimationFrame(step);
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    let statsAnimated = false;
+    const statsObserver = new IntersectionObserver((entries) => {
+      if(entries[0].isIntersecting && !statsAnimated) {
+         statsAnimated = true;
+         document.querySelectorAll('.stat-num').forEach(el => {
+            let end = parseInt(el.getAttribute('data-target'));
+            let start = parseInt(el.getAttribute('data-start') || 0);
+            let suffix = el.getAttribute('data-suffix');
+            animateValue(el, start, end, 1500, suffix);
+         });
+      }
+    }, { threshold: 0.5 });
+    
+    const sr = document.getElementById('statsRow');
+    if(sr) statsObserver.observe(sr);
+
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) * 0.3; 
+        const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = `translate(0px, 0px)`;
+      });
+    });
+
+    document.querySelectorAll('.bento-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('floatingNav');
+      const fab = document.getElementById('fab');
+      
+      if (window.scrollY > 300) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+
+      if (window.scrollY > 500) fab.classList.add('visible');
+      else fab.classList.remove('visible');
+    });
+  });
+  
+// --- BULLETPROOF VISITOR COUNTER (Powered by Abacus) ---
+  const hasVisited = localStorage.getItem('nitroide_visited');
+  
+  // Abacus is a free, no-registration clone of the original CountAPI
+  const getUrl = "https://abacus.jasoncameron.dev/get/nitroide/visits";
+  const hitUrl = "https://abacus.jasoncameron.dev/hit/nitroide/visits";
+
+  // 1. Initial Load (Checks if you are unique, or just grabbing the current number)
+  fetch(hasVisited ? getUrl : hitUrl)
+    .then(res => res.json())
+    .then(data => {
+      const countEl = document.getElementById("visitor-count");
+      if (countEl && data.value !== undefined) {
+        countEl.innerText = data.value.toLocaleString();
+        
+        // Give the receipt so you don't double-count on refresh
+        if (!hasVisited) localStorage.setItem('nitroide_visited', 'true');
+      }
+    })
+    .catch(() => {
+      const countEl = document.getElementById("visitor-count");
+      if (countEl) countEl.innerText = "—";
+    });
+
+  // 2. Live Update Loop (Every 15 Seconds)
+  setInterval(() => {
+    fetch(getUrl)
+      .then(res => res.json())
+      .then(data => {
+        const countEl = document.getElementById("visitor-count");
+        if (countEl && data.value !== undefined) {
+          const currentText = countEl.innerText;
+          const newText = data.value.toLocaleString();
+          
+          // Only update visually if the number actually went up
+          if (currentText !== "—" && currentText !== newText) {
+            countEl.innerText = newText;
+          }
+        }
+      })
+      .catch(() => {});
+}, 180000); // Changed from 15000 to 180000 (3 minutes)
+  
+</script>
+</body>
+</html>
