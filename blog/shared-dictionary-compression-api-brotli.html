@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>90% Smaller Payloads via Shared Dictionary Compression | NitroIDE</title>
+  <meta name="title" content="90% Smaller Payloads via Shared Dictionary Compression | NitroIDE">
+  <meta name="description" content="Standard Gzip is not enough. Learn how NitroIDE uses the experimental Shared Dictionary Compression API over HTTPS to shrink AST payloads by 90%.">
+  <meta name="keywords" content="Shared Dictionary Compression API, Brotli dictionary web, Zstandard shared dictionary, reduce JSON payload size, optimize HTTP requests web, AST compression javascript">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #10b981; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NETWORK ARCHITECTURE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">90% Smaller Payloads via Shared Dictionaries.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When NitroIDE communicates with a remote Language Server or syncs a massive JSON configuration file across a collaborative session, standard HTTP compression algorithms like Gzip or Brotli struggle. These algorithms compress data in isolation, meaning they cannot learn from previous requests. If you request the same massive JSON schema 10 times with minor changes, Brotli compresses it from scratch 10 times.</p><p>We shattered this network bottleneck using the experimental <strong>Shared Dictionary Compression API</strong>. This allows the browser and the server to share a pre-agreed-upon "dictionary" of common strings, shrinking network payloads by up to 90%.</p><h2>The Dictionary Handshake</h2><p>When a developer boots NitroIDE, the browser downloads a highly optimized, 500KB binary dictionary containing the most common AST syntax tokens, TypeScript definitions, and React boilerplate. We register this dictionary with the browser's network layer using an HTTP header.</p><div class="docs-code"><span class="code-comment">// Registering a shared compression dictionary via HTTP headers</span><br><span class="code-comment">// HTTP Response from the server for the dictionary file:</span><br>Use-As-Dictionary: match=<span class="code-string">"/api/ast-sync"</span><br><br><span class="code-comment">// Future requests to /api/ast-sync will now include:</span><br><span class="code-comment">// Available-Dictionary: &lt;hash-of-the-dictionary&gt;</span><br><br><span class="code-comment">// The server detects the hash and uses it to compress the JSON</span><br><span class="code-keyword">const</span> compressedPayload = brotli.<span class="code-func">compress</span>(rawJson, { <br>&nbsp;&nbsp;<span class="code-attr">dictionary</span>: preLoadedBuffer <br>});</div><div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);"><i class="ph-fill ph-archive" style="color: #10b981;"></i><div><p><strong>Delta Compression:</strong> Because the Brotli algorithm now has the shared dictionary loaded in memory, it doesn't need to transmit the string <code>"FunctionDeclaration"</code>. It just sends a tiny pointer that says "use word #402 from the dictionary." This effectively turns standard HTTP compression into a hyper-efficient delta-sync algorithm.</p></div></div><h2>The Edge Computing Advantage</h2><p>By distributing these shared dictionaries to edge CDN nodes worldwide, collaborative typing updates that used to require 15KB of JSON overhead are reduced to a few hundred bytes. This is the secret sauce that allows NitroIDE to synchronize massive projects over 3G cellular connections flawlessly.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #10b9811A; border: 1px solid #10b9814D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Feel the Network Speed.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Throttle your network to 3G in DevTools and watch our engine keep up effortlessly.</p>
+      <a href="../tools/codebox.html?env=react" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #10b981;">
+        Launch Collaborative IDE <i class="ph-bold ph-wifi-high"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>True Multithreading in the Browser via SharedArrayBuffer | NitroIDE</title>
+  <meta name="title" content="True Multithreading in the Browser via SharedArrayBuffer | NitroIDE">
+  <meta name="description" content="JavaScript is single-threaded, but your IDE shouldn't be. Learn how NitroIDE uses SharedArrayBuffer and Atomics for lock-free memory sharing across Web Workers.">
+  <meta name="keywords" content="SharedArrayBuffer javascript, Web Workers multithreading, Atomics API browser, bypass main thread JS, lock free data structures web, high performance web apps">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #eab308; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SYSTEM ARCHITECTURE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">True Multithreading via SharedArrayBuffer.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>JavaScript's single-threaded nature is the biggest bottleneck for web-based developer tools. If you run a heavy TypeScript compilation on the main thread, the entire UI freezes. The standard solution is to offload the work to a background Web Worker and pass the data back using <code>postMessage</code>. However, passing a 50MB string of compiled code via <code>postMessage</code> clones the data in memory, causing a massive, UI-blocking garbage collection spike.</p>
+    
+    <h2>Lock-Free Memory Sharing</h2>
+    <p>NitroIDE completely solves the main-thread bottleneck using <strong>SharedArrayBuffer</strong>. Instead of copying data between threads, we allocate a single block of raw binary memory that <em>both</em> the main UI thread and the Web Worker can access simultaneously.</p>
+
+    <div class="docs-code"><span class="code-comment">// Creating a shared memory block for the terminal output</span><br><span class="code-keyword">const</span> sharedMemory = <span class="code-keyword">new</span> <span class="code-func">SharedArrayBuffer</span>(<span class="code-num">1024</span> * <span class="code-num">1024</span>); <span class="code-comment">// 1MB</span><br><span class="code-keyword">const</span> int32Array = <span class="code-keyword">new</span> <span class="code-func">Int32Array</span>(sharedMemory);<br><br><span class="code-comment">// Send the memory pointer (not the data!) to the background worker</span><br>compilerWorker.<span class="code-func">postMessage</span>(sharedMemory);<br><br><span class="code-comment">// Main UI Thread: Safely read the status without locking</span><br><span class="code-keyword">const</span> compilerStatus = Atomics.<span class="code-func">load</span>(int32Array, <span class="code-num">0</span>);<br><span class="code-keyword">if</span> (compilerStatus === <span class="code-num">1</span>) {<br>&nbsp;&nbsp;console.<span class="code-func">log</span>(<span class="code-string">'Compilation Complete!'</span>);<br>}</div>
+
+    <div class="pro-tip" style="border-color: rgba(234, 179, 8, 0.3); background: rgba(234, 179, 8, 0.05);"><i class="ph-fill ph-plugs" style="color: #eab308;"></i><div><p><strong>The Atomics API:</strong> When two threads access the exact same memory address simultaneously, you get data corruption (race conditions). NitroIDE utilizes the <code>Atomics</code> API to guarantee thread-safe read/write operations, effectively bringing POSIX-style Mutex locking directly to JavaScript.</p></div></div>
+
+    <h2>Shattering the Barrier</h2>
+    <p>By implementing a massive SharedArrayBuffer as our core VFS (Virtual File System) bridge, the background compilation engine can write thousands of lines of output log directly into memory, and the frontend terminal can read them flawlessly at 120fps, completely un-sandboxing the browser's potential.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Experience 120fps.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Type in our editor and feel the difference of perfect main-thread scheduling.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #eab308;">
+        Launch Workspace <i class="ph-bold ph-lightning"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

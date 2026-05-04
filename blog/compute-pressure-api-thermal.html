@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preventing Thermal Throttling via the Compute Pressure API | NitroIDE</title>
+  <meta name="title" content="Preventing Thermal Throttling via the Compute Pressure API | NitroIDE">
+  <meta name="description" content="Laptops overheat when compiling code. Learn how NitroIDE uses the experimental Compute Pressure API to dynamically adjust background tasks and prevent thermal throttling.">
+  <meta name="keywords" content="Compute Pressure API, prevent thermal throttling web, adaptive performance javascript, CPU load detection browser, web application performance tuning, hardware utilization web">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f59e0b; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SYSTEM ARCHITECTURE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Preventing Thermal Throttling via Compute Pressure.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When you run heavy TypeScript compilation, ESLint validation, and a dev server simultaneously, a laptop's CPU hits 100% utilization. Within minutes, the physical hardware heats up, and the operating system enforces Thermal Throttling—slashing CPU clock speeds and causing the entire browser to lag horribly. As web developers, we historically had no way to know if we were melting the user's computer.</p><p>NitroIDE solves this by hooking into the new <strong>Compute Pressure API</strong>. This API allows our JavaScript engine to read the actual physical load and thermal state of the user's CPU, adapting our workload in real-time before the OS forcibly throttles the chip.</p><h2>Listening to Hardware States</h2><p>We instantiate a <code>PressureObserver</code> that monitors the system's compute pressure. The hardware reports back in four distinct states: <code>nominal</code>, <code>fair</code>, <code>serious</code>, and <code>critical</code>. NitroIDE uses these states as a feedback loop for our background Web Workers.</p><div class="docs-code"><span class="code-comment">// Registering a PressureObserver to monitor CPU thermal/load states</span><br><span class="code-keyword">const</span> observer = <span class="code-keyword">new</span> PressureObserver((records) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> lastRecord = records[records.length - <span class="code-num">1</span>];<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-keyword">switch</span>(lastRecord.state) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">case</span> <span class="code-string">'nominal'</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">enableMaxPerformance</span>(); <span class="code-comment">// 120fps, aggressive AST parsing</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">case</span> <span class="code-string">'serious'</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">throttleBackgroundWorkers</span>(); <span class="code-comment">// Pause non-critical linting</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">case</span> <span class="code-string">'critical'</span>:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">enterBatterySaverMode</span>(); <span class="code-comment">// Drop to 60fps, suspend indexers</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span>;<br>&nbsp;&nbsp;}<br>});<br><br>observer.<span class="code-func">observe</span>(<span class="code-string">'cpu'</span>, { <span class="code-attr">sampleInterval</span>: <span class="code-num">1000</span> });</div><div class="pro-tip" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);"><i class="ph-fill ph-thermometer" style="color: #f59e0b;"></i><div><p><strong>Graceful Degradation:</strong> When the CPU hits "critical," NitroIDE doesn't just slow down; it degrades gracefully. We suspend background indexing, delay auto-formatting until the user stops typing for 2 seconds, and reduce the Canvas 2D render loop from 120Hz to 60Hz. This allows the fan to cool the laptop down, bringing the system back to "nominal" without the user ever experiencing a frozen UI.</p></div></div><h2>Sustainable Desktop Web Apps</h2><p>By respecting the physical limitations of the hardware, NitroIDE ensures that you can code on a MacBook Air or a thin-and-light Windows ultrabook for 8 hours on a single battery charge, without burning your lap or suffering from late-day OS throttling.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f59e0b1A; border: 1px solid #f59e0b4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Code Without Overheating.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a heavy workspace and watch the engine intelligently manage your CPU.</p>
+      <a href="../tools/codebox.html?env=react" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f59e0b;">
+        Launch Workspace <i class="ph-bold ph-cpu"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

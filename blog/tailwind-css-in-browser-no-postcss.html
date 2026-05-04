@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JIT Tailwind CSS Compilation in the Browser | NitroIDE</title>
+  <meta name="title" content="JIT Tailwind CSS Compilation in the Browser | NitroIDE">
+  <meta name="description" content="Discover how to inject Tailwind CSS utility classes directly into the browser's CSSOM without PostCSS or configuration files.">
+  <meta name="keywords" content="tailwind without postcss, JIT tailwind compilation browser, CSSOM injection, zero latency tailwind editor, tailwind config bypass">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #38bdf8; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">CSS ENGINEERING • APRIL 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">JIT Compilation & CSSOM Injection for Tailwind.</h1>
+    
+    <p>Tailwind CSS revolutionized styling by pushing developers toward utility-first classes. However, extracting and purging those classes traditionally requires a heavy PostCSS pipeline and a localized <code>tailwind.config.js</code> execution environment.</p>
+
+    <p>If you want to rapidly prototype a complex grid layout, running an npm install sequence is friction. NitroIDE solves this by leveraging a Just-In-Time (JIT) script that binds directly to the browser's CSS Object Model (CSSOM).</p>
+
+    <h2>Bypassing the Build Step</h2>
+    <p>Instead of statically analyzing your HTML files on a Node server to generate a bloated CSS file, we utilize Tailwind's client-side JIT compiler. When NitroIDE renders your iframe, it observes DOM mutations. The instant a new class (e.g., <code>backdrop-blur-xl</code>) is typed into the Monaco editor, the JIT engine generates the exact CSS rule and injects it into a runtime style tag.</p>
+    
+    <div class="docs-code">
+<span class="code-comment">&lt;!-- Real-time layout scaffolding via dynamic injection --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-string">"absolute inset-0 bg-zinc-950 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-900/20 via-zinc-950 to-zinc-950"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-string">"flex min-h-screen items-center justify-center p-4"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-string">"rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-3xl shadow-2xl"</span><span class="code-tag">&gt;</span>
+      <span class="code-tag">&lt;h1</span> <span class="code-attr">class</span>=<span class="code-string">"bg-gradient-to-r from-white to-white/50 bg-clip-text text-transparent font-extrabold text-5xl tracking-tighter"</span><span class="code-tag">&gt;</span>
+        Quantum UI
+      <span class="code-tag">&lt;/h1&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+  <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span>
+    </div>
+
+    <h2>Micro-Optimization for the Sandbox</h2>
+    <p>By keeping the payload purely client-side, we circumvent the traditional browser reflow bottleneck. The DOM doesn't need to request a new stylesheet from a server; the styles are instantiated in memory microseconds after the keystroke.</p>
+
+    <div class="pro-tip" style="border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.05);">
+      <i class="ph-fill ph-wind" style="color: #38bdf8;"></i>
+      <div>
+        <p><strong>Arbitrary Values:</strong> The client-side JIT engine fully supports Tailwind's arbitrary values. Typing <code>w-[34.5rem]</code> or <code>bg-[#09090b]</code> will instantly compile without breaking the iframe's layout engine.</p>
+      </div>
+    </div>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Prototype Instantly.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Load the pre-configured Tailwind workspace and watch utility classes render with zero configuration.</p>
+      <a href="../tools/codebox.html?env=tailwind" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch Tailwind Editor <i class="ph-bold ph-wind"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

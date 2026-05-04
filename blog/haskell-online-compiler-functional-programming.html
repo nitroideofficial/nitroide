@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haskell Online Compiler: Pure Functional Programming Web IDE | NitroIDE</title>
+  <meta name="title" content="Haskell Online Compiler: Pure Functional Programming Web IDE | NitroIDE">
+  <meta name="description" content="Experience the elegance of pure functional programming. NitroIDE offers a robust, local Haskell execution environment right in your browser.">
+  <meta name="keywords" content="Haskell online compiler, free Haskell IDE, learn functional programming online, run Haskell browser, WebAssembly GHC">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #5e5086; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FRAMEWORKS & TOOLS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Pure Functional Programming with Haskell.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Installing the Glasgow Haskell Compiler (GHC) locally can be a massive undertaking for students. NitroIDE removes the friction entirely. Our isolated browser environment lets you experiment with Monads, pure functions, and strict type checking with zero installation required.</p>
+    
+    <h2>Bypassing Server Queues with WebAssembly GHC</h2>
+    <p>Standard functional programming sandboxes send your code to a remote Linux server, compile it, and return the text output. If the server is busy, you wait. NitroIDE compiled the GHC engine directly into WebAssembly. You get an uncompromising, native-feeling REPL and multi-file compilation pipeline running directly on your local CPU.</p>
+
+    <div class="docs-code"><span class="code-comment">-- Executing pure functional Haskell natively in the browser</span><br><span class="code-func">quicksort</span> <span class="code-keyword">::</span> (<span class="code-tag">Ord</span> a) <span class="code-keyword">=&gt;</span> [a] <span class="code-keyword">-&gt;</span> [a]<br><span class="code-func">quicksort</span> [] <span class="code-keyword">=</span> []<br><span class="code-func">quicksort</span> (x:xs) <span class="code-keyword">=</span><br>&nbsp;&nbsp;<span class="code-keyword">let</span> smallerSorted <span class="code-keyword">=</span> <span class="code-func">quicksort</span> [a | a &lt;- xs, a &lt;= x]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;biggerSorted&nbsp;&nbsp;<span class="code-keyword">=</span> <span class="code-func">quicksort</span> [a | a &lt;- xs, a &gt; x]<br>&nbsp;&nbsp;<span class="code-keyword">in</span>&nbsp;&nbsp;smallerSorted ++ [x] ++ biggerSorted<br><br><span class="code-func">main</span> <span class="code-keyword">::</span> <span class="code-tag">IO</span> ()<br><span class="code-func">main</span> <span class="code-keyword">= do</span><br>&nbsp;&nbsp;<span class="code-keyword">let</span> numbers <span class="code-keyword">=</span> [<span class="code-num">5</span>, <span class="code-num">1</span>, <span class="code-num">9</span>, <span class="code-num">4</span>, <span class="code-num">6</span>, <span class="code-num">7</span>, <span class="code-num">3</span>]<br>&nbsp;&nbsp;<span class="code-func">putStrLn</span> $ <span class="code-string">"Sorted: "</span> ++ <span class="code-func">show</span> (<span class="code-func">quicksort</span> numbers)</div>
+
+    <div class="pro-tip" style="border-color: rgba(94, 80, 134, 0.3); background: rgba(94, 80, 134, 0.05);"><i class="ph-fill ph-math-operations" style="color: #5e5086;"></i><div><p><strong>Instant Type Feedback:</strong> The official Haskell Language Server (HLS) runs locally in a background Web Worker in NitroIDE. You get real-time type inference, inline HLint suggestions, and instant feedback on your Monadic operations before you even hit the compile button.</p></div></div>
+
+    <h2>Evaluating Lazy Expressions</h2>
+    <p>Because the execution environment is strictly client-side, you can safely evaluate infinite lists and complex lazy evaluation chains without fear of crashing a remote host server. It is the perfect sandbox for mastering pure functional architectures.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: rgba(94, 80, 134, 0.1); border: 1px solid rgba(94, 80, 134, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Master Functional Code.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a pristine Haskell environment in milliseconds.</p>
+      <a href="../tools/codebox.html?env=haskell" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #5e5086;">
+        Launch Haskell IDE <i class="ph-bold ph-math-operations"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

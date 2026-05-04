@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The NitroIDE Blog | Tutorials & Updates</title>
+  <meta name="title" content="The NitroIDE Blog | Tutorials & Updates">
+  <meta name="description" content="Read the latest tutorials, frontend engineering tips, and patch notes for NitroIDE, the zero-latency browser code editor.">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<!-- INJECTED DYNAMIC HEADER -->
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+<div class="global-spotlight" id="globalSpotlight"></div>
+
+<div class="container relative-z">
+  
+  <div class="premium-hero" style="margin-top: 60px;">
+    <div class="badge-row">
+      <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-book-open"></i> NitroIDE Engineering</div>
+    </div>
+    <h1 class="reveal-2 hero-title-main">
+      The NitroIDE <span class="hollow-text">Blog.<span class="glow-layer">Blog.</span><span class="fill-layer">Blog.</span></span>
+    </h1>
+    <p class="reveal-3 hero-subtitle">
+      Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.
+    </p>
+  </div>
+
+  <div class="reveal-4 content-section">
+    <!-- SEARCH BAR AND COUNTER -->
+    <div class="blog-controls">
+      <div class="blog-search-wrapper">
+        <i class="ph-bold ph-magnifying-glass"></i>
+        <input type="text" id="articleSearch" class="blog-search-input" placeholder="Search by title, technology, or keyword...">
+      </div>
+      <div class="blog-count-badge" id="articleCount">
+        Loading...
+      </div>
+    </div>
+
+    <!-- BENTO GRID -->
+    <div class="bento-grid" id="blogGrid">
+       <!-- Dynamic content will be injected here via script.js -->
+    </div>
+  </div>
+
+</div> <!-- Closes .container -->
+
+<!-- INJECTED DYNAMIC FOOTER & SCRIPTS -->
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

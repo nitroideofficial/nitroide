@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero-Knowledge Architecture via HKDF Key Derivation | NitroIDE</title>
+  <meta name="title" content="Zero-Knowledge Architecture via HKDF Key Derivation | NitroIDE">
+  <meta name="description" content="Don't store raw passwords. Learn how NitroIDE uses the Web Crypto API, PBKDF2, and HKDF to derive secure, purpose-built encryption keys entirely client-side.">
+  <meta name="keywords" content="HKDF Web Crypto API, client side key derivation, PBKDF2 javascript, zero knowledge web app, end-to-end encrypted architecture, secure key management browser">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #10b981; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SECURITY • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Zero-Knowledge Architecture via HKDF.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When we say NitroIDE is a "Zero-Knowledge" platform, we mean it mathematically. We encrypt your local files (OPFS), your WebRTC video streams, and your remote collaborative syncs. However, requiring a user to manage and paste 3 different 256-bit AES keys is terrible UX. Users just want to type a single password.</p><p>We solve this by utilizing the Web Crypto API to implement an advanced cryptographic pipeline combining <strong>PBKDF2</strong> (Password-Based Key Derivation Function 2) and <strong>HKDF</strong> (HMAC-based Extract-and-Expand Key Derivation Function).</p><h2>The Extraction and Expansion Pipeline</h2><p>When you enter your master password, we first run it through 100,000 rounds of PBKDF2 with a high-entropy salt to protect against brute-force dictionary attacks. This produces a "Master Key Material." We then feed this material into HKDF to mathematically "expand" it into distinct, mathematically isolated sub-keys.</p><div class="docs-code"><span class="code-comment">// Deriving mathematically isolated sub-keys from a single master key</span><br><span class="code-keyword">const</span> <span class="code-func">deriveSessionKeys</span> = <span class="code-keyword">async</span> (masterKeyMaterial) =&gt; {<br>&nbsp;&nbsp;<span class="code-comment">// Derive a key specifically and ONLY for OPFS File Encryption</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> fileKey = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">deriveKey</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'HKDF'</span>, <span class="code-attr">hash</span>: <span class="code-string">'SHA-256'</span>, <span class="code-attr">salt</span>: opfsSalt, <span class="code-attr">info</span>: <span class="code-func">encoder</span>(<span class="code-string">'file-encryption'</span>) },<br>&nbsp;&nbsp;&nbsp;&nbsp;masterKeyMaterial,<br>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'AES-GCM'</span>, <span class="code-attr">length</span>: <span class="code-num">256</span> },<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">false</span>, [<span class="code-string">'encrypt'</span>, <span class="code-string">'decrypt'</span>]<br>&nbsp;&nbsp;);<br><br>&nbsp;&nbsp;<span class="code-comment">// Derive a completely different key for WebRTC Data Channel Sync</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> syncKey = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">deriveKey</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'HKDF'</span>, <span class="code-attr">hash</span>: <span class="code-string">'SHA-256'</span>, <span class="code-attr">salt</span>: syncSalt, <span class="code-attr">info</span>: <span class="code-func">encoder</span>(<span class="code-string">'webrtc-sync'</span>) },<br>&nbsp;&nbsp;&nbsp;&nbsp;masterKeyMaterial,<br>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'AES-GCM'</span>, <span class="code-attr">length</span>: <span class="code-num">256</span> },<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">false</span>, [<span class="code-string">'encrypt'</span>, <span class="code-string">'decrypt'</span>]<br>&nbsp;&nbsp;);<br>};</div><div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);"><i class="ph-fill ph-shield-check" style="color: #10b981;"></i><div><p><strong>Cryptographic Isolation:</strong> The beauty of HKDF is isolation. If a highly sophisticated attacker somehow manages to compromise your <code>syncKey</code> via a WebRTC side-channel attack, they cannot mathematically reverse-engineer the <code>masterKeyMaterial</code>, nor can they deduce the <code>fileKey</code> to read your local hard drive.</p></div></div><h2>Client-Side Only</h2><p>This entire process executes strictly within the V8 engine on your local machine. The server never receives your password, your master key, or your sub-keys. We mathematically cannot read your data, even if served a subpoena.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #10b9811A; border: 1px solid #10b9814D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Code with Absolute Privacy.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Set a master password and experience true Zero-Knowledge engineering.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #10b981;">
+        Launch Secure IDE <i class="ph-bold ph-lock-key"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

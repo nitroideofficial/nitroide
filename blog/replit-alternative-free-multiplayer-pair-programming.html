@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Pair Programming: The Ultimate Replit Alternative | NitroIDE</title>
+  <meta name="title" content="Free Pair Programming: The Ultimate Replit Alternative | NitroIDE">
+  <meta name="description" content="Don't pay for multiplayer. Discover how NitroIDE uses decentralized WebRTC to offer free, end-to-end encrypted pair programming, beating Replit's pricing model.">
+  <meta name="keywords" content="Replit alternative, free pair programming online, real time collaborative IDE, WebRTC multiplayer coding, end to end encrypted IDE, free multiplayer code editor, zero trust workspace">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #10b981; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">COLLABORATION • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Free Pair Programming: The Ultimate Replit Alternative.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Replit popularized the concept of collaborative coding in the browser. However, as these platforms grew, they locked core features—like private repositories and multiplayer pair programming—behind expensive enterprise paywalls. The reason they charge so much is because of their centralized architecture: every single keystroke from every user has to be routed through their expensive WebSocket servers.</p><p>NitroIDE democratizes multiplayer coding. By leveraging a decentralized <strong>WebRTC Mesh Network</strong>, we connect your browser directly to your teammate's browser. No central server means zero bandwidth costs, which allows us to offer real-time collaboration completely for free.</p><h2>The P2P WebRTC Advantage</h2><p>When you invite a friend to a NitroIDE workspace, our signaling server simply introduces the two IP addresses. From that moment on, all cursor movements, terminal outputs, and file syncs flow directly between your computers via WebRTC UDP Data Channels.</p><div class="docs-code"><span class="code-comment">// Centralized Architecture (The Replit Model)</span><br>Alice --&gt; Cloud WebSocket Server --&gt; Bob  <span class="code-comment">// High latency, high cost, plain-text</span><br><br><span class="code-comment">// Decentralized Architecture (The NitroIDE Model)</span><br>Alice &lt;============ WebRTC ============&gt; Bob  <span class="code-comment">// Zero latency, free, AES-GCM encrypted</span></div><div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);"><i class="ph-fill ph-lock-key" style="color: #10b981;"></i><div><p><strong>Absolute Privacy (E2EE):</strong> Because WebRTC is encrypted by default using DTLS and SRTP, your proprietary codebase is mathematically secure. Unlike centralized cloud IDEs where the host company can theoretically view your code in plaintext, NitroIDE operates on a strict Zero-Knowledge architecture.</p></div></div><h2>The Future of Interviews</h2><p>This architecture makes NitroIDE the ultimate tool for technical interviews and remote pair programming. You can spin up a fully isolated, collaborative environment in milliseconds, knowing that the connection is lightning-fast, entirely private, and completely free of artificial subscription gates.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #10b9811A; border: 1px solid #10b9814D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Code Together for Free.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Invite a colleague to a secure, P2P collaborative workspace in one click.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #10b981;">
+        Start Pair Programming <i class="ph-bold ph-users"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

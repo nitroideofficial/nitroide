@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>True Multi-Threading in WebAssembly via pthreads | NitroIDE</title>
+  <meta name="title" content="True Multi-Threading in WebAssembly via pthreads | NitroIDE">
+  <meta name="description" content="Web Workers are not real threads. Discover how NitroIDE compiles C++ pthreads into WebAssembly for true shared-memory parallel processing in the browser.">
+  <meta name="keywords" content="WASM pthreads, multi-threaded webassembly, SharedArrayBuffer wasm, parallel execution browser, compile c++ pthreads webassembly, emscripten multi-threading, browser IDE performance">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #a855f7; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">WEBASSEMBLY • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">True Multi-Threading via WASM pthreads.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When JavaScript developers want "multi-threading," they spin up Web Workers. But Web Workers operate on isolated memory spaces. Passing data between them requires serializing massive JSON objects or transferring ArrayBuffers, which introduces severe latency. In native C++ desktop software, threads share the exact same heap memory, allowing for instantaneous data access.</p><p>NitroIDE brings true, desktop-grade multi-threading to the browser by compiling POSIX threads (<strong>pthreads</strong>) directly into WebAssembly using Emscripten and <code>SharedArrayBuffer</code>.</p><h2>Mapping pthreads to Web Workers</h2><p>When we compile our core C++ syntax engine, we pass the <code>-pthread</code> flag to the Emscripten compiler. Emscripten does something incredibly clever: it intercepts standard C++ <code>std::thread</code> creation calls and dynamically spawns a pool of JavaScript Web Workers under the hood.</p><div class="docs-code"><span class="code-comment">// Native C++ multi-threading compiled directly to WASM</span><br><span class="code-keyword">#include</span> &lt;thread&gt;<br><span class="code-keyword">#include</span> &lt;vector&gt;<br><br><span class="code-keyword">void</span> <span class="code-func">parse_chunk</span>(<span class="code-keyword">int</span> start, <span class="code-keyword">int</span> end) {<br>&nbsp;&nbsp;<span class="code-comment">// High-performance AST parsing logic here</span><br>}<br><br><span class="code-keyword">int</span> <span class="code-func">main</span>() {<br>&nbsp;&nbsp;<span class="code-keyword">std::vector&lt;std::thread&gt;</span> threads;<br>&nbsp;&nbsp;<span class="code-comment">// Spawns 4 parallel threads sharing the SAME memory heap</span><br>&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">int</span> i = <span class="code-num">0</span>; i &lt; <span class="code-num">4</span>; ++i) {<br>&nbsp;&nbsp;&nbsp;&nbsp;threads.<span class="code-func">push_back</span>(<span class="code-keyword">std::thread</span>(parse_chunk, i * <span class="code-num">1000</span>, (i+<span class="code-num">1</span>) * <span class="code-num">1000</span>));<br>&nbsp;&nbsp;}<br>&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">auto</span>&amp; th : threads) th.<span class="code-func">join</span>();<br>}</div><div class="pro-tip" style="border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.05);"><i class="ph-fill ph-cpu" style="color: #a855f7;"></i><div><p><strong>The Shared Heap:</strong> To make this work, the WebAssembly instance is initialized with a <code>WebAssembly.Memory</code> object backed by a <code>SharedArrayBuffer</code>. All 4 spawned Web Workers are handed a reference to this exact same memory block. When Thread 1 updates a variable, Thread 2 sees it instantly without a single <code>postMessage</code>.</p></div></div><h2>Mutexes and Atomics</h2><p>Because multiple threads can now overwrite the same memory address simultaneously, we rely on WASM atomics to implement C++ <code>std::mutex</code>. This allows our browser-based compiler to lock memory regions during write operations, preventing data races while leveraging 100% of the user's multi-core CPU.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #a855f71A; border: 1px solid #a855f74D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Experience Parallel Processing.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Run our C++ compiler in the browser and watch it utilize all of your CPU cores.</p>
+      <a href="../tools/codebox.html?env=cpp" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #a855f7;">
+        Launch C++ Sandbox <i class="ph-bold ph-lightning"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

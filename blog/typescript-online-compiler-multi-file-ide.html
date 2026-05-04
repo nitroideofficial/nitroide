@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ultimate TypeScript Online Compiler: Multi-File Support | NitroIDE</title>
+  <meta name="title" content="The Ultimate TypeScript Online Compiler: Multi-File Support | NitroIDE">
+  <meta name="description" content="The official TS Playground restricts you to a single file. Experience NitroIDE, a full-stack TypeScript browser IDE with NPM imports and native Language Servers.">
+  <meta name="keywords" content="TypeScript online compiler, free typescript IDE, TS playground alternative, run typescript in browser, multi file typescript editor, webassembly tsc, online code editor, modern frontend ide">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #3178c6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FRAMEWORKS & TOOLS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">The Ultimate TypeScript Online Compiler.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>TypeScript has won the frontend ecosystem. Naturally, thousands of developers search for a "TypeScript Online Compiler" every day to test complex generics or quickly prototype a utility function. The official TypeScript Playground is the go-to tool, but it suffers from a fatal flaw: it is strictly a single-file sandbox. You cannot test how types flow across multiple imported files, and you certainly cannot build a real application.</p><p>NitroIDE completely shatters the limitations of the standard playground. We provide a professional, dark-themed, minimalist workspace that acts as a true <strong>TypeScript browser IDE</strong>. You get a full Virtual File System (VFS), native NPM package resolution, and real-time type checking.</p><h2>Multi-File Type Inference</h2><p>Because NitroIDE mounts the official <code>tsserver</code> (TypeScript Language Server) inside a background Web Worker, type inference works exactly like it does in VS Code. You can define a complex interface in <code>types.ts</code>, import it into <code>main.ts</code>, and get instant, millisecond-accurate auto-completion and error highlighting across your entire project.</p><div class="docs-code"><span class="code-comment">// types.ts</span><br><span class="code-keyword">export interface</span> User {<br>&nbsp;&nbsp;id: <span class="code-keyword">string</span>;<br>&nbsp;&nbsp;role: <span class="code-string">'admin'</span> | <span class="code-string">'member'</span>;<br>}<br><br><span class="code-comment">// main.ts - Seamless cross-file imports with instant IntelliSense</span><br><span class="code-keyword">import</span> { User } <span class="code-keyword">from</span> <span class="code-string">'./types'</span>;<br><span class="code-keyword">import</span> { v4 <span class="code-keyword">as</span> uuidv4 } <span class="code-keyword">from</span> <span class="code-string">'uuid'</span>; <span class="code-comment">// Real NPM dependencies!</span><br><br><span class="code-keyword">const</span> createAdmin = (): User =&gt; ({<br>&nbsp;&nbsp;id: <span class="code-func">uuidv4</span>(),<br>&nbsp;&nbsp;role: <span class="code-string">'admin'</span><br>});</div><div class="pro-tip" style="border-color: rgba(49, 120, 198, 0.3); background: rgba(49, 120, 198, 0.05);"><i class="ph-fill ph-file-ts" style="color: #3178c6;"></i><div><p><strong>Zero-Configuration tsconfig.json:</strong> By default, NitroIDE runs in strict mode with the latest ESNext targets. However, you have full control. You can create a <code>tsconfig.json</code> file in your workspace, and our Language Server will instantly respect your custom compiler options, path aliases, and module resolutions.</p></div></div><h2>Stop Copy-Pasting Snippets</h2><p>When you finish writing your code, you don't have to copy-paste it back into your local desktop editor. NitroIDE allows you to instantly commit your entire multi-file TypeScript workspace directly to a GitHub repository.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #3178c61A; border: 1px solid #3178c64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Master TypeScript.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a full TypeScript workspace and test complex types across multiple files.</p>
+      <a href="../tools/codebox.html?env=typescript" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #3178c6;">
+        Launch TypeScript IDE <i class="ph-bold ph-code"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

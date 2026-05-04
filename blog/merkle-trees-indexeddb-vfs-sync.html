@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(1) Virtual File System Synchronization via Merkle Trees</title>
+  <meta name="title" content="O(1) Virtual File System Synchronization via Merkle Trees">
+  <meta name="description" content="Don't diff 10,000 files. Discover how NitroIDE uses cryptographic Merkle Trees to achieve O(1) file system synchronization across IndexedDB and WebRTC.">
+  <meta name="keywords" content="Merkle tree javascript, IndexedDB synchronization, virtual file system diffing, CRDT file system, O(1) sync algorithm browser, WebRTC file transfer architecture">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #14b8a6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">STORAGE ARCHITECTURE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">O(1) VFS Synchronization via Merkle Trees.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When you connect to a collaborative workspace, your browser needs to sync its local Virtual File System (VFS) with the host. If a project has 10,000 files, doing a linear <code>for</code> loop to compare the timestamps or contents of every single file across a WebRTC data channel takes several seconds and completely chokes the network bandwidth.</p><p>NitroIDE completely eliminates this O(N) bottleneck. We modeled our Virtual File System using a <strong>Cryptographic Merkle Tree</strong>—the exact same data structure used by Git and blockchain ledgers to verify data integrity instantly.</p><h2>Cryptographic Directory Hashing</h2><p>In a Merkle Tree, every file is hashed (using SHA-256). Every directory is then assigned a hash based on the combination of the files inside it. Finally, the root of your project gets a single "Root Hash." When two browsers connect, they don't compare 10,000 files; they just compare their Root Hashes. If the hashes match, the VFS is perfectly synced in O(1) time.</p><div class="docs-code"><span class="code-comment">// Generating a Merkle Hash for a directory node</span><br><span class="code-keyword">const</span> <span class="code-func">calculateDirectoryHash</span> = <span class="code-keyword">async</span> (directoryNode) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> childHashes = directoryNode.children.<span class="code-func">map</span>(child =&gt; child.hash).<span class="code-func">sort</span>();<br>&nbsp;&nbsp;<span class="code-keyword">const</span> concatenatedHashes = childHashes.<span class="code-func">join</span>(<span class="code-string">''</span>);<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-comment">// Derive the directory hash via native Web Crypto API</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> buffer = <span class="code-keyword">new</span> TextEncoder().<span class="code-func">encode</span>(concatenatedHashes);<br>&nbsp;&nbsp;<span class="code-keyword">const</span> hashBuffer = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">digest</span>(<span class="code-string">'SHA-256'</span>, buffer);<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-keyword">return</span> Array.<span class="code-func">from</span>(<span class="code-keyword">new</span> Uint8Array(hashBuffer))<br>&nbsp;&nbsp;&nbsp;&nbsp;.<span class="code-func">map</span>(b =&gt; b.<span class="code-func">toString</span>(<span class="code-num">16</span>).<span class="code-func">padStart</span>(<span class="code-num">2</span>, <span class="code-string">'0'</span>)).<span class="code-func">join</span>(<span class="code-string">''</span>);<br>};</div><div class="pro-tip" style="border-color: rgba(20, 184, 166, 0.3); background: rgba(20, 184, 166, 0.05);"><i class="ph-fill ph-tree-structure" style="color: #14b8a6;"></i><div><p><strong>Logarithmic Traversal:</strong> If the Root Hashes differ, the algorithm travels down the tree, comparing branch hashes. It ignores 99% of the file system and immediately pinpoints the exact nested folder and single file that changed, requiring only <code>log(N)</code> network requests to synchronize a massive mono-repo.</p></div></div><h2>IndexedDB Integration</h2><p>These Merkle hashes are heavily cached in IndexedDB. Whenever a developer types a character and saves a file, NitroIDE only recalculates the hash for that specific file and its parent directories bubbling up to the root. This guarantees that your 10,000-file project is always ready to sync in under 5 milliseconds.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #14b8a61A; border: 1px solid #14b8a64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Experience Instant Sync.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Connect a peer to your workspace and watch the Merkle Tree synchronize 10,000 files instantly.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #14b8a6;">
+        Launch Collaborative IDE <i class="ph-bold ph-plugs"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

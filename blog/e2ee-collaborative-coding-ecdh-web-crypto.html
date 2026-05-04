@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>End-to-End Encrypted Pair Programming via ECDH | NitroIDE</title>
+  <meta name="title" content="End-to-End Encrypted Pair Programming via ECDH | NitroIDE">
+  <meta name="description" content="Keep your intellectual property secure. Discover how NitroIDE implements true End-to-End Encryption (E2EE) using Elliptic Curve Diffie-Hellman (ECDH).">
+  <meta name="keywords" content="ECDH key exchange javascript, Web Cryptography API e2ee, end-to-end encrypted IDE, secure collaborative coding, AES-GCM WebRTC, zero knowledge browser ide">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #10b981; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SECURITY • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">True E2EE Pair Programming via ECDH.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When you use cloud-based pair programming tools, your source code is transmitted in plain text to the host company's routing servers. Even if the WebSocket connection is secured via TLS/SSL, the server itself can read, store, and analyze your proprietary algorithms. For enterprise compliance, this is a fatal flaw.</p><p>NitroIDE guarantees absolute zero-knowledge collaboration. Before a single keystroke is transmitted over our WebRTC mesh, the peers negotiate a secure, shared cryptographic key using <strong>Elliptic Curve Diffie-Hellman (ECDH)</strong> via the browser's native Web Cryptography API.</p><h2>The ECDH Key Exchange</h2><p>ECDH is a mathematical miracle that allows two browsers to agree on a shared secret key over an insecure channel, without ever transmitting the key itself. When Alice invites Bob to a NitroIDE workspace, both browsers generate a public/private keypair using the P-256 elliptic curve.</p><div class="docs-code"><span class="code-comment">// Generating an ephemeral Elliptic Curve keypair</span><br><span class="code-keyword">const</span> keyPair = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">generateKey</span>(<br>&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'ECDH'</span>, <span class="code-attr">namedCurve</span>: <span class="code-string">'P-256'</span> },<br>&nbsp;&nbsp;<span class="code-keyword">true</span>, [<span class="code-string">'deriveKey'</span>]<br>);<br><br><span class="code-comment">// Deriving the shared AES-GCM secret using the peer's public key</span><br><span class="code-keyword">const</span> sharedSecret = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">deriveKey</span>(<br>&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'ECDH'</span>, <span class="code-attr">public</span>: peerPublicKey },<br>&nbsp;&nbsp;keyPair.privateKey,<br>&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'AES-GCM'</span>, <span class="code-attr">length</span>: <span class="code-num">256</span> },<br>&nbsp;&nbsp;<span class="code-keyword">false</span>, [<span class="code-string">'encrypt'</span>, <span class="code-string">'decrypt'</span>]<br>);</div><div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);"><i class="ph-fill ph-lock-key" style="color: #10b981;"></i><div><p><strong>Perfect Forward Secrecy:</strong> NitroIDE generates fresh, ephemeral ECDH keypairs for every single collaborative session. Once you close the browser tab, the keys are wiped from RAM forever. Even if a bad actor recorded all the encrypted network traffic, they could never decrypt it later.</p></div></div><h2>Hardware-Accelerated AES-GCM</h2><p>Once the shared secret is established, every cursor movement, file save, and terminal command is encrypted using AES-GCM before hitting the network. Because the Web Crypto API is backed by native OS libraries (like OpenSSL or BoringSSL), this encryption happens at the hardware level, resulting in zero noticeable latency during real-time typing.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #10b9811A; border: 1px solid #10b9814D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Code with Absolute Privacy.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Start a collaborative session. Your code is mathematically unreadable to us.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #10b981;">
+        Launch Secure Workspace <i class="ph-bold ph-shield-check"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

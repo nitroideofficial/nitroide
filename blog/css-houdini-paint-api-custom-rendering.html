@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bypassing DOM Elements with the CSS Houdini Paint API | NitroIDE</title>
+  <meta name="title" content="Bypassing DOM Elements with the CSS Houdini Paint API | NitroIDE">
+  <meta name="description" content="Rendering 10,000 error squiggles crashes the DOM. Learn how NitroIDE uses the CSS Paint API (Houdini) to render custom UI elements at 120fps.">
+  <meta name="keywords" content="CSS Houdini Paint API, Paint Worklet javascript, custom CSS renderer, bypass DOM nodes, high performance CSS canvas, monaco editor error squiggles, web rendering engine">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">GRAPHICS PIPELINE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Bypassing the DOM via CSS Houdini Paint Worklets.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When a language server detects syntax errors across a 10,000-line file, standard editors render those red "error squiggles" by injecting thousands of tiny HTML <code>&lt;div&gt;</code> elements or SVG nodes under the text. This absolutely destroys the browser's layout engine, causing catastrophic lag when the user tries to scroll.</p><p>NitroIDE completely eliminates these DOM nodes. By utilizing the experimental <strong>CSS Paint API (Houdini)</strong>, we instruct the browser's native C++ rendering engine to paint the squiggles programmatically, acting as a low-level bridge between CSS and a Canvas-like API.</p><h2>The Paint Worklet</h2><p>Houdini allows us to register a <code>PaintWorklet</code>. This script runs on a dedicated background rendering thread. Instead of generating DOM elements, we write a custom JavaScript class that receives the exact dimensions of the HTML element and draws the squiggles directly onto the screen's bitmap before the frame is painted.</p><div class="docs-code"><span class="code-comment">// Registering a custom Houdini Paint Worklet</span><br>CSS.paintWorklet.<span class="code-func">addModule</span>(<span class="code-string">'error-squiggle-painter.js'</span>);<br><br><span class="code-comment">// Inside error-squiggle-painter.js</span><br><span class="code-keyword">class</span> ErrorSquigglePainter {<br>&nbsp;&nbsp;<span class="code-func">paint</span>(ctx, size, properties) {<br>&nbsp;&nbsp;&nbsp;&nbsp;ctx.strokeStyle = <span class="code-string">'#ef4444'</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;ctx.lineWidth = <span class="code-num">2</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;ctx.<span class="code-func">beginPath</span>();<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Draw Bezier curves mathematically across the 'size' boundary</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">let</span> x = <span class="code-num">0</span>; x &lt; size.width; x += <span class="code-num">4</span>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ctx.<span class="code-func">lineTo</span>(x, x % <span class="code-num">8</span> === <span class="code-num">0</span> ? size.height : <span class="code-num">0</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;ctx.<span class="code-func">stroke</span>();<br>&nbsp;&nbsp;}<br>}<br><span class="code-func">registerPaint</span>(<span class="code-string">'error-squiggle'</span>, ErrorSquigglePainter);</div><div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-paint-brush" style="color: #f43f5e;"></i><div><p><strong>Applying via CSS:</strong> Once the worklet is registered, applying it is as simple as writing <code>background-image: paint(error-squiggle);</code> in our CSS. The browser handles the rest, executing the paint function seamlessly at the monitor's native refresh rate.</p></div></div><h2>Zero-Layout Thrashing</h2><p>Because Houdini operates strictly during the browser's "Paint" phase, it never triggers a "Layout" or "Style" recalculation. We can dynamically change the squiggle color, amplitude, or frequency via CSS Custom Properties (Variables) and achieve perfect 120fps animations with zero CPU overhead.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f43f5e1A; border: 1px solid #f43f5e4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">See Houdini in Action.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Write some bad code to trigger our Houdini-powered error rendering engine.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f43f5e;">
+        Launch Workspace <i class="ph-bold ph-warning-circle"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

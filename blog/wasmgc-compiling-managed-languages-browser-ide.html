@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WasmGC: Running Managed Languages Natively in the Browser</title>
+  <meta name="title" content="WasmGC: Running Managed Languages Natively in the Browser">
+  <meta name="description" content="WebAssembly isn't just for C++ anymore. See how NitroIDE leverages WasmGC to compile and execute Kotlin, Dart, and Java natively inside the browser.">
+  <meta name="keywords" content="WasmGC, WebAssembly Garbage Collection, Kotlin WebAssembly, Dart WASM browser, run Java in browser, managed languages wasm, browser IDE compiler">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #8b5cf6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">WEBASSEMBLY • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">WasmGC: Bringing Managed Languages to the Web.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Historically, WebAssembly (WASM) was strictly reserved for languages with manual memory management, like C++ and Rust. If you wanted to compile a "managed" language like Kotlin, Java, or Dart to WASM, you had to compile the language's entire Garbage Collector (GC) into the binary. This resulted in massive 15MB+ payloads that took forever to download and initialize over the network.</p><p>NitroIDE embraces the bleeding-edge <strong>WasmGC (WebAssembly Garbage Collection)</strong> specification. This allows WebAssembly modules to tap directly into the V8 engine's highly optimized, native JavaScript Garbage Collector, completely eliminating the need to ship custom memory management code.</p><h2>The WasmGC Advantage</h2><p>With WasmGC enabled in modern browsers, compiling enterprise-grade Language Servers (written in Kotlin or Java) down to WASM becomes viable. The binaries shrink from 15MB to under 2MB. More importantly, because the WASM module uses the browser's GC, passing complex objects between JavaScript and WebAssembly requires zero serialization.</p><div class="docs-code"><span class="code-comment">// Instantiating a WasmGC-compiled Kotlin module</span><br><span class="code-keyword">const</span> response = <span class="code-keyword">await</span> <span class="code-func">fetch</span>(<span class="code-string">'kotlin-language-server.wasm'</span>);<br><br><span class="code-comment">// The module relies on the host environment (V8) for GC</span><br><span class="code-keyword">const</span> { instance } = <span class="code-keyword">await</span> WebAssembly.<span class="code-func">instantiateStreaming</span>(response, {<br>&nbsp;&nbsp;<span class="code-attr">env</span>: {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Host functions passed seamlessly to WASM</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">onGarbageCollectionEvent</span>: () =&gt; console.<span class="code-func">log</span>(<span class="code-string">'V8 handled memory.'</span>)<br>&nbsp;&nbsp;}<br>});</div><div class="pro-tip" style="border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.05);"><i class="ph-fill ph-trash" style="color: #8b5cf6;"></i><div><p><strong>Seamless Object References:</strong> WasmGC introduces the <code>externref</code> type. This allows a WASM module to hold a direct reference to a JavaScript DOM node or Monaco Editor instance. When the JS object goes out of scope, the V8 Garbage Collector cleans it up automatically, preventing memory leaks across the boundary.</p></div></div><h2>The Future of Web IDEs</h2><p>By leveraging WasmGC, NitroIDE can run the official, unmodified backend compilers for languages like Dart and Kotlin directly in the browser's background threads, providing absolute 1:1 parity with Android Studio and IntelliJ without requiring a remote Docker container.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #8b5cf61A; border: 1px solid #8b5cf64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Run Kotlin in the Browser.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch our WasmGC-powered workspace and write managed code natively on the web.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #8b5cf6;">
+        Launch WasmGC Sandbox <i class="ph-bold ph-cpu"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

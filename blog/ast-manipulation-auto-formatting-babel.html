@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Auto-Formatting via AST Manipulation | NitroIDE</title>
+  <meta name="title" content="Real-Time Auto-Formatting via AST Manipulation | NitroIDE">
+  <meta name="description" content="Stop using regex formatters. Discover how NitroIDE uses Babel to parse, manipulate, and reconstruct Abstract Syntax Trees for flawless code formatting.">
+  <meta name="keywords" content="AST manipulation javascript, babel traverse abstract syntax tree, code auto formatter browser, prettier alternative online, real-time code formatting">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">COMPILER THEORY • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Flawless Auto-Formatting via AST Manipulation.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Most basic online code editors use simple Regular Expressions to format code. They look for curly braces <code>{}</code> and add indentation. This approach falls apart instantly when faced with complex ES6 template literals, nested JSX, or ternary operators. Regex cannot understand context.</p><p>NitroIDE implements true, context-aware code formatting by leveraging the Babel parser to generate an <strong>Abstract Syntax Tree (AST)</strong>. We don't format strings; we manipulate the underlying logical structure of the code.</p><h2>The AST Lifecycle</h2><p>When you press <code>Cmd + Shift + F</code>, the editor sends the raw string to a Web Worker. Babel parses the string into an enormous JSON tree representing every variable, function, and operator. We then traverse this tree, applying formatting rules to the nodes themselves, before generating a new, perfectly formatted string.</p><div class="docs-code"><span class="code-comment">// Parsing, transforming, and generating code via Babel AST</span><br><span class="code-keyword">import</span> * <span class="code-keyword">as</span> babel <span class="code-keyword">from</span> <span class="code-string">'@babel/core'</span>;<br><br><span class="code-keyword">const</span> <span class="code-func">formatCode</span> = (rawCode) =&gt; {<br>&nbsp;&nbsp;<span class="code-comment">// 1. Parse string to AST</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> ast = babel.<span class="code-func">parse</span>(rawCode, { <span class="code-attr">sourceType</span>: <span class="code-string">'module'</span> });<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-comment">// 2. Traverse and normalize nodes (e.g., standardizing quotes)</span><br>&nbsp;&nbsp;babel.<span class="code-func">traverse</span>(ast, {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">StringLiteral</span>(path) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path.node.extra.raw = <span class="code-string">`'${path.node.value}'`</span>; <span class="code-comment">// Force single quotes</span><br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;});<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-comment">// 3. Generate perfectly formatted string from AST</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> { code } = babel.<span class="code-func">generate</span>(ast, { <span class="code-attr">retainLines</span>: <span class="code-keyword">false</span> });<br>&nbsp;&nbsp;<span class="code-keyword">return</span> code;<br>};</div><div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-tree-structure" style="color: #f43f5e;"></i><div><p><strong>Destructive Transformations:</strong> Because we operate on the AST, we can safely perform destructive actions like removing unused imports or rewriting arrow functions, with mathematical certainty that we won't break the actual execution logic.</p></div></div><h2>Worker Synchronization</h2><p>Because AST generation is CPU-intensive, running it on the main thread would freeze the editor. By executing the Babel traversal inside a SharedWorker, NitroIDE can format a 10,000-line React component in the background while you continue typing, applying the update seamlessly once complete.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f43f5e1A; border: 1px solid #f43f5e4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Format Code Instantly.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Paste ugly, unformatted React code into our sandbox and watch the AST engine fix it.</p>
+      <a href="../tools/codebox.html?env=react" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f43f5e;">
+        Launch React Sandbox <i class="ph-bold ph-code"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

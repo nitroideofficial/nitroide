@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ultimate Rust Online Compiler: Full Cargo Support in the Browser</title>
+  <meta name="title" content="The Ultimate Rust Online Compiler: Full Cargo Support in the Browser">
+  <meta name="description" content="The official Rust Playground is just a snippet tool. Discover NitroIDE, the only free online Rust compiler with full Cargo support and instant Borrow Checker feedback.">
+  <meta name="keywords" content="Rust online compiler, free online Rust editor, Rust browser IDE, compile rust to webassembly, Rust playground alternative, learn rust online, cargo browser IDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #ea580c; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FRAMEWORKS & TOOLS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">The Ultimate Rust Online Compiler (with full Cargo).</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Learning Rust is notoriously difficult. Before you can even write your first "Hello World," you have to wrestle with <code>rustup</code>, configure your system paths, and install massive build toolchains. The official "Rust Playground" exists, but it is strictly a single-file snippet tool. If you want to use external crates or structure a real application, you are out of luck.</p><p>NitroIDE is the most advanced <strong>Rust online compiler</strong> available today. By compiling the entire Rust toolchain (including <code>rustc</code> and <code>cargo</code>) into WebAssembly, we give you a native Rust development environment directly in your browser.</p><h2>Instant Borrow-Checker Feedback</h2><p>The hardest part of Rust is satisfying the Borrow Checker. In standard online compilers, you have to click "Build" and wait 5 seconds for a remote server to yell at you. NitroIDE runs the official <code>rust-analyzer</code> Language Server inside a background Web Worker. As you type, the AST is analyzed locally, giving you instant, sub-millisecond red squiggles the moment a lifetime is violated.</p><div class="docs-code"><span class="code-comment">// Full Cargo support directly in the browser terminal</span><br>$ cargo new nitro_rust_app<br>     Created binary (application) `nitro_rust_app` package<br><br>$ cd nitro_rust_app<br>$ cargo add serde_json<br>    Updating crates.io index<br>      Adding serde_json v1.0.114 to dependencies<br><br><span class="code-comment">// Compiling natively via WebAssembly</span><br>$ cargo build --release<br>   Compiling nitro_rust_app v0.1.0 (/workspace/nitro_rust_app)<br>    Finished release [optimized] target(s) in 1.2s</div><div class="pro-tip" style="border-color: rgba(234, 88, 12, 0.3); background: rgba(234, 88, 12, 0.05);"><i class="ph-fill ph-crab" style="color: #ea580c;"></i><div><p><strong>Crates.io Integration:</strong> NitroIDE's decentralized package manager can securely fetch and cache external crates directly from <code>crates.io</code> into your browser's IndexedDB. You can build complex, multi-dependency Rust servers without ever leaving the tab.</p></div></div><h2>Compile Rust to WASM... inside WASM</h2><p>Because the environment is fully self-contained, you can write Rust code, compile it into a WebAssembly binary using our browser-based <code>rustc</code>, and immediately execute that binary in an adjacent HTML preview pane. It is a perfect, isolated loop for frontend WebAssembly development.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #ea580c1A; border: 1px solid #ea580c4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Master the Borrow Checker.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a complete Cargo environment and start writing Rust in milliseconds.</p>
+      <a href="../tools/codebox.html?env=rust" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #ea580c;">
+        Launch Rust IDE <i class="ph-bold ph-terminal"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

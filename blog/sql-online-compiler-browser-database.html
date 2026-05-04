@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Online Compiler: High-Performance Databases in the Browser</title>
+  <meta name="title" content="SQL Online Compiler: High-Performance Databases in the Browser">
+  <meta name="description" content="DB Fiddle is too limited. Discover how NitroIDE uses WebAssembly SQLite and OPFS to run gigabyte-scale relational databases natively in your browser.">
+  <meta name="keywords" content="SQL online compiler, free database playground, SQLite browser IDE, DB Fiddle alternative, run SQL online, in-browser database, SQL sandbox, relational database web">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #0284c7; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">DATABASES • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">SQL Online Compiler: Gigabyte Databases in the Browser.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Practicing SQL online has historically been an awful experience. Tools like DB Fiddle or SQL Fiddle are fine for basic <code>SELECT</code> statements, but they enforce strict limits. You can't import a 2GB dataset, and complex JOINs often time out because you are sharing a tiny remote database container with thousands of other users.</p><p>NitroIDE is the most powerful <strong>SQL online compiler</strong> available. By compiling the official C-based SQLite engine to WebAssembly and backing it with the browser's Origin Private File System (OPFS), we turn your browser into a high-performance relational database engine.</p><h2>True Disk Persistence via OPFS</h2><p>Unlike standard web playgrounds that wipe your data the second you refresh the page, NitroIDE's SQLite implementation writes directly to your local SSD. This means you can import massive, gigabyte-scale CSV files into your workspace, index them, and run complex analytical queries instantly.</p><div class="docs-code"><span class="code-comment">-- Running complex analytical queries entirely locally</span><br><span class="code-keyword">CREATE</span> <span class="code-keyword">TABLE</span> ecommerce_events (<br>&nbsp;&nbsp;event_id INTEGER <span class="code-keyword">PRIMARY KEY</span>,<br>&nbsp;&nbsp;user_id INTEGER,<br>&nbsp;&nbsp;event_type TEXT,<br>&nbsp;&nbsp;created_at DATETIME<br>);<br><br><span class="code-comment">-- NitroIDE handles millions of rows without crashing the tab</span><br><span class="code-keyword">SELECT</span> <br>&nbsp;&nbsp;<span class="code-func">DATE</span>(created_at) <span class="code-keyword">AS</span> day,<br>&nbsp;&nbsp;<span class="code-func">COUNT</span>(<span class="code-keyword">DISTINCT</span> user_id) <span class="code-keyword">AS</span> active_users<br><span class="code-keyword">FROM</span> ecommerce_events<br><span class="code-keyword">WHERE</span> event_type = <span class="code-string">'checkout'</span><br><span class="code-keyword">GROUP BY</span> <span class="code-func">DATE</span>(created_at)<br><span class="code-keyword">ORDER BY</span> day <span class="code-keyword">DESC</span>;</div><div class="pro-tip" style="border-color: rgba(2, 132, 199, 0.3); background: rgba(2, 132, 199, 0.05);"><i class="ph-fill ph-database" style="color: #0284c7;"></i><div><p><strong>Zero-Latency Query Execution:</strong> Because the database is querying your local NVMe/SSD drive through the OPFS bridging layer, queries that would take 10 seconds over an HTTP connection complete in milliseconds. It is the perfect environment for mastering complex data science workflows.</p></div></div><h2>Visualizing Data Instantly</h2><p>We didn't just build a terminal. NitroIDE includes a built-in Data Grid visualizer. When you run a query, the results are instantly pipelined into an interactive, high-performance table where you can sort, filter, and export the raw JSON or CSV data in one click.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #0284c71A; border: 1px solid #0284c74D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Query Massive Datasets.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Import your CSVs and start writing SQL at lightning speed.</p>
+      <a href="../tools/codebox.html?env=sql" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #0284c7;">
+        Launch SQL Sandbox <i class="ph-bold ph-database"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

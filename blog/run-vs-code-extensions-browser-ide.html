@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Running VS Code Extensions Natively in a Browser IDE | NitroIDE</title>
+  <meta name="title" content="Running VS Code Extensions Natively in a Browser IDE | NitroIDE">
+  <meta name="description" content="Don't lose your muscle memory. Learn how NitroIDE supports the VS Code Extension API natively in the browser for a zero-compromise transition.">
+  <meta name="keywords" content="VS Code online alternative, run vscode extensions browser, monaco editor extensions, open vsx registry web, migrate to browser IDE, desktop vs web ide, web based vscode">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #3b82f6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">PROTOTYPING & WORKFLOW • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Running VS Code Extensions Natively on the Web.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>The biggest barrier to adopting an online IDE is muscle memory. Professional developers spend years customizing their desktop environments—installing specific ESLint rules, Prettier configurations, Vim keybindings, and custom dark themes. If a browser IDE forces you to abandon your toolchain, it will never be more than a toy.</p><p>NitroIDE isn't a toy. It is a true <strong>VS Code Online alternative</strong>. We engineered a massive polyfill layer for the VS Code Extension API, allowing you to run your favorite desktop extensions natively inside the browser.</p><h2>The Open VSX Integration</h2><p>Microsoft restricts access to the official VS Code Marketplace from third-party tools. To bypass this, NitroIDE integrates directly with the <strong>Open VSX Registry</strong>, an open-source catalog containing tens of thousands of compatible extensions. You can search, install, and manage extensions exactly as you do on your desktop.</p><div class="docs-code"><span class="code-comment">// How NitroIDE runs extension code securely off the main thread</span><br><span class="code-keyword">const</span> extensionWorker = <span class="code-keyword">new</span> Worker(<span class="code-string">'extension-host.js'</span>);<br><br><span class="code-comment">// We polyfill the global 'vscode' API inside the worker</span><br><span class="code-keyword">const</span> vscodePolyfill = {<br>&nbsp;&nbsp;<span class="code-attr">window</span>: {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">showInformationMessage</span>: (msg) =&gt; <span class="code-func">renderToast</span>(msg),<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;<span class="code-attr">workspace</span>: {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Maps directly to our IndexedDB Virtual File System</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-attr">fs</span>: opfsFileSystemAdapter <br>&nbsp;&nbsp;}<br>};<br><br><span class="code-comment">// Load the VSIX payload into the secure sandbox</span><br><span class="code-func">activateExtension</span>(vsixPayload, vscodePolyfill);</div><div class="pro-tip" style="border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05);"><i class="ph-fill ph-plugs" style="color: #3b82f6;"></i><div><p><strong>Extension Host Workers:</strong> Desktop VS Code is famous for "Extension Host Crashes." NitroIDE prevents this by running every installed extension in an isolated, background Web Worker. If a poorly written linting extension gets stuck in an infinite loop, it mathematically cannot freeze your editor's UI.</p></div></div><h2>Sync Your settings.json</h2><p>You don't have to start from scratch. You can paste your exact desktop <code>settings.json</code> and <code>keybindings.json</code> directly into NitroIDE. The engine parses the configurations, loads the necessary extensions, and instantly transforms the web interface into your personal, highly optimized workspace.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #3b82f61A; border: 1px solid #3b82f64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Bring Your Workflow to the Web.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Import your VS Code settings and experience desktop power in the browser.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #3b82f6;">
+        Launch Workspace <i class="ph-bold ph-code-block"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

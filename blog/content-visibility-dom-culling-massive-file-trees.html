@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(1) DOM Rendering with CSS content-visibility | NitroIDE</title>
+  <meta name="title" content="O(1) DOM Rendering with CSS content-visibility | NitroIDE">
+  <meta name="description" content="Rendering a 100,000-file project tree crashes the browser. Discover how NitroIDE uses CSS content-visibility for native, zero-JS DOM culling.">
+  <meta name="keywords" content="CSS content-visibility, DOM culling javascript, optimize massive DOM browser, contain-intrinsic-size layout, browser IDE file tree performance, CSS rendering optimization">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #3b82f6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">CSS ENGINEERING • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Native DOM Culling with content-visibility.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When a developer imports a massive monorepo into NitroIDE, the Virtual File System might contain over 100,000 nested files and folders. If we render 100,000 <code>&lt;div&gt;</code> elements into the sidebar, the browser's layout engine will freeze for 10 seconds attempting to calculate the geometry of the page. Traditional workarounds involve complex JavaScript "Virtual Scrolling" libraries, which are prone to jitter and break native browser find-in-page (<code>Cmd+F</code>) functionality.</p><p>We eliminated JS virtual scrolling entirely. NitroIDE leverages the modern <strong>CSS <code>content-visibility</code> property</strong> to push the DOM culling workload down to the browser's native C++ rendering engine.</p><h2>The 'Auto' Culling Magic</h2><p>By applying <code>content-visibility: auto</code> to the parent containers of collapsed folders, we instruct the browser to completely skip the rendering, layout, and painting phases for any elements that are currently off-screen. The browser technically knows the DOM nodes exist, but it spends zero CPU cycles drawing them.</p><div class="docs-code"><span class="code-comment">/* Applying native DOM culling to massive file trees */</span><br><span class="code-keyword">.directory-folder</span> {<br>&nbsp;&nbsp;<span class="code-attr">content-visibility</span>: auto;<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-comment">/* Prevent the scrollbar from collapsing when children are culled */</span><br>&nbsp;&nbsp;<span class="code-attr">contain-intrinsic-size</span>: auto <span class="code-num">24px</span>;<br>}</div><div class="pro-tip" style="border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05);"><i class="ph-fill ph-eye-slash" style="color: #3b82f6;"></i><div><p><strong>Maintaining Scrollbar Integrity:</strong> The danger of skipping layout is that the browser doesn't know how tall the hidden content is, causing the scrollbar to wildly jump around. We fix this using <code>contain-intrinsic-size</code>, providing a placeholder dimension so the scrollbar remains perfectly stable even when 99,000 files are culled from the GPU.</p></div></div><h2>Restoring Native Find-in-Page</h2><p>The greatest advantage of <code>content-visibility</code> over JavaScript virtual scrolling is accessibility. Because the DOM nodes physically exist in the document (just unrendered), when a user presses <code>Cmd+F</code> and types a filename, the browser natively searches the hidden nodes. When a match is found, the browser automatically renders the node and scrolls it into view. True native performance.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #3b82f61A; border: 1px solid #3b82f64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Scroll 100,000 Files.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Import a massive codebase and experience native CSS DOM culling.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #3b82f6;">
+        Launch Workspace <i class="ph-bold ph-folders"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

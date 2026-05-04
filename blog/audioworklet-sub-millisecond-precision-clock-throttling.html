@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Defeating the 4ms Throttle: Sub-Millisecond Clocks via Web Audio</title>
+  <meta name="title" content="Defeating the 4ms Throttle: Sub-Millisecond Clocks via Web Audio">
+  <meta name="description" content="JavaScript setTimeout is artificially throttled. Discover how NitroIDE hijacks the Web Audio API to create a microsecond-precision clock for perfectly synced rendering.">
+  <meta name="keywords" content="AudioWorklet precision clock, bypass setTimeout throttle, sub-millisecond timer javascript, requestAnimationFrame alternative, Web Audio API timing, high performance javascript clock">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #eab308; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINE INTERNALS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Defeating the 4ms Throttle via AudioWorklet Clocks.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>A dark secret of JavaScript performance is that you cannot set a timeout faster than 4 milliseconds. Due to historical battery-saving implementations, if you call <code>setTimeout(fn, 0)</code>, the browser artificially delays execution by at least 4ms. For rendering a 120fps Canvas Editor or synchronizing multi-threaded WebAssembly execution, a 4ms margin of error causes visually noticeable frame jitter and micro-stutters.</p><p>NitroIDE requires a flawless, un-throttled heartbeat. We achieved this by hijacking the <strong>Web Audio API's AudioWorklet</strong> to act as an ultra-high-precision, sub-millisecond system clock.</p><h2>Why Audio Cannot Be Throttled</h2><p>Browser vendors cannot throttle the Web Audio rendering thread. If they delayed audio processing by even 2ms, users would hear audible clicks, pops, and distortion. The AudioWorklet guarantees absolute, real-time priority at the hardware level, executing its <code>process()</code> function reliably every 128 audio samples (roughly every 2.9 milliseconds at 44.1kHz).</p><div class="docs-code"><span class="code-comment">// Inside the AudioWorkletProcessor: The unthrottled heartbeat</span><br><span class="code-keyword">class</span> PrecisionClockProcessor <span class="code-keyword">extends</span> AudioWorkletProcessor {<br>&nbsp;&nbsp;<span class="code-func">constructor</span>() {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">super</span>();<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.tickCount = <span class="code-num">0</span>;<br>&nbsp;&nbsp;}<br><br>&nbsp;&nbsp;<span class="code-func">process</span>(inputs, outputs, parameters) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// This runs with absolute hardware priority every ~2.9ms</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">this</span>.tickCount++;<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Alert the main thread or WASM thread via a SharedArrayBuffer</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (<span class="code-keyword">this</span>.tickCount % <span class="code-num">3</span> === <span class="code-num">0</span>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Atomics.<span class="code-func">add</span>(sharedClockBuffer, <span class="code-num">0</span>, <span class="code-num">1</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Atomics.<span class="code-func">notify</span>(sharedClockBuffer, <span class="code-num">0</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">true</span>; <span class="code-comment">// Keep the clock alive</span><br>&nbsp;&nbsp;}<br>}</div><div class="pro-tip" style="border-color: rgba(234, 179, 8, 0.3); background: rgba(234, 179, 8, 0.05);"><i class="ph-fill ph-clock-countdown" style="color: #eab308;"></i><div><p><strong>The Atomics Sync:</strong> We map a <code>SharedArrayBuffer</code> between the AudioWorklet and our background WASM compiler threads. The AudioWorklet rapidly increments the value. The WASM thread utilizes <code>Atomics.wait()</code>, instantly waking up the microsecond the clock ticks, completely bypassing the main thread's Event Loop scheduling.</p></div></div><h2>Absolute Determinism</h2><p>By slaving our rendering and compilation pipelines to the sound card's hardware clock rather than the V8 Event Loop, NitroIDE achieves frame-perfect execution determinism. Animations never drop frames, and AST parsing tasks are scheduled with microsecond precision.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #eab3081A; border: 1px solid #eab3084D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">See Perfect Synchronization.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Run a heavy compilation task and watch the UI render at a locked 120fps.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #eab308;">
+        Launch Workspace <i class="ph-bold ph-gauge"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

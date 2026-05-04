@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Migrate from Replit to NitroIDE in 3 Minutes</title>
+  <meta name="title" content="How to Migrate from Replit to NitroIDE in 3 Minutes">
+  <meta name="description" content="Tired of Replit's pricing and latency? Follow our step-by-step guide to migrating your projects to NitroIDE for a faster, free, and offline-capable experience.">
+  <meta name="keywords" content="migrate from Replit, Replit alternative free, import Replit project, Replit to NitroIDE, export Replit to GitHub, free online IDE for Replit users, Replit pricing alternative">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">PROTOTYPING & WORKFLOW • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Migrating from Replit to NitroIDE.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Replit pioneered the social coding space, but many professional developers eventually outgrow it. Whether it's the frustration of 'waking up' sleeping repls, the latency of remote execution, or the rising cost of private workspaces, the need for a more robust tool is clear. NitroIDE provides a seamless exit path, offering a local-first, zero-latency environment that is 100% compatible with your existing projects.</p><h2>Step 1: The GitHub Bridge</h2><p>The fastest way to migrate is via GitHub. If your Replit project is already linked to a repository, NitroIDE can import it instantly. If not, use Replit's built-in Git tools to push your code to a private GitHub repo. NitroIDE utilizes a secure OAuth handshake to pull your code directly into your browser's encrypted OPFS storage.</p><div class="docs-code"><span class="code-comment">// NitroIDE automatically detects your Replit structure</span><br><span class="code-keyword">const</span> project = <span class="code-keyword">await</span> Nitro.<span class="code-func">importFromGitHub</span>({<br>&nbsp;&nbsp;<span class="code-attr">repo</span>: <span class="code-string">'user/my-replit-app'</span>,<br>&nbsp;&nbsp;<span class="code-attr">branch</span>: <span class="code-string">'main'</span><br>});<br><br><span class="code-comment">// Your .replit config is parsed and mapped to nitro.config.json</span><br>Nitro.<span class="code-func">mapEnvironment</span>(project.config);</div><div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-swap" style="color: #f43f5e;"></i><div><p><strong>Config Mapping:</strong> NitroIDE's engine is smart enough to read your <code>.replit</code> or <code>replit.nix</code> files. We automatically map your start commands and dependencies to our WebAssembly runtimes, ensuring your app boots exactly the same way—only faster.</p></div></div><h2>Step 2: Dependency Hydration</h2><p>Once imported, open the NitroIDE terminal. Run <code>npm install</code> or <code>cargo build</code>. Unlike Replit, which might take minutes to pull from a shared cache, NitroIDE's decentralized package manager pulls directly to your local machine, creating a persistent <code>node_modules</code> folder in your browser's IndexedDB.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f43f5e1A; border: 1px solid #f43f5e4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Leave the Cloud Behind.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Import your first Replit project today and feel the zero-latency difference.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f43f5e;">
+        Import from GitHub <i class="ph-bold ph-arrow-square-out"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

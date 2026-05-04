@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instant VFS Synchronization via MutationObserver | NitroIDE</title>
+  <meta name="title" content="Instant VFS Synchronization via MutationObserver | NitroIDE">
+  <meta name="description" content="Discover how NitroIDE monitors internal file trees and synchronizes them with IndexedDB instantly using the microtask-powered MutationObserver API.">
+  <meta name="keywords" content="MutationObserver API, virtual file system javascript, DOM observation performance, microtask queue javascript, IndexedDB synchronization, browser file manager architecture">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #3b82f6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FILE SYSTEMS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Instant VFS Synchronization via MutationObserver.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Building a robust Virtual File System (VFS) in the browser means managing thousands of individual files, folders, and nested directories. When a user drags and drops a folder, renames a file, or deletes a component, that state change must instantly be reflected in the UI and persisted to IndexedDB. Relying on complex arrays of event listeners for every single user action creates brittle, spaghetti code.</p><p>NitroIDE completely decouples the UI from the database logic. Instead, we use the <strong>MutationObserver API</strong> to monitor the VFS structure itself, allowing the browser's native C++ microtask queue to handle the synchronization.</p><h2>The Microtask Batching Advantage</h2><p>When you drag 50 files into a new folder, it would be catastrophic to trigger 50 individual IndexedDB write transactions. The MutationObserver API is fired as a "microtask"—meaning it executes immediately after the current JavaScript execution context finishes, but <em>before</em> the browser paints the next frame. It batches all 50 DOM mutations into a single array.</p><div class="docs-code"><span class="code-comment">// Batching VFS changes natively via the microtask queue</span><br><span class="code-keyword">const</span> observer = <span class="code-keyword">new</span> MutationObserver((mutations) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> batchUpdate = [];<br>&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">const</span> mutation <span class="code-keyword">of</span> mutations) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (mutation.type === <span class="code-string">'childList'</span>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Compile all added/removed nodes into a single array</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;batchUpdate.<span class="code-func">push</span>(...mutation.addedNodes);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>&nbsp;&nbsp;<span class="code-comment">// Execute a single, hyper-fast IndexedDB transaction</span><br>&nbsp;&nbsp;<span class="code-func">syncToDatabase</span>(batchUpdate);<br>});<br><br>observer.<span class="code-func">observe</span>(vfsRootElement, { <span class="code-attr">childList</span>: <span class="code-keyword">true</span>, <span class="code-attr">subtree</span>: <span class="code-keyword">true</span> });</div><div class="pro-tip" style="border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05);"><i class="ph-fill ph-tree-structure" style="color: #3b82f6;"></i><div><p><strong>Silent State Updates:</strong> Because the MutationObserver operates quietly in the background, we can programmatically generate files (e.g., scaffolding a new React app) and the observer will seamlessly catch the changes and save them to disk without requiring manual <code>save()</code> function calls throughout the codebase.</p></div></div><h2>Decoupled Architecture</h2><p>This architecture means the UI layer and the Storage layer in NitroIDE are completely unaware of each other. The UI just moves DOM nodes around, and the MutationObserver acts as the silent, hyper-efficient bridge to IndexedDB, ensuring your workspace is saved natively at 120 frames per second.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #3b82f61A; border: 1px solid #3b82f64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Organize Files Instantly.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Drag, drop, and rename files in the workspace. Watch how fast the engine tracks your changes.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #3b82f6;">
+        Open Workspace <i class="ph-bold ph-folder-open"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

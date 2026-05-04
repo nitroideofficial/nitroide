@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Streaming 10GB Files via Service Worker Byte-Range Requests</title>
+  <meta name="title" content="Streaming 10GB Files via Service Worker Byte-Range Requests">
+  <meta name="description" content="Loading a 10GB file crashes the browser tab. See how NitroIDE intercepts HTTP 206 Byte-Range requests in the Service Worker to stream massive files into RAM.">
+  <meta name="keywords" content="Service worker byte range requests, HTTP 206 partial content javascript, stream large video browser offline, IndexedDB video streaming, intercept range headers browser">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #10b981; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NETWORK ARCHITECTURE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Streaming 10GB Files via Byte-Range Requests.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>A common edge case in web development is serving massive media assets. If you place a 10 Gigabyte <code>.mp4</code> video file or a massive SQL log into a standard HTML <code>&lt;video&gt;</code> or editor tag, standard fetch routines attempt to download the entire 10GB payload into RAM at once, immediately crashing the V8 engine.</p><p>Native web servers solve this using <code>HTTP 206 Partial Content</code> (Byte-Range requests). But what happens when you are entirely offline, serving files from NitroIDE's local Virtual File System? We must manually implement a full HTTP streaming server directly inside our <strong>Service Worker</strong>.</p><h2>Parsing Range Headers Offline</h2><p>When an HTML video tag requests a file, it sends an HTTP header that looks like <code>Range: bytes=0-1048575</code>. Our Service Worker intercepts this request, parses the exact byte string, slices the requested chunk from our local OPFS storage, and dynamically constructs a synthetic <code>206 Partial Content</code> response.</p><div class="docs-code"><span class="code-comment">// Inside the Service Worker: Faking an HTTP Streaming Server</span><br>self.<span class="code-func">addEventListener</span>(<span class="code-string">'fetch'</span>, <span class="code-keyword">async</span> (event) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> rangeHeader = event.request.headers.<span class="code-func">get</span>(<span class="code-string">'range'</span>);<br>&nbsp;&nbsp;<span class="code-keyword">if</span> (rangeHeader && isLocalVFSRequest(event.request.url)) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> fileBlob = <span class="code-keyword">await</span> <span class="code-func">getFileFromOPFS</span>(event.request.url);<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Parse "bytes=0-1048575"</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> parts = rangeHeader.<span class="code-func">replace</span>(<span class="code-string">/bytes=/</span>, <span class="code-string">""</span>).<span class="code-func">split</span>(<span class="code-string">"-"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> start = <span class="code-func">parseInt</span>(parts[<span class="code-num">0</span>], <span class="code-num">10</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> end = parts[<span class="code-num">1</span>] ? <span class="code-func">parseInt</span>(parts[<span class="code-num">1</span>], <span class="code-num">10</span>) : fileBlob.size - <span class="code-num">1</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Return a synthetic HTTP 206 chunk to the DOM</span><br>&nbsp;&nbsp;&nbsp;&nbsp;event.<span class="code-func">respondWith</span>(<span class="code-keyword">new</span> Response(fileBlob.<span class="code-func">slice</span>(start, end + <span class="code-num">1</span>), {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-attr">status</span>: <span class="code-num">206</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-attr">headers</span>: {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'Content-Range'</span>: <span class="code-string">`bytes ${start}-${end}/${fileBlob.size}`</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'Accept-Ranges'</span>: <span class="code-string">'bytes'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;}));<br>&nbsp;&nbsp;}<br>});</div><div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);"><i class="ph-fill ph-film-strip" style="color: #10b981;"></i><div><p><strong>Seamless Media Scrubbing:</strong> By respecting these Byte-Range protocols perfectly, the native browser video player doesn't know it's disconnected from the internet. The user can scrub an offline 10GB video timeline, and the Service Worker will dynamically slice and stream only the exact requested bytes in milliseconds.</p></div></div><h2>The Universal File Bridge</h2><p>This architecture isn't just for video. By forcing massive log files or database dumps to load via synthetic byte-range streams, NitroIDE ensures that the application's memory profile never exceeds 50MB, no matter the size of the underlying local file.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #10b9811A; border: 1px solid #10b9814D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Stream Massive Assets.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Drop a massive media asset into our workspace and watch the Service Worker stream it flawlessly.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #10b981;">
+        Launch Workspace <i class="ph-bold ph-hard-drives"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

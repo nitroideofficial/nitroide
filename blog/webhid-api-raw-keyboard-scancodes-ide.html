@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero-Latency Keystrokes: Reading Raw Scancodes via WebHID</title>
+  <meta name="title" content="Zero-Latency Keystrokes: Reading Raw Scancodes via WebHID">
+  <meta name="description" content="The DOM keydown event is slow. Discover how NitroIDE uses the WebHID API to read raw USB scancodes directly from custom mechanical keyboards.">
+  <meta name="keywords" content="WebHID API, raw keyboard scancodes javascript, QMK via integration browser, bypass OS keyboard latency, WebHID keyboard javascript, low latency typing web, hardware macro editor">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #8b5cf6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">HARDWARE INTEGRATION • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Reading Raw Scancodes via the WebHID API.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When you press a key in a standard web application, the physical electrical signal travels through the keyboard controller, the USB bus, the operating system's HID driver, the browser's C++ input thread, and finally into the JavaScript Event Loop as a <code>keydown</code> event. This entire chain introduces unpredictable latency and subjects your typing to the OS's artificial "key repeat delay" settings.</p><p>For power users with 1000Hz polling-rate custom mechanical keyboards (like QMK or ZMK boards), this software abstraction is unacceptable. NitroIDE offers a highly experimental "Raw Input" mode utilizing the <strong>WebHID API</strong>.</p><h2>Bypassing the Operating System</h2><p>WebHID allows NitroIDE to request direct, low-level access to Human Interface Devices. Instead of waiting for the browser to synthesize a DOM KeyboardEvent, we read the raw, 8-byte hexadecimal input reports streaming directly off the USB or Bluetooth endpoint of the keyboard.</p><div class="docs-code"><span class="code-comment">// Requesting direct access to a connected QMK Mechanical Keyboard</span><br><span class="code-keyword">const</span> devices = <span class="code-keyword">await</span> navigator.hid.<span class="code-func">requestDevice</span>({ <br>&nbsp;&nbsp;<span class="code-attr">filters</span>: [{ <span class="code-attr">vendorId</span>: <span class="code-num">0xFEED</span> }] <span class="code-comment">// Example QMK Vendor ID</span><br>});<br><span class="code-keyword">const</span> keyboard = devices[<span class="code-num">0</span>];<br><span class="code-keyword">await</span> keyboard.<span class="code-func">open</span>();<br><br><span class="code-comment">// Intercepting raw USB hex payloads at 1000Hz</span><br>keyboard.<span class="code-func">addEventListener</span>(<span class="code-string">'inputreport'</span>, event =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> { data } = event;<br>&nbsp;&nbsp;<span class="code-comment">// Byte 2 usually contains the primary scancode</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> scanCode = data.<span class="code-func">getUint8</span>(<span class="code-num">2</span>);<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-keyword">if</span> (scanCode !== <span class="code-num">0</span>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">processRawScancode</span>(scanCode);<br>&nbsp;&nbsp;}<br>});</div><div class="pro-tip" style="border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.05);"><i class="ph-fill ph-keyboard" style="color: #8b5cf6;"></i><div><p><strong>N-Key Rollover (NKRO):</strong> Standard DOM events struggle with complex, simultaneous key chords due to OS-level interception. By reading the raw HID bitmask, NitroIDE can process true N-Key Rollover, allowing developers to execute complex, 6-key Vim macro chords with mathematical precision.</p></div></div><h2>The Ultimate Tactile Workflow</h2><p>Because we process the raw hardware interrupts, typing in NitroIDE's Raw Input mode feels exactly like typing into a bare-metal Linux terminal. The keystroke is rendered to the Canvas 2D engine before the host operating system even finishes calculating its own accessibility overlays.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #8b5cf61A; border: 1px solid #8b5cf64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Feel the Speed.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Connect a compatible mechanical keyboard and enable WebHID Raw Input mode.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #8b5cf6;">
+        Launch Editor <i class="ph-bold ph-lightning"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

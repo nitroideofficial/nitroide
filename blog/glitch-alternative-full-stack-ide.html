@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beyond Glitch: A Professional Browser IDE Alternative | NitroIDE</title>
+  <meta name="title" content="Beyond Glitch: A Professional Browser IDE Alternative | NitroIDE">
+  <meta name="description" content="Glitch is great for simple web pages, but NitroIDE is built for enterprise scale. Learn why professional developers prefer our zero-latency VFS.">
+  <meta name="keywords" content="Glitch alternative, free online web editor, full stack browser IDE, Glitch vs NitroIDE, professional web IDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #2563eb; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">PROTOTYPING & WORKFLOW • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">A Professional Alternative to Glitch.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Glitch revolutionized how beginners share small web projects. Its "Remix" button made it incredibly easy to clone an app and start tweaking code. However, as developers advance, Glitch's container-based approach reveals its limitations: projects take seconds to "wake up" from sleep, the terminal is notoriously slow, and massive multi-file projects struggle to index properly.</p>
+    
+    <h2>Built for Enterprise Scale</h2>
+    <p>NitroIDE provides the exact same instant-sharing capability as Glitch, but replaces the backend with a desktop-grade architecture. Because we don't rely on waking up remote Docker containers, your projects boot instantly via WebAssembly and the Origin Private File System (OPFS).</p>
+
+    <div class="docs-code"><span class="code-comment">// The underlying architecture difference</span><br><br><span class="code-comment">// Glitch Model:</span><br><span class="code-comment">// 1. Click Link -> 2. Wake Container -> 3. Download Files -> 4. Parse AST -> 5. Render IDE</span><br><br><span class="code-comment">// NitroIDE Model:</span><br><span class="code-comment">// 1. Click Link -> 2. Render IDE (from Service Worker Cache) -> 3. Hydrate OPFS</span><br><br><span class="code-keyword">const</span> nitroBootSequence = <span class="code-keyword">async</span> () =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">await</span> localCache.<span class="code-func">loadEngine</span>();<br>&nbsp;&nbsp;<span class="code-comment">// Zero latency startup</span><br>&nbsp;&nbsp;console.<span class="code-func">log</span>(<span class="code-string">'Workspace active in 12ms.'</span>);<br>};</div>
+
+    <div class="pro-tip" style="border-color: rgba(37, 99, 235, 0.3); background: rgba(37, 99, 235, 0.05);"><i class="ph-fill ph-rocket" style="color: #2563eb;"></i><div><p><strong>Professional UI:</strong> Unlike Glitch's playful, beginner-focused UI, NitroIDE provides an uncompromising, dark-themed interface built on the Monaco Editor (the core of VS Code). You get split panes, advanced search, and native Language Servers without the visual clutter.</p></div></div>
+
+    <h2>Seamless GitHub Integration</h2>
+    <p>Instead of locking you into a proprietary remixing ecosystem, NitroIDE treats GitHub as the source of truth. You can pull a 50-package Turborepo into the browser, edit it at 120fps, and push the commit directly back to GitHub using our secure, tokenless integration.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Upgrade Your Workflow.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Import your Glitch projects and feel the speed of WebAssembly.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #2563eb;">
+        Launch Workspace <i class="ph-bold ph-rocket"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

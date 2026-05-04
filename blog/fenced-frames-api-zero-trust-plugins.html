@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero-Trust Plugin Sandboxing via the Fenced Frames API | NitroIDE</title>
+  <meta name="title" content="Zero-Trust Plugin Sandboxing via the Fenced Frames API | NitroIDE">
+  <meta name="description" content="Iframes are no longer secure enough. Learn how NitroIDE uses the cryptographic privacy of the Fenced Frames API to safely execute third-party extensions.">
+  <meta name="keywords" content="Fenced Frames API, zero trust plugins web, sandbox third party javascript, iframe alternative security, secure browser extensions, cross-site tracking prevention, enterprise web security">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #ef4444; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SECURITY • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Zero-Trust Plugin Sandboxing via Fenced Frames.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>A modern IDE lives and dies by its plugin ecosystem. But allowing third-party developers to execute code inside your IDE is a massive security risk. Traditionally, web apps used <code>&lt;iframe sandbox="..."&gt;</code> to isolate plugins. However, iframes can still communicate with their embedding parent via <code>postMessage</code>, URL parameters, or side-channel attacks, creating vectors for malicious plugins to exfiltrate proprietary source code.</p><p>NitroIDE abandons iframes for executing untrusted UI extensions. We implement the newly standardized <strong>Fenced Frames API</strong>, providing a mathematically guaranteed, cryptographically opaque sandbox.</p><h2>The Opaque Privacy Boundary</h2><p>A <code>&lt;fencedframe&gt;</code> operates under a strict "Privacy Preserving" mandate. Unlike an iframe, a fenced frame cannot read the parent's URL, it cannot send <code>postMessage</code> to the parent, and it cannot access local storage partitions that could be used for cross-site tracking. The boundary is absolute.</p><div class="docs-code"><span class="code-comment">// Instantiating a 3rd-party UI plugin in a secure Fenced Frame</span><br><span class="code-keyword">const</span> frame = document.<span class="code-func">createElement</span>(<span class="code-string">'fencedframe'</span>);<br><br><span class="code-comment">// Fenced Frames require specific, privacy-preserving navigation routing</span><br><span class="code-keyword">const</span> pluginConfig = <span class="code-keyword">new</span> FencedFrameConfig(<span class="code-string">'https://plugins.thirdparty.com/linter-ui'</span>);<br>frame.config = pluginConfig;<br><br><span class="code-comment">// Even if the plugin contains malicious code, it cannot exfiltrate data</span><br><span class="code-comment">// back to the parent IDE environment or track the user's session.</span><br>document.<span class="code-func">getElementById</span>(<span class="code-string">'plugin-sidebar'</span>).<span class="code-func">appendChild</span>(frame);</div><div class="pro-tip" style="border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05);"><i class="ph-fill ph-shield-check" style="color: #ef4444;"></i><div><p><strong>Shared Storage Worklets:</strong> How does the plugin interact with the IDE if communication is blocked? NitroIDE uses the <code>Shared Storage API</code>. The plugin can write output data (like linter warnings) to a secure shared storage node, which the IDE can read, but the plugin can <em>never</em> read data out of the IDE's storage, ensuring a strictly one-way flow of information.</p></div></div><h2>Enterprise Peace of Mind</h2><p>With Fenced Frames, enterprise teams can safely install community themes, visualizers, and tools without undergoing months of security audits. The browser's native C++ engine mathematically guarantees that the plugin cannot steal your intellectual property.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #ef44441A; border: 1px solid #ef44444D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Install Plugins Securely.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Browse our extension marketplace, knowing every plugin runs in absolute isolation.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #ef4444;">
+        Open Workspace <i class="ph-bold ph-puzzle-piece"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>
