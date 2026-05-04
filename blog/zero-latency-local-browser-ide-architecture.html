@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bypassing the Cloud: Zero-Latency IDE Architecture | NitroIDE</title>
+  <meta name="title" content="Bypassing the Cloud: Zero-Latency IDE Architecture | NitroIDE">
+  <meta name="description" content="Discover how NitroIDE utilizes HTML5 srcdoc, IndexedDB blobs, and Monaco Web Workers to build an offline-capable, zero-latency IDE.">
+  <meta name="keywords" content="browser IDE architecture, HTML5 srcdoc execution, indexedDB virtual file system, monaco editor web workers, bypass cloud ide">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #bb9af7; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SYSTEM ARCHITECTURE • APRIL 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Bypassing the Cloud Environment Entirely.</h1>
+    
+    <p>The standard methodology for building a cloud editor relies heavily on remote Virtual Machines (VMs). Services like GitHub Codespaces bind a local UI to a remote Docker container via WebSockets. Every keystroke, terminal command, and hot-reload sequence is subject to network latency and server availability.</p>
+
+    <p>NitroIDE rejects this paradigm. We engineered a robust, offline-capable architecture that isolates the compilation layer exclusively to your machine's hardware.</p>
+
+    <h2>The Execution Layer: HTML5 <code>srcdoc</code> Isolation</h2>
+    <p>Instead of posting your code to an API that returns a rendered HTML page, NitroIDE dynamically constructs the DOM string locally. We utilize the HTML5 <code>srcdoc</code> attribute to sandbox the generated code within an iframe, preventing security conflicts and CORS issues while maintaining instant execution speeds.</p>
+    
+    <div class="docs-code" style="border-color: #bb9af7; color: #e4e4e7;">
+<span class="code-comment">// The core execution loop (Simplified)</span>
+<span class="code-keyword">const</span> <span class="code-func">forceRun</span> = (html, css, js, iframe) =&gt; {
+  <span class="code-keyword">let</span> headBlock = <span class="code-string">`&lt;style id="live-css"&gt;${css}&lt;/style&gt;`</span>;
+  <span class="code-keyword">let</span> scriptBlock = <span class="code-string">`&lt;script&gt;${js}&lt;/script&gt;`</span>;
+  
+  <span class="code-comment">// Injects directly into the hardware memory</span>
+  iframe.<span class="code-attr">srcdoc</span> = <span class="code-string">`&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;${headBlock}&lt;/head&gt;&lt;body&gt;${html}${scriptBlock}&lt;/body&gt;&lt;/html&gt;`</span>;
+};
+    </div>
+
+    <h2>Monaco Editor & Web Workers</h2>
+    <p>Loading an enterprise-grade text editor like Monaco (the core of VS Code) on the main browser thread causes devastating UI blocking. To achieve absolute fluidity, NitroIDE proxies Monaco's syntax parsing and IntelliSense dictionaries through dedicated background Web Workers. Your UI stays at 60FPS, even while parsing thousands of lines of React definitions.</p>
+
+    <div class="pro-tip" style="border-color: rgba(187, 154, 247, 0.3); background: rgba(187, 154, 247, 0.05);">
+      <i class="ph-fill ph-hard-drives" style="color: #bb9af7;"></i>
+      <div>
+        <p><strong>Persistent Local State:</strong> To avoid data loss without a database, NitroIDE implements a Virtual File System (VFS) bound to <code>localStorage</code> and IndexedDB. Your multi-file architecture is stringified, compressed via LZ-String, and stored safely offline.</p>
+      </div>
+    </div>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(187, 154, 247, 0.05); border: 1px solid rgba(187, 154, 247, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Experience Local Execution.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Load the workspace offline. Write code without network latency or paywalled containers.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch the IDE <i class="ph-bold ph-terminal-window"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

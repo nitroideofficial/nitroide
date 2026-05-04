@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bypassing the GPU: AI Execution via Neural Processing Units (WebNN)</title>
+  <meta name="title" content="Bypassing the GPU: AI Execution via Neural Processing Units (WebNN)">
+  <meta name="description" content="WebGPU is too power-hungry. Discover how NitroIDE executes local AI models using dedicated silicon NPUs via the experimental WebNN API.">
+  <meta name="keywords" content="WebNN API, Neural Processing Unit browser, AI hardware acceleration javascript, WebGPU vs WebNN, run ONNX models browser, NPU web API, local AI battery optimization">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #3b82f6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ARTIFICIAL INTELLIGENCE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Bypassing GPUs: Native NPU Execution via WebNN.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Running Large Language Models (LLMs) locally in the browser is traditionally done via WebGPU. However, GPUs are designed for pushing pixels, not executing tensor math. Forcing a laptop's GPU to generate AI code completions drains the battery in under an hour and makes the fans spin like a jet engine.</p><p>Modern processors (like Apple Silicon and Intel Core Ultra) ship with dedicated Neural Processing Units (NPUs) built specifically for low-power AI math. NitroIDE utilizes the bleeding-edge <strong>WebNN (Web Neural Network) API</strong> to bypass the GPU entirely and compile our AI models directly to your machine's dedicated AI silicon.</p><h2>Compiling the Computational Graph</h2><p>Unlike WebGPU, which requires writing complex compute shaders in WGSL, the WebNN API operates at the mathematical graph level. We define the matrix multiplications, convolutions, and activation functions using the WebNN builder. The browser then translates this graph directly into the native OS machine learning frameworks (like CoreML on macOS or DirectML on Windows).</p><div class="docs-code"><span class="code-comment">// Building a hardware-agnostic neural network execution graph</span><br><span class="code-keyword">const</span> context = <span class="code-keyword">await</span> navigator.ml.<span class="code-func">createContext</span>({ <span class="code-attr">deviceType</span>: <span class="code-string">'npu'</span> });<br><span class="code-keyword">const</span> builder = <span class="code-keyword">new</span> MLGraphBuilder(context);<br><br><span class="code-comment">// Defining the tensor math operations</span><br><span class="code-keyword">const</span> input = builder.<span class="code-func">input</span>(<span class="code-string">'input'</span>, {<span class="code-attr">type</span>: <span class="code-string">'float32'</span>, <span class="code-attr">dimensions</span>: [<span class="code-num">1</span>, <span class="code-num">1024</span>]});<br><span class="code-keyword">const</span> weights = builder.<span class="code-func">constant</span>(weightData, {<span class="code-attr">type</span>: <span class="code-string">'float32'</span>, <span class="code-attr">dimensions</span>: [<span class="code-num">1024</span>, <span class="code-num">512</span>]});<br><span class="code-keyword">const</span> output = builder.<span class="code-func">matmul</span>(input, weights);<br><br><span class="code-comment">// Compile graph directly to the dedicated NPU hardware</span><br><span class="code-keyword">const</span> graph = <span class="code-keyword">await</span> builder.<span class="code-func">build</span>({<span class="code-string">'output'</span>: output});</div><div class="pro-tip" style="border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05);"><i class="ph-fill ph-cpu" style="color: #3b82f6;"></i><div><p><strong>Asymmetric Compute:</strong> By shifting AI inference to the NPU, the CPU and GPU are left completely uncontested. This means you can run a heavy WebGL canvas preview and compile a Webpack bundle simultaneously, while the NPU silently generates AI code suggestions in the background with near-zero power draw.</p></div></div><h2>The Death of Cloud AI Compute</h2><p>With WebNN, NitroIDE achieves inference speeds that rival server-grade Nvidia A100s, right on your local laptop. Your proprietary codebase never touches an external API, and your monthly cloud compute bill drops to zero.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #3b82f61A; border: 1px solid #3b82f64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Experience NPU Speed.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Generate offline code suggestions at lightning speed without draining your battery.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #3b82f6;">
+        Enable Local AI <i class="ph-bold ph-magic-wand"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

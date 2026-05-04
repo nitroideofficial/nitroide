@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debugging Arduino and IoT Devices via the Web Serial API | NitroIDE</title>
+  <meta name="title" content="Debugging Arduino and IoT Devices via the Web Serial API | NitroIDE">
+  <meta name="description" content="Connect your browser to the physical world. Learn how NitroIDE uses the Web Serial API to flash code to Arduino and ESP32 boards directly from a web tab.">
+  <meta name="keywords" content="Web Serial API tutorial, Arduino browser IDE, ESP32 online compiler, hardware debugging web, connect USB to browser, IoT development online">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f59e0b; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">HARDWARE INTEGRATION • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Hardware Debugging via the Web Serial API.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Developing for IoT devices has historically required massive, clunky desktop IDEs (like the classic Arduino IDE) and complex driver installations just to get a COM port recognized. The modern web has evolved past this. With the introduction of the <strong>Web Serial API</strong>, your browser can securely read and write directly to physical USB ports.</p>
+    
+    <h2>Flashing Firmware from the Browser</h2>
+    <p>NitroIDE leverages this API to turn Chrome and Edge into full-fledged hardware engineering stations. You can write C++ logic, let our WebAssembly Clang compiler convert it into a raw binary blob, and push that firmware directly to an Arduino or ESP32 microcontroller.</p>
+
+    <div class="docs-code"><span class="code-comment">// Connecting to an external microcontroller natively</span><br><span class="code-keyword">async</span> <span class="code-keyword">function</span> <span class="code-func">connectSerialDevice</span>() {<br>&nbsp;&nbsp;<span class="code-keyword">try</span> {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Prompts the user to securely select a COM/USB port</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> port = <span class="code-keyword">await</span> navigator.serial.<span class="code-func">requestPort</span>();<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">await</span> port.<span class="code-func">open</span>({ <span class="code-attr">baudRate</span>: <span class="code-num">115200</span> });<br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> writer = port.writable.<span class="code-func">getWriter</span>();<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> data = <span class="code-keyword">new</span> <span class="code-func">Uint8Array</span>([<span class="code-num">0x01</span>, <span class="code-num">0x02</span>, <span class="code-num">0x03</span>]); <span class="code-comment">// Raw firmware bytes</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">await</span> writer.<span class="code-func">write</span>(data);<br>&nbsp;&nbsp;&nbsp;&nbsp;writer.<span class="code-func">releaseLock</span>();<br>&nbsp;&nbsp;} <span class="code-keyword">catch</span> (err) {<br>&nbsp;&nbsp;&nbsp;&nbsp;console.<span class="code-func">error</span>(<span class="code-string">"Failed to claim serial port:"</span>, err);<br>&nbsp;&nbsp;}<br>}</div>
+
+    <div class="pro-tip" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);"><i class="ph-fill ph-plugs" style="color: #f59e0b;"></i><div><p><strong>Integrated Serial Monitor:</strong> NitroIDE features a built-in Serial Monitor tab in the bottom terminal panel. When your Arduino sends <code>Serial.println()</code> statements back over the USB connection, the Web Serial API pipes those streams directly into our UI in real-time, matching desktop debugging capabilities.</p></div></div>
+
+    <h2>Cross-Platform Compatibility</h2>
+    <p>Because the Web Serial API is standardized, you can build and flash IoT projects from a Macbook, a Windows desktop, or even a low-cost Chromebook, completely democratizing hardware engineering for students and professionals alike.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Connect Your Hardware.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Write code that interacts with the physical world natively.</p>
+      <a href="../tools/codebox.html?env=cpp" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #f59e0b;">
+        Launch Workspace <i class="ph-bold ph-usb"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

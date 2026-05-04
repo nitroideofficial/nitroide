@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1XL4PN2R0Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1XL4PN2R0Z');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Web Hosting: Zero-Compute Deployment via NitroIDE</title>
+  <meta name="title" content="Free Web Hosting: Zero-Compute Deployment via NitroIDE">
+  <meta name="description" content="Stop paying for Vercel or Netlify overages. Learn how NitroIDE's Zero-Compute architecture allows you to host and share web apps directly from your browser.">
+  <meta name="keywords" content="free web hosting online, deploy web app from browser, Vercel alternative free, zero cost web hosting, P2P web hosting, share dev server online, hosting for students, NitroIDE deployment">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #3b82f6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NETWORK ARCHITECTURE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Zero-Compute Hosting: Deploy from the Browser.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Deploying a project should be as simple as writing it. Yet, developers often find themselves trapped in complex CI/CD pipelines, paying for Vercel seat licenses, or worrying about bandwidth overages on Netlify. For quick prototypes and collaborative previews, the cloud is often more of a hurdle than a help.</p><p>NitroIDE introduces <strong>Zero-Compute Hosting</strong>. Instead of deploying your code to a remote server, you can host your application directly from your browser tab, sharing a live, interactive link with anyone in the world via a secure P2P tunnel.</p><h2>Live Tunneling via WebRTC</h2><p>When you click "Deploy Preview," NitroIDE creates a secure, encrypted tunnel from your local WASM dev server to our global edge gateway. Anyone with the unique URL can access your running application. The traffic is routed directly to your browser—eliminating the need for a persistent cloud backend.</p><div class="docs-code"><span class="code-comment">// Instantly sharing your local dev server with the world</span><br><span class="code-keyword">const</span> deploy = <span class="code-keyword">await</span> Nitro.<span class="code-func">deployPreview</span>({<br>&nbsp;&nbsp;<span class="code-attr">port</span>: <span class="code-num">3000</span>,<br>&nbsp;&nbsp;<span class="code-attr">expiresIn</span>: <span class="code-string">'24h'</span><br>});<br><br>console.<span class="code-func">log</span>(<span class="code-string">`Live preview at: ${deploy.url}`</span>);</div><div class="pro-tip" style="border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05);"><i class="ph-fill ph-globe" style="color: #3b82f6;"></i><div><p><strong>Perfect for Client Demos:</strong> This is the ultimate tool for freelancers. You can show a client a live, working React or Next.js app in real-time, making edits as they give feedback, without ever having to set up a staging environment or pay for hosting.</p></div></div><h2>The Future of Decentralized Web</h2><p>Zero-Compute hosting is more than just a cost-saving measure; it’s a privacy-first way to share your work. Because the code stays in your browser until it is requested by the visitor, you maintain absolute control over your environment, making it the most secure way to demo proprietary internal tools.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #3b82f61A; border: 1px solid #3b82f64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Deploy Your First App.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a project and share a live preview link with a teammate in one click.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #3b82f6;">
+        Launch & Deploy <i class="ph-bold ph-rocket"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>
