@@ -23,6 +23,8 @@ html { background: var(--bg-gradient); scroll-behavior: smooth;}
 body { background: transparent; color: var(--text); min-height: 100vh; min-height: 100dvh; transition: background 0.3s, color 0.3s; line-height: 1.6; -webkit-font-smoothing: antialiased; margin: 0; overflow-x: hidden; }
 i[class^="ph"] { vertical-align: middle; display: inline-flex; align-items: center; justify-content: center; }
 
+nitro-header, nitro-footer, nitro-modals { display: block; }
+
 .hide-on-desktop { display: none !important; }
 
 /* CUSTOM PREMIUM SCROLLBARS */
@@ -352,7 +354,7 @@ html.light-mode .glass-mockup .mockup-header { border-bottom: 1px solid rgba(0,0
 .term-tab { color: var(--text-muted); cursor: pointer; transition: 0.2s; }
 .term-tab:hover { color: var(--text); }
 .term-tab.active { color: var(--success); }
-.terminal-comment { color: var(--text-muted); margin-bottom: 10px; }
+.terminal-comment { color: var(--text-muted); margin-bottom: 10px; 	}
 .terminal-line { margin-bottom: 5px; }
 .terminal-prompt { color: var(--text-muted); margin-right: 6px;}
 .terminal-success { color: var(--success); margin-bottom: 15px; }
@@ -360,7 +362,7 @@ html.light-mode .glass-mockup .mockup-header { border-bottom: 1px solid rgba(0,0
 .cursor-blink { font-weight: bold; animation: blink 1s step-end infinite; color: var(--text); }
 
 /* PRICING & STATS */
-.pricing-section { margin-top: 60px; margin-bottom: 80px;}
+.pricing-section { margin-top: 60px; margin-bottom: 40px;}
 .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 50px; }
 .stat-card { background: transparent; border: 1px solid var(--border); padding: 25px; border-radius: 16px; text-align: center;}
 .stat-num { font-size: 2.8rem; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; letter-spacing: -2px;}
@@ -377,7 +379,7 @@ html.light-mode .glass-mockup .mockup-header { border-bottom: 1px solid rgba(0,0
 .pricing-features div i { color: var(--text); font-size: 1.2rem;}
 
 /* FOOTER */
-.pro-footer { margin-top: 60px; padding: 40px 0 20px 0; border-top: 1px solid var(--border); background: transparent; }
+.pro-footer { margin-top: 0; padding: 40px 0 20px 0; border-top: 1px solid var(--border); background: transparent; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1.3fr 1.5fr 1.2fr 1fr; gap: 20px; margin-bottom: 50px; text-align: left; }
 .footer-brand .logo { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--text); margin-bottom: 15px; }
 .footer-desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
@@ -1012,4 +1014,100 @@ body:not(.workspace-body) .logo:hover img {
   /* Glitch Event 4: Double Micro-Snap (around 90%) */
   89% { transform: translate(-3px, 2px); filter: drop-shadow(3px 0 0 #00e5ff) drop-shadow(-2px 0 0 #ff003c); }
   91% { transform: translate(3px, -2px); filter: drop-shadow(-3px 0 0 #00e5ff) drop-shadow(2px 0 0 #ff003c); }
+}
+
+/* ==========================================================================
+   HOMEPAGE SPECIFIC ANIMATIONS & STYLES
+   ========================================================================== */
+[class*="reveal-"] { opacity: 0; animation-fill-mode: forwards; }
+#techMarquee { opacity: 0; transition: opacity 0.5s ease; }
+#techMarquee.loaded { opacity: 0.6; }
+
+@keyframes textShimmer { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+@keyframes subtleFloat { 0%, 100% { translate: 0 0px; } 50% { translate: 0 -12px; } }
+
+.hero-title-main { font-size: 5rem; font-weight: 800; letter-spacing: -3px; line-height: 1.05; margin-bottom: 15px; position: relative; z-index: 1; color: var(--text); animation: subtleFloat 6s ease-in-out infinite; }
+.hollow-text { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.4); position: relative; display: inline-block; }
+html.light-mode .hollow-text { -webkit-text-stroke: 1px rgba(0,0,0,0.4); }
+
+.hollow-text .fill-layer { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(90deg, #00e5ff, #bb9af7, #00e5ff); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textShimmer 5s linear infinite; will-change: background-position; }
+.hollow-text .glow-layer { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(90deg, #00e5ff, #bb9af7, #00e5ff); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0.8; filter: blur(12px); z-index: -1; animation: textShimmer 5s linear infinite; will-change: background-position; }
+
+
+/* ==========================================================================
+   BLOG SEARCH & CONTROLS
+   ========================================================================== */
+.blog-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.blog-search-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 5px 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+}
+
+html.light-mode .blog-search-wrapper {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.blog-search-wrapper:focus-within {
+  border-color: #00e5ff;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+}
+
+.blog-search-wrapper i {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+}
+
+.blog-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 1rem;
+  padding: 12px 15px;
+  outline: none;
+  margin: 0;
+  box-shadow: none;
+}
+
+.blog-count-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  letter-spacing: 0.5px;
+}
+
+.no-results {
+  text-align: center;
+  grid-column: 1 / -1;
+  padding: 50px 20px;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  background: var(--card);
+  border: 1px dashed var(--border);
+  border-radius: 16px;
 }
