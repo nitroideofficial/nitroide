@@ -1086,3 +1086,378 @@ document.body.addEventListener('drop', (e) => {
     processImportedFiles(e.dataTransfer.files);
   }
 });
+
+
+
+// ==========================================================================
+// PHASE 5: GLOBAL UI COMPONENTS & HOMEPAGE LOGIC (NULL-CHECKED)
+// ==========================================================================
+const rPath = (window.location.pathname.includes('/blog/') || window.location.pathname.includes('/tools/') || window.location.pathname.includes('/landing/')) ? '../' : './';
+
+// 1. THE UNIVERSAL HEADER
+class NitroHeader extends HTMLElement {
+    connectedCallback() {
+        this.innerHTML = `
+        <div class="nitro-alert-bar-wrapper">
+          <div class="nitro-alert-content-flex">
+            <span class="nitro-alert-badge-pill">BETA</span>
+            <span class="nitro-alert-message-text">NitroIDE is in active development. Help us shape the future of local coding!</span>
+            <button onclick="toggleFeedbackModal()" class="nitro-alert-action-btn">Share Feedback <i class="ph-bold ph-arrow-right"></i></button>
+          </div>
+        </div>
+        <nav class="floating-nav" id="floatingNav">
+          <div class="logo">
+            <a href="${rPath}index.html" style="text-decoration:none; display: flex; align-items: center; gap: 8px;">
+              <img src="${rPath}logo/logo_white.png" alt="NitroIDE" class="logo-dark">
+              <img src="${rPath}logo/logo_black.png" alt="NitroIDE" class="logo-light">
+            </a>
+            <div class="status-ping hide-in-mobile"><span class="ping-dot"></span> 0ms Latency</div>
+          </div>
+          <div class="nav-actions">
+            <a href="${rPath}blog/index.html" class="theme-toggle" style="text-decoration: none; display: flex; align-items: center; gap: 6px; height: 36px; box-sizing: border-box;"><i class="ph-bold ph-book-open"></i><span class="hide-in-mobile">Tutorials</span></a>
+            <button class="theme-toggle hide-in-mobile" onclick="toggleCmdK()" title="Command Palette" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-magnifying-glass"></i> <span class="hide-in-mobile" style="font-size:0.7rem; font-weight:700; opacity:0.7;">⌘K</span></button>
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeBtnFloat" aria-label="Toggle Dark Mode" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-sun"></i></button>
+            <a href="${rPath}tools/codebox.html" class="btn btn-compact primary-btn hide-in-mobile" style="border-radius: 30px; padding: 0 16px; height: 36px; box-sizing: border-box; display: flex; align-items: center;">Open Workspace</a>
+          </div>
+        </nav>
+        <div class="container relative-z" style="padding-top: 10px; padding-bottom: 0;">
+            <div class="header-row">
+              <div class="logo">
+                <a href="${rPath}index.html" style="text-decoration:none; display: flex; align-items: center; gap: 8px;">
+                  <img src="${rPath}logo/logo_white.png" alt="NitroIDE" class="logo-dark">
+                  <img src="${rPath}logo/logo_black.png" alt="NitroIDE" class="logo-light">
+                </a>
+              </div>
+              <div class="nav-actions">
+                <a href="${rPath}blog/index.html" class="theme-toggle" style="text-decoration: none; display: flex; align-items: center; gap: 6px; height: 36px; box-sizing: border-box;"><i class="ph-bold ph-book-open"></i><span class="hide-in-mobile">Tutorials</span></a>
+                <button class="theme-toggle hide-in-mobile" onclick="toggleCmdK()" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-magnifying-glass"></i> <span>Search...</span> <span class="cmd-badge">⌘K</span></button>
+                <button class="theme-toggle" id="themeBtn" aria-label="Toggle Dark Mode" onclick="toggleTheme()" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-sun"></i></button>
+                <a href="${rPath}tools/codebox.html" class="btn btn-compact primary-btn" style="border-radius: 30px; padding: 0 16px; height: 36px; box-sizing: border-box; display: flex; align-items: center;">Open Workspace</a>
+              </div>
+            </div>
+        </div>
+        `;
+    }
+}
+customElements.define('nitro-header', NitroHeader);
+
+// 2. THE UNIVERSAL FOOTER
+class NitroFooter extends HTMLElement {
+    connectedCallback() {
+        // Pathing Logic (The GPS)
+        const isLanding = window.location.pathname.includes('/landing/');
+        const isTools = window.location.pathname.includes('/tools/');
+        const isBlog = window.location.pathname.includes('/blog/');
+        const inSub = isLanding || isTools || isBlog;
+
+        const rPath = inSub ? '../' : './';
+        
+        let lPath = 'landing/';
+        if (isLanding) {
+            lPath = './'; // Already in the landing folder
+        } else if (inSub) {
+            lPath = '../landing/'; // In a different subfolder, go up then down
+        }
+
+        this.innerHTML = `
+        <div class="container relative-z" style="padding-top: 0;">
+          <footer class="pro-footer reveal-8 active" style="margin-top: 0;">
+            <div class="footer-grid">
+              <div class="footer-brand">
+                <a href="${rPath}index.html" class="logo" style="text-decoration: none;">
+                  <img src="${rPath}logo/logo_white.png" alt="NitroIDE" class="logo-dark">
+                  <img src="${rPath}logo/logo_black.png" alt="NitroIDE" class="logo-light">
+                </a>
+                <p class="footer-desc">The ultimate client-side code editor. <br>A free, open-source, zero-latency browser IDE built for modern frontend developers.</p>
+              </div>
+              <div class="footer-col">
+                <h4>Workspace</h4>
+                <a href="${rPath}tools/codebox.html?env=vanilla">Launch IDE</a>
+                <a href="${rPath}docs.html">Documentation</a>
+                <a href="${rPath}changelog.html">Changelog</a>
+              </div>
+              <div class="footer-col">
+                <h4>Free Sandboxes</h4>
+                <!-- Notice these now use the new lPath variable -->
+                <a href="${lPath}react-online-playground.html">React Playground</a>
+                <a href="${lPath}tailwind-online-editor.html">Tailwind Editor</a>
+                <a href="${lPath}test-tailwind-css-online.html">Tailwind CSS Sandbox</a>
+                <a href="${lPath}vanilla-javascript-sandbox.html">Vanilla JS Sandbox</a>
+                <a href="${lPath}html-css-js-editor.html">HTML/CSS/JS Editor</a>
+                <a href="${lPath}monaco-editor-online.html">Monaco Engine Online</a>
+              </div>
+              <div class="footer-col">
+                <h4>Top Use Cases</h4>
+                <a href="${lPath}run-react-in-browser-no-install.html">Run React in Browser</a>
+                <a href="${lPath}offline-html-editor.html">Offline HTML Editor</a>
+                <a href="${lPath}private-code-editor-no-tracking.html">Private Code Editor</a>
+                <a href="${lPath}chromebook-code-editor-free.html">Chromebook IDE</a>
+                <a href="${lPath}low-ram-code-editor.html">Low RAM Editor</a>
+                <a href="${lPath}responsive-design-tester.html">Responsive Design Tester</a>
+                <a href="${lPath}export-code-to-zip.html">Export Code to ZIP</a>
+              </div>
+              <div class="footer-col">
+                <h4>Compare</h4>
+                <a href="${lPath}vscode-online-alternative.html">VS Code Alternative</a>
+                <a href="${lPath}codesandbox-lightweight-alternative.html">CodeSandbox Alt</a>
+                <a href="${lPath}codepen-alternative-no-login.html">CodePen Alternative</a>
+              </div>
+              <div class="footer-col">
+                <h4>Community</h4>
+                <a href="https://github.com/nitroideofficial/nitroide" target="_blank">GitHub</a>
+                <a href="https://x.com/trynitroide" target="_blank">X / Twitter</a>
+                <a href="https://www.instagram.com/nitroideofficial/" target="_blank">Instagram</a>
+                <h4 style="margin-top: 25px;">Legal</h4>
+                <a href="${rPath}legal.html">Privacy Policy</a>
+                <a href="${rPath}legal.html#license">MIT License</a>
+              </div>
+            </div>
+            <div class="footer-bottom">
+              <p>© 2026 NitroIDE. Open Source and Free Forever.</p>
+            </div>
+          </footer>
+        </div>
+        `;
+    }
+}
+customElements.define('nitro-footer', NitroFooter);
+
+// 3. THE UNIVERSAL MODALS
+class NitroModals extends HTMLElement {
+    connectedCallback() {
+        this.innerHTML = `
+        <button class="fab" id="fab" aria-label="Scroll to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="ph-bold ph-arrow-up"></i></button>
+        <button class="feedback-fab" onclick="toggleFeedbackModal()" aria-label="Open Feedback Form"><i class="ph-fill ph-chat-teardrop-text"></i></button>
+        <div class="feedback-backdrop" id="feedbackModal" onclick="handleFeedbackClick(event)">
+          <div class="feedback-card">
+            <div class="feedback-header">
+              <h3>Send Feedback</h3>
+              <button onclick="toggleFeedbackModal()" aria-label="Close Feedback Form"><i class="ph-bold ph-x"></i></button>
+            </div>
+            <div class="feedback-body">
+              <p class="feedback-desc">Found a bug or have a suggestion? Let us know directly.</p>
+              <form id="feedbackForm" onsubmit="sendFeedback(event)">
+                <textarea id="feedbackText" placeholder="Tell us what you think..." required></textarea>
+                <button type="submit" id="feedbackBtn" class="btn-launch primary-btn" style="width:100%;">
+                  <span id="feedbackBtnText">Send Message</span>
+                  <div id="feedbackSpinner" class="spinner" style="display: none;"></div>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="cmd-palette-backdrop" id="cmdPalette">
+          <div class="cmd-palette">
+            <div class="cmd-input-wrap">
+              <i class="ph-bold ph-magnifying-glass"></i>
+              <input type="text" class="cmd-input" placeholder="Type a command or search..." id="cmdInput" autocomplete="off">
+            </div>
+            <div class="cmd-list" id="cmdList">
+              <a href="${rPath}tools/codebox.html" class="cmd-item"><div class="cmd-item-left"><i class="ph-fill ph-terminal-window"></i> Launch Workspace</div><div class="cmd-item-right">↵</div></a>
+              <div class="cmd-item" onclick="toggleTheme(); toggleCmdK();"><div class="cmd-item-left"><i class="ph-bold ph-sun"></i> Toggle Theme Aesthetic</div></div>
+              <a href="${rPath}docs.html" class="cmd-item"><div class="cmd-item-left"><i class="ph-bold ph-book"></i> View Documentation</div></a>
+            </div>
+          </div>
+        </div>
+        `;
+    }
+}
+customElements.define('nitro-modals', NitroModals);
+
+// 4. GLOBAL INTERACTIONS (Safe for all pages)
+document.fonts.ready.then(() => {
+  setTimeout(() => {
+    document.body.classList.add('site-loaded');
+    setTimeout(() => { const tm = document.getElementById('techMarquee'); if(tm) tm.classList.add('loaded'); }, 300);
+  }, 100);
+}).catch(() => { document.body.classList.add('site-loaded'); });
+
+function toggleFeedbackModal() { const modal = document.getElementById('feedbackModal'); if(modal) modal.classList.toggle('active'); }
+function handleFeedbackClick(e) { if(e.target.id === 'feedbackModal') toggleFeedbackModal(); }
+function sendFeedback(e) {
+  e.preventDefault();
+  const btnText = document.getElementById('feedbackBtnText'); const spinner = document.getElementById('feedbackSpinner');
+  if(btnText) btnText.style.display = 'none'; if(spinner) spinner.style.display = 'block';
+  fetch("https://formsubmit.co/ajax/contactnitroide@gmail.com", {
+      method: "POST", headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ _captcha: "false", subject: "New Feedback from NitroIDE", message: document.getElementById('feedbackText').value })
+  }).then(res => res.json()).then(data => {
+      toggleFeedbackModal(); showToast("<i class='ph-bold ph-check-circle' style='color:var(--success); margin-right:6px;'></i> Feedback sent securely!");
+      const form = document.getElementById('feedbackForm'); if(form) form.reset();
+  }).catch(err => { showToast("<i class='ph-bold ph-warning-circle' style='color:var(--error); margin-right:6px;'></i> Error."); }).finally(() => {
+      if(btnText) btnText.style.display = 'block'; if(spinner) spinner.style.display = 'none';
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    // 3D Tilt Effect
+    document.querySelectorAll('.mockup-window').forEach(windowEl => {
+      windowEl.addEventListener('mousemove', (e) => {
+        const rect = windowEl.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+        const centerX = rect.width / 2; const centerY = rect.height / 2;
+        windowEl.style.transform = `perspective(1000px) rotateX(${((y - centerY) / centerY) * -4}deg) rotateY(${((x - centerX) / centerX) * 4}deg) scale3d(1.02, 1.02, 1.02)`;
+        windowEl.style.transition = 'none'; 
+      });
+      windowEl.addEventListener('mouseleave', () => { windowEl.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)'; windowEl.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'; });
+    });
+
+    const observer = new IntersectionObserver((entries, obs) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); obs.unobserve(entry.target); } }); }, { threshold: 0.1 });
+    document.querySelectorAll('[class*="reveal-"]').forEach(el => observer.observe(el));
+
+    const globalSpotlight = document.getElementById('globalSpotlight');
+    if(globalSpotlight) {
+        window.addEventListener('mousemove', (e) => { globalSpotlight.style.opacity = '1'; globalSpotlight.style.left = `${e.clientX}px`; globalSpotlight.style.top = `${e.clientY}px`; });
+        window.addEventListener('mouseleave', () => globalSpotlight.style.opacity = '0');
+    }
+
+    let statsAnimated = false;
+    const statsObserver = new IntersectionObserver((entries) => {
+      if(entries[0] && entries[0].isIntersecting && !statsAnimated) {
+         statsAnimated = true;
+         document.querySelectorAll('.stat-num').forEach(el => {
+            let end = parseInt(el.getAttribute('data-target')); let start = parseInt(el.getAttribute('data-start') || 0); let suffix = el.getAttribute('data-suffix');
+            let startTimestamp = null;
+            const step = (timestamp) => {
+              if (!startTimestamp) startTimestamp = timestamp;
+              const progress = Math.min((timestamp - startTimestamp) / 1500, 1);
+              el.innerHTML = Math.floor(progress * (end - start) + start) + suffix;
+              if (progress < 1) window.requestAnimationFrame(step);
+            };
+            window.requestAnimationFrame(step);
+         });
+      }
+    }, { threshold: 0.5 });
+    const sr = document.getElementById('statsRow'); if(sr) statsObserver.observe(sr);
+
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
+      btn.addEventListener('mousemove', (e) => { const rect = btn.getBoundingClientRect(); btn.style.transform = `translate(${(e.clientX - rect.left - rect.width / 2) * 0.3}px, ${(e.clientY - rect.top - rect.height / 2) * 0.3}px)`; });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = `translate(0px, 0px)`; });
+    });
+
+    document.querySelectorAll('.bento-card').forEach(card => {
+      card.addEventListener('mousemove', e => { const rect = card.getBoundingClientRect(); card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`); card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`); });
+    });
+
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('floatingNav'); const fab = document.getElementById('fab');
+      if(nav) { if (window.scrollY > 300) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }
+      if(fab) { if (window.scrollY > 500) fab.classList.add('visible'); else fab.classList.remove('visible'); }
+    });
+    
+    // Visitor Counter
+    const hasVisited = localStorage.getItem('nitroide_visited');
+    const getUrl = "https://abacus.jasoncameron.dev/get/nitroide/visits";
+    fetch(hasVisited ? getUrl : "https://abacus.jasoncameron.dev/hit/nitroide/visits").then(res => res.json()).then(data => {
+        const countEl = document.getElementById("visitor-count");
+        if (countEl && data.value !== undefined) { countEl.innerText = data.value.toLocaleString(); if (!hasVisited) localStorage.setItem('nitroide_visited', 'true'); }
+    }).catch(() => {});
+});
+
+
+// ==========================================================================
+// BLOG INDEX SEARCH & DYNAMIC RENDERING LOGIC
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const blogGrid = document.getElementById('blogGrid');
+  
+  // Safety check: Only execute this script if we are actually on the blog page
+  if (!blogGrid) return; 
+
+  let allBlogs = [];
+  const countBadge = document.getElementById('articleCount');
+  const searchInput = document.getElementById('articleSearch');
+
+  async function loadBlogs() {
+    try {
+      const response = await fetch('blog-data.json');
+      if (!response.ok) throw new Error('Failed to load blog data');
+      
+      const rawBlogs = await response.json();
+      
+      // AUTO-FIX: Remove any accidental copy-paste duplicates from the JSON
+      const uniqueBlogs = [];
+      const seenSlugs = new Set();
+      for (const blog of rawBlogs) {
+        if (!seenSlugs.has(blog.SLUG)) {
+          seenSlugs.add(blog.SLUG);
+          uniqueBlogs.push(blog);
+        }
+      }
+      
+      // Use the perfectly cleaned list, reversed so newest is at the top
+      allBlogs = uniqueBlogs.reverse();
+      
+      // Initial Render
+      renderGrid(allBlogs);
+      
+    } catch (error) {
+      console.error('Error loading blogs:', error);
+      blogGrid.innerHTML = '<p style="color: red; text-align: center; grid-column: 1/-1;">Unable to load articles at this time.</p>';
+      if (countBadge) countBadge.innerText = 'Error loading articles';
+    }
+  }
+
+  // Function to build the HTML cards based on the array
+  function renderGrid(blogsToRender) {
+    blogGrid.innerHTML = ''; // Clear current grid
+    
+    // Update the counter
+    if (countBadge) {
+      countBadge.innerHTML = `<i class="ph-fill ph-files" style="color: #00e5ff;"></i> ${blogsToRender.length} Articles Found`;
+    }
+
+    // Handle empty search results
+    if (blogsToRender.length === 0) {
+      blogGrid.innerHTML = `<div class="no-results"><i class="ph-duotone ph-ghost" style="font-size: 3rem; margin-bottom: 10px; display:block;"></i>No articles found matching your search.</div>`;
+      return;
+    }
+
+    // Loop through and generate cards
+    blogsToRender.forEach(blog => {
+      const card = document.createElement('div');
+      card.className = 'bento-card';
+      
+      card.innerHTML = `
+        <i class="ph-duotone ${blog.CTA_ICON || 'ph-article'} bento-icon" style="color: ${blog.THEME_COLOR || '#ffffff'};"></i>
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">
+          ${blog.CATEGORY} • ${blog.DATE}
+        </div>
+        <h2>${blog.H1_TITLE}</h2>
+        <div class="bento-content-swap">
+          <p class="bento-text">${blog.META_DESC}</p>
+          <div class="bento-code" style="display:flex; align-items:flex-end;">
+            <a href="${blog.SLUG}.html" class="btn-compact primary-btn" style="border-radius:6px; text-decoration:none;">
+              Read Article <i class="ph-bold ph-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      `;
+      blogGrid.appendChild(card);
+    });
+  }
+
+  // Initialize data fetch
+  loadBlogs();
+
+// Set up the Real-Time Search Bar listener
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      
+      // Filter the global array based on Title, Desc, Category, Keywords, OR CONTENT!
+      const filteredBlogs = allBlogs.filter(blog => {
+        return (
+          (blog.H1_TITLE && blog.H1_TITLE.toLowerCase().includes(searchTerm)) ||
+          (blog.META_DESC && blog.META_DESC.toLowerCase().includes(searchTerm)) ||
+          (blog.CATEGORY && blog.CATEGORY.toLowerCase().includes(searchTerm)) ||
+          (blog.KEYWORDS && blog.KEYWORDS.toLowerCase().includes(searchTerm)) ||
+          /* NEW: Deep Content Search */
+          (blog.CONTENT && blog.CONTENT.toLowerCase().includes(searchTerm))
+        );
+      });
+      
+      renderGrid(filteredBlogs);
+    });
+  }
+});
