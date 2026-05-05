@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O(1) Global Code Search via WebGPU Compute Shaders | NitroIDE</title>
+  <meta name="title" content="O(1) Global Code Search via WebGPU Compute Shaders | NitroIDE">
+  <meta name="description" content="Searching 100,000 files freezes the browser. Learn how NitroIDE offloads global regex searches to the GPU using WebGPU Compute Shaders and WGSL.">
+  <meta name="keywords" content="WebGPU compute shaders, WGSL text search, GPU accelerated regex browser, WebGPU vs WebGL, massive file search javascript, offload CPU to GPU web, NitroIDE webgpu">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #8b5cf6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">GRAPHICS PIPELINE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Global AST Search via WebGPU Compute Shaders.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When you press <code>Cmd+Shift+F</code> to search a massive monorepo, a standard IDE has to iterate through every single file sequentially using the CPU. Even with multi-threading, executing a complex Regular Expression across 100,000 files takes several seconds and completely spikes CPU temperatures.</p><p>NitroIDE completely abandons the CPU for global searches. We utilize <strong>WebGPU Compute Shaders</strong> to offload the text processing to your graphics card, searching thousands of files simultaneously across thousands of parallel GPU cores.</p><h2>Writing the WGSL Search Kernel</h2><p>Instead of writing our search algorithm in JavaScript, we write it in WGSL (WebGPU Shading Language). We load the raw byte arrays of your Virtual File System directly into VRAM (Video RAM). We then dispatch a compute shader where each GPU thread is responsible for searching exactly one chunk of text in parallel.</p><div class="docs-code"><span class="code-comment">// WGSL Compute Shader for parallel text searching</span><br>@group(<span class="code-num">0</span>) @binding(<span class="code-num">0</span>) <span class="code-keyword">var</span>&lt;storage, read&gt; fileData: <span class="code-keyword">array</span>&lt;u32&gt;;<br>@group(<span class="code-num">0</span>) @binding(<span class="code-num">1</span>) <span class="code-keyword">var</span>&lt;storage, read_write&gt; matchResults: <span class="code-keyword">array</span>&lt;i32&gt;;<br><br>@compute @workgroup_size(<span class="code-num">256</span>)<br><span class="code-keyword">fn</span> <span class="code-func">main</span>(@builtin(global_invocation_id) global_id: vec3&lt;u32&gt;) {<br>&nbsp;&nbsp;<span class="code-keyword">let</span> index = global_id.x;<br>&nbsp;&nbsp;<span class="code-comment">// GPU mathematically compares bytes in parallel across 4096 cores</span><br>&nbsp;&nbsp;<span class="code-keyword">if</span> (<span class="code-func">checkPatternMatch</span>(fileData[index])) {<br>&nbsp;&nbsp;&nbsp;&nbsp;matchResults[index] = <span class="code-num">1</span>; <span class="code-comment">// Flag as a match</span><br>&nbsp;&nbsp;}<br>}</div><div class="pro-tip" style="border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.05);"><i class="ph-fill ph-cpu" style="color: #8b5cf6;"></i><div><p><strong>Storage Buffers:</strong> Because WebGPU allows for massive `StorageBuffer` allocations (unlike the restrictive textures of WebGL), we can stream a 1GB project directory into the GPU, execute the search, and map the result buffer back to JavaScript in less than 50 milliseconds.</p></div></div><h2>Instantaneous Regex</h2><p>This architecture results in a search feature that is completely decoupled from project size. Whether you are searching a 10-file React app or the entire 30-million-line Linux Kernel codebase, the search completes almost instantaneously, bound only by the memory bandwidth of your graphics card.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #8b5cf61A; border: 1px solid #8b5cf64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Search at the Speed of Light.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Import a massive codebase and run a global regex search. Watch the GPU shred it.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #8b5cf6;">
+        Launch Workspace <i class="ph-bold ph-magnifying-glass"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Native App Routing via Cross-Document View Transitions | NitroIDE</title>
+  <meta name="title" content="Native App Routing via Cross-Document View Transitions | NitroIDE">
+  <meta name="description" content="React Router is bloated. Discover how NitroIDE builds a multi-page app (MPA) that feels like an SPA using the native Cross-Document View Transitions API.">
+  <meta name="keywords" content="View Transitions API, Cross-Document View Transitions, MPA vs SPA, native app routing browser, bypass React Router, fluid page transitions web, web architecture 2026">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #ec4899; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">UI PERFORMANCE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Native App Routing via Cross-Document View Transitions.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>For years, developers have built massive Single Page Applications (SPAs) just to get smooth, animated page transitions. If you wanted the file sidebar to slide out smoothly while the editor pane faded in, you were forced to use bloated client-side routers like React Router and ship megabytes of JavaScript state management.</p><p>NitroIDE completely reverses this architecture. We built the IDE as a hyper-fast Multi-Page Application (MPA) and achieved 120fps, native-app-style animations using the bleeding-edge <strong>Cross-Document View Transitions API</strong>.</p><h2>The Browser Takes Control</h2><p>With Cross-Document View Transitions, the animation logic is removed from JavaScript entirely. When a user clicks a link to navigate from the <code>/dashboard</code> to the <code>/editor</code>, the browser's C++ rendering engine takes a high-resolution screenshot of the old DOM, loads the new HTML document in the background, takes a screenshot of the new DOM, and smoothly interpolates between them on the GPU.</p><div class="docs-code"><span class="code-comment">/* Enabling native cross-document animations via CSS */</span><br><span class="code-keyword">@view-transition</span> {<br>&nbsp;&nbsp;<span class="code-attr">navigation</span>: auto;<br>}<br><br><span class="code-comment">/* Tagging elements so the GPU knows how to morph them across pages */</span><br><span class="code-keyword">.ide-sidebar</span> {<br>&nbsp;&nbsp;<span class="code-attr">view-transition-name</span>: main-sidebar;<br>}<br><br><span class="code-keyword">.active-file-tab</span> {<br>&nbsp;&nbsp;<span class="code-attr">view-transition-name</span>: active-tab;<br>}</div><div class="pro-tip" style="border-color: rgba(236, 72, 153, 0.3); background: rgba(236, 72, 153, 0.05);"><i class="ph-fill ph-magic-wand" style="color: #ec4899;"></i><div><p><strong>Shared Element Morphing:</strong> Because we tag our elements with <code>view-transition-name</code>, when you click a repository card on your dashboard, the browser natively pulls that exact card out of the layout, expands it into the full-screen editor header, and fades the IDE in around it. No JS physics engines required.</p></div></div><h2>The Death of the SPA</h2><p>This API fundamentally shifts web architecture. Because NitroIDE is an MPA, clicking a link fetches a pristine, tiny HTML document. We don't have to manage complex React unmount lifecycles, Redux store resets, or memory leaks across routes. The browser clears the memory perfectly on every click, while the UI morphs with absolute fluidity.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #ec48991A; border: 1px solid #ec48994D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Navigate at 120fps.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Click around the NitroIDE dashboard. Notice how it feels exactly like a native iOS or macOS app.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #ec4899;">
+        Open Dashboard <i class="ph-bold ph-browsers"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Defeating the Event Loop: Thread Blocking with Atomics | NitroIDE</title>
+  <meta name="title" content="Defeating the Event Loop: Thread Blocking with Atomics | NitroIDE">
+  <meta name="description" content="JavaScript workers don't have a sleep function. Discover how NitroIDE safely blocks Web Workers synchronously using Atomics.wait() without burning CPU cycles.">
+  <meta name="keywords" content="Atomics.wait javascript, block web worker thread, synchronous sleep javascript, SharedArrayBuffer atomics, multithreading browser, web worker mutex lock">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #ef4444; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">THREAD MANAGEMENT • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Defeating the Event Loop with Atomics.wait().</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>A fundamental rule of JavaScript is that you cannot synchronously pause execution. If you write a <code>while(true)</code> loop to wait for a condition, you will burn 100% of a CPU core and crash the browser. Developers usually rely on asynchronous Promises, but when dealing with high-performance WebAssembly modules and multi-threaded compilation, asynchronous code introduces unpredictable Event Loop latency.</p><p>NitroIDE requires deterministic, synchronous execution for cross-thread mutex locking. We achieve this by bypassing the Event Loop entirely using <code>SharedArrayBuffer</code> and the <strong>Atomics API</strong>.</p><h2>The Atomics.wait() Mechanism</h2><p>When our background compiler thread needs to wait for the main thread to release a file lock, it doesn't use a Promise. It uses <code>Atomics.wait()</code>. This low-level C-style instruction physically puts the Web Worker thread to sleep at the OS level. It yields the CPU core completely, consuming zero processing power until it is explicitly woken up.</p><div class="docs-code"><span class="code-comment">// Inside the Web Worker: Synchronously sleeping the thread</span><br><span class="code-keyword">const</span> lockBuffer = <span class="code-keyword">new</span> Int32Array(sharedArrayBuffer);<br><span class="code-keyword">const</span> LOCK_INDEX = <span class="code-num">0</span>;<br><br><span class="code-comment">// If the value at LOCK_INDEX is 1 (locked), sleep the thread</span><br>Atomics.<span class="code-func">wait</span>(lockBuffer, LOCK_INDEX, <span class="code-num">1</span>);<br><br><span class="code-comment">// --- THREAD IS COMPLETELY FROZEN HERE ---</span><br><br><span class="code-comment">// Execution only resumes once the main thread unlocks it</span><br>console.<span class="code-func">log</span>(<span class="code-string">'Lock released! Resuming compilation...'</span>);</div><div class="pro-tip" style="border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05);"><i class="ph-fill ph-hand-palm" style="color: #ef4444;"></i><div><p><strong>Main Thread Protection:</strong> The browser engine strictly prohibits calling <code>Atomics.wait()</code> on the main UI thread. If it were allowed, you could permanently freeze the entire browser tab. It is an exclusive superpower reserved solely for background Web Workers.</p></div></div><h2>Waking the Threads</h2><p>When the main thread finishes its task (like writing a file to IndexedDB), it simply changes the value in the <code>SharedArrayBuffer</code> and calls <code>Atomics.notify()</code>. The OS instantly wakes up the sleeping Web Worker, and execution resumes on the very next line of code without waiting for the next tick of the Event Loop.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #ef44441A; border: 1px solid #ef44444D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Unleash Multi-Threading.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Run heavy compilation tasks in our editor without dropping a single frame.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #ef4444;">
+        Launch IDE <i class="ph-bold ph-cpu"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

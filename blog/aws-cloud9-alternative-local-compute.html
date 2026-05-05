@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ultimate AWS Cloud9 Alternative | NitroIDE</title>
+  <meta name="title" content="The Ultimate AWS Cloud9 Alternative | NitroIDE">
+  <meta name="description" content="Stop paying Amazon for remote EC2 instances. Discover why NitroIDE's local WebAssembly execution makes it the best AWS Cloud9 alternative.">
+  <meta name="keywords" content="AWS Cloud9 alternative, cloud IDE vs local IDE, replace AWS Cloud9, zero cost cloud IDE, WebAssembly development environment">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f59e0b; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">CLOUD VS LOCAL • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">The Ultimate AWS Cloud9 Alternative.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>AWS Cloud9 was a pioneer in browser-based development. Its model is straightforward: you open a browser tab, and AWS connects you to a remote EC2 instance running your code. The problem? You are paying Amazon by the minute for compute power, and your typing experience is entirely dependent on the latency between your office and the `us-east-1` datacenter.</p>
+    
+    <h2>Zero-Cost Local Execution</h2>
+    <p>NitroIDE completely replaces the EC2 instance with your laptop's own CPU. By compiling our backend runtime into WebAssembly, we give you a desktop-grade IDE that executes entirely client-side. There are no hourly server costs, no auto-sleep functions to interrupt your workflow, and absolutely no latency.</p>
+
+    <div class="docs-code"><span class="code-comment">// The legacy Cloud9 Architecture</span><br><span class="code-keyword">const</span> cloud9 = {<br>&nbsp;&nbsp;<span class="code-attr">execution</span>: <span class="code-string">"Remote EC2 Instance"</span>,<br>&nbsp;&nbsp;<span class="code-attr">latency</span>: <span class="code-string">"80ms - 150ms"</span>,<br>&nbsp;&nbsp;<span class="code-attr">cost</span>: <span class="code-string">"Hourly AWS Compute Rates"</span><br>};<br><br><span class="code-comment">// The modern NitroIDE Architecture</span><br><span class="code-keyword">const</span> nitro = {<br>&nbsp;&nbsp;<span class="code-attr">execution</span>: <span class="code-string">"Local WebAssembly Runtime"</span>,<br>&nbsp;&nbsp;<span class="code-attr">latency</span>: <span class="code-string">"0ms (Local)"</span>,<br>&nbsp;&nbsp;<span class="code-attr">cost</span>: <span class="code-string">"Free"</span><br>};</div>
+
+    <div class="pro-tip" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);"><i class="ph-fill ph-cloud-slash" style="color: #f59e0b;"></i><div><p><strong>Offline Capable:</strong> If your company's VPN goes down or you lose internet access, AWS Cloud9 locks you out completely. NitroIDE's PWA architecture allows you to continue writing, compiling, and testing your applications entirely offline.</p></div></div>
+
+    <h2>Integrated AWS Tooling</h2>
+    <p>Moving away from Cloud9 doesn't mean moving away from AWS. NitroIDE fully supports importing the AWS CLI and Boto3 SDKs into your workspace. You can still deploy Lambdas, manage S3 buckets, and configure DynamoDB natively from our WebAssembly terminal, saving thousands in compute costs without sacrificing deployment velocity.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Ditch the EC2 Bill.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Experience the speed of local execution in a browser IDE.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #f59e0b;">
+        Launch NitroIDE <i class="ph-bold ph-cloud-slash"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

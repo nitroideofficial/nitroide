@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero-Backend API Testing via Service Worker Interception</title>
+  <meta name="title" content="Zero-Backend API Testing via Service Worker Interception">
+  <meta name="description" content="Build full-stack apps without a backend. Learn how NitroIDE utilizes Service Workers to intercept fetch requests and mock REST/GraphQL APIs locally.">
+  <meta name="keywords" content="mock service worker ide, intercept fetch requests browser, zero backend api testing, local REST mock browser, graphql offline testing, client-side api routing">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NETWORK INTERCEPTION • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Zero-Backend API Testing via Service Workers.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>A major friction point for frontend developers is waiting on backend teams. If you are building a React dashboard in NitroIDE but the production API isn't ready (or is blocked by CORS), your UI components are effectively dead. Traditional solutions require running a local Node.js Express server, which defeats the purpose of an instant browser IDE.</p><p>NitroIDE integrates an architectural pattern inspired by Mock Service Worker (MSW). We hijack the browser's network layer at the <strong>Service Worker</strong> level, intercepting outgoing <code>fetch</code> and <code>XMLHttpRequest</code> calls, and returning synthetic, user-defined JSON responses entirely offline.</p><h2>Hijacking the Network Layer</h2><p>When your frontend code calls <code>fetch('https://api.myapp.com/users')</code>, the request never actually hits the internet. Our registered Service Worker traps the request, matches the route against your local mock definitions, and constructs an artificial <code>Response</code> object.</p><div class="docs-code"><span class="code-comment">// Inside the NitroIDE Service Worker</span><br>self.<span class="code-func">addEventListener</span>(<span class="code-string">'fetch'</span>, (event) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> url = <span class="code-keyword">new</span> URL(event.request.url);<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-comment">// Intercepting a specific API route</span><br>&nbsp;&nbsp;<span class="code-keyword">if</span> (url.pathname === <span class="code-string">'/api/users'</span> && event.request.method === <span class="code-string">'GET'</span>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> mockData = [{ <span class="code-attr">id</span>: <span class="code-num">1</span>, <span class="code-attr">name</span>: <span class="code-string">'Alice'</span> }, { <span class="code-attr">id</span>: <span class="code-num">2</span>, <span class="code-attr">name</span>: <span class="code-string">'Bob'</span> }];<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Returning a synthetic HTTP 200 response</span><br>&nbsp;&nbsp;&nbsp;&nbsp;event.<span class="code-func">respondWith</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">new</span> Response(JSON.<span class="code-func">stringify</span>(mockData), {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-attr">headers</span>: { <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span> }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})<br>&nbsp;&nbsp;&nbsp;&nbsp;);<br>&nbsp;&nbsp;}<br>});</div><div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-wifi-slash" style="color: #f43f5e;"></i><div><p><strong>Simulating Network Chaos:</strong> Because we control the <code>Response</code> generation, NitroIDE allows developers to artificially inject network latency (e.g., <code>setTimeout</code> for 2000ms) or force HTTP 500 errors to test frontend loading states and error boundaries natively.</p></div></div><h2>The GraphQL Advantage</h2><p>This architecture is particularly devastating for GraphQL development. NitroIDE intercepts POST requests to <code>/graphql</code>, parses the AST of the requested query, and dynamically resolves the fields against a localized SQLite WebAssembly database, simulating a massive GraphQL gateway without a single running server.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f43f5e1A; border: 1px solid #f43f5e4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Mock APIs Instantly.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Build data-driven frontends without waiting for backend deployments.</p>
+      <a href="../tools/codebox.html?env=react" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f43f5e;">
+        Launch Sandbox <i class="ph-bold ph-plugs"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

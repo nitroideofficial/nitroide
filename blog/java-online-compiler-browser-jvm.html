@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Online Compiler: Running the JVM Natively in the Browser</title>
+  <meta name="title" content="Java Online Compiler: Running the JVM Natively in the Browser">
+  <meta name="description" content="Stop waiting in queues for remote cloud execution. Learn how NitroIDE compiles the Java Virtual Machine (JVM) to WebAssembly for instant, local Java compilation.">
+  <meta name="keywords" content="Java online compiler, free Java IDE online, JDoodle alternative, run Java in browser, WASM JVM, learn Java online, enterprise web IDE, java compiler for students">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #ea580c; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FRAMEWORKS & TOOLS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Java Online Compiler: The JVM in your Browser.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Computer Science students and enterprise developers alike rely heavily on Java. But if you try to use an online Java compiler like JDoodle or OnlineGDB, you are instantly hit with a frustrating reality: Java is heavy. When you click "Run," these websites place your code into a server queue. It can take 5 to 10 seconds for a remote Docker container to spin up, compile your `.java` files, execute the bytecode, and return the console output.</p><p>NitroIDE completely bypasses the cloud. We are the fastest <strong>Java online compiler</strong> because we compiled the actual Java Virtual Machine (JVM) into WebAssembly. Your Java code compiles and executes directly on your local CPU.</p><h2>Zero-Latency Execution</h2><p>By bringing the JVM to the client side, there is zero network latency when executing your code. You get the raw, unthrottled performance of a native desktop environment right inside a lightweight browser tab. You can compile massively complex, object-oriented architectures instantly.</p><div class="docs-code"><span class="code-comment">// Executing standard Java natively in the browser via WASM</span><br><span class="code-keyword">import</span> java.util.ArrayList;<br><span class="code-keyword">import</span> java.util.List;<br><br><span class="code-keyword">public class</span> Main {<br>&nbsp;&nbsp;<span class="code-keyword">public static void</span> <span class="code-func">main</span>(String[] args) {<br>&nbsp;&nbsp;&nbsp;&nbsp;List&lt;String&gt; systems = <span class="code-keyword">new</span> ArrayList&lt;&gt;();<br>&nbsp;&nbsp;&nbsp;&nbsp;systems.<span class="code-func">add</span>(<span class="code-string">"NitroIDE JVM"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// This stream executes locally, bound only by your processor</span><br>&nbsp;&nbsp;&nbsp;&nbsp;systems.stream()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.map(s -&gt; s + <span class="code-string">" is running at native speed."</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.forEach(System.out::println);<br>&nbsp;&nbsp;}<br>}</div><div class="pro-tip" style="border-color: rgba(234, 88, 12, 0.3); background: rgba(234, 88, 12, 0.05);"><i class="ph-fill ph-coffee" style="color: #ea580c;"></i><div><p><strong>Interactive Console Input:</strong> Because remote compilers rely on HTTP requests, they struggle with interactive <code>Scanner(System.in)</code> inputs. NitroIDE's integrated terminal is bidirectional and entirely local, meaning you can build real-time, interactive CLI games and applications flawlessly.</p></div></div><h2>The Perfect CS Classroom Tool</h2><p>Say goodbye to teaching students how to configure the `JAVA_HOME` path variable or installing bulky IDEs like Eclipse. NitroIDE provides a pristine, instantly accessible Java workspace with a highly polished, distraction-free interface that lets students focus solely on learning algorithms and data structures.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #ea580c1A; border: 1px solid #ea580c4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Compile Java Instantly.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a native JVM workspace in your browser in milliseconds.</p>
+      <a href="../tools/codebox.html?env=java" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #ea580c;">
+        Launch Java IDE <i class="ph-bold ph-terminal-window"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

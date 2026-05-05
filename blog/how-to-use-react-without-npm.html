@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Build React Apps Without npm | Browser AST Transpilation</title>
+  <meta name="title" content="How to Build React Apps Without npm | Browser AST Transpilation">
+  <meta name="description" content="Bypass the Node.js event loop. Learn how to leverage client-side AST transpilation to execute raw React JSX directly in the V8 engine using NitroIDE.">
+  <meta name="keywords" content="react without npm, client-side JSX transpilation, babel standalone AST parsing, zero latency react editor, bypass webpack node_modules">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #00e5ff; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">REACT ENGINEERING • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Executing JSX via Client-Side AST Transpilation.</h1>
+    
+    <p>The modern frontend ecosystem is drowning in dependency bloat. Booting up a simple React component requires downloading a 400MB <code>node_modules</code> black hole, initializing a Webpack dev server, and waiting for the Node.js event loop to process file I/O operations.</p>
+
+    <p>We engineered a way to bypass this entirely. By pushing the compilation matrix to the client, you can execute raw JSX in an ephemeral memory sandbox—achieving absolute zero-latency rendering.</p>
+
+    <h2>The Fallacy of the Build Step</h2>
+    <p>Browsers natively execute ES6 JavaScript. The only reason we require bundlers is to parse Abstract Syntax Trees (AST) and transform HTML-like JSX into <code>React.createElement()</code> calls. If we hijack this transpilation pipeline and move it to the client via a Babel standalone instance, we eliminate the need for a backend server entirely.</p>
+    
+    <div class="docs-code">
+<span class="code-comment">&lt;!-- Injecting the runtime directly into the DOM headers --&gt;</span>
+<span class="code-tag">&lt;script</span> <span class="code-attr">src</span>=<span class="code-string">"https://unpkg.com/react@18/umd/react.production.min.js"</span><span class="code-tag">&gt;&lt;/script&gt;</span>
+<span class="code-tag">&lt;script</span> <span class="code-attr">src</span>=<span class="code-string">"https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"</span><span class="code-tag">&gt;&lt;/script&gt;</span>
+<span class="code-tag">&lt;script</span> <span class="code-attr">src</span>=<span class="code-string">"https://unpkg.com/@babel/standalone/babel.min.js"</span><span class="code-tag">&gt;&lt;/script&gt;</span>
+    </div>
+
+    <h2>Memory-Allocated Execution</h2>
+    <p>Traditional cloud IDEs (like CodeSandbox) spin up costly Docker containers to run your React app, transmitting state changes over WebSockets. NitroIDE allocates a local memory partition inside your browser's V8 engine isolate. When you type, the Monaco Editor engine intercepts the keystrokes and immediately feeds them into our local evaluation hook.</p>
+
+    <div class="docs-code">
+<span class="code-comment">// Raw JSX parsed locally without file system latency</span>
+<span class="code-keyword">const</span> <span class="code-func">QuantumComponent</span> = () =&gt; {
+  <span class="code-keyword">const</span> [cycles, setCycles] = React.useState(<span class="code-num">0</span>);
+  
+  <span class="code-keyword">return</span> (
+    <span class="code-tag">&lt;button</span> <span class="code-attr">onClick</span>={<span class="code-func">() =&gt; setCycles(prev =&gt; prev + 1)</span>}<span class="code-tag">&gt;</span>
+      Render Cycles: {cycles}
+    <span class="code-tag">&lt;/button&gt;</span>
+  );
+};
+
+<span class="code-keyword">const</span> root = ReactDOM.<span class="code-func">createRoot</span>(document.<span class="code-func">getElementById</span>(<span class="code-string">'root'</span>));
+root.<span class="code-func">render</span>(<span class="code-tag">&lt;QuantumComponent /&gt;</span>);
+    </div>
+
+    <div class="pro-tip">
+      <i class="ph-fill ph-cpu"></i>
+      <div>
+        <p><strong>Hardware Acceleration:</strong> Because NitroIDE bypasses network requests, component re-renders are bottlenecked only by your device's refresh rate (typically 60-120hz), resulting in a flawlessly synchronized Hot Module Replacement (HMR) experience.</p>
+      </div>
+    </div>
+
+    <h2>The Paradigm Shift</h2>
+    <p>By migrating the build step to the client, we grant developers an untethered, offline-capable environment to test complex state hooks, prop drilling, and layout shifting without the administrative overhead of package management.</p>
+
+    <!-- NEW PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Initialize the Engine.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Bypass the Node.js runtime. Execute pure JSX directly in your browser's local memory partition.</p>
+      <a href="../tools/codebox.html?env=react" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch React Sandbox <i class="ph-bold ph-rocket-launch"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

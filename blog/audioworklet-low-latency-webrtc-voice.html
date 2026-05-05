@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sub-20ms Voice Chat via AudioWorklet and WebRTC | NitroIDE</title>
+  <meta name="title" content="Sub-20ms Voice Chat via AudioWorklet and WebRTC | NitroIDE">
+  <meta name="description" content="Standard WebRTC audio has jitter. Learn how NitroIDE leverages AudioWorklet for ultra-low latency pair programming voice channels.">
+  <meta name="keywords" content="AudioWorklet web audio api, WebRTC low latency voice, pair programming audio chat, bypassing main thread audio, browser voice chat optimization, PCM audio streams">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #10b981; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">MEDIA PIPELINE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Sub-20ms Voice Chat via AudioWorklet & WebRTC.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When implementing pair programming, text isn't enough. You need seamless voice communication. Unfortunately, standard HTML5 <code>&lt;audio&gt;</code> tags and traditional WebRTC streams are tied to the browser's main thread. If the IDE is compiling a massive AST, the main thread stutters, causing the audio to clip, pop, and lag.</p><p>To achieve Discord-level voice quality inside a browser IDE, NitroIDE entirely bypasses the main thread using the Web Audio API's <strong>AudioWorklet</strong> interface.</p><h2>The Audio Rendering Thread</h2><p>AudioWorklet allows us to execute custom JavaScript audio processing scripts in a dedicated, high-priority audio rendering thread. When your microphone captures a raw PCM (Pulse-Code Modulation) stream, the AudioWorklet intercepts it, applies client-side noise suppression, and pipes the buffer directly into the WebRTC stream without touching the UI thread.</p><div class="docs-code"><span class="code-comment">// Initializing an AudioWorkletProcessor in a dedicated thread</span><br><span class="code-keyword">class</span> NitroVoiceProcessor <span class="code-keyword">extends</span> AudioWorkletProcessor {<br>&nbsp;&nbsp;<span class="code-func">process</span>(inputs, outputs, parameters) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> input = inputs[<span class="code-num">0</span>];<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> output = outputs[<span class="code-num">0</span>];<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">let</span> channel = <span class="code-num">0</span>; channel &lt; input.length; ++channel) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Apply noise gate and copy PCM buffer to output</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output[channel].<span class="code-func">set</span>(input[channel]);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">true</span>; <span class="code-comment">// Keep processor alive</span><br>&nbsp;&nbsp;}<br>}<br><span class="code-func">registerProcessor</span>(<span class="code-string">'nitro-voice'</span>, NitroVoiceProcessor);</div><div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);"><i class="ph-fill ph-microphone-stage" style="color: #10b981;"></i><div><p><strong>SharedArrayBuffer Integration:</strong> To display the active "Voice Volume" UI indicator in the editor, we don't use <code>postMessage</code> (which adds latency). The AudioWorklet writes the volume amplitude to a <code>SharedArrayBuffer</code>, which the main thread reads synchronously at 60fps for real-time visual feedback.</p></div></div><h2>Eliminating Jitter</h2><p>By keeping the audio encoding and decoding strictly within the AudioWorklet thread, we guarantee that compiling a 10MB JavaScript file will never interrupt your conversation. The result is a rock-solid, sub-20ms latency voice channel that rivals native desktop VoIP applications.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #10b9811A; border: 1px solid #10b9814D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Talk in Real-Time.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Start a collaborative session and experience hardware-accelerated voice chat.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #10b981;">
+        Launch Workspace <i class="ph-bold ph-users"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

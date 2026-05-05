@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controlling IoT Devices via the Web Bluetooth API | NitroIDE</title>
+  <meta name="title" content="Controlling IoT Devices via the Web Bluetooth API | NitroIDE">
+  <meta name="description" content="Connect your code to the real world. Learn how NitroIDE utilizes the Web Bluetooth API to interface with physical IoT devices directly from a browser IDE.">
+  <meta name="keywords" content="Web Bluetooth API, IoT browser IDE, connect Bluetooth to web app, hardware debugging online, web physical computing">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #3b82f6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">HARDWARE INTEGRATION • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">IoT Integration via Web Bluetooth.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Writing code that controls the physical world is the holy grail of hardware engineering. Historically, communicating with Bluetooth Low Energy (BLE) devices required writing native Swift for iOS or C++ for Windows. NitroIDE bridges the gap by providing direct access to the <strong>Web Bluetooth API</strong>, right from your browser tab.</p>
+    
+    <h2>Connecting to Physical Hardware</h2>
+    <p>Because NitroIDE executes your scripts locally in a secure, same-origin sandbox, you can request access to nearby Bluetooth devices directly from the IDE's terminal or preview pane. Whether you are reading biometric data from a heart rate monitor or sending movement commands to a robotic drone, the connection is established securely without installing any native drivers.</p>
+
+    <div class="docs-code"><span class="code-comment">// Connecting to a custom BLE drone controller via NitroIDE</span><br><span class="code-keyword">async</span> <span class="code-keyword">function</span> <span class="code-func">connectToDrone</span>() {<br>&nbsp;&nbsp;<span class="code-keyword">try</span> {<br>&nbsp;&nbsp;&nbsp;&nbsp;console.<span class="code-func">log</span>(<span class="code-string">'Requesting Bluetooth Device...'</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> device = <span class="code-keyword">await</span> navigator.bluetooth.<span class="code-func">requestDevice</span>({<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-attr">filters</span>: [{<span class="code-attr">services</span>: [<span class="code-string">'battery_service'</span>, <span class="code-string">'19b10000-e8f2-537e-4f6c-d104768a1214'</span>]}]<br>&nbsp;&nbsp;&nbsp;&nbsp;});<br><br>&nbsp;&nbsp;&nbsp;&nbsp;console.<span class="code-func">log</span>(<span class="code-string">'Connecting to GATT Server...'</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> server = <span class="code-keyword">await</span> device.gatt.<span class="code-func">connect</span>();<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Send control packets directly over WebBluetooth</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> server;<br>&nbsp;&nbsp;} <span class="code-keyword">catch</span>(error) {<br>&nbsp;&nbsp;&nbsp;&nbsp;console.<span class="code-func">error</span>(<span class="code-string">'Connection failed:'</span>, error);<br>&nbsp;&nbsp;}<br>}</div>
+
+    <div class="pro-tip" style="border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05);"><i class="ph-fill ph-bluetooth" style="color: #3b82f6;"></i><div><p><strong>Offline IoT Prototyping:</strong> Combine the Web Bluetooth API with our Progressive Web App (PWA) architecture. You can install NitroIDE on your laptop, take it to an active job site with zero Wi-Fi, and continue to debug and flash your physical hardware devices entirely offline.</p></div></div>
+
+    <h2>Real-Time Telemetry</h2>
+    <p>You can pipe the incoming data from a connected Bluetooth sensor directly into the built-in NitroIDE state visualizer or an HTML Canvas, creating high-performance, real-time telemetry dashboards for your hardware prototypes.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Connect Your Hardware.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Write code that interacts with the physical world natively.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #3b82f6;">
+        Launch Workspace <i class="ph-bold ph-bluetooth"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

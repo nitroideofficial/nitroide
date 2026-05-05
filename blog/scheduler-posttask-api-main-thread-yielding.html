@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligent Thread Yielding via the Prioritized Task Scheduling API</title>
+  <meta name="title" content="Intelligent Thread Yielding via the Prioritized Task Scheduling API">
+  <meta name="description" content="Don't use setTimeout to yield the main thread. See how NitroIDE leverages the new scheduler.postTask() API to keep the editor at 120fps during heavy workloads.">
+  <meta name="keywords" content="scheduler.postTask javascript, Prioritized Task Scheduling API, yield main thread browser, prevent frozen UI web app, setTimeout alternative javascript, requestIdleCallback modern, IDE event loop optimization">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #0ea5e9; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINE INTERNALS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Intelligent Yielding via scheduler.postTask().</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When an IDE formats a 50,000-line JSON file, executing that task synchronously will completely freeze the browser's Event Loop for several seconds. The traditional hack to prevent this UI freeze is "yielding" to the main thread using <code>setTimeout(fn, 0)</code> or <code>requestIdleCallback()</code>. However, these methods are incredibly imprecise and lack the concept of task prioritization.</p><p>NitroIDE engineers adopted the native <strong>Prioritized Task Scheduling API</strong> (<code>scheduler.postTask()</code>) to intelligently slice massive computational workloads into micro-tasks, allowing the browser's C++ scheduler to handle the execution priority natively.</p><h2>The Priority Queue</h2><p>Instead of hoping the browser finds idle time, <code>scheduler.postTask</code> allows us to explicitly tag tasks with three priority levels: <code>user-blocking</code> (keystrokes), <code>user-visible</code> (UI updates), and <code>background</code> (telemetry/formatting). When we format a massive file, we enqueue the formatting chunks as <code>background</code> tasks.</p><div class="docs-code"><span class="code-comment">// Yielding a heavy formatting task safely using scheduler.postTask</span><br><span class="code-keyword">async</span> <span class="code-keyword">function</span> <span class="code-func">formatMassiveFile</span>(astChunks) {<br>&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">const</span> chunk <span class="code-keyword">of</span> astChunks) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Tell the OS this is a low-priority background task</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">await</span> scheduler.<span class="code-func">postTask</span>(() =&gt; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">formatChunk</span>(chunk);<br>&nbsp;&nbsp;&nbsp;&nbsp;}, { <span class="code-attr">priority</span>: <span class="code-string">'background'</span> });<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// The browser will AUTOMATICALLY pause this loop if the user</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// starts typing, prioritizing the 'user-blocking' keystrokes.</span><br>&nbsp;&nbsp;}<br>}</div><div class="pro-tip" style="border-color: rgba(14, 165, 233, 0.3); background: rgba(14, 165, 233, 0.05);"><i class="ph-fill ph-traffic-cone" style="color: #0ea5e9;"></i><div><p><strong>TaskControllers & AbortSignals:</strong> The true power of this API is dynamic reprioritization. By passing a <code>TaskController</code> to the tasks, NitroIDE can instantly upgrade a <code>background</code> task to <code>user-blocking</code> if the user suddenly scrolls to that section of the file, ensuring the code they are looking at formats first.</p></div></div><h2>The Blinking Cursor Guarantee</h2><p>This architecture guarantees that the text cursor will never stop blinking, no matter how hard the engine is working. The browser natively preempts our heavy JavaScript logic to process your keystrokes and paint the next frame, providing a perfectly smooth 120fps experience.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #0ea5e91A; border: 1px solid #0ea5e94D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Test the Event Loop.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Trigger a massive code format and try typing. The UI will never freeze.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #0ea5e9;">
+        Launch Workspace <i class="ph-bold ph-spinner"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

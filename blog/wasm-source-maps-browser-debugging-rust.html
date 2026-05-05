@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debugging Rust/C++ in the Browser via WASM Source Maps</title>
+  <meta name="title" content="Debugging Rust/C++ in the Browser via WASM Source Maps">
+  <meta name="description" content="WebAssembly is notoriously difficult to debug. Learn how NitroIDE integrates DWARF debug info and WASM Source Maps to debug Rust and C++ directly in the browser.">
+  <meta name="keywords" content="WASM source maps, debugging webassembly browser, DWARF debug info javascript, rust browser ide, c++ webassembly debugger, nitroide wasm tools">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f97316; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">WEBASSEMBLY • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Debugging Rust & C++ via WASM Source Maps.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Compiling Rust or C++ to WebAssembly (WASM) and running it in the browser is incredible—until you hit an error. When a WASM module panics, the browser console traditionally spits out an unreadable stack trace referencing raw memory offsets like <code>wasm-function[124]:0x1a4</code>. For a web-based IDE, this developer experience is unacceptable.</p><p>NitroIDE bridges the gap between binary execution and high-level source code by deeply integrating <strong>WASM Source Maps</strong> and <strong>DWARF Debug Information</strong> directly into our Monaco Editor environment.</p><h2>The DWARF Standard in the Browser</h2><p>DWARF is a widely used, standardized debugging data format originally built for C/C++ compilers like GCC and Clang. When NitroIDE's client-side compiler builds your Rust code, we instruct LLVM to embed DWARF metadata directly into the <code>.wasm</code> binary payload.</p><div class="docs-code"><span class="code-comment">// Fetching the WASM module and extracting DWARF source maps</span><br><span class="code-keyword">const</span> response = <span class="code-keyword">await</span> <span class="code-func">fetch</span>(<span class="code-string">'engine.wasm'</span>);<br><span class="code-keyword">const</span> buffer = <span class="code-keyword">await</span> response.<span class="code-func">arrayBuffer</span>();<br><br><span class="code-comment">// Parsing the custom "name" and "sourceMappingURL" sections</span><br><span class="code-keyword">const</span> wasmModule = <span class="code-keyword">await</span> WebAssembly.<span class="code-func">compile</span>(buffer);<br><span class="code-keyword">const</span> debugSections = WebAssembly.Module.<span class="code-func">customSections</span>(wasmModule, <span class="code-string">'.debug_info'</span>);</div><div class="pro-tip" style="border-color: rgba(249, 115, 22, 0.3); background: rgba(249, 115, 22, 0.05);"><i class="ph-fill ph-bug" style="color: #f97316;"></i><div><p><strong>DevTools Integration:</strong> Because we properly map these DWARF sections, when your Rust code panics in NitroIDE, you don't see memory addresses. Our integrated terminal translates the WASM trap back into the exact Rust filename, line number, and function name where the error occurred.</p></div></div><h2>Breakpoints and Memory Inspection</h2><p>Taking this a step further, NitroIDE allows you to set visual breakpoints in your Rust source code. Because we map the exact byte offsets of the WASM instruction to the AST line numbers, the editor halts execution, allowing you to inspect the WASM linear memory buffer (as localized variables) before resuming the thread.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f973161A; border: 1px solid #f973164D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Debug at the Binary Level.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Compile C++ or Rust to WebAssembly and debug it with flawless source mapping.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f97316;">
+        Launch WASM Environment <i class="ph-bold ph-cpu"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

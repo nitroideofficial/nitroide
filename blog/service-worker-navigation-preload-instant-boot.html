@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parallel IDE Booting via Navigation Preload | NitroIDE</title>
+  <meta name="title" content="Parallel IDE Booting via Navigation Preload | NitroIDE">
+  <meta name="description" content="Eliminate Service Worker boot delays. See how NitroIDE achieves instant page loads by implementing the Navigation Preload API.">
+  <meta name="keywords" content="Navigation Preload API, service worker boot time, parallel execution browser, instant load web app, PWA performance optimization, reduce time to interactive">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #0ea5e9; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">UI PERFORMANCE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Parallel Booting via Navigation Preload.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Progressive Web Apps (PWAs) use Service Workers to intercept network requests and serve cached files instantly. However, there is a hidden performance penalty: when you navigate to the app, the browser has to physically boot up the Service Worker thread <em>before</em> it can ask it for the cached files. This thread spin-up can delay the IDE's "Time to Interactive" by up to 500ms on slower devices.</p><p>NitroIDE crushes this delay by implementing the <strong>Navigation Preload API</strong>. This allows the browser to fetch essential network resources in parallel while the Service Worker is still booting up.</p><h2>Breaking the Boot Bottleneck</h2><p>Without Navigation Preload, the execution is strictly sequential: <code>User Clicks URL -&gt; Boot Service Worker -&gt; Intercept Fetch -&gt; Request Network/Cache</code>. By explicitly enabling Navigation Preload during the <code>activate</code> event, we force the browser to run the network request and the worker boot simultaneously.</p><div class="docs-code"><span class="code-comment">// Enabling Navigation Preload during SW activation</span><br>self.<span class="code-func">addEventListener</span>(<span class="code-string">'activate'</span>, event =&gt; {<br>&nbsp;&nbsp;event.<span class="code-func">waitUntil</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;self.registration.navigationPreload.<span class="code-func">enable</span>()<br>&nbsp;&nbsp;);<br>});<br><br><span class="code-comment">// Utilizing the preloaded response inside the fetch handler</span><br>self.<span class="code-func">addEventListener</span>(<span class="code-string">'fetch'</span>, event =&gt; {<br>&nbsp;&nbsp;event.<span class="code-func">respondWith</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">async</span> <span class="code-keyword">function</span>() {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// The preloadResponse is already streaming in!</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> preloaded = <span class="code-keyword">await</span> event.preloadResponse;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (preloaded) <span class="code-keyword">return</span> preloaded;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-func">fetch</span>(event.request);<br>&nbsp;&nbsp;&nbsp;&nbsp;}()<br>&nbsp;&nbsp;);<br>});</div><div class="pro-tip" style="border-color: rgba(14, 165, 233, 0.3); background: rgba(14, 165, 233, 0.05);"><i class="ph-fill ph-rocket-launch" style="color: #0ea5e9;"></i><div><p><strong>The 500ms Advantage:</strong> By the time the Service Worker finishes initializing its internal caches and IndexedDB connections, the HTML and critical CSS of the NitroIDE workspace are already sitting in the <code>preloadResponse</code> buffer, ready to be painted instantly.</p></div></div><h2>The Illusion of Desktop Software</h2><p>Combined with aggressive WASM caching and V8 memory snapshots, Navigation Preload allows NitroIDE to jump from a cold URL navigation to a fully initialized, blinking text cursor in under 300 milliseconds. This completely breaks the psychological barrier of web applications, making it feel exactly like opening a native binary executable.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #0ea5e91A; border: 1px solid #0ea5e94D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Experience Instant Load Times.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Close the tab, reopen it, and watch the IDE boot faster than you can blink.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #0ea5e9;">
+        Launch IDE <i class="ph-bold ph-lightning"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

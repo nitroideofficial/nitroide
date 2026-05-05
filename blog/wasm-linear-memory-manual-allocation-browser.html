@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Defeating Garbage Collection: Manual Memory Management in the Browser</title>
+  <meta name="title" content="Defeating Garbage Collection: Manual Memory Management in the Browser">
+  <meta name="description" content="Stop relying on the V8 Garbage Collector. See how NitroIDE implements custom malloc() and free() inside WebAssembly Linear Memory for zero-GC pauses.">
+  <meta name="keywords" content="WASM linear memory, manual memory management javascript, bypass V8 garbage collector, webassembly malloc free, zero allocation browser, rust wasm memory pool">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f97316; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">MEMORY MANAGEMENT • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Manual Memory Management via WASM Linear Memory.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>JavaScript is a garbage-collected language. You create an object, and eventually, the V8 engine pauses your application to clean it up. For standard websites, this is fine. For a 120fps browser IDE parsing 50-megabyte Abstract Syntax Trees, a Garbage Collection (GC) "Stop-The-World" event will freeze the entire editor for over 100 milliseconds.</p><p>To guarantee absolute 0ms GC pauses, NitroIDE implements <strong>Manual Memory Management</strong>. We completely bypass JavaScript object instantiation for heavy compiler tasks, writing our data directly into WebAssembly Linear Memory.</p><h2>Treating the Browser like C++</h2><p>WebAssembly exposes its memory to JavaScript as a single, massive <code>SharedArrayBuffer</code>. Instead of creating JS objects (<code>{ type: 'Identifier', name: 'foo' }</code>), we use a custom Rust allocator to reserve a slice of that buffer. We then write the struct data as raw bytes using a <code>DataView</code>.</p><div class="docs-code"><span class="code-comment">// Bypassing JS Garbage Collection by writing directly to RAM</span><br><span class="code-keyword">const</span> memory = wasmInstance.exports.memory;<br><span class="code-keyword">const</span> dataView = <span class="code-keyword">new</span> DataView(memory.buffer);<br><br><span class="code-keyword">const</span> <span class="code-func">createToken</span> = (typeId, start, end) =&gt; {<br>&nbsp;&nbsp;<span class="code-comment">// Call custom malloc() compiled from Rust/C++</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> pointer = wasmInstance.exports.<span class="code-func">allocate_memory</span>(<span class="code-num">12</span>); <span class="code-comment">// 12 bytes</span><br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-comment">// Write raw bytes directly to the allocated pointer</span><br>&nbsp;&nbsp;dataView.<span class="code-func">setUint32</span>(pointer, typeId, <span class="code-keyword">true</span>);<br>&nbsp;&nbsp;dataView.<span class="code-func">setUint32</span>(pointer + <span class="code-num">4</span>, start, <span class="code-keyword">true</span>);<br>&nbsp;&nbsp;dataView.<span class="code-func">setUint32</span>(pointer + <span class="code-num">8</span>, end, <span class="code-keyword">true</span>);<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-keyword">return</span> pointer;<br>};</div><div class="pro-tip" style="border-color: rgba(249, 115, 22, 0.3); background: rgba(249, 115, 22, 0.05);"><i class="ph-fill ph-memory" style="color: #f97316;"></i><div><p><strong>Explicit Memory Deallocation:</strong> When a file is closed, we don't wait for V8 to clean it up. We explicitly call our WASM <code>free(pointer)</code> function. Because the browser engine sees zero JavaScript objects being created or destroyed, the Garbage Collector never runs, ensuring a perfectly flat memory profile.</p></div></div><h2>The Pointer-Based Architecture</h2><p>By shifting to a pointer-based architecture, our web workers can pass massive ASTs to the main thread simply by passing a 32-bit integer (the memory address). This eliminates all JSON serialization overhead, making cross-thread communication mathematically instantaneous.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f973161A; border: 1px solid #f973164D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Feel the Zero-GC Speed.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Load massive files. You will never feel a Garbage Collection stutter again.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f97316;">
+        Launch IDE <i class="ph-bold ph-cpu"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

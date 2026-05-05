@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Git Commits via Service Worker Background Sync | NitroIDE</title>
+  <meta name="title" content="Offline Git Commits via Service Worker Background Sync | NitroIDE">
+  <meta name="description" content="Never lose code on a train again. See how NitroIDE uses the Background Sync API to queue Git commits offline and sync them when the network returns.">
+  <meta name="keywords" content="Background Sync API, offline git commits browser, service worker background sync, offline-first web IDE, PWA offline sync, indexeddb git repository">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f59e0b; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">OFFLINE ARCHITECTURE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Queueing Offline Git Commits via Background Sync.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Standard cloud IDEs are completely useless on a train or an airplane. If your connection drops for even a second while pushing a commit, the operation fails, the socket disconnects, and you are left staring at a loading spinner. NitroIDE treats offline execution as a primary feature, not an edge case.</p><p>We solve the offline commit problem by marrying a local IndexedDB Git implementation with the modern <strong>Background Sync API</strong> via our Service Worker.</p><h2>The Background Sync Queue</h2><p>When you type <code>git push</code> in our terminal, the engine checks <code>navigator.onLine</code>. If you are offline, it doesn't throw an error. Instead, it writes the serialized Git commit objects to a dedicated IndexedDB table and registers a "sync" tag with the Service Worker.</p><div class="docs-code"><span class="code-comment">// Registering an offline push operation to be synced later</span><br><span class="code-keyword">await</span> indexedDB.<span class="code-func">put</span>(<span class="code-string">'pending-pushes'</span>, serializedCommit);<br><br><span class="code-keyword">const</span> registration = <span class="code-keyword">await</span> navigator.serviceWorker.ready;<br><span class="code-keyword">try</span> {<br>&nbsp;&nbsp;<span class="code-keyword">await</span> registration.sync.<span class="code-func">register</span>(<span class="code-string">'sync-git-push'</span>);<br>&nbsp;&nbsp;console.<span class="code-func">log</span>(<span class="code-string">'Commit queued for background sync.'</span>);<br>} <span class="code-keyword">catch</span> (err) {<br>&nbsp;&nbsp;console.<span class="code-func">error</span>(<span class="code-string">'Background Sync failed:'</span>, err);<br>}</div><div class="pro-tip" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);"><i class="ph-fill ph-airplane-tilt" style="color: #f59e0b;"></i><div><p><strong>Closed-Tab Execution:</strong> The true power of the Background Sync API is that it runs independently of the browser tab. You can commit your code, close the NitroIDE tab completely, and put your laptop to sleep. The moment your laptop reconnects to Wi-Fi, the Service Worker wakes up in the background and pushes the payload to GitHub automatically.</p></div></div><h2>Deterministic State Conflict Resolution</h2><p>Because multiple offline branches can be pushed concurrently once the network is restored, NitroIDE handles Fast-Forward merges locally. The Service Worker fetches the latest remote <code>HEAD</code> before dispatching the payload, ensuring your background sync never causes a catastrophic merge conflict on the remote repository.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f59e0b1A; border: 1px solid #f59e0b4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Code Without Wi-Fi.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Disconnect from the internet, write code, and watch the engine queue your tasks effortlessly.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f59e0b;">
+        Launch Offline Sandbox <i class="ph-bold ph-wifi-slash"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

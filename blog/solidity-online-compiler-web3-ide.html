@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ultimate Solidity Online Compiler: A Faster Remix IDE Alternative</title>
+  <meta name="title" content="The Ultimate Solidity Online Compiler: A Faster Remix IDE Alternative">
+  <meta name="description" content="Remix IDE is bloated and slow. Experience NitroIDE's lightning-fast Solidity online compiler, featuring local EVM execution and instant smart contract deployment.">
+  <meta name="keywords" content="Solidity online compiler, Remix IDE alternative, Web3 browser IDE, smart contract online editor, Ethereum IDE web, compile Solidity online, Hardhat browser sandbox">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #6366f1; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">WEB3 & BLOCKCHAIN • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">The Ultimate Solidity Online Compiler.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>For years, Web3 developers have relied on Remix IDE to prototype smart contracts in the browser. While historically important, Remix has become bloated, plagued by slow UI rendering, clunky file management, and unreliable plugin ecosystems. Modern Ethereum development requires the speed and IntelliSense of a desktop IDE.</p><p>NitroIDE brings professional-grade Web3 development to the web. We are the premier <strong>Remix IDE alternative</strong>, offering a lightning-fast, multi-file workspace powered by a WebAssembly-compiled Solidity compiler (<code>solc</code>).</p><h2>Instant Local EVM Execution</h2><p>You don't need to connect to a slow, rate-limited testnet just to test a <code>require()</code> statement. NitroIDE runs a lightweight, fully functional Ethereum Virtual Machine (EVM) directly in your browser's memory. When you compile your contract, it is instantly deployed to this local EVM, allowing you to interact with your functions with zero network latency and zero gas fees.</p><div class="docs-code"><span class="code-comment">// Compiling and deploying Solidity instantly via WASM</span><br><span class="code-keyword">pragma solidity</span> ^0.8.20;<br><br><span class="code-keyword">contract</span> <span class="code-func">NitroVault</span> {<br>&nbsp;&nbsp;<span class="code-keyword">mapping</span>(<span class="code-keyword">address</span> =&gt; <span class="code-keyword">uint256</span>) <span class="code-keyword">public</span> balances;<br><br>&nbsp;&nbsp;<span class="code-keyword">function</span> <span class="code-func">deposit</span>() <span class="code-keyword">public payable</span> {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">require</span>(<span class="code-keyword">msg.value</span> &gt; <span class="code-num">0</span>, <span class="code-string">"Must send ETH"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;balances[<span class="code-keyword">msg.sender</span>] += <span class="code-keyword">msg.value</span>;<br>&nbsp;&nbsp;}<br>}</div><div class="pro-tip" style="border-color: rgba(99, 102, 241, 0.3); background: rgba(99, 102, 241, 0.05);"><i class="ph-fill ph-currency-eth" style="color: #6366f1;"></i><div><p><strong>Integrated Hardhat & Foundry:</strong> Unlike Remix, which uses its own proprietary testing environment, NitroIDE allows you to write real JavaScript/TypeScript Hardhat tests. Our local Node.js environment executes your test suites exactly as they would run on your desktop, ensuring 100% CI/CD compatibility.</p></div></div><h2>Desktop-Grade IntelliSense</h2><p>We run the official <code>solidity-language-server</code> in a background Web Worker. This provides real-time linting, security vulnerability scanning, and deep auto-completion across all your inherited contracts and OpenZeppelin library imports. It is the uncompromising speed of a native editor, built for the decentralized web.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #6366f11A; border: 1px solid #6366f14D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Deploy Smart Contracts.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a secure Web3 workspace and start writing Solidity in milliseconds.</p>
+      <a href="../tools/codebox.html?env=solidity" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #6366f1;">
+        Launch Web3 IDE <i class="ph-bold ph-hexagon"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

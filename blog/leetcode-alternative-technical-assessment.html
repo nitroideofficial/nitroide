@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beyond LeetCode: Real-World Technical Assessments | NitroIDE</title>
+  <meta name="title" content="Beyond LeetCode: Real-World Technical Assessments | NitroIDE">
+  <meta name="description" content="Algorithm puzzles don't prove engineering skill. Discover how NitroIDE allows companies to conduct real-world, full-stack technical interviews in the browser.">
+  <meta name="keywords" content="LeetCode alternative, HackerRank alternative, real world coding assessment, technical interview platform, full stack interview IDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">COLLABORATION • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Real-World Technical Assessments.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Asking a senior frontend engineer to reverse a binary tree on LeetCode is a terrible way to assess talent. Modern web development is about architecture, API integration, and debugging state. NitroIDE allows companies to spin up a full React or Node.js application environment for an interview, allowing candidates to demonstrate actual architectural skills in a realistic setting.</p>
+    
+    <h2>Testing Architecture, Not Memorization</h2>
+    <p>Instead of a blank text area, you can provision a multi-file workspace containing a broken React application or a backend server with a memory leak. You can watch the candidate navigate the file tree, use the terminal, and utilize browser DevTools—exactly how they would on the job.</p>
+
+    <div class="docs-code"><span class="code-comment">// A realistic interview prompt inside NitroIDE</span><br><span class="code-keyword">import</span> { useState, useEffect } <span class="code-keyword">from</span> <span class="code-string">'react'</span>;<br><br><span class="code-keyword">export</span> <span class="code-keyword">default</span> <span class="code-keyword">function</span> <span class="code-func">UserDashboard</span>({ userId }) {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> [data, setData] = <span class="code-func">useState</span>(<span class="code-keyword">null</span>);<br><br>&nbsp;&nbsp;<span class="code-comment">// Task: The candidate must identify why this causes an infinite loop</span><br>&nbsp;&nbsp;<span class="code-comment">// and refactor it to handle loading and error states properly.</span><br>&nbsp;&nbsp;<span class="code-func">useEffect</span>(() =&gt; {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">fetch</span>(<span class="code-string">`/api/users/${userId}`</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span class="code-func">then</span>(res =&gt; res.<span class="code-func">json</span>())<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span class="code-func">then</span>(setData);<br>&nbsp;&nbsp;});<br><br>&nbsp;&nbsp;<span class="code-keyword">return</span> &lt;<span class="code-func">div</span>&gt;{data?.name}&lt;/<span class="code-func">div</span>&gt;;<br>}</div>
+
+    <div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-video-camera" style="color: #f43f5e;"></i><div><p><strong>Integrated E2EE A/V:</strong> You don't need a separate Zoom link. NitroIDE includes fully integrated, end-to-end encrypted audio and video chat right inside the editor panels. Your voice and video sync perfectly with the candidate's keystrokes over our low-latency WebRTC mesh.</p></div></div>
+
+    <h2>Zero Network Latency</h2>
+    <p>Because the code compiles entirely on the candidate's local machine via WebAssembly, they won't suffer from the infuriating input lag common in centralized interview tools like Coderpad or HackerRank. It’s a stress-free environment that lets their actual talent shine.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Upgrade Your Interviews.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Test real engineering skills in a zero-latency environment.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #f43f5e;">
+        Start an Interview <i class="ph-bold ph-users"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

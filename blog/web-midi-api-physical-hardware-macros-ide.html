@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controlling the IDE with Physical Hardware via Web MIDI | NitroIDE</title>
+  <meta name="title" content="Controlling the IDE with Physical Hardware via Web MIDI | NitroIDE">
+  <meta name="description" content="Ditch the mouse. Learn how NitroIDE uses the Web MIDI API to bind IDE macros and debugging controls to physical hardware like DJ mixers and launchpads.">
+  <meta name="keywords" content="Web MIDI API javascript, hardware macros browser, control IDE with MIDI, physical debugging controls web, MIDI controller programming browser, webusb vs webmidi">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #10b981; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">HARDWARE INTEGRATION • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Physical IDE Macros via the Web MIDI API.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Developers love tactile hardware. We buy expensive mechanical keyboards and dedicated macro pads to optimize our workflows. But what if you could control the specific parameters of your browser IDE using a physical slider, a rotary dial, or an external hardware sequencer? </p><p>NitroIDE taps into the <strong>Web MIDI API</strong> to allow developers to bind physical hardware controllers—like an Akai APC mini, a DJ mixer, or a dedicated MIDI macro pad—directly to IDE functions. We translate musical notes and Control Change (CC) data into Editor actions.</p><h2>Listening for CC Signals</h2><p>When you connect a MIDI controller to your machine, NitroIDE requests MIDI access. We listen for specific hex payloads. For example, moving a slider on a MIDI controller sends a continuous stream of integer values from 0 to 127. We can pipe this value directly into the Monaco Editor's configuration to dynamically adjust the zoom level or font size in real-time.</p><div class="docs-code"><span class="code-comment">// Requesting access to connected physical MIDI hardware</span><br><span class="code-keyword">const</span> midiAccess = <span class="code-keyword">await</span> navigator.<span class="code-func">requestMIDIAccess</span>();<br><br><span class="code-keyword">for</span> (<span class="code-keyword">const</span> input <span class="code-keyword">of</span> midiAccess.inputs.<span class="code-func">values</span>()) {<br>&nbsp;&nbsp;input.onmidimessage = (message) =&gt; {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> [command, note, velocity] = message.data;<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// If a specific physical slider is moved (Control Change)</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (command === <span class="code-num">176</span> && note === <span class="code-num">1</span>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Map MIDI velocity (0-127) to Editor Font Size (10px - 30px)</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> newSize = Math.<span class="code-func">floor</span>(<span class="code-func">mapRange</span>(velocity, <span class="code-num">0</span>, <span class="code-num">127</span>, <span class="code-num">10</span>, <span class="code-num">30</span>));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;editor.<span class="code-func">updateOptions</span>({ <span class="code-attr">fontSize</span>: newSize });<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;};<br>}</div><div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);"><i class="ph-fill ph-faders" style="color: #10b981;"></i><div><p><strong>Hardware Debugging:</strong> Our power users frequently map MIDI Launchpads to our step-debugger. Instead of clicking tiny buttons on the screen with a mouse, they hit a large, LED-backlit physical button on their desk to "Step Over," "Step Into," or "Continue" execution, creating a profoundly tactile debugging experience.</p></div></div><h2>Bidirectional LED Feedback</h2><p>Because the Web MIDI API is bidirectional, NitroIDE can send signals <em>back</em> to your hardware. If your test suite fails, we can programmatically send a SysEx command to your MIDI controller, forcing all the LEDs on your desk to instantly flash bright red.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #10b9811A; border: 1px solid #10b9814D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Connect Your Hardware.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Plug in a MIDI controller and start binding physical macros to your workspace.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #10b981;">
+        Launch Workspace <i class="ph-bold ph-sliders"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

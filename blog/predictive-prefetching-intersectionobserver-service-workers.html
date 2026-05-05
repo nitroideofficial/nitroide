@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero-Delay File Loading: Predictive Prefetching | NitroIDE</title>
+  <meta name="title" content="Zero-Delay File Loading: Predictive Prefetching | NitroIDE">
+  <meta name="description" content="Don't wait for the click. See how NitroIDE achieves 0ms file loading times by combining IntersectionObserver and Service Workers to predict user navigation.">
+  <meta name="keywords" content="predictive prefetching web, IntersectionObserver javascript, service worker cache preload, zero latency file load, web IDE performance, speculative loading browser">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #22c55e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">UI PERFORMANCE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Zero-Delay Files via Predictive Prefetching.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When a developer clicks a file in a cloud IDE's sidebar, the browser fires an HTTP request, waits for the server to read the file, and then streams the payload back. Even with a fast connection, this "Click-to-Load" sequence takes 100-300 milliseconds. It feels sluggish compared to native desktop editors.</p><p>NitroIDE eliminates this delay entirely. By implementing <strong>Speculative Prefetching</strong>, we begin loading the file into RAM <em>before</em> the user actually clicks their mouse.</p><h2>The Intersection & Hover Triggers</h2><p>We attach an <code>IntersectionObserver</code> to the Virtual File System sidebar. When a folder is expanded, any visible file node immediately signals the background Service Worker to quietly pre-parse the file's metadata.</p><p>The real magic happens on <code>mouseenter</code>. A human takes an average of 150ms to press a mouse button after hovering over an element. NitroIDE uses that 150ms window to execute a localized cache-hit.</p><div class="docs-code"><span class="code-comment">// Predictive caching triggered by mouse hover</span><br>fileNode.<span class="code-func">addEventListener</span>(<span class="code-string">'mouseenter'</span>, () =&gt; {<br>&nbsp;&nbsp;<span class="code-comment">// Tell the Service Worker to pull the file into active RAM</span><br>&nbsp;&nbsp;serviceWorker.postMessage({<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-attr">type</span>: <span class="code-string">'PREFETCH_FILE'</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-attr">fileId</span>: node.dataset.id<br>&nbsp;&nbsp;});<br>}, { <span class="code-attr">passive</span>: <span class="code-keyword">true</span> });<br><br><span class="code-comment">// When the click actually happens, the file is already in memory</span><br>fileNode.<span class="code-func">addEventListener</span>(<span class="code-string">'mousedown'</span>, () =&gt; {<br>&nbsp;&nbsp;editor.<span class="code-func">setValue</span>(cache.<span class="code-func">get</span>(node.dataset.id));<br>});</div><div class="pro-tip" style="border-color: rgba(34, 197, 94, 0.3); background: rgba(34, 197, 94, 0.05);"><i class="ph-fill ph-cursor-click" style="color: #22c55e;"></i><div><p><strong>Heuristic Purging:</strong> To prevent memory bloat, the prefetch cache is strictly limited. If the user hovers over a file but doesn't click it within 5 seconds, the Service Worker silently evicts the file from RAM, ensuring the garbage collector stays unburdened.</p></div></div><h2>The Illusion of Instant</h2><p>This architecture creates a powerful optical illusion. Because the file data is already decoded and sitting in the V8 engine's memory the exact millisecond the <code>mousedown</code> event fires, the transition is mathematically instantaneous. It doesn't just feel fast; it physically cannot be faster.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #22c55e1A; border: 1px solid #22c55e4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Experience 0ms Loading.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Navigate through a massive project directory and feel the predictive engine at work.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #22c55e;">
+        Open Directory <i class="ph-bold ph-folder-notch-open"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

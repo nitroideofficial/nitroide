@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross-Tab Mutex Locking via the Web Locks API | NitroIDE</title>
+  <meta name="title" content="Cross-Tab Mutex Locking via the Web Locks API | NitroIDE">
+  <meta name="description" content="Prevent catastrophic file corruption. Learn how NitroIDE utilizes the Web Locks API to manage distributed mutexes across multiple browser tabs and workers.">
+  <meta name="keywords" content="Web Locks API javascript, cross-tab mutex lock, prevent OPFS corruption, browser thread synchronization, IndexedDB race conditions, web worker locks">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SYSTEM ARCHITECTURE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Cross-Tab Mutex Locking via the Web Locks API.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When you run a desktop application, the operating system uses Mutexes (Mutually Exclusive locks) to ensure two threads don't write to the same file simultaneously. In the web ecosystem, if a developer opens NitroIDE in Tab A and Tab B, and both tabs attempt to run <code>npm install</code> or write to the Origin Private File System (OPFS) at the exact same time, catastrophic data corruption is mathematically guaranteed.</p><p>To solve this distributed concurrency problem, NitroIDE implements the <strong>Web Locks API</strong>, providing true, OS-level resource locking across every tab, iframe, and Web Worker on the same origin.</p><h2>Requesting an Exclusive Lock</h2><p>The Web Locks API is entirely asynchronous and deadlock-resistant. When our terminal executes a build script, it requests an exclusive lock on the <code>vfs-write</code> resource. If Tab B tries to write to the file system, its promise will securely pause and wait in a queue until Tab A releases the lock.</p><div class="docs-code"><span class="code-comment">// Requesting an exclusive cross-tab lock before a massive write operation</span><br><span class="code-keyword">await</span> navigator.locks.<span class="code-func">request</span>(<span class="code-string">'vfs-write'</span>, { <span class="code-attr">mode</span>: <span class="code-string">'exclusive'</span> }, <span class="code-keyword">async</span> (lock) =&gt; {<br>&nbsp;&nbsp;<span class="code-comment">// --- CRITICAL SECTION START ---</span><br>&nbsp;&nbsp;<span class="code-comment">// No other tab or worker can execute this block until we return</span><br>&nbsp;&nbsp;console.<span class="code-func">log</span>(<span class="code-string">'Lock acquired. Executing heavy OPFS mutations...'</span>);<br>&nbsp;&nbsp;<span class="code-keyword">await</span> <span class="code-func">writeGigabytesOfNodeModules</span>();<br>&nbsp;&nbsp;<span class="code-comment">// --- CRITICAL SECTION END ---</span><br>}); <span class="code-comment">// Lock is automatically released here</span></div><div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-lock-key" style="color: #f43f5e;"></i><div><p><strong>Crash Immunity:</strong> Why not just use <code>localStorage</code> flags to track locks? Because if the browser tab crashes or is forcibly closed via the Task Manager, a <code>localStorage</code> flag remains permanently stuck. The Web Locks API is tied to the V8 isolate; if the tab dies, the browser automatically drops the lock, preventing permanent deadlocks.</p></div></div><h2>Shared Read Locks</h2><p>For operations like global search, NitroIDE requests a <code>shared</code> lock. This allows multiple tabs to read from the VFS simultaneously at maximum speed, but instantly blocks any incoming <code>exclusive</code> write requests until all the read operations have gracefully finished.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f43f5e1A; border: 1px solid #f43f5e4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Experience Safe Concurrency.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Open the IDE in multiple tabs and watch the engine perfectly sequence your commands.</p>
+      <a href="../tools/codebox.html?env=node" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f43f5e;">
+        Launch Workspace <i class="ph-bold ph-files"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Defeating IDE Memory Leaks with WeakRefs & FinalizationRegistry</title>
+  <meta name="title" content="Defeating IDE Memory Leaks with WeakRefs & FinalizationRegistry">
+  <meta name="description" content="Browser IDEs crash over time due to AST memory leaks. See how NitroIDE leverages ES2021 WeakRefs and FinalizationRegistry for deterministic garbage collection.">
+  <meta name="keywords" content="javascript memory leak prevention, WeakRef AST parsing, FinalizationRegistry browser IDE, V8 garbage collection, monaco editor memory optimization, weakmap caching">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #8b5cf6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">MEMORY MANAGEMENT • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Defeating Memory Leaks with WeakRefs & FinalizationRegistry.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>A notorious problem with browser-based IDEs is the inevitable "5-Hour Crash." As you type, the engine continuously generates Abstract Syntax Trees (ASTs), symbol tables, and diagnostic objects. If these massive JSON structures are inadvertently stored in an array or a cache, the V8 Garbage Collector (GC) cannot clear them. The browser's RAM usage balloons to 4GB, and the tab aggressively crashes.</p><p>NitroIDE engineers engineered a robust memory lifecycle utilizing modern ES2021 features: <strong>WeakRefs</strong> and <strong>FinalizationRegistry</strong>. This ensures that unused compilation data is deterministically purged from RAM.</p><h2>The WeakRef Caching Strategy</h2><p>Instead of caching AST representations in a standard <code>Map</code> or array, we store them using <code>WeakRef</code>. A WeakRef holds a "soft" reference to an object. If no other part of the application is actively using that AST, the V8 engine is free to destroy it during the next GC cycle, completely avoiding memory saturation.</p><div class="docs-code"><span class="code-comment">// Storing massive ASTs without preventing Garbage Collection</span><br><span class="code-keyword">const</span> astCache = <span class="code-keyword">new</span> Map();<br><br><span class="code-keyword">function</span> <span class="code-func">cacheAST</span>(fileId, astObject) {<br>&nbsp;&nbsp;<span class="code-comment">// V8 can freely destroy astObject if memory runs low</span><br>&nbsp;&nbsp;astCache.<span class="code-func">set</span>(fileId, <span class="code-keyword">new</span> WeakRef(astObject));<br>}<br><br><span class="code-keyword">function</span> <span class="code-func">getAST</span>(fileId) {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> ref = astCache.<span class="code-func">get</span>(fileId);<br>&nbsp;&nbsp;<span class="code-comment">// Deref returns the object, or undefined if the GC killed it</span><br>&nbsp;&nbsp;<span class="code-keyword">return</span> ref ? ref.<span class="code-func">deref</span>() : <span class="code-keyword">null</span>;<br>}</div><div class="pro-tip" style="border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.05);"><i class="ph-fill ph-trash" style="color: #8b5cf6;"></i><div><p><strong>Tracking Destruction:</strong> How do we know when V8 actually destroyed our object? We attach the AST to a <code>FinalizationRegistry</code>. When the browser silently nukes the AST from RAM, our callback fires, allowing us to cleanly remove the dead <code>WeakRef</code> pointer from our Maps to prevent pointer bloat.</p></div></div><h2>Sustained 24/7 Execution</h2><p>By enforcing a "Weak by Default" policy for all code intelligence features (IntelliSense, hover tooltips, and jump-to-definition maps), NitroIDE achieves a completely flat memory curve. You can leave the workspace open for weeks, editing hundreds of files, and the memory footprint will remain stabilized at ~120MB.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #8b5cf61A; border: 1px solid #8b5cf64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Code Without Limits.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Experience a browser editor that never crashes, no matter how long you code.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #8b5cf6;">
+        Launch Workspace <i class="ph-bold ph-cpu"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

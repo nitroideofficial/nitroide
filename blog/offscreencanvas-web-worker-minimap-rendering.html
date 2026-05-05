@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Off-Main-Thread Minimap Rendering via OffscreenCanvas | NitroIDE</title>
+  <meta name="title" content="Off-Main-Thread Minimap Rendering via OffscreenCanvas | NitroIDE">
+  <meta name="description" content="Don't let the minimap cause scroll jank. Learn how NitroIDE moves all code minimap rendering to a background Web Worker using the OffscreenCanvas API.">
+  <meta name="keywords" content="OffscreenCanvas API, web worker rendering, monaco editor minimap, canvas in web worker, off-main-thread ui javascript, prevent scroll jank web, UI performance IDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #38bdf8; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">GRAPHICS PIPELINE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Off-Main-Thread Rendering via OffscreenCanvas.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>The "Minimap" (the zoomed-out overview of your code on the right side of the editor) is notoriously expensive to render. As you scroll rapidly through a 10,000-line file, the browser has to constantly redraw thousands of tiny, 2-pixel-tall text lines. If this runs on the main thread, it competes directly with user input, causing severe scroll jank and dropped frames.</p><p>NitroIDE physically separates the minimap from the DOM. We use the <strong>OffscreenCanvas API</strong> to transfer rendering control from the main thread directly to an isolated background Web Worker.</p><h2>Transferring the Rendering Context</h2><p>Normally, a Web Worker cannot access the DOM or a <code>&lt;canvas&gt;</code> element. However, by calling <code>transferControlToOffscreen()</code>, we can detach the canvas from the main thread's layout engine and pass the raw drawing buffer to a background thread.</p><div class="docs-code"><span class="code-comment">// Main Thread: Detaching the canvas and passing it to a Worker</span><br><span class="code-keyword">const</span> canvas = document.<span class="code-func">getElementById</span>(<span class="code-string">'minimap-canvas'</span>);<br><span class="code-keyword">const</span> offscreen = canvas.<span class="code-func">transferControlToOffscreen</span>();<br><br><span class="code-keyword">const</span> worker = <span class="code-keyword">new</span> Worker(<span class="code-string">'minimap-renderer.js'</span>);<br>worker.<span class="code-func">postMessage</span>({ <span class="code-attr">canvas</span>: offscreen }, [offscreen]);<br><br><span class="code-comment">// Worker Thread (minimap-renderer.js): Drawing in the background</span><br>self.onmessage = (e) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> ctx = e.data.canvas.<span class="code-func">getContext</span>(<span class="code-string">'2d'</span>);<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-comment">// We can draw 10,000 lines here without ever blocking the UI</span><br>&nbsp;&nbsp;ctx.fillStyle = <span class="code-string">'#38bdf8'</span>;<br>&nbsp;&nbsp;ctx.<span class="code-func">fillRect</span>(<span class="code-num">0</span>, <span class="code-num">0</span>, <span class="code-num">100</span>, <span class="code-num">2</span>);<br>};</div><div class="pro-tip" style="border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.05);"><i class="ph-fill ph-monitor" style="color: #38bdf8;"></i><div><p><strong>Asynchronous Scroll Syncing:</strong> When the user scrolls, the main thread sends a tiny coordinate payload to the worker. The worker repaints the minimap asynchronously. Even if the worker takes 10ms to draw the complex syntax colors, the main thread continues scrolling at a locked 120fps, ensuring the primary code editor never stutters.</p></div></div><h2>Multi-Core UI Architecture</h2><p>This architecture transforms NitroIDE from a single-threaded web app into a multi-core desktop application. By shifting heavy visual workloads (like the minimap, markdown preview rendering, and AST syntax trees) to dedicated OffscreenCanvas workers, the main thread remains eternally idle, waiting only for your keystrokes.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #38bdf81A; border: 1px solid #38bdf84D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Scroll at 120fps.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Load a massive codebase and scroll rapidly. Notice how the minimap renders seamlessly in the background.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #38bdf8;">
+        Launch Workspace <i class="ph-bold ph-fast-forward"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ultimate C++ Online Compiler: Desktop-Grade Execution | NitroIDE</title>
+  <meta name="title" content="The Ultimate C++ Online Compiler: Desktop-Grade Execution | NitroIDE">
+  <meta name="description" content="OnlineGDB and cloud compilers are too slow. Discover how NitroIDE compiles C and C++ directly to WebAssembly for native, zero-latency execution in the browser.">
+  <meta name="keywords" content="C++ online compiler, free online C++ editor, run C++ in browser, OnlineGDB alternative, WebAssembly C++ compiler, compile C++ online fast, C++ browser IDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #2563eb; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FRAMEWORKS & TOOLS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">The Ultimate C++ Online Compiler.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When you search for a "C++ online compiler," the tools you find operate on an archaic model. You write your <code>std::cout</code> statement, hit "Run," and wait 3 to 5 seconds. Why? Because the browser has to package your code, send it over HTTP to a remote Linux server, run GCC, capture the standard output, and stream it back. If you are building a real-time application or a high-performance algorithm, this latency is completely unusable.</p><p>NitroIDE is the fastest <strong>C++ online compiler</strong> on the web because we removed the server entirely. We compiled the LLVM/Clang compiler toolchain into WebAssembly, allowing your browser to compile C++ code directly on your local CPU.</p><h2>Zero-Latency Compilation</h2><p>Because the Clang compiler runs locally in a background Web Worker, there is absolutely zero network overhead. When you click build, your C++ source code is mathematically transformed into a WebAssembly binary (<code>.wasm</code>) in milliseconds, and immediately executed in an adjacent sandboxed thread.</p><div class="docs-code"><span class="code-comment">// Executing high-performance C++ natively in the browser</span><br><span class="code-keyword">#include</span> &lt;iostream&gt;<br><span class="code-keyword">#include</span> &lt;vector&gt;<br><span class="code-keyword">#include</span> &lt;numeric&gt;<br><br><span class="code-keyword">int</span> <span class="code-func">main</span>() {<br>&nbsp;&nbsp;<span class="code-keyword">std::vector&lt;int&gt;</span> data(<span class="code-num">1000000</span>, <span class="code-num">1</span>);<br>&nbsp;&nbsp;<span class="code-comment">// This computes instantly, bound only by your local CPU</span><br>&nbsp;&nbsp;<span class="code-keyword">int</span> sum = <span class="code-keyword">std::accumulate</span>(data.<span class="code-func">begin</span>(), data.<span class="code-func">end</span>(), <span class="code-num">0</span>);<br>&nbsp;&nbsp;<span class="code-keyword">std::cout</span> &lt;&lt; <span class="code-string">"Computed Sum: "</span> &lt;&lt; sum &lt;&lt; <span class="code-keyword">std::endl</span>;<br>&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-num">0</span>;<br>}</div><div class="pro-tip" style="border-color: rgba(37, 99, 235, 0.3); background: rgba(37, 99, 235, 0.05);"><i class="ph-fill ph-cpu" style="color: #2563eb;"></i><div><p><strong>Hardware Graphics Access:</strong> Unlike remote servers, local WASM execution gives your C++ code direct access to the browser's hardware-accelerated Canvas API. You can write custom OpenGL/WebGL engines in C++ and render them at 120fps directly beside your code.</p></div></div><h2>The Desktop Experience, Zero Install</h2><p>Stop wrestling with CMake, MinGW, or system path variables. NitroIDE gives you a pristine, instant C++ environment equipped with a powerful Language Server (clangd) for intelligent auto-completion, allowing you to focus entirely on writing highly optimized systems code.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #2563eb1A; border: 1px solid #2563eb4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Compile at Native Speed.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a C++ workspace and feel the raw performance of local WebAssembly.</p>
+      <a href="../tools/codebox.html?env=cpp" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #2563eb;">
+        Launch C++ IDE <i class="ph-bold ph-lightning"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

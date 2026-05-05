@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sub-50ms Screen Sharing via WebCodecs & WebTransport | NitroIDE</title>
+  <meta name="title" content="Sub-50ms Screen Sharing via WebCodecs & WebTransport | NitroIDE">
+  <meta name="description" content="WebRTC screen sharing is bloated. Discover how NitroIDE streams pair-programming screen shares at 4K 60fps using raw WebCodecs and WebTransport UDP.">
+  <meta name="keywords" content="WebCodecs screen share, WebTransport video stream, WebRTC alternative javascript, sub-50ms video streaming, pair programming screen share web">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #10b981; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">MEDIA PIPELINE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Sub-50ms Screen Sharing via WebCodecs.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When pair programming remotely, standard WebRTC screen sharing is deeply flawed. WebRTC is a massive, black-box protocol optimized for video conferencing (like Zoom or Google Meet). It aggressively drops resolution to maintain framerate, which is terrible for coding where you need to read crisp, 12px text. It also adds a mandatory jitter buffer, introducing 150-300ms of latency.</p><p>To build a true "Remote Cursor" experience, NitroIDE ripped out WebRTC. We built a custom video pipeline combining the <strong>WebCodecs API</strong> for hardware encoding and <strong>WebTransport</strong> for low-latency UDP delivery.</p><h2>The Raw Video Pipeline</h2><p>We use <code>navigator.mediaDevices.getDisplayMedia()</code> to grab the raw screen frames. Instead of feeding this to an RTCPeerConnection, we pipe it directly into a <code>VideoEncoder</code> configured for H.264 High Profile, enforcing a strict zero-latency tuning parameter.</p><div class="docs-code"><span class="code-comment">// Hardware-accelerated, zero-latency screen encoding</span><br><span class="code-keyword">const</span> encoder = <span class="code-keyword">new</span> VideoEncoder({<br>&nbsp;&nbsp;<span class="code-func">output</span>: (chunk) =&gt; {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Fire the compressed video frame over HTTP/3 Datagrams</span><br>&nbsp;&nbsp;&nbsp;&nbsp;webTransportWriter.<span class="code-func">write</span>(chunk.data);<br>&nbsp;&nbsp;},<br>&nbsp;&nbsp;<span class="code-func">error</span>: (e) =&gt; console.<span class="code-func">error</span>(e)<br>});<br><br>encoder.<span class="code-func">configure</span>({<br>&nbsp;&nbsp;<span class="code-attr">codec</span>: <span class="code-string">'avc1.640028'</span>,<br>&nbsp;&nbsp;<span class="code-attr">width</span>: <span class="code-num">3840</span>, <span class="code-attr">height</span>: <span class="code-num">2160</span>, <span class="code-comment">// 4K Text Clarity</span><br>&nbsp;&nbsp;<span class="code-attr">bitrate</span>: <span class="code-num">8000000</span>,<br>&nbsp;&nbsp;<span class="code-attr">latencyMode</span>: <span class="code-string">'realtime'</span> <span class="code-comment">// Disables internal buffering</span><br>});</div><div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);"><i class="ph-fill ph-monitor-play" style="color: #10b981;"></i><div><p><strong>Datagram Delivery:</strong> By transmitting the encoded video chunks over WebTransport Datagrams (HTTP/3), we completely bypass TCP head-of-line blocking. If a video frame packet is lost over the network, we don't halt the stream to request it again; the decoder simply skips it and renders the next frame instantly.</p></div></div><h2>The Result: 4K at 60fps</h2><p>Because we explicitly force the encoder to prioritize resolution over framerate (and bypass WebRTC's aggressive downscaling), the remote peer sees the code exactly as crisp as the host does, with mouse movements syncing in under 50 milliseconds.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #10b9811A; border: 1px solid #10b9814D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Share Your Screen.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Start a collaborative session and share your 4K screen with zero latency.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #10b981;">
+        Launch Collaborative IDE <i class="ph-bold ph-screencast"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

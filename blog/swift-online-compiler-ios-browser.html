@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swift Online Compiler: iOS Logic in the Browser | NitroIDE</title>
+  <meta name="title" content="Swift Online Compiler: iOS Logic in the Browser | NitroIDE">
+  <meta name="description" content="You don't need a Mac to learn Swift. NitroIDE provides a lightning-fast Swift online compiler powered by WebAssembly.">
+  <meta name="keywords" content="Swift online compiler, run Swift on Windows, free Swift IDE, WebAssembly Swift, iOS development online">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f05138; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FRAMEWORKS & TOOLS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Learn Swift Without a Mac.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Apple's Swift is an incredibly powerful, modern language, but it has one massive barrier to entry: you need a Mac. If you are a student on a Windows PC or a Chromebook, attempting to learn Swift or build iOS logic typically requires sketchy virtual machines or expensive cloud Mac rentals.</p>
+    
+    <h2>The SwiftWasm Toolchain</h2>
+    <p>NitroIDE completely democratizes Apple ecosystem development. We utilize the official <strong>SwiftWasm</strong> toolchain, which compiles Swift code into WebAssembly. This means you can write, compile, and execute Swift algorithms directly in your browser tab, regardless of your operating system.</p>
+
+    <div class="docs-code"><span class="code-comment">// Executing Swift 6 natively on a Windows or ChromeOS browser</span><br><span class="code-keyword">import</span> Foundation<br><br><span class="code-keyword">struct</span> <span class="code-tag">NitroDeveloper</span> {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">var</span> name: <span class="code-tag">String</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">var</span> isCoding: <span class="code-tag">Bool</span><br><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">mutating func</span> <span class="code-func">startProject</span>() {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">self</span>.isCoding = <span class="code-keyword">true</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">print</span>(<span class="code-string">"\(name) has started compiling WebAssembly!"</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}<br><br><span class="code-keyword">var</span> dev = <span class="code-func">NitroDeveloper</span>(name: <span class="code-string">"Alice"</span>, isCoding: <span class="code-keyword">false</span>)<br>dev.<span class="code-func">startProject</span>()</div>
+
+    <div class="pro-tip" style="border-color: rgba(240, 81, 56, 0.3); background: rgba(240, 81, 56, 0.05);"><i class="ph-fill ph-apple-logo" style="color: #f05138;"></i><div><p><strong>DOM Interaction in Swift:</strong> You aren't just limited to console output. The SwiftWasm ecosystem includes the <code>JavaScriptKit</code> library, allowing you to write type-safe Swift code that manipulates the browser's DOM, creating a seamless bridge between iOS logic and web rendering.</p></div></div>
+
+    <h2>SourceKit-LSP Integration</h2>
+    <p>A language is only as good as its tooling. NitroIDE doesn't just compile Swift; we run Apple's official <code>sourcekit-lsp</code> inside a background Web Worker. This provides desktop-grade auto-completion, hover documentation, and real-time error highlighting natively in the browser.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(240, 81, 56, 0.1); border: 1px solid rgba(240, 81, 56, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Write Swift Anywhere.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a pristine Swift environment without installing Xcode.</p>
+      <a href="../tools/codebox.html?env=swift" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #f05138;">
+        Launch Swift IDE <i class="ph-bold ph-apple-logo"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

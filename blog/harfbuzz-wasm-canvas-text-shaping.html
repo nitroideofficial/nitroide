@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desktop-Grade Font Shaping in Canvas via HarfBuzz WASM</title>
+  <meta name="title" content="Desktop-Grade Font Shaping in Canvas via HarfBuzz WASM">
+  <meta name="description" content="Canvas 2D text rendering lacks advanced ligatures. See how NitroIDE compiles HarfBuzz to WebAssembly for pixel-perfect typography.">
+  <meta name="keywords" content="HarfBuzz webassembly, canvas font shaping javascript, monaco editor ligatures, freetype wasm, bypass canvas fillText, custom text rendering browser">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #ec4899; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">GRAPHICS PIPELINE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Pixel-Perfect Font Shaping via HarfBuzz WASM.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>While moving from the DOM to the Canvas 2D API for text rendering provides a massive performance boost, it introduces a severe typographical flaw: Canvas <code>fillText()</code> is notoriously bad at complex text shaping. It completely fails to render advanced programming ligatures (like turning <code>=&gt;</code> or <code>===</code> into a single, beautiful glyph) commonly found in fonts like Fira Code or JetBrains Mono.</p><p>To achieve flawless, desktop-grade typography without sacrificing Canvas performance, NitroIDE completely overrides the browser's text rendering engine by compiling <strong>HarfBuzz</strong> and <strong>FreeType</strong> into WebAssembly.</p><h2>The WASM Shaping Pipeline</h2><p>Instead of asking the Canvas to draw a string, we pass the string to our HarfBuzz WASM module. HarfBuzz analyzes the font file, processes the ligature rules, and returns an array of exact X/Y coordinates and specific glyph IDs.</p><div class="docs-code"><span class="code-comment">// Offloading text shaping to a HarfBuzz WASM module</span><br><span class="code-keyword">const</span> fontBuffer = <span class="code-keyword">await</span> <span class="code-func">fetchFont</span>(<span class="code-string">'FiraCode.ttf'</span>);<br><span class="code-keyword">const</span> hbFont = harfbuzz.<span class="code-func">createFont</span>(fontBuffer);<br><br><span class="code-comment">// Ask HarfBuzz to calculate ligatures for the arrow function</span><br><span class="code-keyword">const</span> shapedGlyphs = harfbuzz.<span class="code-func">shapeText</span>(hbFont, <span class="code-string">'const fn = () =&gt; {}'</span>);<br><br><span class="code-comment">// Render the exact glyph paths to the Canvas</span><br>shapedGlyphs.<span class="code-func">forEach</span>(glyph =&gt; {<br>&nbsp;&nbsp;ctx.<span class="code-func">fillPath</span>(hbFont.<span class="code-func">getGlyphPath</span>(glyph.id), glyph.x, glyph.y);<br>});</div><div class="pro-tip" style="border-color: rgba(236, 72, 153, 0.3); background: rgba(236, 72, 153, 0.05);"><i class="ph-fill ph-text-aa" style="color: #ec4899;"></i><div><p><strong>Subpixel Kerning:</strong> Because we control the exact placement of every single character at the mathematical level, we can implement custom subpixel kerning algorithms, ensuring that italicized comments and dense JSON structures are perfectly legible at any zoom level.</p></div></div><h2>Absolute Typographical Control</h2><p>This architecture decouples NitroIDE from the host operating system's font rendering quirks. Whether you are on a Windows machine with ClearType or a Mac with Retina scaling, the code in your editor will look mathematically identical, preserving the designer's exact intent.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #ec48991A; border: 1px solid #ec48994D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">See Perfect Ligatures.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Type some complex arrow functions and watch HarfBuzz shape them flawlessly.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #ec4899;">
+        Test Typography <i class="ph-bold ph-text-t"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

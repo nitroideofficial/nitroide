@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Killing ResizeObserver: Container Queries for Micro-Frontends</title>
+  <meta name="title" content="Killing ResizeObserver: Container Queries for Micro-Frontends">
+  <meta name="description" content="JavaScript layout thrashing is slow. Learn how NitroIDE eliminates ResizeObserver overhead by using CSS Container Queries for autonomous, fluid IDE panels.">
+  <meta name="keywords" content="CSS container queries, ResizeObserver alternative javascript, micro-frontends css, fluid IDE layout web, component driven layout, container queries performance, prevent layout thrashing">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">CSS ENGINEERING • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Killing ResizeObserver with Container Queries.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>A modern IDE is a chaotic grid of resizable panels: the file tree, the terminal, the Git integration, and the code minimap. When a user drags a split-pane boundary, traditional web apps use JavaScript <code>ResizeObserver</code> to measure the new panel width and manually inject CSS classes (like <code>.is-narrow</code>) to hide elements.</p><p>Running 50 active <code>ResizeObserver</code> listeners during a drag event causes catastrophic JavaScript main-thread blocking and Layout Thrashing. NitroIDE completely rips out JS-based resizing in favor of native <strong>CSS Container Queries</strong>.</p><h2>Autonomous Micro-Frontends</h2><p>Instead of relying on media queries (which measure the entire browser window), Container Queries allow a DOM element to measure its own parent container. This transforms every panel in NitroIDE into a self-aware, autonomous Micro-Frontend that handles its own responsive logic entirely within the C++ rendering engine.</p><div class="docs-code"><span class="code-comment">/* 1. Define the IDE panel as a measurable container */</span><br><span class="code-keyword">.terminal-panel</span> {<br>&nbsp;&nbsp;<span class="code-attr">container-type</span>: inline-size;<br>&nbsp;&nbsp;<span class="code-attr">container-name</span>: terminal;<br>}<br><br><span class="code-comment">/* 2. The UI adapts based on the panel width, not the window width */</span><br><span class="code-keyword">@container</span> terminal (max-width: <span class="code-num">400px</span>) {<br>&nbsp;&nbsp;<span class="code-keyword">.terminal-timestamp</span> {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-attr">display</span>: none; <span class="code-comment">/* Hide timestamps if panel is squeezed */</span><br>&nbsp;&nbsp;}<br>&nbsp;&nbsp;<span class="code-keyword">.terminal-input-prefix</span> {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-attr">content</span>: <span class="code-string">"&gt;"</span>; <span class="code-comment">/* Shorten the bash prefix */</span><br>&nbsp;&nbsp;}<br>}</div><div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-columns" style="color: #f43f5e;"></i><div><p><strong>Container Query Units (cqw):</strong> Beyond breakpoints, NitroIDE uses responsive container units. By setting a font size to <code>clamp(12px, 2cqw, 16px)</code>, the text inside a panel dynamically and smoothly scales based on the exact width of its parent container, with zero JavaScript required.</p></div></div><h2>Silencing the Main Thread</h2><p>By moving layout logic from JavaScript to CSS, we eliminate the "Scripting" phase of the browser's render pipeline during drag events. The browser only has to recalculate Style and Layout, allowing panel resizing to run at a flawless, hardware-accelerated 120fps.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f43f5e1A; border: 1px solid #f43f5e4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Drag the Boundaries.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Resize the panels in our IDE and watch the layout adapt with zero JS overhead.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f43f5e;">
+        Open IDE <i class="ph-bold ph-arrows-left-right"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

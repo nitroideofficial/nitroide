@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPGPU in the Browser: Real-Time Linting via WebGPU | NitroIDE</title>
+  <meta name="title" content="GPGPU in the Browser: Real-Time Linting via WebGPU | NitroIDE">
+  <meta name="description" content="Discover how NitroIDE leverages WebGPU Compute Shaders for massive parallel processing, offloading AST linting directly to your graphics card.">
+  <meta name="keywords" content="WebGPU compute shaders, GPGPU in browser, hardware accelerated linting, webgpu javascript IDE, offload cpu to gpu web, parallel processing browser">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #8b5cf6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">COMPUTE PIPELINES • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">GPGPU: Offloading Linting to WebGPU Compute Shaders.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Linting a massive monolithic codebase usually grinds the main thread to a halt. Even when offloaded to a Web Worker, CPU-based AST parsing is bottlenecked by the sequential nature of standard processors. But what if we could analyze 10,000 lines of code simultaneously?</p><p>NitroIDE bypasses the CPU entirely for heavy static analysis. By utilizing the modern <strong>WebGPU API</strong>, we map our Abstract Syntax Tree into a byte array and feed it directly into the user's graphics card, leveraging General-Purpose computing on Graphics Processing Units (GPGPU).</p><h2>The Compute Pipeline</h2><p>Unlike WebGL, which was strictly designed for drawing pixels, WebGPU exposes raw Compute Shaders. We write our linting rules in WGSL (WebGPU Shading Language), dispatch the data across thousands of GPU cores, and read the execution buffer back into JavaScript in under 2 milliseconds.</p><div class="docs-code"><span class="code-comment">// WGSL Compute Shader for parallel syntax analysis</span><br>@group(0) @binding(0) var&lt;storage, read_write&gt; ast_buffer: array&lt;u32&gt;;<br><br>@compute @workgroup_size(64)<br>fn main(@builtin(global_invocation_id) global_id: vec3&lt;u32&gt;) {<br>&nbsp;&nbsp;let index = global_id.x;<br>&nbsp;&nbsp;if (ast_buffer[index] == 0xBADBEEF) {<br>&nbsp;&nbsp;&nbsp;&nbsp;ast_buffer[index] = 0xFF0000; // Flag Syntax Error<br>&nbsp;&nbsp;}<br>}</div><div class="pro-tip" style="border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.05);"><i class="ph-fill ph-cpu" style="color: #8b5cf6;"></i><div><p><strong>Massive Parallelism:</strong> While a high-end CPU has 16 to 32 threads, a modern GPU has thousands. By mapping code chunks to GPU workgroups, NitroIDE can statically type-check a 10MB file in a fraction of a frame.</p></div></div><h2>Bridging the GPU and V8</h2><p>Transferring data between the CPU (V8 Engine) and the GPU has historical overhead. NitroIDE utilizes mapped memory buffers (<code>device.createBuffer({ mappedAtCreation: true })</code>) to write directly into GPU-accessible memory, achieving zero-copy synchronization between JavaScript and your graphics card.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #8b5cf61A; border: 1px solid #8b5cf64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Feel the Power of WebGPU.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Load a massive script into the editor and watch our GPU-accelerated engine parse it flawlessly.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #8b5cf6;">
+        Launch Workspace <i class="ph-bold ph-lightning"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

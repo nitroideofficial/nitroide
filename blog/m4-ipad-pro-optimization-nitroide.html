@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optimizing for M4: Desktop Engineering on iPad Pro</title>
+  <meta name="title" content="Optimizing for M4: Desktop Engineering on iPad Pro">
+  <meta name="description" content="The M4 iPad Pro is a beast. Learn how NitroIDE utilizes Apple Silicon's Unified Memory and high-performance cores to deliver a desktop-grade IDE experience.">
+  <meta name="keywords" content="M4 iPad Pro coding, Apple Silicon iPad IDE, program on iPad M4, best IDE for iPad 2026, iPad Pro web development, NitroIDE iPad optimization, M-series iPadOS development">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #a855f7; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SYSTEM ARCHITECTURE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Harnessing the M4: Desktop Power on iPad.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>The M4 iPad Pro is arguably the most powerful consumer computing device on the planet, yet it is often held back by software. Most 'coding apps' on the iPad are mere text editors. NitroIDE is different. We engineered our engine specifically to exploit the <strong>Unified Memory Architecture</strong> and the high-performance cores of Apple Silicon, turning your tablet into a legitimate workstation.</p><h2>Unified Memory & WASM</h2><p>Because the M4 chip shares memory between the CPU and GPU, NitroIDE's WebAssembly compilers can access data with incredibly low latency. Our Rust and C++ compilers are optimized to use the iPad's multi-core architecture, allowing for parallel compilation speeds that rival high-end MacBook Pros.</p><div class="docs-code"><span class="code-comment">// Detecting and utilizing M4's high-performance cores</span><br><span class="code-keyword">const</span> hardwareThreads = navigator.hardwareConcurrency;<br><br><span class="code-comment">// Spawn workers based on the M4's 10-core architecture</span><br><span class="code-keyword">for</span> (<span class="code-keyword">let</span> i = <span class="code-num">0</span>; i &lt; hardwareThreads; i++) {<br>&nbsp;&nbsp;<span class="code-func">spawnCompilerWorker</span>(i);<br>}</div><div class="pro-tip" style="border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.05);"><i class="ph-fill ph-lightning" style="color: #a855f7;"></i><div><p><strong>ProMotion Sync:</strong> NitroIDE's rendering engine is locked to the iPad Pro's 120Hz ProMotion display. Whether you are scrolling through 20,000 lines of code or navigating a 3D WebGL preview, the experience is buttery smooth and visually stunning.</p></div></div><h2>The Ultimate Mobile Setup</h2><p>Pair your M4 iPad Pro with a Magic Keyboard, and NitroIDE becomes a portable powerhouse. You can build, test, and deploy full-stack applications from anywhere—without the bulk of a laptop and without the limitations of traditional mobile software.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #a855f71A; border: 1px solid #a855f74D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Power Your iPad.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch NitroIDE on your M-series iPad and experience the future of mobile engineering.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #a855f7;">
+        Launch iPad IDE <i class="ph-bold ph-device-tablet"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruby Online Compiler: Running Ruby natively in the Browser | NitroIDE</title>
+  <meta name="title" content="Ruby Online Compiler: Running Ruby natively in the Browser | NitroIDE">
+  <meta name="description" content="Say goodbye to server queues. NitroIDE uses WebAssembly to run a full Ruby environment directly in your browser with zero latency.">
+  <meta name="keywords" content="Ruby online compiler, run Ruby browser, WebAssembly Ruby, free Ruby IDE online, irb browser, learn Ruby online free">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #cc342d; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FRAMEWORKS & TOOLS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Ruby Online Compiler via WebAssembly.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Ruby is famous for its developer happiness and elegant syntax, but trying to learn it via standard online compilers often leads to frustration. Because Ruby is an interpreted language, web playgrounds typically send your code to a remote Linux container. This introduces execution queues, network latency, and strict time limits on how long your scripts can run.</p>
+    
+    <h2>The CRuby WebAssembly Port</h2>
+    <p>NitroIDE completely eliminates the cloud server. We utilize the official CRuby (MRI) WebAssembly port, embedding the entire Ruby interpreter directly into your browser tab. Your Ruby scripts, blocks, and classes execute instantaneously on your local machine.</p>
+
+    <div class="docs-code"><span class="code-comment"># Executing Ruby natively via WebAssembly</span><br><span class="code-keyword">class</span> <span class="code-tag">Developer</span><br>&nbsp;&nbsp;<span class="code-keyword">attr_accessor</span> <span class="code-func">:name</span>, <span class="code-func">:language</span><br><br>&nbsp;&nbsp;<span class="code-keyword">def</span> <span class="code-func">initialize</span>(name, language)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">@name</span> = name<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">@language</span> = language<br>&nbsp;&nbsp;<span class="code-keyword">end</span><br><br>&nbsp;&nbsp;<span class="code-keyword">def</span> <span class="code-func">code!</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">puts</span> <span class="code-string">"#{<span class="code-tag">@name</span>} is writing blazing fast #{<span class="code-tag">@language</span>}."</span><br>&nbsp;&nbsp;<span class="code-keyword">end</span><br><span class="code-keyword">end</span><br><br>dev = Developer.<span class="code-func">new</span>(<span class="code-string">"Alice"</span>, <span class="code-string">"Ruby"</span>)<br><span class="code-num">3</span>.<span class="code-func">times</span> { dev.<span class="code-func">code!</span> }</div>
+
+    <div class="pro-tip" style="border-color: rgba(204, 52, 45, 0.3); background: rgba(204, 52, 45, 0.05);"><i class="ph-fill ph-diamond" style="color: #cc342d;"></i><div><p><strong>DOM Interaction with Ruby:</strong> Because the Ruby interpreter is running locally inside the V8 engine, it can interoperate with JavaScript. You can actually write Ruby code that queries the DOM, adds event listeners, and manipulates HTML elements directly using the `js` bridging module.</p></div></div>
+
+    <h2>A True REPL Experience</h2>
+    <p>Without the overhead of HTTP requests, the integrated terminal in NitroIDE provides an uncompromising IRB (Interactive Ruby) experience. You get real-time evaluation, syntax highlighting, and an offline sandbox that travels with you everywhere.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(204, 52, 45, 0.1); border: 1px solid rgba(204, 52, 45, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Write Ruby Instantly.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a Ruby environment with zero server latency.</p>
+      <a href="../tools/codebox.html?env=ruby" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #cc342d;">
+        Launch Ruby IDE <i class="ph-bold ph-diamond"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>
