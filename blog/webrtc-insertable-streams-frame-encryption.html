@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frame-by-Frame Video Encryption via WebRTC Insertable Streams</title>
+  <meta name="title" content="Frame-by-Frame Video Encryption via WebRTC Insertable Streams">
+  <meta name="description" content="Standard E2EE is hard for video. Discover how NitroIDE uses WebRTC Insertable Streams to encrypt raw pair-programming video frames before transmission.">
+  <meta name="keywords" content="WebRTC insertable streams, Breakout Box API, end-to-end encrypted video browser, WebRTC E2EE javascript, intercept encoded frames web, secure pair programming video">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #10b981; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SECURITY • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Frame-by-Frame Encryption via Insertable Streams.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>We already implemented ECDH End-to-End Encryption (E2EE) for keystrokes, but encrypting a live 60fps pair-programming video feed is significantly harder. Traditionally, developers had to pipe raw Canvas frames through JavaScript, encrypt them, and send them over WebSockets—a process that destroys framerates and introduces massive latency.</p><p>NitroIDE achieves absolute zero-knowledge video conferencing by utilizing the experimental <strong>WebRTC Insertable Streams API</strong> (often called the Breakout Box API). This allows us to intercept the hardware-encoded video frames <em>before</em> they hit the network, and apply AES-GCM encryption natively.</p><h2>The Breakout Box Pipeline</h2><p>When you start a screen share, the browser's hardware encoder compresses your screen into H.264 or VP8 frames. The Insertable Streams API exposes these encoded frames as a <code>ReadableStream</code>. We pipe this stream through a Web Worker, encrypt the raw byte payload using the Web Crypto API, and pipe it back into the <code>RTCRtpSender</code>.</p><div class="docs-code"><span class="code-comment">// Intercepting encoded WebRTC frames for custom encryption</span><br><span class="code-keyword">const</span> sender = peerConnection.<span class="code-func">addTrack</span>(videoTrack);<br><span class="code-keyword">const</span> streams = sender.<span class="code-func">createEncodedStreams</span>();<br><br><span class="code-comment">// Pipe the encoded frames through a custom TransformStream</span><br><span class="code-keyword">const</span> transformStream = <span class="code-keyword">new</span> TransformStream({<br>&nbsp;&nbsp;<span class="code-func">transform</span>: <span class="code-keyword">async</span> (encodedFrame, controller) =&gt; {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// 1. Extract the raw encoded video bytes</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> view = <span class="code-keyword">new</span> Uint8Array(encodedFrame.data);<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// 2. Encrypt the frame via AES-GCM using our shared ECDH key</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> cipherText = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">encrypt</span>(aesAlgorithm, sharedKey, view);<br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// 3. Replace the frame payload and send it over the wire</span><br>&nbsp;&nbsp;&nbsp;&nbsp;encodedFrame.data = cipherText;<br>&nbsp;&nbsp;&nbsp;&nbsp;controller.<span class="code-func">enqueue</span>(encodedFrame);<br>&nbsp;&nbsp;}<br>});<br><br>streams.readable.<span class="code-func">pipeThrough</span>(transformStream).<span class="code-func">pipeTo</span>(streams.writable);</div><div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);"><i class="ph-fill ph-lock-key" style="color: #10b981;"></i><div><p><strong>Preserving Metadata:</strong> We carefully encrypt only the frame payload, leaving the RTP header unencrypted. This allows the underlying WebRTC routing servers (TURN/STUN) to efficiently route the packets and manage bandwidth drops, without ever having the cryptographic ability to actually view the pixels.</p></div></div><h2>Absolute Enterprise Privacy</h2><p>Even if an attacker compromises the signaling server, or a rogue ISP intercepts the UDP packets, all they will capture is high-entropy, mathematically uncrackable noise. Your proprietary code screenshare remains securely locked between the two communicating browsers.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #10b9811A; border: 1px solid #10b9814D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Share Securely.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Start a video call in your workspace with mathematically guaranteed privacy.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #10b981;">
+        Launch Collaborative IDE <i class="ph-bold ph-shield-check"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

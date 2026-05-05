@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P2P Collaborative Terminals via WebRTC & xterm.js | NitroIDE</title>
+  <meta name="title" content="P2P Collaborative Terminals via WebRTC & xterm.js | NitroIDE">
+  <meta name="description" content="Discover how NitroIDE synchronizes raw PTY streams across multiple browser instances in real-time using WebRTC Data Channels and xterm.js.">
+  <meta name="keywords" content="xterm.js webrtc, collaborative terminal browser, p2p pty stream, webassembly terminal, browser command line sync, collaborative shell session">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #14b8a6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">TERMINAL EMULATION • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">P2P Collaborative Terminals via WebRTC & xterm.js.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Collaborative coding is standard, but collaborative terminal sessions are a logistical nightmare. In a traditional cloud IDE, giving two users access to the same bash terminal requires piping standard input (stdin) and standard output (stdout) through a centralized WebSocket multiplexer. This introduces severe latency and massive security vulnerabilities if the multiplexer is compromised.</p><p>NitroIDE completely decentralizes the terminal. By marrying <strong>xterm.js</strong> with <strong>WebRTC Data Channels</strong>, we stream raw Pseudo-Terminal (PTY) byte sequences directly between peer browsers with zero intermediaries.</p><h2>Streaming PTY Byte Buffers</h2><p>xterm.js doesn't understand "text"; it understands ANSI escape sequences and raw byte streams. When User A types <code>ls -la</code>, their browser encodes those keystrokes into a <code>Uint8Array</code>. Instead of sending this to a server, we pump it straight into a WebRTC peer-to-peer data channel.</p><div class="docs-code"><span class="code-comment">// Intercepting xterm.js keystrokes and streaming via WebRTC</span><br><span class="code-keyword">const</span> term = <span class="code-keyword">new</span> Terminal();<br>term.<span class="code-func">onData</span>((data) =&gt; {<br>&nbsp;&nbsp;<span class="code-comment">// Encode ANSI string to byte array</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> payload = <span class="code-keyword">new</span> TextEncoder().<span class="code-func">encode</span>(data);<br>&nbsp;&nbsp;<span class="code-comment">// Fire directly to connected peers over UDP</span><br>&nbsp;&nbsp;rtcDataChannel.<span class="code-func">send</span>(payload);<br>});<br><br><span class="code-comment">// Receiving peer keystrokes and writing to local terminal</span><br>rtcDataChannel.onmessage = <span class="code-keyword">async</span> (event) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> text = <span class="code-keyword">new</span> TextDecoder().<span class="code-func">decode</span>(event.data);<br>&nbsp;&nbsp;term.<span class="code-func">write</span>(text);<br>};</div><div class="pro-tip" style="border-color: rgba(20, 184, 166, 0.3); background: rgba(20, 184, 166, 0.05);"><i class="ph-fill ph-terminal-window" style="color: #14b8a6;"></i><div><p><strong>Latency Compensation:</strong> Because WebRTC data channels run over UDP (or TCP-like SCTP depending on configuration), terminal keystrokes traverse the network faster than human visual perception, making a remote collaborative shell feel indistinguishable from a local terminal.</p></div></div><h2>The WebAssembly PTY Backend</h2><p>To actually execute the commands (not just echo them), the host browser runs a WebAssembly-compiled shell environment (like a WebContainer). The host processes the <code>stdout</code> buffer and broadcasts it back through the WebRTC channel, ensuring all connected peers see the exact same terminal output simultaneously.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #14b8a61A; border: 1px solid #14b8a64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Terminal Access, Reimagined.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Experience instant, serverless terminal emulation right in your browser.</p>
+      <a href="../tools/codebox.html?env=node" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #14b8a6;">
+        Launch CLI Environment <i class="ph-bold ph-terminal"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

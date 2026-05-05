@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zig Online Compiler: Low-Level Systems Code in the Browser | NitroIDE</title>
+  <meta name="title" content="Zig Online Compiler: Low-Level Systems Code in the Browser | NitroIDE">
+  <meta name="description" content="The future of systems programming is here. Discover NitroIDE's native Zig compiler, executing low-level code directly in your browser via WASM.">
+  <meta name="keywords" content="Zig online compiler, run Zig in browser, WebAssembly Zig compiler, systems programming online, free Zig IDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f59e0b; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FRAMEWORKS & TOOLS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Systems Programming in the Browser.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Zig is rapidly becoming the go-to language for high-performance systems programming, challenging C and C++ with its lack of hidden control flow and native memory safety. Setting up a local Zig toolchain can be tedious for beginners. NitroIDE offers a fully native Zig compiler running in WebAssembly.</p>
+    
+    <h2>Compiling Zig to WebAssembly</h2>
+    <p>By porting the official <code>zig build</code> system into a background Web Worker, NitroIDE allows you to write, compile, and execute low-level memory-managed code directly in your browser. We pass the resulting <code>.wasm</code> binaries directly into the V8 engine for instantaneous execution.</p>
+
+    <div class="docs-code"><span class="code-comment">// A basic Zig memory allocation test running natively</span><br><span class="code-keyword">const</span> std = <span class="code-keyword">@import</span>(<span class="code-string">"std"</span>);<br><br><span class="code-keyword">export</span> <span class="code-keyword">fn</span> <span class="code-func">calculate_fibonacci</span>(n: <span class="code-tag">u32</span>) <span class="code-tag">u32</span> {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (n &lt;= <span class="code-num">1</span>) <span class="code-keyword">return</span> n;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-func">calculate_fibonacci</span>(n - <span class="code-num">1</span>) + <span class="code-func">calculate_fibonacci</span>(n - <span class="code-num">2</span>);<br>}<br><br><span class="code-keyword">pub</span> <span class="code-keyword">fn</span> <span class="code-func">main</span>() !<span class="code-tag">void</span> {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> result = <span class="code-func">calculate_fibonacci</span>(<span class="code-num">10</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;std.debug.<span class="code-func">print</span>(<span class="code-string">"Fibonacci of 10 is: {}\n"</span>, .{result});<br>}</div>
+
+    <div class="pro-tip" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);"><i class="ph-fill ph-cpu" style="color: #f59e0b;"></i><div><p><strong>C/C++ Interoperability:</strong> One of Zig's greatest strengths is its ability to compile C code natively. NitroIDE's Zig environment seamlessly supports importing legacy C libraries into your workspace, compiling them via WebAssembly alongside your Zig source.</p></div></div>
+
+    <h2>Instant Memory Profiling</h2>
+    <p>Because Zig forces you to pass explicit allocators (like <code>std.heap.page_allocator</code>), NitroIDE can intercept these memory allocations and provide a real-time visual heap map in the console, helping you detect leaks instantly.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Compile Zig Natively.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a Zig workspace and experience raw performance.</p>
+      <a href="../tools/codebox.html?env=zig" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #f59e0b;">
+        Launch Zig IDE <i class="ph-bold ph-lightning"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

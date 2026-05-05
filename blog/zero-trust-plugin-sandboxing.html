@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Plugin Architecture: Sandboxing Third-Party Code | NitroIDE</title>
+  <meta name="title" content="Secure Plugin Architecture: Sandboxing Third-Party Code | NitroIDE">
+  <meta name="description" content="Third-party extensions are a major security risk. Discover how NitroIDE uses cross-origin iframes and MessageChannel to sandbox plugins securely.">
+  <meta name="keywords" content="Zero Trust architecture, sandbox third party plugins, cross origin iframe security, MessageChannel API, secure web app extensions, isolate untrusted code">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #14b8a6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SECURITY • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Secure Plugin Architecture: Sandboxing Third-Party Code.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Allowing users to install third-party plugins is incredibly dangerous for a web application. If a malicious VS Code extension runs in the main UI thread of a browser IDE, it can easily steal authentication tokens, read your local Origin Private File System (OPFS), or execute crypto-miners.</p>
+    
+    <h2>The MessageChannel API</h2>
+    <p>NitroIDE enforces a strict <strong>Zero-Trust Plugin Architecture</strong>. When you install an extension, it is executed inside a dynamically generated, cross-origin <code>&lt;iframe&gt;</code> that has absolutely no DOM access and is restricted by a draconian Content Security Policy (CSP). Communication with the core IDE happens exclusively via the native <code>MessageChannel</code> API.</p>
+
+    <div class="docs-code"><span class="code-comment">// Secure bi-directional communication with an untrusted plugin</span><br><span class="code-keyword">const</span> channel = <span class="code-keyword">new</span> <span class="code-func">MessageChannel</span>();<br><span class="code-keyword">const</span> pluginFrame = document.<span class="code-func">getElementById</span>(<span class="code-string">'sandboxed-plugin'</span>);<br><br><span class="code-comment">// Pass port2 to the isolated iframe</span><br>pluginFrame.contentWindow.<span class="code-func">postMessage</span>(<br>&nbsp;&nbsp;<span class="code-string">'init-plugin'</span>, <br>&nbsp;&nbsp;<span class="code-string">'https://sandbox.nitroide.com'</span>, <br>&nbsp;&nbsp;[channel.port2]<br>);<br><br><span class="code-comment">// The main IDE thread carefully validates all requests from the plugin</span><br>channel.port1.<span class="code-func">onmessage</span> = (event) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">if</span> (event.data.action === <span class="code-string">'READ_FILE'</span>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Enforce strict permission checks before fulfilling the request</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">validateAndFulfill</span>(event.data);<br>&nbsp;&nbsp;}<br>};</div>
+
+    <div class="pro-tip" style="border-color: rgba(20, 184, 166, 0.3); background: rgba(20, 184, 166, 0.05);"><i class="ph-fill ph-shield" style="color: #14b8a6;"></i><div><p><strong>Service Worker Interception:</strong> Even if a malicious plugin tries to use <code>fetch()</code> to exfiltrate your code to a remote server, our global Service Worker intercepts all network traffic originating from the sandbox domain and strictly blocks any unauthorized outbound requests.</p></div></div>
+
+    <h2>Protecting Your IP</h2>
+    <p>By treating every extension as a hostile actor, NitroIDE guarantees that your proprietary source code remains mathematically isolated. You get the rich ecosystem of a modern desktop IDE without compromising the security of your web browser.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(20, 184, 166, 0.1); border: 1px solid rgba(20, 184, 166, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Code with Confidence.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Bring your favorite tools to a completely secure environment.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #14b8a6;">
+        Launch Secure IDE <i class="ph-bold ph-shield-check"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

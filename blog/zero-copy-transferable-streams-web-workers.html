@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero-Copy Memory Passing via Transferable Streams | NitroIDE</title>
+  <meta name="title" content="Zero-Copy Memory Passing via Transferable Streams | NitroIDE">
+  <meta name="description" content="Copying memory kills performance. Discover how NitroIDE streams massive files across background threads instantly using Zero-Copy Transferable Streams.">
+  <meta name="keywords" content="Transferable streams javascript, zero copy memory web workers, ReadableStream transfer, optimize web worker performance, postMessage performance, massive file handling web">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #8b5cf6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">MEMORY MANAGEMENT • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Zero-Copy Passing via Transferable Streams.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When a background Web Worker finishes downloading a 500MB dependency bundle, it needs to send that data to the main thread to be saved to IndexedDB. If you use a standard <code>postMessage(data)</code>, the browser physically copies all 500MB of RAM from the worker's heap to the main thread's heap. This duplicates memory usage to 1GB and completely locks the UI thread during the copy operation.</p><p>NitroIDE completely eliminates memory copying. By combining the Streams API with <strong>Transferable Objects</strong>, we move ownership of the memory pointer itself, executing cross-thread transfers in 0 milliseconds.</p><h2>Transferring the ReadableStream</h2><p>Instead of reading the massive file into memory, we keep it as a <code>ReadableStream</code>. When we pass this stream via <code>postMessage</code>, we include it in the "transfer list". The V8 engine instantly revokes the Worker's access to that memory location and grants it to the Main Thread. No bytes are copied; only the ownership pointer moves.</p><div class="docs-code"><span class="code-comment">// Inside the Web Worker: Fetching a massive file</span><br><span class="code-keyword">const</span> response = <span class="code-keyword">await</span> <span class="code-func">fetch</span>(<span class="code-string">'massive-database.sqlite'</span>);<br><span class="code-keyword">const</span> stream = response.body;<br><br><span class="code-comment">// Transferring ownership of the stream, NOT copying the data</span><br>self.<span class="code-func">postMessage</span>(<br>&nbsp;&nbsp;{ <span class="code-attr">type</span>: <span class="code-string">'FILE_DOWNLOAD'</span>, <span class="code-attr">payload</span>: stream }, <br>&nbsp;&nbsp;[stream] <span class="code-comment">// The Transfer List</span><br>);<br><br><span class="code-comment">// Main Thread: Receiving the stream instantly</span><br>worker.onmessage = <span class="code-keyword">async</span> (e) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> readableStream = e.data.payload;<br>&nbsp;&nbsp;<span class="code-comment">// Pipe the stream directly into the OPFS without touching main memory</span><br>&nbsp;&nbsp;<span class="code-keyword">await</span> readableStream.<span class="code-func">pipeTo</span>(fileSystemWritable);<br>};</div><div class="pro-tip" style="border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.05);"><i class="ph-fill ph-arrows-left-right" style="color: #8b5cf6;"></i><div><p><strong>Piping Across the Chasm:</strong> Because <code>ReadableStream</code> is natively transferable, we can create complex pipelines. Data can stream from an HTTP fetch in Worker A, be piped directly to a compression algorithm in Worker B, and finally piped to IndexedDB in the Main Thread, completely bypassing heavy memory allocation at every step.</p></div></div><h2>The 500MB Milestone</h2><p>This zero-copy architecture allows NitroIDE to effortlessly handle gigabyte-scale repositories and heavy SQLite databases. Memory usage stays entirely flat, and the garbage collector remains dormant, no matter how much data you move around your workspace.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #8b5cf61A; border: 1px solid #8b5cf64D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Move Data Instantly.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Import massive local databases into our IDE. Watch how memory stays flat.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #8b5cf6;">
+        Launch IDE <i class="ph-bold ph-database"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decentralized Package Management via WebTorrent & WebRTC</title>
+  <meta name="title" content="Decentralized Package Management via WebTorrent & WebRTC">
+  <meta name="description" content="NPM is a central point of failure. Learn how NitroIDE bypasses CDNs entirely by fetching node_modules via a P2P WebTorrent swarm using WebRTC.">
+  <meta name="keywords" content="WebTorrent P2P browser, decentralized package manager, WebRTC CDN bypass, p2p node_modules javascript, distributed hash tables browser, offline npm install">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NETWORK ARCHITECTURE • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Bypassing CDNs: Decentralized Package Fetching.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>When millions of developers run <code>npm install react</code>, they are all hitting the same centralized content delivery networks (CDNs). If that CDN goes down, or if the user is in a region with poor routing to US-based servers, development grinds to a halt. In a browser IDE, fetching a 50MB dependency tree over HTTP is a massive bottleneck.</p><p>NitroIDE introduces the first decentralized package manager built directly into the browser. By utilizing <strong>WebTorrent and WebRTC</strong>, we fetch dependencies not from a central server, but from a global peer-to-peer (P2P) swarm of other active NitroIDE users.</p><h2>The WebRTC Swarm</h2><p>When you request a library, the engine calculates the deterministic hash of the package version. It then queries the Distributed Hash Table (DHT) via a WebTorrent client instantiated in a background Web Worker. If 10 other developers are currently working on React projects, your browser connects to them directly via WebRTC Data Channels and downloads the package chunks concurrently.</p><div class="docs-code"><span class="code-comment">// Initializing a decentralized package fetch via WebTorrent</span><br><span class="code-keyword">import</span> WebTorrent <span class="code-keyword">from</span> <span class="code-string">'webtorrent'</span>;<br><span class="code-keyword">const</span> client = <span class="code-keyword">new</span> <span class="code-func">WebTorrent</span>();<br><br><span class="code-keyword">const</span> <span class="code-func">fetchPackageP2P</span> = (magnetURI) =&gt; {<br>&nbsp;&nbsp;client.<span class="code-func">add</span>(magnetURI, (torrent) =&gt; {<br>&nbsp;&nbsp;&nbsp;&nbsp;torrent.files.<span class="code-func">forEach</span>(file =&gt; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Stream the package chunk directly into IndexedDB RAM</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file.<span class="code-func">getBlob</span>((err, blob) =&gt; <span class="code-func">saveDependencyToVFS</span>(blob));<br>&nbsp;&nbsp;&nbsp;&nbsp;});<br>&nbsp;&nbsp;});<br>};</div><div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-share-network" style="color: #f43f5e;"></i><div><p><strong>Bandwidth Multiplexing:</strong> HTTP requires downloading a file sequentially from one server. WebTorrent allows NitroIDE to download chunk 1 from a user in Tokyo, chunk 2 from a user in London, and chunk 3 from a user in New York simultaneously, resulting in massive bandwidth multiplexing that frequently outpaces gigabit fiber speeds.</p></div></div><h2>Cryptographic Verification</h2><p>Security is paramount in a P2P network. Before a single byte of code is executed by the IDE, the Service Worker runs a SHA-256 cryptographic hash verification against the official NPM registry's manifest. If a malicious peer attempts to inject poisoned code into a chunk, the hash fails, the chunk is instantly discarded, and the peer is permanently banned from your local swarm.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #f43f5e1A; border: 1px solid #f43f5e4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Join the Swarm.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Install packages at lightning speed using our decentralized P2P architecture.</p>
+      <a href="../tools/codebox.html?env=react" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f43f5e;">
+        Launch React Environment <i class="ph-bold ph-globe-hemisphere-west"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

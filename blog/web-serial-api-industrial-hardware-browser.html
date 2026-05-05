@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controlling Industrial Hardware via the Web Serial API | NitroIDE</title>
+  <meta name="title" content="Controlling Industrial Hardware via the Web Serial API | NitroIDE">
+  <meta name="description" content="Connect your browser directly to PLCs and CNC machines. Learn how NitroIDE utilizes the Web Serial API to communicate over legacy RS-232 UART protocols.">
+  <meta name="keywords" content="Web Serial API, browser RS-232 connection, web ide industrial hardware, connect serial port javascript, webusb vs webserial, hardware browser integration, uart javascript">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #38bdf8; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">HARDWARE INTEGRATION • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Interfacing Industrial Hardware via Web Serial.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>While the WebUSB API is fantastic for modern devices with custom endpoints, the vast majority of legacy industrial equipment—CNC machines, PLCs, robotic arms, and diagnostic scanners—still rely on legacy RS-232 serial communication (UART). Historically, communicating with these devices required native C++ or Python scripts running on the host OS.</p><p>NitroIDE bridges the gap between the modern web and legacy manufacturing by implementing the <strong>Web Serial API</strong>, allowing developers to write control software and pipe serial telemetry directly into the browser IDE.</p><h2>Bypassing the OS Abstraction</h2><p>When you request a serial port in NitroIDE, the browser negotiates directly with the operating system's COM ports (Windows) or TTY devices (Linux/macOS). Once connected, we can configure the baud rate, data bits, and parity mathematically, opening a raw, bidirectional data stream to the physical hardware.</p><div class="docs-code"><span class="code-comment">// Requesting access to an RS-232 Serial Port (e.g., COM3)</span><br><span class="code-keyword">const</span> port = <span class="code-keyword">await</span> navigator.serial.<span class="code-func">requestPort</span>();<br><br><span class="code-comment">// Opening the connection at an industrial 115200 baud rate</span><br><span class="code-keyword">await</span> port.<span class="code-func">open</span>({ <span class="code-attr">baudRate</span>: <span class="code-num">115200</span>, <span class="code-attr">dataBits</span>: <span class="code-num">8</span>, <span class="code-attr">stopBits</span>: <span class="code-num">1</span> });<br><br><span class="code-comment">// Pumping the incoming byte stream into the UI</span><br><span class="code-keyword">const</span> reader = port.readable.<span class="code-func">getReader</span>();<br><span class="code-keyword">while</span> (<span class="code-keyword">true</span>) {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> { value, done } = <span class="code-keyword">await</span> reader.<span class="code-func">read</span>();<br>&nbsp;&nbsp;<span class="code-keyword">if</span> (done) <span class="code-keyword">break</span>;<br>&nbsp;&nbsp;console.<span class="code-func">log</span>(<span class="code-string">'Raw UART Bytes:'</span>, value);<br>}</div><div class="pro-tip" style="border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.05);"><i class="ph-fill ph-plug" style="color: #38bdf8;"></i><div><p><strong>TransformStreams for Parsing:</strong> RS-232 data often arrives in fragmented chunks. NitroIDE utilizes the <code>TransformStream</code> API to pipe the raw bytes through a custom <code>TextDecoderStream</code> and a <code>LineBreakTransformer</code>, converting raw hexadecimal fragments into clean, parsed JSON strings before they ever hit the main thread.</p></div></div><h2>The Browser as an HMI</h2><p>This API transforms NitroIDE from a standard code editor into a fully functional Human-Machine Interface (HMI). Engineers can write a script to control a robotic arm, execute it in the browser, and instantly read the servo telemetry back through the serial monitor without ever leaving the tab.</p>
+
+    <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
+    <div style="background: #38bdf81A; border: 1px solid #38bdf84D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Connect to the Real World.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Plug in a serial device and write control scripts directly from the browser.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #38bdf8;">
+        Launch IDE <i class="ph-bold ph-cpu"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>
