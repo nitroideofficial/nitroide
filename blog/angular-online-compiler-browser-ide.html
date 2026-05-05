@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SH02J5Q7MB');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angular Online Compiler: Desktop Speed on the Web | NitroIDE</title>
+  <meta name="title" content="Angular Online Compiler: Desktop Speed on the Web | NitroIDE">
+  <meta name="description" content="Angular's build times are notoriously slow. Discover how NitroIDE accelerates Angular development with local WebAssembly compilation.">
+  <meta name="keywords" content="Angular online compiler, Angular browser IDE, run Angular online, TypeScript IDE web, CodeSandbox Angular alternative">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+    
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #dd0031; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FRAMEWORKS & TOOLS • MAY 2026</div>
+    
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Accelerating Angular Development.</h1>
+    
+    <!-- THE ARTICLE CONTENT -->
+    <p>Angular is a powerhouse for enterprise application development, but it carries a heavy footprint. The Angular CLI, TypeScript compilation, and Ivy rendering engine demand significant compute. When standard cloud IDEs try to host Angular projects, the remote Docker containers choke, resulting in excruciatingly slow build times and unresponsive dev servers.</p>
+    
+    <h2>Local WASM Execution</h2>
+    <p>NitroIDE completely alters the architecture. Instead of relying on a slow, 2-core remote cloud instance, we compile the entire Angular CLI and Node.js environment into WebAssembly. Your Angular project compiles directly on your laptop's CPU, inside your browser, operating at near-native speeds.</p>
+
+    <div class="docs-code"><span class="code-comment">// Writing modern, standalone Angular components entirely in the browser</span><br><span class="code-keyword">import</span> { Component } <span class="code-keyword">from</span> <span class="code-string">'@angular/core'</span>;<br><span class="code-keyword">import</span> { CommonModule } <span class="code-keyword">from</span> <span class="code-string">'@angular/common'</span>;<br><br><span class="code-keyword">@Component</span>({<br>&nbsp;&nbsp;<span class="code-attr">selector</span>: <span class="code-string">'app-nitro-dashboard'</span>,<br>&nbsp;&nbsp;<span class="code-attr">standalone</span>: <span class="code-keyword">true</span>,<br>&nbsp;&nbsp;<span class="code-attr">imports</span>: [CommonModule],<br>&nbsp;&nbsp;<span class="code-attr">template</span>: <span class="code-string">`&lt;h2&gt;Compiled via WebAssembly&lt;/h2&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p *ngIf="loaded"&gt;Angular is running locally!&lt;/p&gt;`</span><br>})<br><span class="code-keyword">export</span> <span class="code-keyword">class</span> <span class="code-tag">NitroDashboard</span> {<br>&nbsp;&nbsp;loaded = <span class="code-keyword">true</span>;<br>}</div>
+
+    <div class="pro-tip" style="border-color: rgba(221, 0, 49, 0.3); background: rgba(221, 0, 49, 0.05);"><i class="ph-fill ph-shield-chevron" style="color: #dd0031;"></i><div><p><strong>Full TypeScript LSP Support:</strong> Angular is heavily reliant on TypeScript. NitroIDE doesn't just compile the code; we run the official <code>tsserver</code> in a background Web Worker, providing exact type checking, strict null checks, and deep Angular template IntelliSense instantly as you type.</p></div></div>
+
+    <h2>Bypassing Node_Modules</h2>
+    <p>We eliminated the massive "downloading dependencies" bottleneck. NitroIDE caches your Angular dependencies in a compressed, decentralized pnpm structure within the browser's OPFS, cutting setup time from minutes to milliseconds.</p>
+
+    <!-- THE DYNAMIC CTA BOX -->
+    <div style="background: rgba(221, 0, 49, 0.1); border: 1px solid rgba(221, 0, 49, 0.3); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Build with Angular.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Launch a pre-configured Angular workspace instantly.</p>
+      <a href="../tools/codebox.html?env=angular" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #fff; background: #dd0031;">
+        Launch Angular IDE <i class="ph-bold ph-shield-chevron"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>
