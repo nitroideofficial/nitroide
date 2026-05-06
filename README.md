@@ -115,7 +115,7 @@ Want to improve NitroIDE?
 * Make changes
 * Open a PR
 
----
+----
 
 ## 🌐 Connect
 
@@ -123,7 +123,7 @@ Want to improve NitroIDE?
 * 🐦 X: https://x.com/trynitroide
 * 📸 Instagram: https://instagram.com/nitroideofficial
 
----
+----
 
 ## 📜 License
 
