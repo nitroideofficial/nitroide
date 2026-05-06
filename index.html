@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+	<!-- Optimized Zero-Latency GA4 Injection -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  window.addEventListener('load', function() {
+    // Wait an extra 1 second after the page loads to ensure UI is fully responsive
+    setTimeout(function() {
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB';
+      document.head.appendChild(script);
 
-  gtag('config', 'G-SH02J5Q7MB');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-SH02J5Q7MB');
+    }, 1000); 
+  });
 </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NitroIDE | Zero-Latency Browser IDE & Online Code Editor</title>
