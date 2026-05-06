@@ -1114,7 +1114,7 @@ class NitroHeader extends HTMLElement {
             <div class="status-ping hide-in-mobile"><span class="ping-dot"></span> 0ms Latency</div>
           </div>
           <div class="nav-actions">
-            <a href="${rPath}blog/index.html" class="theme-toggle" style="text-decoration: none; display: flex; align-items: center; gap: 6px; height: 36px; box-sizing: border-box;"><i class="ph-bold ph-book-open"></i><span class="hide-in-mobile">Tutorials</span></a>
+            <a href="${rPath}blog/index.html" aria-label="Tutorials" class="theme-toggle" style="text-decoration: none; display: flex; align-items: center; gap: 6px; height: 36px; box-sizing: border-box;"><i class="ph-bold ph-book-open"></i><span class="hide-in-mobile">Tutorials</span></a>
             <button class="theme-toggle hide-in-mobile" onclick="toggleCmdK()" title="Command Palette" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-magnifying-glass"></i> <span class="hide-in-mobile" style="font-size:0.7rem; font-weight:700; opacity:0.7;">⌘K</span></button>
             <button class="theme-toggle" onclick="toggleTheme()" id="themeBtnFloat" aria-label="Toggle Dark Mode" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-sun"></i></button>
             <a href="${rPath}tools/codebox.html" class="btn btn-compact primary-btn hide-in-mobile" style="border-radius: 30px; padding: 0 16px; height: 36px; box-sizing: border-box; display: flex; align-items: center;">Open Workspace</a>
@@ -1129,7 +1129,7 @@ class NitroHeader extends HTMLElement {
                 </a>
               </div>
               <div class="nav-actions">
-                <a href="${rPath}blog/index.html" class="theme-toggle" style="text-decoration: none; display: flex; align-items: center; gap: 6px; height: 36px; box-sizing: border-box;"><i class="ph-bold ph-book-open"></i><span class="hide-in-mobile">Tutorials</span></a>
+                <a href="${rPath}blog/index.html" aria-label="Tutorials" class="theme-toggle" style="text-decoration: none; display: flex; align-items: center; gap: 6px; height: 36px; box-sizing: border-box;"><i class="ph-bold ph-book-open"></i><span class="hide-in-mobile">Tutorials</span></a>
                 <button class="theme-toggle hide-in-mobile" onclick="toggleCmdK()" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-magnifying-glass"></i> <span>Search...</span> <span class="cmd-badge">⌘K</span></button>
                 <button class="theme-toggle" id="themeBtn" aria-label="Toggle Dark Mode" onclick="toggleTheme()" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-sun"></i></button>
                 <a href="${rPath}tools/codebox.html" class="btn btn-compact primary-btn" style="border-radius: 30px; padding: 0 16px; height: 36px; box-sizing: border-box; display: flex; align-items: center;">Open Workspace</a>
