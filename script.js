@@ -1227,7 +1227,7 @@ class NitroModals extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
         <button class="fab" id="fab" aria-label="Scroll to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="ph-bold ph-arrow-up"></i></button>
-        <button class="feedback-fab" onclick="toggleFeedbackModal()" aria-label="Open Feedback Form"><i class="ph-fill ph-chat-teardrop-text"></i></button>
+        <button class="feedback-fab" onclick="toggleFeedbackModal()" aria-label="Open Feedback Form"><i class="ph-bold ph-chat-teardrop-text"></i></button>
         <div class="feedback-backdrop" id="feedbackModal" onclick="handleFeedbackClick(event)">
           <div class="feedback-card">
             <div class="feedback-header">
