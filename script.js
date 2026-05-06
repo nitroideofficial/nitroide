@@ -1102,7 +1102,7 @@ class NitroHeader extends HTMLElement {
           <div class="nitro-alert-content-flex">
             <span class="nitro-alert-badge-pill">BETA</span>
             <span class="nitro-alert-message-text">NitroIDE is in active development. Help us shape the future of local coding!</span>
-            <button onclick="toggleFeedbackModal()" class="nitro-alert-action-btn">Share Feedback <i class="ph-bold ph-arrow-right"></i></button>
+            <button onclick="toggleFeedbackModal()" class="nitro-alert-action-btn">Share Feedback <i class="ph-fill ph-arrow-right"></i></button>
           </div>
         </div>
         <nav class="floating-nav" id="floatingNav">
