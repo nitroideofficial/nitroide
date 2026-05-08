@@ -2,33 +2,131 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://nitroideofficial.github.io/nitroide/</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://nitroide.com/</loc>
+    <lastmod>2026-05-08</lastmod>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://nitroideofficial.github.io/nitroide/tools/codebox.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://nitroide.com/tools/codebox.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://nitroideofficial.github.io/nitroide/docs.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://nitroide.com/docs.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://nitroideofficial.github.io/nitroide/changelog.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://nitroide.com/changelog.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://nitroideofficial.github.io/nitroide/legal.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://nitroide.com/legal.html</loc>
+    <lastmod>2026-05-08</lastmod>
     <priority>0.3</priority>
+  </url>
+
+  <!-- LANDING PAGES -->
+
+  <url>
+    <loc>https://nitroide.com/landing/chromebook-code-editor-free.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/codepen-alternative-no-login.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/codesandbox-lightweight-alternative.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/export-code-to-zip.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/html-css-js-editor.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/low-ram-code-editor.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/monaco-editor-online.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/offline-html-editor.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/private-code-editor-no-tracking.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/react-online-playground.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/responsive-design-tester.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/run-react-in-browser-no-install.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/tailwind-online-editor.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/test-tailwind-css-online.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/vanilla-javascript-sandbox.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://nitroide.com/landing/vscode-online-alternative.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <priority>0.9</priority>
   </url>
 
 </urlset>
