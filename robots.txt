@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://nitroideofficial.github.io/nitroide/sitemap.xml
+Disallow: /tools/codebox.html
+Sitemap: https://nitroide.com/sitemap.xml
