@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SH02J5Q7MB');
+  </script>
 
-  gtag('config', 'G-SH02J5Q7MB');
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zero-Backend API Testing via Service Worker Interception</title>
@@ -18,15 +17,80 @@
   <meta name="keywords" content="mock service worker ide, intercept fetch requests browser, zero backend api testing, local REST mock browser, graphql offline testing, client-side api routing">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
+  <link rel="canonical" href="https://nitroide.com/blog/service-worker-api-mocking-browser-ide.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/service-worker-api-mocking-browser-ide.html">
+  <meta property="og:title" content="Zero-Backend API Testing via Service Worker Interception">
+  <meta property="og:description" content="Build full-stack apps without a backend. Learn how NitroIDE utilizes Service Workers to intercept fetch requests and mock REST/GraphQL APIs locally.">
+  <meta property="og:image" content="https://nitroide.com/og-banner.png">
+  <meta property="og:site_name" content="NitroIDE">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://nitroide.com/blog/service-worker-api-mocking-browser-ide.html">
+  <meta property="twitter:title" content="Zero-Backend API Testing via Service Worker Interception">
+  <meta property="twitter:description" content="Build full-stack apps without a backend. Learn how NitroIDE utilizes Service Workers to intercept fetch requests and mock REST/GraphQL APIs locally.">
+  <meta property="twitter:image" content="https://nitroide.com/og-banner.png">
+
+  <link rel="icon" type="image/x-icon" href="https://nitroide.com/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://nitroide.com/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://nitroide.com/favicon-192x192.png">
+  <link rel="apple-touch-icon" href="https://nitroide.com/apple-touch-icon.png">
   
-  <link rel="icon" type="image/png" href="../logo/logo_white.png">
-  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="manifest" href="../manifest.json">
   <link rel="stylesheet" href="../styles.css">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Zero-Backend API Testing via Service Worker Interception",
+    "description": "Build full-stack apps without a backend. Learn how NitroIDE utilizes Service Workers to intercept fetch requests and mock REST/GraphQL APIs locally.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/service-worker-api-mocking-browser-ide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
 </head>
 <body>
 
