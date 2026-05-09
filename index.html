@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) - Lazy Loaded for 100/100 Performance -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       setTimeout(function() {
@@ -22,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NitroIDE | Zero-Latency Browser IDE & Online Code Editor</title>
   
-  <link rel="preload" as="image" href="./logo/logo_white.png">
+  <link rel="preload" as="image" href="https://nitroide.com/logo/logo_white.png">
   
   <meta name="title" content="NitroIDE | Zero-Latency Browser IDE & Online Code Editor">
   <meta name="description" content="Code at the speed of thought. NitroIDE is a free, entirely client-side web IDE featuring the Monaco editor, live preview, and secure offline support.">
@@ -37,38 +36,70 @@
   <meta property="og:url" content="https://nitroide.com/">
   <meta property="og:title" content="NitroIDE | Zero-Latency Browser IDE">
   <meta property="og:description" content="A free, 100% client-side web IDE with Monaco editor and instant live preview. Build frontend projects directly in your browser.">
-  <meta property="og:image" content="https://nitroide.com/logo/logo_white.png">
+  <meta property="og:image" content="https://nitroide.com/og-banner.png">
   <meta property="og:site_name" content="NitroIDE">
 
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://nitroide.com/">
   <meta property="twitter:title" content="NitroIDE | Zero-Latency Browser IDE">
   <meta property="twitter:description" content="A free, 100% client-side web IDE with Monaco editor and instant live preview. Build frontend projects directly in your browser.">
-  <meta property="twitter:image" content="https://nitroide.com/logo/logo_white.png">
+  <meta property="twitter:image" content="https://nitroide.com/og-banner.png">
 
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="https://nitroide.com/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://nitroide.com/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://nitroide.com/favicon-192x192.png">
+  <link rel="apple-touch-icon" href="https://nitroide.com/apple-touch-icon.png">
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
-
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-	
   <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
 
-  <!-- PRELOAD FONTS FOR LCP -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
   
-  <!-- LOAD CORE STYLES INSTANTLY -->
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- DEFER ICONS ONLY -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css" media="print" onload="this.media='all'">
-</head>
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "NitroIDE - Zero Latency Code Editor",
+    "url": "https://nitroide.com/",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD"
+    },
+    "description": "Code at the speed of thought. NitroIDE is a free, entirely client-side web IDE featuring the Monaco editor, live preview, and secure offline support."
+  }
+  </script>
+</head>
 <body>
 
 <!-- INJECTED COMPONENTS -->
