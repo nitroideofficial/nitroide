@@ -1,16 +1,16 @@
 <div align="center">
 
-<img src="https://nitroideofficial.github.io/nitroide/logo/logo_black.png" width="180"/>
+<img src="https://nitroide.com/logo/logo_black.png" width="180"/>
 
 # ⚡ NitroIDE
 
 ### Code locally. Execute instantly.
 
 <p>
-  <a href="https://nitroideofficial.github.io/nitroide/">
+  <a href="https://nitroide.com/">
     <img src="https://img.shields.io/badge/Live-Demo-00e5ff?style=for-the-badge&logo=vercel&logoColor=black"/>
   </a>
-  <a href="https://nitroideofficial.github.io/nitroide/docs.html">
+  <a href="https://nitroide.com/docs.html">
     <img src="https://img.shields.io/badge/Documentation-bb9af7?style=for-the-badge"/>
   </a>
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
@@ -46,7 +46,7 @@ No installs. No backend. No delays.
 
 ## 🖥️ Live Demo
 
-👉 https://nitroideofficial.github.io/nitroide/
+👉 https://nitroide.com/
 
 ---
 
@@ -115,15 +115,15 @@ Want to improve NitroIDE?
 * Make changes
 * Open a PR
 
-----
+---
 
 ## 🌐 Connect
 
-* 🌍 Website: https://nitroideofficial.github.io/nitroide/
+* 🌍 Website: https://nitroide.com/
 * 🐦 X: https://x.com/trynitroide
 * 📸 Instagram: https://instagram.com/nitroideofficial
 
-----
+---
 
 ## 📜 License
 
