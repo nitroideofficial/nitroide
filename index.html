@@ -70,6 +70,24 @@
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
     "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "author": {
+      "@type": "Person",
+      "name": "Yash Panchal",
+      "jobTitle": "Founder & Lead Engineer"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "url": "https://nitroide.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Yash Panchal"
+      }
+    },
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -321,7 +339,7 @@
       </div>
     </div>
 
-    <div class="pricing-section reveal-8" id="statsRow">
+    <div class="content-section reveal-8" id="statsRow">
       <div class="section-header">
         <h2>Enterprise Grade. Zero Cost.</h2>
         <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
@@ -341,20 +359,23 @@
           <div class="stat-label">Local Workspaces</div>
         </div>
       </div>
-
-      <div class="pricing-card">
-        <div class="pricing-header">
-          <h3>Community Plan</h3>
-          <div class="price">$0<span>/forever</span></div>
-          <p>Everything is unlocked. No credit card required.</p>
-        </div>
-        <div class="pricing-features">
-          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
-          <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
-          <div><i class="ph-bold ph-check-circle"></i> Developer Command Line</div>
-          <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>
-        </div>
-        <a href="tools/codebox.html" class="btn-launch primary-btn full-width">Launch Workspace</a>
+    </div>
+	  
+    <div class="reveal-8 content-section" style="margin-top: 80px;">
+      <div class="section-header">
+        <div class="badge"><i class="ph-bold ph-article"></i> Engineering Blog</div>
+        <h2>Latest from the Founder</h2>
+        <p>Insights on frontend architecture, zero-latency engineering, and building NitroIDE.</p>
+      </div>
+      
+      <div class="bento-grid" id="devto-articles-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <p style="color: var(--text-muted); text-align: center; width: 100%;"><i class="ph-bold ph-spinner-gap" style="animation: spin 1s linear infinite;"></i> Fetching latest articles...</p>
+      </div>
+      
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="https://dev.to/nitroide_bd133284181ff579" target="_blank" class="btn-secondary magnetic-btn" style="display: inline-flex; align-items: center; gap: 8px;">
+          Read more on Dev.to <i class="ph-bold ph-arrow-up-right"></i>
+        </a>
       </div>
     </div>
 
