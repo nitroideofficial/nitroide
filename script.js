@@ -92,8 +92,15 @@
 
 	if (localStorage.getItem('theme') === 'light') { 
 	  document.documentElement.classList.add('light-mode'); 
-	  const tBtn = document.getElementById('themeBtn'); 
-	  if(tBtn) tBtn.innerHTML = `<i class="ph-bold ph-moon"></i> Dark Mode`; 
+	  
+	  // Check if it's a dropdown item (codebox) or standard nav button (homepage)
+	  document.querySelectorAll('#themeBtn, #themeBtnFloat').forEach(btn => {
+		if (btn.classList.contains('dropdown-item')) {
+			btn.innerHTML = `<i class="ph-bold ph-moon"></i> Dark Mode`;
+		} else {
+			btn.innerHTML = `<i class="ph-bold ph-moon"></i>`;
+		}
+	  });
 	}
 
 	function toggleTheme() { 
@@ -101,8 +108,15 @@
 	  let isLight = document.documentElement.classList.contains('light-mode');
 	  localStorage.setItem('theme', isLight ? 'light' : 'dark'); 
 	  
-	  const btns = document.querySelectorAll('#themeBtn'); 
-	  btns.forEach(btn => btn.innerHTML = isLight ? `<i class="ph-bold ph-moon"></i> Dark Mode` : `<i class="ph-bold ph-sun"></i> Light Mode`); 
+	  document.querySelectorAll('#themeBtn, #themeBtnFloat').forEach(btn => {
+		if (btn.classList.contains('dropdown-item')) {
+			// Add text for the Codebox dropdown
+			btn.innerHTML = isLight ? `<i class="ph-bold ph-moon"></i> Dark Mode` : `<i class="ph-bold ph-sun"></i> Light Mode`;
+		} else {
+			// Keep it icon-only for the Homepage/Nav
+			btn.innerHTML = isLight ? `<i class="ph-bold ph-moon"></i>` : `<i class="ph-bold ph-sun"></i>`;
+		}
+	  });
 	  
 	  if (typeof monaco !== 'undefined') {
 		let currentTheme = document.getElementById('editorTheme') ? document.getElementById('editorTheme').value : 'toolbox-dark';
@@ -1175,7 +1189,8 @@ class NitroFooter extends HTMLElement {
                 <a href="${rPath}tools/codebox.html?env=vanilla">Launch IDE</a>
                 <a href="${rPath}docs.html">Documentation</a>
                 <a href="${rPath}changelog.html">Changelog</a>
-              </div>
+                <a href="${rPath}about.html">About NitroIDE</a>
+			  </div>
               <div class="footer-col">
                 <h4>Free Sandboxes</h4>
                 <!-- Notice these now use the new lPath variable -->
@@ -1476,4 +1491,82 @@ document.addEventListener('DOMContentLoaded', () => {
       renderGrid(filteredBlogs);
     });
   }
+});
+
+// ==========================================================================
+// DEV.TO API INTEGRATION
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const devToGrid = document.getElementById('devto-articles-grid');
+  
+  // Only run if the grid exists on the current page
+  if (!devToGrid) return;
+
+  // Your exact Dev.to Username
+  const DEVTO_USERNAME = 'nitroide_bd133284181ff579'; 
+  const ARTICLE_LIMIT = 3; // Pulls the top 3 most recent articles
+
+  async function fetchDevToArticles() {
+    try {
+      const response = await fetch(`https://dev.to/api/articles?username=${DEVTO_USERNAME}&per_page=${ARTICLE_LIMIT}`);
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const articles = await response.json();
+      devToGrid.innerHTML = ''; // Clear the loading spinner
+
+      if (articles.length === 0) {
+        devToGrid.innerHTML = '<p style="color: var(--text-muted); text-align: center; width: 100%;">No articles published yet.</p>';
+        return;
+      }
+
+      articles.forEach(article => {
+        // Format the date to look clean
+        const date = new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        
+        const card = document.createElement('a');
+        card.href = article.url;
+        card.target = "_blank";
+        card.className = 'bento-card';
+        card.style.textDecoration = 'none';
+        card.style.display = 'flex';
+        card.style.flexDirection = 'column';
+        card.style.transition = 'transform 0.2s, border-color 0.2s';
+        
+        // Premium hover state border change
+        card.addEventListener('mouseenter', () => card.style.borderColor = '#00e5ff');
+        card.addEventListener('mouseleave', () => card.style.borderColor = 'rgba(255,255,255,0.05)');
+
+        // BUGFIX: Inject the mousemove listener specifically for these dynamic cards so the glow tracks properly
+        card.addEventListener('mousemove', e => { 
+          const rect = card.getBoundingClientRect(); 
+          card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`); 
+          card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`); 
+        });
+
+        card.innerHTML = `
+          <div style="font-size: 0.75rem; color: #bb9af7; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+            <i class="ph-bold ph-calendar-blank"></i> ${date}
+            <span style="color: var(--text-muted); margin-left: auto; font-weight: normal; display: flex; align-items: center; gap: 4px;">
+              <i class="ph-fill ph-heart" style="color: #f7768e;"></i> ${article.public_reactions_count}
+            </span>
+          </div>
+          <h3 style="font-size: 1.2rem; color: var(--text); margin-bottom: 10px; line-height: 1.4;">${article.title}</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1;">
+            ${article.description}
+          </p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            ${article.tag_list.slice(0, 3).map(tag => `<span style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; color: var(--text-muted);">#${tag}</span>`).join('')}
+          </div>
+        `;
+        
+        devToGrid.appendChild(card);
+      });
+
+    } catch (error) {
+      console.error('Error fetching Dev.to articles:', error);
+      devToGrid.innerHTML = '<p style="color: var(--error); text-align: center; width: 100%;">Failed to load articles. Check back later.</p>';
+    }
+  }
+
+  fetchDevToArticles();
 });
