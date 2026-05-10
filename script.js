@@ -1221,6 +1221,7 @@ class NitroFooter extends HTMLElement {
                 <h4>Community</h4>
                 <a href="https://github.com/nitroideofficial/nitroide" target="_blank">GitHub</a>
                 <a href="https://x.com/trynitroide" target="_blank">X / Twitter</a>
+				<a href="https://www.linkedin.com/in/yashpanchal-nitro" target="_blank">LinkedIn</a>
                 <a href="https://www.instagram.com/nitroideofficial/" target="_blank">Instagram</a>
                 <h4 style="margin-top: 25px;">Legal</h4>
                 <a href="${rPath}legal.html">Privacy Policy</a>
