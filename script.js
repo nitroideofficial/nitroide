@@ -1509,7 +1509,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function fetchDevToArticles() {
     try {
-      const response = await fetch(`https://dev.to/api/articles?username=${DEVTO_USERNAME}&per_page=${ARTICLE_LIMIT}`);
+      const response = await fetch(`https://dev.to/api/articles?username=${DEVTO_USERNAME}&per_page=${ARTICLE_LIMIT}&t=${new Date().getTime()}`);
       if (!response.ok) throw new Error('Network response was not ok');
       
       const articles = await response.json();
