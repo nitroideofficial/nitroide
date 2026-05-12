@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-SH02J5Q7MB');
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var gtagScript = document.createElement('script');
+        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB";
+        gtagScript.async = true;
+        document.head.appendChild(gtagScript);
+        gtag('js', new Date());
+        gtag('config', 'G-SH02J5Q7MB');
+      }, 2500);
+    });
   </script>
 
   <meta charset="UTF-8">
@@ -71,7 +78,7 @@
   }
   </script>
 </head>
-<body class="workspace-body">
+<body class="workspace-body workspace-booting">
 
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
@@ -106,9 +113,13 @@
             <i class="ph-bold ph-faders"></i>
             <span class="ws-hide-mobile">Prefs</span>
           </button>
-          <button class="ws-btn ws-compile-btn" onclick="smartRun()">
+          <button class="ws-btn ws-compile-btn" onclick="smartRun(true)">
             <i class="ph-fill ph-play"></i> Compile
           </button>
+          <div id="workspaceStatus" class="workspace-status" role="status" aria-live="polite">
+            <span class="status-dot"></span>
+            <span id="workspaceStatusText">Ready</span>
+          </div>
         </div>
 
         <div id="optionsMenu" class="options-dropdown">
