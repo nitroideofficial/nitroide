@@ -134,3 +134,485 @@
     gap: 20px;
   }
 }
+
+/* Codebox workspace polish: compact, calmer, and tuned for editor real estate. */
+.workspace-body {
+  --workspace-surface: color-mix(in srgb, var(--card) 92%, #000 8%);
+  --workspace-elevated: color-mix(in srgb, var(--card) 86%, var(--bg) 14%);
+  --workspace-line: color-mix(in srgb, var(--border) 80%, transparent);
+}
+
+.workspace-body .bg-grid {
+  opacity: .18;
+}
+
+.workspace-body .ambient-glow {
+  display: none;
+}
+
+.workspace-body .container-ide,
+.workspace-body .ide-card {
+  background: var(--workspace-surface);
+}
+
+.workspace-body.workspace-booting .file-sidebar,
+.workspace-body.workspace-booting .editor-panel,
+.workspace-body.workspace-booting .editor-half,
+.workspace-body.workspace-booting .output-half,
+.workspace-body.workspace-booting iframe {
+  transition: none!important;
+}
+
+.workspace-body .card.ide-card {
+  box-shadow: none;
+}
+
+.workspace-body .ws-header {
+  height: 48px;
+  padding: 6px 10px;
+  background: color-mix(in srgb, var(--card) 94%, transparent);
+  border-bottom-color: var(--workspace-line);
+}
+
+.workspace-body .ws-left,
+.workspace-body .ws-right {
+  gap: 8px;
+  min-width: 0;
+}
+
+.workspace-body .ws-logo img {
+  height: 24px!important;
+  max-width: 150px!important;
+}
+
+.workspace-body .ws-btn {
+  height: 32px;
+  border-radius: 5px;
+  padding: 0 10px;
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+}
+
+.workspace-body .ws-icon-btn,
+.workspace-body .ws-icon-text-btn {
+  min-width: 32px;
+}
+
+.workspace-body .ws-compile-btn {
+  padding: 0 14px;
+  font-weight: 700;
+}
+
+.workspace-body .ide-workspace,
+.workspace-body .ide-split,
+.workspace-body .editor-half,
+.workspace-body .output-half {
+  background: var(--workspace-surface);
+}
+
+.workspace-body .ide-split {
+  gap: 0;
+}
+
+.workspace-body .file-sidebar {
+  width: 204px;
+  background: color-mix(in srgb, var(--workspace-elevated) 96%, transparent);
+  border-right-color: var(--workspace-line);
+}
+
+.workspace-body .file-sidebar.collapsed {
+  width: 0;
+  border-right-color: transparent;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.workspace-body .sidebar-header {
+  padding: 10px 12px 8px;
+}
+
+.workspace-body .file-list {
+  padding: 0 8px 8px;
+}
+
+.workspace-body .file-item {
+  min-height: 30px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  font-size: .78rem;
+}
+
+.workspace-body .editor-half {
+  height: 60%;
+}
+
+.workspace-body .output-half {
+  min-height: 88px;
+}
+
+.workspace-body .editor-panel {
+  background: color-mix(in srgb, var(--workspace-surface) 96%, transparent);
+  contain: layout paint size;
+}
+
+.workspace-body .editor-header-pill {
+  top: 8px;
+  right: 12px;
+  max-width: calc(100% - 24px);
+  padding: 3px 8px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  font-size: .68rem;
+  opacity: .78;
+}
+
+.workspace-body .editor-panel:hover .editor-header-pill,
+.workspace-body .editor-header-pill:hover {
+  opacity: 1;
+}
+
+.workspace-body .ide-resizer.horiz {
+  width: 3px;
+  flex-basis: 3px;
+  margin: 0;
+  border-radius: 0;
+}
+
+.workspace-body .ide-resizer.vert {
+  height: 3px;
+  flex-basis: 3px;
+  margin: 0;
+  border-radius: 0;
+}
+
+.workspace-body .ide-resizer::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+
+.workspace-body .output-tabs {
+  height: 38px;
+  padding: 0 8px;
+  border-top-color: var(--workspace-line);
+  background: color-mix(in srgb, var(--workspace-elevated) 94%, transparent);
+}
+
+.workspace-body .out-tab-group {
+  gap: 4px;
+  padding: 5px 0;
+}
+
+.workspace-body .out-tab {
+  min-height: 28px;
+  border-radius: 5px;
+  padding: 4px 9px;
+  font-size: .76rem;
+}
+
+.workspace-body .cmd-palette-backdrop {
+  background: rgba(0,0,0,.52);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.workspace-body .cmd-palette {
+  width: min(620px, calc(100vw - 28px));
+  max-height: min(680px, calc(100dvh - 70px));
+  border-radius: 8px;
+  border: 1px solid var(--workspace-line);
+  background: color-mix(in srgb, var(--card) 96%, #000 4%);
+  box-shadow: 0 24px 70px rgba(0,0,0,.48);
+  overflow: hidden;
+}
+
+.workspace-body .cmd-input-wrap {
+  height: 54px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--workspace-line);
+  background: color-mix(in srgb, var(--bg) 52%, transparent);
+}
+
+.workspace-body .cmd-input-wrap i {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+.workspace-body .cmd-input {
+  height: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: .96rem;
+}
+
+.workspace-body .cmd-list {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-height: calc(min(680px, 100dvh - 70px) - 54px);
+  overflow-y: auto;
+}
+
+.workspace-body .ws-command-item {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 6px 8px;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.workspace-body .ws-command-item:hover,
+.workspace-body .ws-command-item.selected,
+.workspace-body .ws-command-item:focus-visible {
+  background: color-mix(in srgb, var(--border) 78%, transparent);
+  border-color: var(--workspace-line);
+  color: var(--text);
+  outline: 0;
+}
+
+.workspace-body .cmd-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  font-size: .88rem;
+  font-weight: 600;
+}
+
+.workspace-body .cmd-item-left span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workspace-body .cmd-icon-wrap {
+  width: 26px;
+  height: 26px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  border: 1px solid var(--workspace-line);
+  color: var(--text);
+  flex: 0 0 auto;
+}
+
+.workspace-body .cmd-item-right {
+  min-width: 42px;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: .68rem;
+  text-align: right;
+  opacity: .75;
+}
+
+.workspace-body .ws-command-item.selected .cmd-item-right {
+  color: var(--text);
+  opacity: 1;
+}
+
+.workspace-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 88px;
+  max-width: 150px;
+  height: 28px;
+  padding: 0 9px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--card) 72%, transparent);
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: .72rem;
+  line-height: 1;
+  overflow: hidden;
+}
+
+.workspace-status span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  background: var(--text-muted);
+}
+
+.workspace-status[data-state="running"] .status-dot,
+.workspace-status[data-state="saving"] .status-dot {
+  background: var(--warning);
+  animation: statusPulse 1s ease-in-out infinite;
+}
+
+.workspace-status[data-state="saved"] .status-dot {
+  background: var(--success);
+}
+
+.workspace-status[data-state="error"] {
+  color: var(--error);
+  border-color: color-mix(in srgb, var(--error) 45%, transparent);
+}
+
+.workspace-status[data-state="error"] .status-dot {
+  background: var(--error);
+}
+
+@keyframes statusPulse {
+  50% { opacity: .35; transform: scale(.8); }
+}
+
+.workspace-body .console-header {
+  padding: 6px 10px;
+}
+
+.workspace-body .console-logs {
+  padding: 6px 8px;
+}
+
+.workspace-body .console-logs .console-entry {
+  min-height: 24px;
+  padding: 4px 8px;
+}
+
+.workspace-body .console-input-wrap {
+  min-height: 34px;
+}
+
+.workspace-body .console-prompt,
+.workspace-body .console-input {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.workspace-body .iframe-wrap {
+  background:
+    linear-gradient(45deg, rgba(255,255,255,.025) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,.025) 25%, transparent 25%);
+  background-size: 16px 16px;
+  position: relative;
+}
+
+.workspace-body iframe {
+  border: 0;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--bg) 94%, #000 6%);
+  box-shadow: none;
+}
+
+.workspace-body iframe.mobile-view,
+.workspace-body iframe.tablet-view {
+  border: 1px solid var(--workspace-line);
+  box-shadow: 0 14px 40px rgba(0,0,0,.22);
+}
+
+.workspace-body .cdn-manager {
+  padding: 8px 12px;
+  background: var(--workspace-elevated);
+}
+
+.workspace-body .options-dropdown {
+  right: 10px;
+  top: calc(100% + 4px);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--card) 96%, #000 4%);
+}
+
+@media (min-width: 1200px) {
+  .workspace-body .file-sidebar:not(.collapsed) + .ide-split .editor-half {
+    height: 62%;
+  }
+}
+
+@media (max-width: 768px) {
+  .workspace-body .ws-header {
+    height: 46px;
+    padding: 6px 8px;
+  }
+
+  .workspace-body .ws-right {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .workspace-body .ws-right::-webkit-scrollbar {
+    display: none;
+  }
+
+  .workspace-body .ws-btn {
+    height: 32px;
+  }
+
+  .workspace-body .ws-icon-text-btn {
+    width: 32px;
+  }
+
+  .workspace-body .ws-compile-btn {
+    padding: 0 10px;
+  }
+
+  .workspace-body .workspace-status {
+    min-width: 28px;
+    width: 28px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .workspace-body .workspace-status span:last-child {
+    display: none;
+  }
+
+  .workspace-body .mobile-vfs-tabs {
+    padding: 6px 8px;
+  }
+
+  .workspace-body .mob-tab {
+    padding: 5px 9px;
+    border-radius: 5px;
+  }
+
+  .workspace-body .editor-half,
+  .workspace-body .output-half {
+    min-height: 120px;
+  }
+
+  .workspace-body .ide-resizer.vert {
+    height: 12px!important;
+    flex-basis: 12px!important;
+    margin: 0!important;
+    background:
+      linear-gradient(to right, transparent, var(--text-muted), transparent) center / 38px 2px no-repeat,
+      var(--workspace-line);
+  }
+
+  .workspace-body .output-tabs {
+    height: 36px;
+  }
+
+  .workspace-body .out-tab {
+    min-width: 34px;
+    padding: 4px 8px;
+  }
+
+  .workspace-body .console-header {
+    gap: 8px;
+    overflow-x: auto;
+  }
+}
