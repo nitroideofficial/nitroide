@@ -1505,7 +1505,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Your exact Dev.to Username
   const DEVTO_USERNAME = 'nitroide'; 
-  const ARTICLE_LIMIT = 2; // Pulls the top 2 most recent articles
+  const ARTICLE_LIMIT = 3; // Pulls the top 3 most recent articles
 
   async function fetchDevToArticles() {
     try {
