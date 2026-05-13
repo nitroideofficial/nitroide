@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-SH02J5Q7MB');
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var gtagScript = document.createElement('script');
+        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB";
+        gtagScript.async = true;
+        document.head.appendChild(gtagScript);
+        gtag('js', new Date());
+        gtag('config', 'G-SH02J5Q7MB');
+      }, 2500);
+    });
   </script>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About NitroIDE | The Story Behind the Engine</title>
   <meta name="title" content="About NitroIDE | The Story Behind the Engine">
   <meta name="description" content="Meet the creator behind NitroIDE. Learn why we built a zero-latency, 100% client-side code editor for the modern web.">
@@ -62,23 +69,24 @@
   }
   </script>
 </head>
-<body>
+<body class="about-page">
 
 <nitro-header></nitro-header>
 
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
 
-<div class="container relative-z about-container">
+<main class="container relative-z about-container">
   
-  <div class="about-hero-header">
+  <section class="about-hero-header" aria-labelledby="about-title">
     <div class="badge badge-primary"><i class="ph-bold ph-code"></i> The Origin Story</div>
-    <h1 class="about-hero-title">Built for Speed.<br><span style="color: var(--text-muted);">Designed for Flow.</span></h1>
-  </div>
+    <h1 id="about-title" class="about-hero-title">Built for Speed.<br><span>Designed for Flow.</span></h1>
+    <p class="about-hero-subtitle">NitroIDE is a local-first browser workspace built to keep coding fast, private, and focused.</p>
+  </section>
 
-  <div class="bento-grid about-bento-grid">
+  <section class="bento-grid about-bento-grid" aria-label="About NitroIDE">
     
-    <div class="bento-card about-founder-card">
+    <article class="bento-card about-founder-card">
       <img src="https://ui-avatars.com/api/?name=Yash+Panchal&background=000&color=fff&size=150" alt="Yash Panchal" class="about-founder-img">
       
       <h2 class="about-founder-name">Yash Panchal</h2>
@@ -86,7 +94,7 @@
       
       <div class="about-founder-bio">
         <p class="about-bio-p">Traditional web IDEs are fundamentally broken. They pipe your keystrokes to a remote server, compile it, and send it back. I hated that latency, so I engineered a way around it.</p>
-        <p class="about-bio-p-last">NitroIDE is the result of pushing client-side architecture to the absolute limit. It executes everything locally in your browser's memory, giving you a completely private, zero-latency development environment. It’s not just a sandbox; it’s a high-performance engine.</p>
+        <p class="about-bio-p-last">NitroIDE is the result of pushing client-side architecture to the absolute limit. It executes everything locally in your browser's memory, giving you a completely private, zero-latency development environment. It's not just a sandbox; it's a high-performance engine.</p>
       </div>
 
       <div class="about-support-wrapper">
@@ -94,9 +102,9 @@
           <i class="ph-duotone ph-heart about-story-icon" style="color: #f7768e;"></i> Sponsor this Project
         </a>
       </div>
-    </div>
+    </article>
 
-    <div class="bento-card about-story-card">
+    <article class="bento-card about-story-card">
       <i class="ph-duotone ph-rocket-launch bento-icon about-story-icon"></i>
       <h2 class="about-story-heading">Why NitroIDE Exists</h2>
       <p class="about-story-text">
@@ -105,14 +113,14 @@
       <p class="about-story-text-last">
         NitroIDE was built to solve this. By executing your code 100% on the client side using your browser's optimized V8 engine, we eliminated the server round-trip entirely. The result is a workspace that responds at the exact speed of your thoughts, while keeping your code completely private.
       </p>
-    </div>
+    </article>
 
-  </div>
-</div>
+  </section>
+</main>
 
 <nitro-footer></nitro-footer>
 <nitro-modals></nitro-modals>
-<script src="script.js"></script>
+<script defer src="script.js"></script>
 
 </body>
 </html>
