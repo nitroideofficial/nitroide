@@ -5,28 +5,42 @@
    ========================================= */
 
 .about-container {
-  padding-top: 120px;
+  padding-top: clamp(56px, 7vh, 78px);
   padding-bottom: 80px;
-  max-width: 900px;
+  max-width: 1040px;
   margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .about-hero-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 34px;
 }
 
 .about-hero-title {
-  font-size: 3.5rem;
+  font-size: clamp(2.6rem, 7vw, 4.75rem);
   line-height: 1.1;
-  letter-spacing: -1.5px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.about-hero-title span {
+  color: var(--text-muted);
+}
+
+.about-hero-subtitle {
+  max-width: 640px;
+  margin: 0 auto;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
 }
 
 .about-bento-grid {
-  grid-template-columns: 1fr 1.5fr;
+  grid-template-columns: minmax(280px, .82fr) minmax(0, 1.18fr);
+  align-items: stretch;
+  gap: 18px;
 }
 
 .about-founder-card {
@@ -34,39 +48,40 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 40px 20px;
+  padding: 34px 24px;
 }
 
 .about-founder-img {
-  width: 120px;
-  height: 120px;
+  width: 112px;
+  height: 112px;
   border-radius: 50%;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   border: 2px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .about-founder-name {
-  font-size: 1.8rem;
+  font-size: 1.55rem;
+  line-height: 1.2;
   margin-bottom: 5px;
 }
 
 .about-founder-title {
   color: #00e5ff;
   font-weight: 600;
-  font-size: 0.9rem;
-  margin-bottom: 25px;
+  font-size: 0.78rem;
+  margin-bottom: 22px;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
 .about-founder-bio {
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: 0.93rem;
   line-height: 1.7;
   text-align: left;
-  margin-bottom: 25px;
-  padding: 0 15px;
+  margin-bottom: 24px;
+  padding: 0;
 }
 
 .about-bio-p {
@@ -79,7 +94,8 @@
 
 .about-support-wrapper {
   width: 100%;
-  padding: 0 15px;
+  padding: 0;
+  margin-top: auto;
 }
 
 .about-support-btn {
@@ -94,7 +110,7 @@
 }
 
 .about-story-card {
-  padding: 40px;
+  padding: 42px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -105,33 +121,83 @@
 }
 
 .about-story-heading {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  line-height: 1.14;
+  margin-bottom: 18px;
 }
 
 .about-story-text {
   color: var(--text-muted);
-  font-size: 1.05rem;
+  font-size: 1rem;
   line-height: 1.7;
   margin-bottom: 20px;
 }
 
 .about-story-text-last {
   color: var(--text-muted);
-  font-size: 1.05rem;
+  font-size: 1rem;
   line-height: 1.7;
   margin-bottom: 0;
 }
 
+.about-page .bento-card {
+  border-radius: 8px;
+}
+
+.about-page .feedback-fab,
+.about-page .fab {
+  display: none;
+}
+
 /* Responsive Overrides */
 @media (max-width: 768px) {
-  .about-hero-title {
-    font-size: 2.2rem;
-    letter-spacing: -1px;
+  .about-container {
+    padding-top: 56px;
+    padding-bottom: 52px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
+
+  .about-hero-header {
+    margin-bottom: 28px;
+  }
+
+  .about-hero-title {
+    font-size: 2.35rem;
+  }
+
+  .about-hero-subtitle {
+    font-size: .95rem;
+  }
+
   .about-bento-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 14px;
+  }
+
+  .about-founder-card,
+  .about-story-card {
+    padding: 26px 18px;
+  }
+
+  .about-founder-bio {
+    text-align: left;
+  }
+
+  .about-support-btn {
+    min-height: 42px;
+  }
+
+}
+
+@media (max-width: 420px) {
+  .about-hero-title {
+    font-size: 2rem;
+  }
+
+  .about-founder-card,
+  .about-story-card {
+    padding: 22px 16px;
   }
 }
 
