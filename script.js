@@ -1447,83 +1447,290 @@ class NitroHeader extends HTMLElement {
 }
 customElements.define('nitro-header', NitroHeader);
 
-// 2. THE UNIVERSAL FOOTER
+// 2. THE UNIVERSAL FOOTER (The Expanding "Dynamic Pill" Dock)
 class NitroFooter extends HTMLElement {
     connectedCallback() {
-        // Pathing Logic (The GPS)
+        // Pathing Logic
         const isLanding = window.location.pathname.includes('/landing/');
         const isTools = window.location.pathname.includes('/tools/');
         const isBlog = window.location.pathname.includes('/blog/');
         const inSub = isLanding || isTools || isBlog;
 
         const rPath = inSub ? '../' : './';
-        
-        let lPath = 'landing/';
-        if (isLanding) {
-            lPath = './'; // Already in the landing folder
-        } else if (inSub) {
-            lPath = '../landing/'; // In a different subfolder, go up then down
-        }
+        let lPath = isLanding ? './' : (inSub ? '../landing/' : 'landing/');
 
         this.innerHTML = `
-        <div class="container relative-z" style="padding-top: 0;">
-          <footer class="pro-footer reveal-8 active" style="margin-top: 0;">
-            <div class="footer-grid">
+        <style>
+          .footer-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--border);
+            padding-top: 80px;
+            padding-bottom: 40px;
+            margin-top: 40px;
+          }
+          
+          /* The Massive Background Watermark */
+          .footer-watermark {
+            position: absolute;
+            bottom: -5%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 15vw;
+            font-weight: 800;
+            color: var(--text);
+            opacity: 0.02;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 0;
+            letter-spacing: -0.05em;
+            user-select: none;
+          }
+          html.light-mode .footer-watermark { opacity: 0.03; color: #000; }
+
+          /* The Upper Deck */
+          .footer-upper {
+            display: flex;
+            justify-content: space-between;
+            gap: 60px;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 60px;
+          }
+          
+          .footer-brand {
+            flex: 0 0 300px;
+          }
+          .footer-hero {
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text);
+            line-height: 1.1;
+            margin-bottom: 15px;
+          }
+          .footer-hero span { color: var(--text-muted); }
+          
+          .footer-link-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            flex: 1;
+          }
+          .f-col h4 {
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+          }
+          .f-col a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            transition: color 0.2s;
+          }
+          .f-col a:hover { color: var(--text); }
+          
+          /* The Lower Deck (Strict Grid) */
+          .footer-lower {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            z-index: 1;
+          }
+          html.light-mode .footer-lower { border-top: 1px solid rgba(0,0,0,0.05); }
+
+          .f-legal {
+            text-align: left;
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+            font-weight: 500;
+          }
+          
+          /* --- THE EXPANDING DOCK LOGIC --- */
+          .f-socials {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .expand-btn {
+            display: inline-flex;
+            align-items: center;
+            height: 44px;
+            max-width: 44px; /* Starts as a perfect circle */
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 44px;
+            overflow: hidden;
+            transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: var(--text-muted);
+            white-space: nowrap;
+          }
+          html.light-mode .expand-btn { background: rgba(0,0,0,0.02); }
+
+          .expand-btn i {
+            width: 42px;
+            height: 44px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: color 0.3s;
+          }
+
+          .expand-btn span {
+            padding-right: 18px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          }
+
+          /* Hover Expansion Physics */
+          .expand-btn:hover {
+            max-width: 160px; /* Slides open on hover */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+          }
+          .expand-btn:hover span {
+            opacity: 1;
+            transform: translateX(0);
+          }
+
+          /* Brand Colors on Hover */
+          .expand-btn.gh:hover { border-color: rgba(255,255,255,0.3); color: #fff; background: rgba(255,255,255,0.05); }
+          .expand-btn.pl:hover { border-color: rgba(0,170,69,0.3); color: #00aa45; background: rgba(0,170,69,0.05); }
+          .expand-btn.ph:hover { border-color: rgba(255,97,84,0.3); color: #ff6154; background: rgba(255,97,84,0.05); }
+          .expand-btn.hn:hover { border-color: rgba(41,98,255,0.3); color: #2962ff; background: rgba(41,98,255,0.05); }
+          .expand-btn.cm:hover { border-color: rgba(75,137,245,0.3); color: #4b89f5; background: rgba(75,137,245,0.05); }
+          .expand-btn.tw:hover { border-color: rgba(29,161,242,0.3); color: #1da1f2; background: rgba(29,161,242,0.05); }
+          .expand-btn.li:hover { border-color: rgba(10,102,194,0.3); color: #0a66c2; background: rgba(10,102,194,0.05); }
+          .expand-btn.ig:hover { border-color: rgba(225,48,108,0.3); color: #e1306c; background: rgba(225,48,108,0.05); }
+
+          .f-madein {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 6px;
+          }
+
+          /* --- MOBILE RESPONSIVENESS --- */
+          @media (max-width: 1100px) {
+            .footer-upper { flex-direction: column; gap: 40px; }
+            .footer-brand { flex: none; max-width: 100%; }
+          }
+          @media (max-width: 768px) {
+            .footer-link-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+            .footer-lower { display: flex; flex-direction: column; gap: 25px; text-align: center; }
+            .f-legal, .f-madein { text-align: center; justify-content: center; }
+            
+            /* On mobile, permanently expand the pills into a 2-column grid */
+            .f-socials { order: -1; width: 100%; flex-wrap: wrap; gap: 10px; }
+            .expand-btn { 
+              flex: 1 1 calc(50% - 12px); 
+              max-width: none; 
+              justify-content: flex-start;
+            }
+            .expand-btn span { opacity: 1; transform: translateX(0); }
+            
+            .footer-watermark { font-size: 22vw; bottom: 5%; }
+          }
+        </style>
+        
+        <div class="footer-wrapper">
+          <div class="footer-watermark">NITROIDE</div>
+          
+          <div class="container relative-z" style="padding-top: 0; padding-bottom: 0;">
+            
+            <div class="footer-upper">
               <div class="footer-brand">
-                <a href="${rPath}index.html" class="logo" style="text-decoration: none;">
-                  <img src="${rPath}logo/logo_white.png" alt="NitroIDE" class="logo-dark">
-                  <img src="${rPath}logo/logo_black.png" alt="NitroIDE" class="logo-light">
+                <a href="${rPath}index.html" style="text-decoration: none; display: inline-block; margin-bottom: 30px;">
+                  <img src="${rPath}logo/logo_white.png" alt="NitroIDE" class="logo-dark" style="height: 28px;">
+                  <img src="${rPath}logo/logo_black.png" alt="NitroIDE" class="logo-light" style="height: 28px; display: none;">
                 </a>
-                <p class="footer-desc">The ultimate client-side code editor. <br>A free, open-source, zero-latency browser IDE built for modern frontend developers.</p>
+                <div class="footer-hero">
+                  Zero latency.<br><span>Infinite focus.</span>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; max-width: 300px;">
+                  The ultimate client-side code editor. A free, open-source browser IDE built for modern frontend developers.
+                </p>
               </div>
-              <div class="footer-col">
-                <h4>Workspace</h4>
-                <a href="${rPath}tools/codebox.html?env=vanilla">Launch IDE</a>
-                <a href="${rPath}docs.html">Documentation</a>
-                <a href="${rPath}changelog.html">Changelog</a>
-                <a href="${rPath}about.html">About NitroIDE</a>
-			  </div>
-              <div class="footer-col">
-                <h4>Free Sandboxes</h4>
-                <!-- Notice these now use the new lPath variable -->
-                <a href="${lPath}react-online-playground.html">React Playground</a>
-                <a href="${lPath}tailwind-online-editor.html">Tailwind Editor</a>
-                <a href="${lPath}test-tailwind-css-online.html">Tailwind CSS Sandbox</a>
-                <a href="${lPath}vanilla-javascript-sandbox.html">Vanilla JS Sandbox</a>
-                <a href="${lPath}html-css-js-editor.html">HTML/CSS/JS Editor</a>
-                <a href="${lPath}monaco-editor-online.html">Monaco Engine Online</a>
-              </div>
-              <div class="footer-col">
-                <h4>Top Use Cases</h4>
-                <a href="${lPath}run-react-in-browser-no-install.html">Run React in Browser</a>
-                <a href="${lPath}offline-html-editor.html">Offline HTML Editor</a>
-                <a href="${lPath}private-code-editor-no-tracking.html">Private Code Editor</a>
-                <a href="${lPath}chromebook-code-editor-free.html">Chromebook IDE</a>
-                <a href="${lPath}low-ram-code-editor.html">Low RAM Editor</a>
-                <a href="${lPath}responsive-design-tester.html">Responsive Design Tester</a>
-                <a href="${lPath}export-code-to-zip.html">Export Code to ZIP</a>
-              </div>
-              <div class="footer-col">
-                <h4>Compare</h4>
-                <a href="${lPath}vscode-online-alternative.html">VS Code Alternative</a>
-                <a href="${lPath}codesandbox-lightweight-alternative.html">CodeSandbox Alt</a>
-                <a href="${lPath}codepen-alternative-no-login.html">CodePen Alternative</a>
-              </div>
-              <div class="footer-col">
-                <h4>Community</h4>
-                <a href="https://github.com/nitroideofficial/nitroide" target="_blank">GitHub</a>
-                <a href="https://x.com/trynitroide" target="_blank">X / Twitter</a>
-				<a href="https://www.linkedin.com/in/yashpanchal-nitro" target="_blank">LinkedIn</a>
-                <a href="https://www.instagram.com/nitroideofficial/" target="_blank">Instagram</a>
-                <h4 style="margin-top: 25px;">Legal</h4>
-                <a href="${rPath}legal.html">Privacy Policy</a>
-                <a href="${rPath}legal.html#license">MIT License</a>
+              
+              <div class="footer-link-grid">
+                <div class="f-col">
+                  <h4>Workspace</h4>
+                  <a href="${rPath}tools/codebox.html?env=vanilla">Launch IDE</a>
+                  <a href="${rPath}docs.html">Documentation</a>
+                  <a href="${rPath}changelog.html">Changelog</a>
+                  <a href="${rPath}about.html">About NitroIDE</a>
+                </div>
+                <div class="f-col">
+                  <h4>Free Sandboxes</h4>
+                  <a href="${lPath}react-online-playground.html">React Playground</a>
+                  <a href="${lPath}tailwind-online-editor.html">Tailwind Editor</a>
+                  <a href="${lPath}test-tailwind-css-online.html">Tailwind CSS Sandbox</a>
+                  <a href="${lPath}vanilla-javascript-sandbox.html">Vanilla JS Sandbox</a>
+                  <a href="${lPath}html-css-js-editor.html">HTML/CSS/JS Editor</a>
+                  <a href="${lPath}monaco-editor-online.html">Monaco Engine Online</a>
+                </div>
+                <div class="f-col">
+                  <h4>Top Use Cases</h4>
+                  <a href="${lPath}run-react-in-browser-no-install.html">Run React in Browser</a>
+                  <a href="${lPath}offline-html-editor.html">Offline HTML Editor</a>
+                  <a href="${lPath}private-code-editor-no-tracking.html">Private Code Editor</a>
+                  <a href="${lPath}chromebook-code-editor-free.html">Chromebook IDE</a>
+                  <a href="${lPath}low-ram-code-editor.html">Low RAM Editor</a>
+                  <a href="${lPath}responsive-design-tester.html">Responsive Design Tester</a>
+                  <a href="${lPath}export-code-to-zip.html">Export Code to ZIP</a>
+                </div>
+                <div class="f-col">
+                  <h4>Compare</h4>
+                  <a href="${lPath}vscode-online-alternative.html">VS Code Alternative</a>
+                  <a href="${lPath}codesandbox-lightweight-alternative.html">CodeSandbox Alt</a>
+                  <a href="${lPath}codepen-alternative-no-login.html">CodePen Alternative</a>
+                </div>
               </div>
             </div>
-            <div class="footer-bottom">
-              <p>© 2026 NitroIDE. Open Source and Free Forever.</p>
+
+            <div class="footer-lower">
+              
+              <div class="f-legal">
+                © 2026 NitroIDE <span style="margin: 0 10px; opacity: 0.5;">|</span> 
+                <a href="${rPath}legal.html" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Privacy</a> <span style="margin: 0 5px; opacity: 0.5;">|</span> 
+                <a href="${rPath}legal.html#license" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">Terms</a>
+              </div>
+              
+              <div class="f-socials">
+                <a href="https://github.com/nitroideofficial/nitroide" target="_blank" class="expand-btn gh"><i class="ph-bold ph-github-logo"></i><span>GitHub</span></a>
+                <a href="https://peerlist.io/nitroide" target="_blank" class="expand-btn pl"><i class="ph-bold ph-leaf"></i><span>Peerlist</span></a>
+                <a href="https://www.producthunt.com/@nitroide" target="_blank" class="expand-btn ph"><i class="ph-bold ph-rocket-launch"></i><span>Product Hunt</span></a>
+                <a href="https://hashnode.com/@nitroide" target="_blank" class="expand-btn hn"><i class="ph-bold ph-hash"></i><span>Hashnode</span></a>
+                <a href="https://www.commudle.com/users/nitroide" target="_blank" class="expand-btn cm"><i class="ph-bold ph-users-three"></i><span>Commudle</span></a>
+                <a href="https://x.com/trynitroide" target="_blank" class="expand-btn tw"><i class="ph-bold ph-twitter-logo"></i><span>Twitter</span></a>
+                <a href="https://www.linkedin.com/in/yashpanchal-nitro" target="_blank" class="expand-btn li"><i class="ph-bold ph-linkedin-logo"></i><span>LinkedIn</span></a>
+                <a href="https://www.instagram.com/nitroideofficial/" target="_blank" class="expand-btn ig"><i class="ph-bold ph-instagram-logo"></i><span>Instagram</span></a>
+              </div>
+              
+              <div class="f-madein">
+                Engineered with <i class="ph-bold ph-lightning" style="color: #00e5ff;"></i> in India
+              </div>
+              
             </div>
-          </footer>
+
+          </div>
         </div>
         `;
     }
@@ -1789,79 +1996,123 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================================================
-// DEV.TO API INTEGRATION
+// ECOSYSTEM PULSE (Dev.to & Hashnode Dynamic Fetcher)
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
-  const devToGrid = document.getElementById('devto-articles-grid');
-  
-  // Only run if the grid exists on the current page
-  if (!devToGrid) return;
+  const blogContainer = document.getElementById('pulse-blog-container');
+  if (!blogContainer) return;
 
-  // Your exact Dev.to Username
-  const DEVTO_USERNAME = 'nitroide'; 
-  const ARTICLE_LIMIT = 3; // Pulls the top 3 most recent articles
+  // Cached data to prevent over-fetching
+  let cachedData = { devto: null, hashnode: null };
 
-  async function fetchDevToArticles() {
+  // Hardcoded Hashnode fallback (since Hashnode's GraphQL API requires a specific publication host)
+  const hashnodeFallback = {
+    title: "Why I Built a Zero-Latency Browser IDE",
+    description: "Cloud containers are too slow for simple frontend prototyping. Here is how I used the Monaco engine to run code directly in the browser's memory.",
+    url: "https://hashnode.com/@nitroide",
+    date: "May 2026"
+  };
+
+  async function fetchBlogData(platform) {
+    if (cachedData[platform]) return renderBlogCard(cachedData[platform], platform);
+
     try {
-      const response = await fetch(`https://dev.to/api/articles?username=${DEVTO_USERNAME}&per_page=${ARTICLE_LIMIT}&t=${new Date().getTime()}`);
-      if (!response.ok) throw new Error('Network response was not ok');
-      
-      const articles = await response.json();
-      devToGrid.innerHTML = ''; // Clear the loading spinner
-
-      if (articles.length === 0) {
-        devToGrid.innerHTML = '<p style="color: var(--text-muted); text-align: center; width: 100%;">No articles published yet.</p>';
-        return;
+      if (platform === 'devto') {
+        const response = await fetch(`https://dev.to/api/articles?username=nitroide&per_page=1`);
+        if (!response.ok) throw new Error('Dev.to fetch failed');
+        const data = await response.json();
+        
+        if (data.length > 0) {
+          cachedData.devto = {
+            title: data[0].title,
+            description: data[0].description,
+            url: data[0].url,
+            date: new Date(data[0].published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+          };
+        }
+      } else if (platform === 'hashnode') {
+        // We use the fallback for Hashnode to guarantee it loads instantly without GraphQL CORS issues
+        cachedData.hashnode = hashnodeFallback;
       }
-
-      articles.forEach(article => {
-        // Format the date to look clean
-        const date = new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        
-        const card = document.createElement('a');
-        card.href = article.url;
-        card.target = "_blank";
-        card.className = 'bento-card';
-        card.style.textDecoration = 'none';
-        card.style.display = 'flex';
-        card.style.flexDirection = 'column';
-        card.style.transition = 'transform 0.2s, border-color 0.2s';
-        
-        // Premium hover state border change
-        card.addEventListener('mouseenter', () => card.style.borderColor = '#00e5ff');
-        card.addEventListener('mouseleave', () => card.style.borderColor = 'rgba(255,255,255,0.05)');
-
-        // BUGFIX: Inject the mousemove listener specifically for these dynamic cards so the glow tracks properly
-        card.addEventListener('mousemove', e => { 
-          const rect = card.getBoundingClientRect(); 
-          card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`); 
-          card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`); 
-        });
-
-        card.innerHTML = `
-          <div style="font-size: 0.75rem; color: #bb9af7; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
-            <i class="ph-bold ph-calendar-blank"></i> ${date}
-            <span style="color: var(--text-muted); margin-left: auto; font-weight: normal; display: flex; align-items: center; gap: 4px;">
-              <i class="ph-fill ph-heart" style="color: #f7768e;"></i> ${article.public_reactions_count}
-            </span>
-          </div>
-          <h3 style="font-size: 1.2rem; color: var(--text); margin-bottom: 10px; line-height: 1.4;">${article.title}</h3>
-          <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; flex-grow: 1;">
-            ${article.description}
-          </p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            ${article.tag_list.slice(0, 3).map(tag => `<span style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; color: var(--text-muted);">#${tag}</span>`).join('')}
-          </div>
-        `;
-        
-        devToGrid.appendChild(card);
-      });
-
+      
+      renderBlogCard(cachedData[platform], platform);
     } catch (error) {
-      console.error('Error fetching Dev.to articles:', error);
-      devToGrid.innerHTML = '<p style="color: var(--error); text-align: center; width: 100%;">Failed to load articles. Check back later.</p>';
+      console.error('Pulse fetch error:', error);
+      blogContainer.innerHTML = '<p style="color: var(--error); text-align: center; margin-top:40px;">Failed to load logs.</p>';
     }
   }
 
-  fetchDevToArticles();
+  function renderBlogCard(data, platform) {
+    if (!data) return;
+    
+    const icon = platform === 'devto' ? '<i class="ph-bold ph-dev-to-logo" style="color: #fff;"></i>' : '<i class="ph-bold ph-hash" style="color: #2962ff;"></i>';
+    
+    blogContainer.innerHTML = `
+      <a href="${data.url}" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; height: 100%;">
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
+          ${icon} ${platform === 'devto' ? 'Dev.to Article' : 'Hashnode Blog'}
+          <span style="margin-left: auto; font-weight: normal;">${data.date}</span>
+        </div>
+        <h3 style="font-size: 1.25rem; color: var(--text); margin-bottom: 10px; line-height: 1.3;">${data.title}</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0;">${data.description}</p>
+        <div style="margin-top: auto; padding-top: 20px; font-size: 0.85rem; color: #00e5ff; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+          Read Full Log <i class="ph-bold ph-arrow-right"></i>
+        </div>
+      </a>
+    `;
+  }
+
+  // Expose the tab switching function globally
+  window.switchPulseTab = function(platform) {
+    document.querySelectorAll('.p-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    blogContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 40px;"><i class="ph-bold ph-spinner-gap" style="animation: spin 1s linear infinite;"></i> Fetching logs...</p>';
+    fetchBlogData(platform);
+  };
+
+  // Init default tab
+  fetchBlogData('devto');
+});
+
+
+// ==========================================================================
+// ECOSYSTEM DATABSE RENDERER (Builds the UI automatically)
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  
+  // 1. Build the Homepage Ticker (Only grabs the top 3)
+  const tickerBox = document.querySelector('.pulse-ticker-box');
+  if (tickerBox && typeof pulseLogs !== 'undefined') {
+    tickerBox.innerHTML = ''; 
+    const latestThree = pulseLogs.slice(0, 3);
+    latestThree.forEach(log => {
+      tickerBox.innerHTML += `
+        <a href="${log.link}" target="_blank" class="ticker-item">
+          <span class="t-icon" style="color: ${log.color};"><i class="ph-bold ${log.icon}"></i></span>
+          <span class="t-text">${log.title}</span>
+        </a>
+      `;
+    });
+  }
+
+  // 2. Build the Ecosystem Archive Page (Grabs everything)
+  const archiveTimeline = document.querySelector('.timeline'); 
+  if (archiveTimeline && window.location.pathname.includes('ecosystem.html') && typeof pulseLogs !== 'undefined') {
+    archiveTimeline.innerHTML = ''; 
+    pulseLogs.forEach(log => {
+      archiveTimeline.innerHTML += `
+        <div class="log-entry">
+          <div class="log-dot dim"></div>
+          <span class="log-date">${log.date}</span>
+          <div class="log-version dim-text" style="font-size: 1.2rem;">${log.platform} Update</div>
+          <div class="log-content">
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 12px;">${log.title}</p>
+            <a href="${log.link}" target="_blank" style="color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px;">
+              <i class="ph-bold ${log.icon}" style="color: ${log.color};"></i> View on ${log.platform}
+            </a>
+          </div>
+        </div>
+      `;
+    });
+  }
 });
