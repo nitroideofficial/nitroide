@@ -2080,7 +2080,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
   
-  // 1. Build the Homepage Ticker (Only grabs the top 3)
+  // 1. Build the Homepage Ticker (Grabs the top 3 with Dates)
   const tickerBox = document.querySelector('.pulse-ticker-box');
   if (tickerBox && typeof pulseLogs !== 'undefined') {
     tickerBox.innerHTML = ''; 
@@ -2089,7 +2089,10 @@ document.addEventListener('DOMContentLoaded', () => {
       tickerBox.innerHTML += `
         <a href="${log.link}" target="_blank" class="ticker-item">
           <span class="t-icon" style="color: ${log.color};"><i class="ph-bold ${log.icon}"></i></span>
-          <span class="t-text">${log.title}</span>
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <span class="t-text">${log.title}</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted); opacity: 0.6; font-family: 'Inter', sans-serif;">${log.date}</span>
+          </div>
         </a>
       `;
     });
