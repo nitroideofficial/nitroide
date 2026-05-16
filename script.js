@@ -1996,57 +1996,68 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================================================
-// ECOSYSTEM PULSE (Dev.to & Hashnode Dynamic Fetcher)
+// ECOSYSTEM PULSE ENGINE (Unified Data Router)
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
+  const tickerBox = document.querySelector('.pulse-ticker-box');
   const blogContainer = document.getElementById('pulse-blog-container');
-  if (!blogContainer) return;
+  const archiveGrid = document.getElementById('archive-grid'); // Changed to Grid
 
-  // Cached data to prevent over-fetching
-  let cachedData = { devto: null, hashnode: null };
+  let cachedDevTo = null;
 
-  // Hardcoded Hashnode fallback (since Hashnode's GraphQL API requires a specific publication host)
-  const hashnodeFallback = {
-    title: "Why I Built a Zero-Latency Browser IDE",
-    description: "Cloud containers are too slow for simple frontend prototyping. Here is how I used the Monaco engine to run code directly in the browser's memory.",
-    url: "https://hashnode.com/@nitroide",
-    date: "May 2026"
-  };
+  // 1. ROUTING TO HOMEPAGE LIVE TICKER (Ultra-Compact 4-Item Layout)
+  if (tickerBox && typeof pulseLogs !== 'undefined') {
+    tickerBox.innerHTML = '';
+    const socialLogs = pulseLogs.filter(log => log.platform !== 'Hashnode');
+    const latestFour = socialLogs.slice(0, 4); 
+    
+    latestFour.forEach(log => {
+      tickerBox.innerHTML += `
+        <a href="${log.link}" target="_blank" class="ticker-item">
+          <span class="t-icon" style="color: ${log.color};"><i class="ph-bold ${log.icon}"></i></span>
+          <div class="t-content-flex">
+            <span class="t-text">${log.title}</span>
+            <span class="t-date">${log.date}</span>
+          </div>
+        </a>
+      `;
+    });
+  }
 
-  async function fetchBlogData(platform) {
-    if (cachedData[platform]) return renderBlogCard(cachedData[platform], platform);
+  // 2. ROUTING TO ARCHITECTURE LOG TABS 
+  async function renderArchitectureTab(platform) {
+    if (!blogContainer) return;
 
-    try {
-      if (platform === 'devto') {
+    if (platform === 'devto') {
+      if (cachedDevTo) return injectBlogHTML(cachedDevTo, 'devto');
+      try {
         const response = await fetch(`https://dev.to/api/articles?username=nitroide&per_page=1`);
-        if (!response.ok) throw new Error('Dev.to fetch failed');
+        if (!response.ok) throw new Error();
         const data = await response.json();
-        
         if (data.length > 0) {
-          cachedData.devto = {
+          cachedDevTo = {
             title: data[0].title,
-            description: data[0].description,
             url: data[0].url,
             date: new Date(data[0].published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
           };
+          injectBlogHTML(cachedDevTo, 'devto');
         }
-      } else if (platform === 'hashnode') {
-        // We use the fallback for Hashnode to guarantee it loads instantly without GraphQL CORS issues
-        cachedData.hashnode = hashnodeFallback;
+      } catch (e) {
+        blogContainer.innerHTML = '<p style="color:var(--error); text-align:center; margin-top:40px;">Dev.to offline.</p>';
       }
-      
-      renderBlogCard(cachedData[platform], platform);
-    } catch (error) {
-      console.error('Pulse fetch error:', error);
-      blogContainer.innerHTML = '<p style="color: var(--error); text-align: center; margin-top:40px;">Failed to load logs.</p>';
+    } else if (platform === 'hashnode') {
+      const latestHashnode = typeof pulseLogs !== 'undefined' ? pulseLogs.find(log => log.platform === 'Hashnode') : null;
+      const hashnodeData = latestHashnode || {
+        title: "Why I Built a Zero-Latency Browser IDE",
+        link: "https://hashnode.com/@nitroide",
+        date: "May 2026"
+      };
+      injectBlogHTML({ title: hashnodeData.title, url: hashnodeData.link || hashnodeData.url, date: hashnodeData.date }, 'hashnode');
     }
   }
 
-  function renderBlogCard(data, platform) {
-    if (!data) return;
-    
+  function injectBlogHTML(data, platform) {
     const icon = platform === 'devto' ? '<i class="ph-bold ph-dev-to-logo" style="color: #fff;"></i>' : '<i class="ph-bold ph-hash" style="color: #2962ff;"></i>';
-    
     blogContainer.innerHTML = `
       <a href="${data.url}" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; height: 100%;">
         <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
@@ -2054,7 +2065,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span style="margin-left: auto; font-weight: normal;">${data.date}</span>
         </div>
         <h3 style="font-size: 1.25rem; color: var(--text); margin-bottom: 10px; line-height: 1.3;">${data.title}</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0;">${data.description}</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0;">Explore the full technical breakdown and implementation details directly on the publishing network.</p>
         <div style="margin-top: auto; padding-top: 20px; font-size: 0.85rem; color: #00e5ff; font-weight: 600; display: flex; align-items: center; gap: 4px;">
           Read Full Log <i class="ph-bold ph-arrow-right"></i>
         </div>
@@ -2062,60 +2073,72 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Expose the tab switching function globally
   window.switchPulseTab = function(platform) {
     document.querySelectorAll('.p-tab').forEach(t => t.classList.remove('active'));
     event.target.classList.add('active');
-    blogContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 40px;"><i class="ph-bold ph-spinner-gap" style="animation: spin 1s linear infinite;"></i> Fetching logs...</p>';
-    fetchBlogData(platform);
+    blogContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 40px;"><i class="ph-bold ph-spinner-gap" style="animation: spin 1s linear infinite;"></i> Fetching...</p>';
+    renderArchitectureTab(platform);
   };
 
-  // Init default tab
-  fetchBlogData('devto');
-});
+  if (blogContainer) renderArchitectureTab('devto');
 
+// 3. COMPLETE ECOSYSTEM TIMELINE ARCHIVE (Sorted Activity Stream)
+  const archiveStream = document.getElementById('archive-stream');
+  if (archiveStream && typeof pulseLogs !== 'undefined') {
+    archiveStream.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 40px;"><i class="ph-bold ph-spinner-gap" style="animation: spin 1s linear infinite;"></i> Syncing timelines...</p>';
+    
+    // Fetch Dev.to articles first before rendering anything
+    fetch(`https://dev.to/api/articles?username=nitroide&per_page=5`)
+      .then(res => res.json())
+      .then(devData => {
+        // 1. Format Dev.to data to match your pulseLogs structure
+        const devLogs = devData.map(article => ({
+          platform: 'Dev.to',
+          icon: 'ph-dev-to-logo',
+          color: '#ffffff',
+          title: article.title,
+          link: article.url,
+          date: new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+          timestamp: new Date(article.published_at).getTime() // For strict sorting
+        }));
 
-// ==========================================================================
-// ECOSYSTEM DATABSE RENDERER (Builds the UI automatically)
-// ==========================================================================
-document.addEventListener('DOMContentLoaded', () => {
-  
-  // 1. Build the Homepage Ticker (Grabs the top 3 with Dates)
-  const tickerBox = document.querySelector('.pulse-ticker-box');
-  if (tickerBox && typeof pulseLogs !== 'undefined') {
-    tickerBox.innerHTML = ''; 
-    const latestThree = pulseLogs.slice(0, 3);
-    latestThree.forEach(log => {
-      tickerBox.innerHTML += `
-        <a href="${log.link}" target="_blank" class="ticker-item">
-          <span class="t-icon" style="color: ${log.color};"><i class="ph-bold ${log.icon}"></i></span>
-          <div style="display: flex; flex-direction: column; gap: 2px;">
-            <span class="t-text">${log.title}</span>
-            <span style="font-size: 0.7rem; color: var(--text-muted); opacity: 0.6; font-family: 'Inter', sans-serif;">${log.date}</span>
-          </div>
-        </a>
-      `;
-    });
-  }
+        // 2. Add timestamps to your manual pulseLogs
+        const manualLogs = pulseLogs.map(log => ({
+          ...log,
+          timestamp: new Date(log.date).getTime()
+        }));
 
-  // 2. Build the Ecosystem Archive Page (Grabs everything)
-  const archiveTimeline = document.querySelector('.timeline'); 
-  if (archiveTimeline && window.location.pathname.includes('ecosystem.html') && typeof pulseLogs !== 'undefined') {
-    archiveTimeline.innerHTML = ''; 
-    pulseLogs.forEach(log => {
-      archiveTimeline.innerHTML += `
-        <div class="log-entry">
-          <div class="log-dot dim"></div>
-          <span class="log-date">${log.date}</span>
-          <div class="log-version dim-text" style="font-size: 1.2rem;">${log.platform} Update</div>
-          <div class="log-content">
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 12px;">${log.title}</p>
-            <a href="${log.link}" target="_blank" style="color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px;">
-              <i class="ph-bold ${log.icon}" style="color: ${log.color};"></i> View on ${log.platform}
+        // 3. Combine Both Lists and Sort (Newest First)
+        const combinedLogs = [...manualLogs, ...devLogs].sort((a, b) => b.timestamp - a.timestamp);
+
+        // 4. Render the perfectly sorted stream
+        archiveStream.innerHTML = '';
+        combinedLogs.forEach(log => {
+          // Creates a subtle background glow for the icon based on the platform's brand color
+          const bgOpacity = log.platform === 'Dev.to' ? 'rgba(255,255,255,0.05)' : `${log.color}15`; 
+          
+          archiveStream.innerHTML += `
+            <a href="${log.link}" target="_blank" class="eco-stream-card">
+              <div class="stream-icon-box" style="color: ${log.color}; background: ${bgOpacity};">
+                <i class="ph-bold ${log.icon}"></i>
+              </div>
+              <div class="stream-content">
+                <div class="stream-header">
+                  <span class="stream-platform" style="color: ${log.color};">${log.platform}</span>
+                  <span class="stream-date">• ${log.date}</span>
+                </div>
+                <div class="stream-title">${log.title}</div>
+              </div>
+              <div class="stream-action">
+                Open <i class="ph-bold ph-arrow-right"></i>
+              </div>
             </a>
-          </div>
-        </div>
-      `;
-    });
+          `;
+        });
+      })
+      .catch(err => {
+         console.error(err);
+         archiveStream.innerHTML = '<p style="color: var(--error); text-align: center;">Failed to sync logs.</p>';
+      });
   }
 });
