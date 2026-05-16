@@ -1,5 +1,45 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
+  {
+  date: "May 16, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The evolution of developer tools has hit a critical inflection point.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7461434637140201472/"
+},
+  {
+  date: "May 16, 2026",
+  platform: "Product Hunt",
+  icon: "ph-rocket-launch",
+  color: "#ff6154",
+  title: "For too long, the phrase online IDE meant sacrificing speed for convenience.",
+  link: "https://www.producthunt.com/p/self-promotion/nitroide-is-a-zero-latency-local-first-browser-ide"
+},
+  {
+  date: "May 16, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Redefining the Web IDE: Why We Chose a Local-First Architecture",
+  link: "https://nitroide.hashnode.dev/redefining-the-web-ide-local-first-browser-ide-architecture"
+},
+  {
+  date: "May 16, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Project Update: Pushing the limits of the browser environment",
+  link: "https://peerlist.io/scroll/post/ACTH7B8O6Q6GB6QDRI9DQGBDDA9GKD"
+},
+  {
+  date: "May 16, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The browser was never the bottleneck; the cloud architecture was. ",
+  link: "https://x.com/trynitroide/status/2055663860108132368"
+},
 {
   date: "May 15, 2026",
   platform: "Peerlist",
