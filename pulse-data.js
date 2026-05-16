@@ -1,5 +1,13 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
+{
+  date: "May 15, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Project Update: Eliminating Latency in the Web IDE",
+  link: "https://peerlist.io/scroll/post/ACTHNN7EKMBL79OJRHOG6R9GNO8OJP"
+},
   {
   date: "May 15, 2026",
   platform: "X",
