@@ -765,16 +765,117 @@ html.light-mode .pulse-tabs { background: rgba(0,0,0,0.05); }
 .pulse-blog-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; flex: 1; display: flex; flex-direction: column; text-decoration: none; transition: border-color 0.2s; }
 .pulse-blog-box:hover { border-color: #00e5ff; }
 
-/* Social Ticker */
-.pulse-ticker-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
-.ticker-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 8px; text-decoration: none; transition: background 0.2s; }
-.ticker-item:hover { background: rgba(255,255,255,0.03); }
-html.light-mode .ticker-item:hover { background: rgba(0,0,0,0.03); }
-.t-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
-.t-text { color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; font-family: 'JetBrains Mono', monospace; transition: color 0.2s; }
+/* --- SOCIAL TICKER (Perfectly Spaced 4-Item Grid) --- */
+.pulse-ticker-box { 
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px; 
+  padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 4px; 
+}
+.ticker-item { 
+  display: flex; align-items: flex-start; gap: 12px; padding: 8px 10px; 
+  border-radius: 8px; text-decoration: none; transition: background 0.2s; overflow: hidden; 
+}
+.ticker-item:hover { background: rgba(255,255,255,0.04); }
+html.light-mode .ticker-item:hover { background: rgba(0,0,0,0.04); }
+.t-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+.t-content-flex { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+.t-text { 
+  color: var(--text-muted); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; 
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; text-overflow: ellipsis; line-height: 1.4; transition: color 0.2s; 
+}
 .ticker-item:hover .t-text { color: var(--text); }
+.t-date { 
+  font-size: 0.65rem; color: var(--text-muted); opacity: 0.5; font-family: 'Inter', sans-serif; 
+  text-transform: uppercase; letter-spacing: 0.5px; 
+}
 
 @media (max-width: 900px) {
   .pulse-grid { flex-direction: column; }
   .pulse-col.blogs { order: -1; } /* Puts the blogs/ticker up top on mobile */
+}
+
+/* --- ECOSYSTEM ACTIVITY STREAM --- */
+.eco-stream-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.eco-stream-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.eco-stream-card:hover {
+  transform: translateX(4px);
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.02);
+}
+html.light-mode .eco-stream-card:hover { border-color: rgba(0,0,0,0.2); background: rgba(0,0,0,0.02); }
+
+.stream-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.stream-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stream-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.stream-platform {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.stream-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+}
+.stream-title {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stream-action {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+.eco-stream-card:hover .stream-action { color: var(--text); }
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .eco-stream-card { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px; }
+  .stream-icon-box { width: 36px; height: 36px; font-size: 1.2rem; }
+  .stream-title { white-space: normal; line-height: 1.4; }
+  .stream-action { align-self: flex-end; }
 }
