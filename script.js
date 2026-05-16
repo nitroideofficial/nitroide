@@ -1465,9 +1465,9 @@ class NitroFooter extends HTMLElement {
             position: relative;
             overflow: hidden;
             border-top: 1px solid var(--border);
-            padding-top: 80px;
+            padding-top: 40px;
             padding-bottom: 40px;
-            margin-top: 40px;
+            margin-top: 0px;
           }
           
           /* The Massive Background Watermark */
