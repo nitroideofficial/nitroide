@@ -2001,11 +2001,11 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const tickerBox = document.querySelector('.pulse-ticker-box');
   const blogContainer = document.getElementById('pulse-blog-container');
-  const archiveGrid = document.getElementById('archive-grid'); // Changed to Grid
+  const archiveStream = document.getElementById('archive-stream');
 
   let cachedDevTo = null;
 
-  // 1. ROUTING TO HOMEPAGE LIVE TICKER (Ultra-Compact 4-Item Layout)
+  // 1. ROUTING TO HOMEPAGE LIVE TICKER
   if (tickerBox && typeof pulseLogs !== 'undefined') {
     tickerBox.innerHTML = '';
     const socialLogs = pulseLogs.filter(log => log.platform !== 'Hashnode');
@@ -2024,7 +2024,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 2. ROUTING TO ARCHITECTURE LOG TABS 
+  // 2. ROUTING TO ARCHITECTURE LOG TABS (Bulletproof Fetch)
   async function renderArchitectureTab(platform) {
     if (!blogContainer) return;
 
@@ -2032,18 +2032,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cachedDevTo) return injectBlogHTML(cachedDevTo, 'devto');
       try {
         const response = await fetch(`https://dev.to/api/articles?username=nitroide&per_page=1`);
-        if (!response.ok) throw new Error();
+        if (!response.ok) throw new Error('API Error');
         const data = await response.json();
-        if (data.length > 0) {
+        
+        if (Array.isArray(data) && data.length > 0) {
           cachedDevTo = {
             title: data[0].title,
             url: data[0].url,
             date: new Date(data[0].published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
           };
           injectBlogHTML(cachedDevTo, 'devto');
+        } else {
+          // Handles empty Dev.to accounts safely
+          blogContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:40px;">No Dev.to articles published yet.</p>';
         }
       } catch (e) {
-        blogContainer.innerHTML = '<p style="color:var(--error); text-align:center; margin-top:40px;">Dev.to offline.</p>';
+        // Handles Ad-Blockers safely
+        console.error("Dev.to Fetch Blocked:", e);
+        blogContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:40px;">Failed to fetch (Check Ad-Blocker).</p>';
       }
     } else if (platform === 'hashnode') {
       const latestHashnode = typeof pulseLogs !== 'undefined' ? pulseLogs.find(log => log.platform === 'Hashnode') : null;
@@ -2082,63 +2088,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (blogContainer) renderArchitectureTab('devto');
 
-// 3. COMPLETE ECOSYSTEM TIMELINE ARCHIVE (Sorted Activity Stream)
-  const archiveStream = document.getElementById('archive-stream');
+  // 3. COMPLETE ECOSYSTEM TIMELINE ARCHIVE (Bulletproof Sorting)
   if (archiveStream && typeof pulseLogs !== 'undefined') {
     archiveStream.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 40px;"><i class="ph-bold ph-spinner-gap" style="animation: spin 1s linear infinite;"></i> Syncing timelines...</p>';
     
-    // Fetch Dev.to articles first before rendering anything
+    // Function to render the UI to prevent duplicate code
+    function renderStream(logsArray) {
+      archiveStream.innerHTML = '';
+      if (logsArray.length === 0) {
+        archiveStream.innerHTML = '<p style="color: var(--text-muted); text-align: center;">No activity logs found.</p>';
+        return;
+      }
+      logsArray.forEach(log => {
+        const bgOpacity = log.platform === 'Dev.to' ? 'rgba(255,255,255,0.05)' : `${log.color}15`; 
+        archiveStream.innerHTML += `
+          <a href="${log.link}" target="_blank" class="eco-stream-card">
+            <div class="stream-icon-box" style="color: ${log.color}; background: ${bgOpacity};">
+              <i class="ph-bold ${log.icon}"></i>
+            </div>
+            <div class="stream-content">
+              <div class="stream-header">
+                <span class="stream-platform" style="color: ${log.color};">${log.platform}</span>
+                <span class="stream-date">• ${log.date}</span>
+              </div>
+              <div class="stream-title">${log.title}</div>
+            </div>
+            <div class="stream-action">
+              Open <i class="ph-bold ph-arrow-right"></i>
+            </div>
+          </a>
+        `;
+      });
+    }
+
+    // Prep Manual Logs First
+    const manualLogs = pulseLogs.map(log => ({ ...log, timestamp: new Date(log.date).getTime() }));
+
+    // Fetch Dev.to safely
     fetch(`https://dev.to/api/articles?username=nitroide&per_page=5`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('API Blocked');
+        return res.json();
+      })
       .then(devData => {
-        // 1. Format Dev.to data to match your pulseLogs structure
-        const devLogs = devData.map(article => ({
-          platform: 'Dev.to',
-          icon: 'ph-dev-to-logo',
-          color: '#ffffff',
-          title: article.title,
-          link: article.url,
-          date: new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-          timestamp: new Date(article.published_at).getTime() // For strict sorting
-        }));
-
-        // 2. Add timestamps to your manual pulseLogs
-        const manualLogs = pulseLogs.map(log => ({
-          ...log,
-          timestamp: new Date(log.date).getTime()
-        }));
-
-        // 3. Combine Both Lists and Sort (Newest First)
+        let devLogs = [];
+        if (Array.isArray(devData)) {
+          devLogs = devData.map(article => ({
+            platform: 'Dev.to', icon: 'ph-dev-to-logo', color: '#ffffff', title: article.title, link: article.url,
+            date: new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+            timestamp: new Date(article.published_at).getTime() 
+          }));
+        }
         const combinedLogs = [...manualLogs, ...devLogs].sort((a, b) => b.timestamp - a.timestamp);
-
-        // 4. Render the perfectly sorted stream
-        archiveStream.innerHTML = '';
-        combinedLogs.forEach(log => {
-          // Creates a subtle background glow for the icon based on the platform's brand color
-          const bgOpacity = log.platform === 'Dev.to' ? 'rgba(255,255,255,0.05)' : `${log.color}15`; 
-          
-          archiveStream.innerHTML += `
-            <a href="${log.link}" target="_blank" class="eco-stream-card">
-              <div class="stream-icon-box" style="color: ${log.color}; background: ${bgOpacity};">
-                <i class="ph-bold ${log.icon}"></i>
-              </div>
-              <div class="stream-content">
-                <div class="stream-header">
-                  <span class="stream-platform" style="color: ${log.color};">${log.platform}</span>
-                  <span class="stream-date">• ${log.date}</span>
-                </div>
-                <div class="stream-title">${log.title}</div>
-              </div>
-              <div class="stream-action">
-                Open <i class="ph-bold ph-arrow-right"></i>
-              </div>
-            </a>
-          `;
-        });
+        renderStream(combinedLogs);
       })
       .catch(err => {
-         console.error(err);
-         archiveStream.innerHTML = '<p style="color: var(--error); text-align: center;">Failed to sync logs.</p>';
+         console.error("Archive Dev.to fetch failed (AdBlocker likely):", err);
+         // If Dev.to fails, STILL render the manual logs perfectly!
+         const safeLogs = [...manualLogs].sort((a, b) => b.timestamp - a.timestamp);
+         renderStream(safeLogs);
       });
   }
 });
