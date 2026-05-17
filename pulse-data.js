@@ -1,6 +1,46 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 17, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "We have normalized a broken standard in browser-based development",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7461801765559078912/"
+},
+  {
+  date: "May 17, 2026",
+  platform: "Product Hunt",
+  icon: "ph-rocket-launch",
+  color: "#ff6154",
+  title: "Have you ever noticed that slight, annoying lag when using an online IDE?",
+  link: "https://www.producthunt.com/p/self-promotion/have-you-ever-noticed-that-slight-annoying-lag-when-using-an-online-ide"
+},
+  {
+  date: "May 17, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The Flow State Deficit: Engineering a Browser IDE at the Speed of Thought",
+  link: "https://nitroide.hashnode.dev/flow-state-deficit-browser-ide-speed-of-thought?utm_source=hashnode&utm_medium=feed"
+},
+  {
+  date: "May 17, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Project Update: Eliminating the latency tax in developer tools",
+  link: "https://peerlist.io/scroll/post/ACTHJKN9ABRLJKB9N3MN6JJ68GQ9AA"
+},
+  {
+  date: "May 17, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "We built NitroIDE to fix this. It’s a 100% client-side IDE.",
+  link: "https://x.com/trynitroide/status/2056031188536717449"
+},
+  {
   date: "May 16, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
