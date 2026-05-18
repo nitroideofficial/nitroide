@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 18, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Rethinking the Web IDE: Why We Abandoned Cloud Containers",
+  link: "https://nitroide.hashnode.dev/rethinking-web-ide-abandoning-cloud-containers"
+},
+  {
+  date: "May 18, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "We are utilizing browsers that can run complex 3D rendering engines and WebAssembly,",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7462154688524668928/"
+},
+  {
+  date: "May 18, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Why are we still spinning up servers just to prototype a UI?",
+  link: "https://peerlist.io/scroll/post/ACTHKKDABEQKPKLG91JLD7OLNN7LDG"
+},
+  {
+  date: "May 18, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The modern browser is a powerhouse. Yet most developer tools still behave like it's 2018.",
+  link: "https://x.com/trynitroide/status/2056388122045509959"
+},
+  {
   date: "May 17, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
