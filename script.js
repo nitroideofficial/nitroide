@@ -2011,19 +2011,25 @@ async function bootNodeEnvironment() {
     const terminalContainer = document.getElementById('terminal-container');
     if (!terminalContainer) return;
     
+    // THE FIX: Force the browser to finish loading fonts before measuring the canvas
+    await document.fonts.ready;
+
     // 1. Initialize xterm.js if not already running
     if (!window.term) {
         window.term = new Terminal({
             theme: { background: '#000000', foreground: '#e4e4e7', cursor: '#00e5ff' },
             fontFamily: "'JetBrains Mono', Consolas, monospace",
             fontSize: 13,
+            letterSpacing: 1, // Adds breathing room to prevent overlapping
             cursorBlink: true,
-            convertEol: true // Fixes carriage returns
+            convertEol: true 
         });
         window.fitAddon = new FitAddon.FitAddon();
         window.term.loadAddon(window.fitAddon);
         window.term.open(terminalContainer);
-        window.fitAddon.fit();
+        
+        // Wait 50ms for the DOM to snap into place, then fit the terminal perfectly
+        setTimeout(() => window.fitAddon.fit(), 50);
         
         // Ensure terminal resizes cleanly when dragging the UI
         window.addEventListener('resize', () => {
