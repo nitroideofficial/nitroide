@@ -2011,25 +2011,31 @@ async function bootNodeEnvironment() {
     const terminalContainer = document.getElementById('terminal-container');
     if (!terminalContainer) return;
     
-    // THE FIX: Force the browser to finish loading fonts before measuring the canvas
+    // 1. THE FIX: Force the browser to wait for fonts (JetBrains Mono) 
+    // and DOM to be fully ready to prevent canvas squishing.
     await document.fonts.ready;
 
-    // 1. Initialize xterm.js if not already running
+    // 2. Initialize xterm.js if not already running
     if (!window.term) {
         window.term = new Terminal({
             theme: { background: '#000000', foreground: '#e4e4e7', cursor: '#00e5ff' },
             fontFamily: "'JetBrains Mono', Consolas, monospace",
             fontSize: 13,
-            letterSpacing: 1, // Adds breathing room to prevent overlapping
+            letterSpacing: 1, // Adds breathing room
+            lineHeight: 1.2,  // Force consistent spacing
             cursorBlink: true,
             convertEol: true 
         });
+        
         window.fitAddon = new FitAddon.FitAddon();
         window.term.loadAddon(window.fitAddon);
         window.term.open(terminalContainer);
         
-        // Wait 50ms for the DOM to snap into place, then fit the terminal perfectly
-        setTimeout(() => window.fitAddon.fit(), 50);
+        // 3. Force-fit the terminal perfectly into the container
+        setTimeout(() => {
+            window.fitAddon.fit();
+            window.term.refresh(0, window.term.rows - 1);
+        }, 100);
         
         // Ensure terminal resizes cleanly when dragging the UI
         window.addEventListener('resize', () => {
@@ -2040,27 +2046,21 @@ async function bootNodeEnvironment() {
     window.term.writeln('\x1b[1;36m[NitroIDE]\x1b[0m Booting Node.js WASM Engine...');
 
     try {
-        // SECURITY CHECK: WebContainers require strict server headers to run.
+        // 4. Security Check
         if (!crossOriginIsolated) {
             window.term.writeln('\x1b[1;31m[FATAL ERROR]\x1b[0m SharedArrayBuffer is not available.');
-            window.term.writeln('\x1b[1;33m[Fix]\x1b[0m To run Node in the browser, your web server MUST send these HTTP headers:');
-            window.term.writeln('  Cross-Origin-Embedder-Policy: require-corp');
-            window.term.writeln('  Cross-Origin-Opener-Policy: same-origin');
-            window.term.writeln('\n(Note: If you are testing this locally via "file://", you must use a local server like "npx serve". In production, you can set these headers easily in Cloudflare Pages or Vercel.)');
+            window.term.writeln('\x1b[1;33m[Fix]\x1b[0m Check your Cloudflare Transform Rules or local serve config.');
             return;
         }
 
-        // 2. Boot WebContainer
-        window.term.writeln('\x1b[1;34m[NitroIDE]\x1b[0m Downloading WebContainer core (this takes a moment on first load)...');
+        // 5. Boot WebContainer
+        window.term.writeln('\x1b[1;34m[NitroIDE]\x1b[0m Downloading WebContainer core...');
         webcontainerInstance = await WebContainerAPI.WebContainer.boot();
         window.term.writeln('\x1b[1;32m[NitroIDE]\x1b[0m Engine booted successfully!');
         
-        // 3. Mount current Virtual File System (VFS) to WASM
         await syncVfsToWebContainer();
 
-        // 4. Connect Terminal to WebContainer shell (jsh)
         const shellProcess = await webcontainerInstance.spawn('jsh');
-        
         shellProcess.output.pipeTo(new WritableStream({
             write(data) { window.term.write(data); }
         }));
@@ -2068,13 +2068,12 @@ async function bootNodeEnvironment() {
         const input = shellProcess.input.getWriter();
         window.term.onData((data) => { input.write(data); });
 
-        // 5. Listen for Server Ports (Injects localhost to Preview window!)
         webcontainerInstance.on('server-ready', (port, url) => {
             showToast(`<i class='ph-bold ph-rocket-launch' style='color:var(--success); margin-right:6px;'></i> Server live on port ${port}!`);
             const iframe = document.getElementById('liveIframe');
             if (iframe) {
-                iframe.removeAttribute('srcdoc'); // Clear static frontend
-                iframe.src = url; // Inject full-stack server URL
+                iframe.removeAttribute('srcdoc');
+                iframe.src = url;
             }
             switchOutputTab('preview');
         });
