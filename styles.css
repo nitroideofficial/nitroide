@@ -898,20 +898,3 @@ html.light-mode .eco-stream-card:hover { border-color: rgba(0,0,0,0.2); backgrou
     display: none; /* Hides "Open ->" on mobile to save maximum space */
   }
 }
-
-/* Force Terminal Rendering Stability */
-#terminal-container {
-    width: 100% !important;
-    height: 100% !important;
-    display: block !important;
-    line-height: 1.2 !important;
-}
-
-#terminal-container .xterm-screen {
-    width: 100% !important;
-    height: 100% !important;
-}
-
-#terminal-container .xterm-viewport {
-    background-color: #000 !important;
-}
