@@ -2009,7 +2009,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tickerBox && typeof pulseLogs !== 'undefined') {
     tickerBox.innerHTML = '';
     const socialLogs = pulseLogs.filter(log => log.platform !== 'Hashnode');
-    const latestFour = socialLogs.slice(0, 4); 
+    const latestFour = socialLogs.slice(0, 3); 
     
     latestFour.forEach(log => {
       tickerBox.innerHTML += `
@@ -2031,7 +2031,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (platform === 'devto') {
       if (cachedDevTo) return injectBlogHTML(cachedDevTo, 'devto');
       try {
-        const response = await fetch(`https://dev.to/api/articles?username=nitroide&per_page=1`);
+        const response = await fetch(`https://dev.to/api/articles?username=nitroide&per_page=1&_cb=${Date.now()}`);
         if (!response.ok) throw new Error('API Error');
         const data = await response.json();
         
@@ -2125,7 +2125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const manualLogs = pulseLogs.map(log => ({ ...log, timestamp: new Date(log.date).getTime() }));
 
     // Fetch Dev.to safely
-    fetch(`https://dev.to/api/articles?username=nitroide&per_page=5`)
+    fetch(`https://dev.to/api/articles?username=nitroide&per_page=5&_cb=${Date.now()}`)
       .then(res => {
         if (!res.ok) throw new Error('API Blocked');
         return res.json();
