@@ -607,20 +607,15 @@
 	  document.getElementById('outPreview').classList.remove('active');
 	  document.getElementById('outConsole').classList.remove('active');
 	  document.getElementById('outState').classList.remove('active');
-      const outTerm = document.getElementById('outTerminal');
-	  if(outTerm) outTerm.classList.remove('active');
 	  
 	  if (!btn) btn = getOutputTabButton(type);
 	  if (btn) btn.classList.add('active');
 	  if(type === 'preview') document.getElementById('outPreview').classList.add('active');
 	  if(type === 'console') { document.getElementById('outConsole').classList.add('active'); document.getElementById('consoleBadge').style.display = 'none'; }
 	  if(type === 'state') document.getElementById('outState').classList.add('active');
-      if(type === 'terminal') { 
-          if(outTerm) outTerm.classList.add('active');
-          if (window.fitAddon) setTimeout(() => window.fitAddon.fit(), 50); // Forces terminal to perfectly fit the UI space
-      }
 	  saveWorkspacePrefs({ outputTab: type });
 
+	  // Auto-expand the drawer if a tab is clicked while minimized
 	  const bottomHalf = document.getElementById('outputBottomSplit');
 	  if (bottomHalf.style.height === '46px') {
 		toggleBottomPanel();
@@ -1999,109 +1994,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
-// ==========================================================================
-// PHASE 6: WEBCONTAINER & XTERM.JS INTEGRATION (Node.js Workspace)
-// ==========================================================================
-let webcontainerInstance = null;
-window.term = null;
-window.fitAddon = null;
-
-async function bootNodeEnvironment() {
-    const terminalContainer = document.getElementById('terminal-container');
-    if (!terminalContainer) return;
-    
-    // 1. THE FIX: Force the browser to wait for fonts (JetBrains Mono) 
-    // and DOM to be fully ready to prevent canvas squishing.
-    await document.fonts.ready;
-
-    // 2. Initialize xterm.js if not already running
-    if (!window.term) {
-        window.term = new Terminal({
-            theme: { background: '#000000', foreground: '#e4e4e7', cursor: '#00e5ff' },
-            fontFamily: "'JetBrains Mono', Consolas, monospace",
-            fontSize: 13,
-            letterSpacing: 1, // Adds breathing room
-            lineHeight: 1.2,  // Force consistent spacing
-            cursorBlink: true,
-            convertEol: true 
-        });
-        
-        window.fitAddon = new FitAddon.FitAddon();
-        window.term.loadAddon(window.fitAddon);
-        window.term.open(terminalContainer);
-        
-        // 3. Force-fit the terminal perfectly into the container
-        setTimeout(() => {
-            window.fitAddon.fit();
-            window.term.refresh(0, window.term.rows - 1);
-        }, 100);
-        
-        // Ensure terminal resizes cleanly when dragging the UI
-        window.addEventListener('resize', () => {
-            if (document.getElementById('outTerminal').classList.contains('active')) window.fitAddon.fit();
-        });
-    }
-
-    window.term.writeln('\x1b[1;36m[NitroIDE]\x1b[0m Booting Node.js WASM Engine...');
-
-    try {
-        // 4. Security Check
-        if (!crossOriginIsolated) {
-            window.term.writeln('\x1b[1;31m[FATAL ERROR]\x1b[0m SharedArrayBuffer is not available.');
-            window.term.writeln('\x1b[1;33m[Fix]\x1b[0m Check your Cloudflare Transform Rules or local serve config.');
-            return;
-        }
-
-        // 5. Boot WebContainer
-        window.term.writeln('\x1b[1;34m[NitroIDE]\x1b[0m Downloading WebContainer core...');
-        webcontainerInstance = await WebContainerAPI.WebContainer.boot();
-        window.term.writeln('\x1b[1;32m[NitroIDE]\x1b[0m Engine booted successfully!');
-        
-        await syncVfsToWebContainer();
-
-        const shellProcess = await webcontainerInstance.spawn('jsh');
-        shellProcess.output.pipeTo(new WritableStream({
-            write(data) { window.term.write(data); }
-        }));
-        
-        const input = shellProcess.input.getWriter();
-        window.term.onData((data) => { input.write(data); });
-
-        webcontainerInstance.on('server-ready', (port, url) => {
-            showToast(`<i class='ph-bold ph-rocket-launch' style='color:var(--success); margin-right:6px;'></i> Server live on port ${port}!`);
-            const iframe = document.getElementById('liveIframe');
-            if (iframe) {
-                iframe.removeAttribute('srcdoc');
-                iframe.src = url;
-            }
-            switchOutputTab('preview');
-        });
-
-    } catch (error) {
-        window.term.writeln(`\x1b[1;31m[Error]\x1b[0m ${error.message}`);
-    }
-}
-
-// Helper: Converts your flat NitroIDE VFS into the nested WebContainer Tree format
-async function syncVfsToWebContainer() {
-    if (!webcontainerInstance) return;
-    const tree = {};
-    
-    Object.keys(vfs).forEach(filename => {
-        tree[filename] = { file: { contents: vfs[filename] } };
-    });
-    
-    // Add a default package.json if it doesn't exist so npm works instantly
-    if (!tree['package.json']) {
-        tree['package.json'] = {
-            file: { contents: JSON.stringify({ name: "nitroide-node-app", main: "script.js", scripts: { start: "node script.js" } }, null, 2) }
-        };
-    }
-
-    await webcontainerInstance.mount(tree);
-    window.term.writeln('\x1b[1;32m[NitroIDE]\x1b[0m Local files mounted to WASM container. Try typing: \x1b[1;36mnpm init\x1b[0m');
-}
 
 // ==========================================================================
 // ECOSYSTEM PULSE ENGINE (Unified Data Router)
