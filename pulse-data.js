@@ -1,6 +1,30 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 19, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "We are utilizing browsers that can run sophisticated WebAssembly applications.",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7462523395184861184/"
+},
+  {
+  date: "May 19, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Why boot a cloud container for a frontend prototype?",
+  link: "https://peerlist.io/scroll/post/ACTHBARJEG9JEEBDLIEOBDKBJRMDOE"
+},
+  {
+  date: "May 19, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Web tooling architecture is stuck in the past. The modern browser is a powerhouse",
+  link: "https://x.com/trynitroide/status/2056757212471840899"
+},
+  {
   date: "May 18, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
