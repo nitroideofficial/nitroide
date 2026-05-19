@@ -53,11 +53,6 @@
   
   <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
   
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css" />
-  <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
-  <script src="https://unpkg.com/@webcontainer/api@1.1.9/dist/index.js"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
 
   <script type="application/ld+json">
@@ -227,7 +222,6 @@
                 <button class="out-tab active" onclick="switchOutputTab('preview', this)"><i class="ph-bold ph-browser"></i> Preview</button>
                 <button class="out-tab" onclick="switchOutputTab('console', this)"><i class="ph-bold ph-terminal"></i> Console <span id="consoleBadge" style="background:var(--error); color:white; padding:2px 6px; border-radius:10px; font-size:0.7rem; display:none;"><i class="ph-bold ph-warning"></i></span></button>
                 <button class="out-tab" onclick="switchOutputTab('state', this)"><i class="ph-bold ph-tree-structure"></i> State</button>
-                <button class="out-tab" onclick="switchOutputTab('terminal', this)"><i class="ph-bold ph-cpu"></i> Node.js</button>
               </div>
               
               
@@ -263,17 +257,6 @@
               </div>
               <div id="stateVisualizer" style="padding: 15px; overflow: auto; flex: 1;"></div>
             </div>
-
-            <div id="outTerminal" class="console-wrap">
-              <div style="padding: 8px 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
-                 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;"><i class="ph-bold ph-terminal-window"></i> Native xterm.js Shell</span>
-                 <button class="btn btn-compact primary-btn" onclick="bootNodeEnvironment()" style="padding: 4px 12px; font-size: 0.75rem;">Boot WebContainer</button>
-              </div>
-              <div id="terminal-container" style="flex: 1; padding: 10px; background: #000; overflow: hidden;"></div>
-            </div>
-
-          </div>
-        </div>
 
           </div>
         </div>
