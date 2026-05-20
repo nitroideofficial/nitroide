@@ -109,6 +109,10 @@
             <i class="ph-bold ph-arrows-out-line-vertical"></i>
             <span class="ws-hide-mobile">Tabs</span>
           </button>
+          <button class="ws-btn ws-icon-text-btn" onclick="openTimeMachine()" title="Local Time Machine">
+            <i class="ph-bold ph-clock-counter-clockwise"></i>
+            <span class="ws-hide-mobile">History</span>
+          </button>
           <button class="ws-btn ws-icon-text-btn" onclick="toggleOptions()" id="optionsBtn" title="Preferences">
             <i class="ph-bold ph-faders"></i>
             <span class="ws-hide-mobile">Prefs</span>
@@ -147,6 +151,7 @@
           <button class="dropdown-item" onclick="document.getElementById('fileImportInput').click()"><i class="ph-bold ph-folder-open"></i> Import ZIP / Files</button>
           <input type="file" id="fileImportInput" accept=".zip,.html,.css,.js" multiple style="display:none;" onchange="handleImport(event)">
           <div class="dropdown-divider"></div>
+          <button class="dropdown-item" onclick="openTimeMachine()"><i class="ph-bold ph-clock-counter-clockwise"></i> Local Time Machine</button>
           <button class="dropdown-item" onclick="generateShareLink()"><i class="ph-bold ph-share-network"></i> Share Workspace</button>
           <button class="dropdown-item" onclick="exportSingleFile()"><i class="ph-bold ph-file-code"></i> Export as 1-File</button>
           <button class="dropdown-item" onclick="downloadZip()"><i class="ph-bold ph-file-archive"></i> Download ZIP</button>
@@ -292,6 +297,21 @@
   .proj-actions { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border); }
   .proj-badge { background: rgba(0,229,255,0.1); color: #00e5ff; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
 </style>
+<div class="feedback-backdrop" id="timeMachineModal" onclick="handleTimeMachineBackdrop(event)">
+  <div class="feedback-card time-machine-card">
+    <div class="feedback-header">
+      <h3><i class="ph-bold ph-clock-counter-clockwise"></i> Local Time Machine</h3>
+      <button onclick="closeTimeMachine()" aria-label="Close Local Time Machine"><i class="ph-bold ph-x"></i></button>
+    </div>
+    <div class="feedback-body time-machine-body">
+      <div class="time-machine-topbar">
+        <p class="feedback-desc">Every manual Compile keeps a local restore point for this project.</p>
+        <button class="btn btn-compact btn-outline" onclick="clearTimeSnapshots()"><i class="ph-bold ph-trash"></i> Clear</button>
+      </div>
+      <div id="timeMachineList" class="time-machine-list"></div>
+    </div>
+  </div>
+</div>
 <div class="feedback-backdrop" id="projectDashboard">
   <div class="feedback-card" style="max-width: 800px; width: 90%;">
     <div class="feedback-header">
