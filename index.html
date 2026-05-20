@@ -424,68 +424,71 @@
       </div>
     </div>
 	  
-    <div class="reveal-8 content-section" style="margin-top: 50px;">
-      <div class="section-header">
-        <div class="badge" style="color: #00e5ff; border-color: rgba(0,229,255,0.2); background: rgba(0,229,255,0.05);">
-          <i class="ph-bold ph-pulse"></i> Ecosystem Pulse
+    <div id="ecosystem-pulse" class="reveal-8 content-section ecosystem-pulse-section">
+      <div class="ecosystem-pulse-header">
+        <div>
+          <div class="badge pulse-badge">
+            <i class="ph-bold ph-pulse"></i> Ecosystem Pulse
+          </div>
+          <h2>Engineering & Community</h2>
+          <p>Product launches, architecture notes, and community signals from the NitroIDE build journey.</p>
         </div>
-        <h2>Engineering & Community</h2>
-        <p>Live architecture updates, community builds, and open-source discussions.</p>
+        <a href="ecosystem.html" class="pulse-archive-link magnetic-btn">
+          View Archive <i class="ph-bold ph-arrow-right"></i>
+        </a>
       </div>
-      
+
       <div class="pulse-grid">
-        
-        <div class="pulse-col">
-          <h4 class="pulse-heading"><i class="ph-bold ph-rocket-launch"></i> Active Builds</h4>
-          
-          <a href="https://www.producthunt.com/products/nitroide?launch=nitroide" target="_blank" class="pulse-card ph-card">
-            <div class="pulse-icon-wrap" style="background: rgba(255,97,84,0.1); color: #ff6154;">
+        <div class="pulse-col pulse-builds">
+          <div class="pulse-panel-heading">
+            <span><i class="ph-bold ph-rocket-launch"></i> Active Builds</span>
+            <small>Launch radar</small>
+          </div>
+
+          <a href="https://www.producthunt.com/products/nitroide?launch=nitroide" target="_blank" rel="noopener" class="pulse-card ph-card">
+            <div class="pulse-icon-wrap pulse-producthunt">
               <i class="ph-bold ph-trend-up"></i>
             </div>
             <div class="pulse-card-content">
               <h5>Product Hunt Launch</h5>
-              <p>Support the 1.0 release on Product Hunt.</p>
+              <p>Support the 1.0 release and follow the public launch thread.</p>
             </div>
+            <i class="ph-bold ph-arrow-up-right pulse-card-arrow"></i>
           </a>
 
-          <a href="https://www.commudle.com/builds/nitroide-zero-latency-browser-ide" target="_blank" class="pulse-card cm-card">
-            <div class="pulse-icon-wrap" style="background: rgba(75,137,245,0.1); color: #4b89f5;">
+          <a href="https://www.commudle.com/builds/nitroide-zero-latency-browser-ide" target="_blank" rel="noopener" class="pulse-card cm-card">
+            <div class="pulse-icon-wrap pulse-commudle">
               <i class="ph-bold ph-users-three"></i>
             </div>
             <div class="pulse-card-content">
               <h5>Commudle Spotlight</h5>
-              <p>View the official community build page.</p>
+              <p>Read the community build page for NitroIDE's zero-latency workspace.</p>
             </div>
+            <i class="ph-bold ph-arrow-up-right pulse-card-arrow"></i>
           </a>
         </div>
 
-        <div class="pulse-col" style="flex: 1.5;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h4 class="pulse-heading" style="margin: 0;"><i class="ph-bold ph-book-open-text"></i> Architecture Logs</h4>
-            <div class="pulse-tabs">
-              <button class="p-tab active" onclick="switchPulseTab('devto')">Dev.to</button>
-              <button class="p-tab" onclick="switchPulseTab('hashnode')">Hashnode</button>
+        <div class="pulse-col pulse-logs">
+          <div class="pulse-panel-heading pulse-panel-heading-row">
+            <span><i class="ph-bold ph-book-open-text"></i> Architecture Logs</span>
+            <div class="pulse-tabs" aria-label="Architecture log source">
+              <button class="p-tab active" type="button" data-platform="devto" onclick="switchPulseTab('devto', event)">Dev.to</button>
+              <button class="p-tab" type="button" data-platform="hashnode" onclick="switchPulseTab('hashnode', event)">Hashnode</button>
             </div>
           </div>
-          
+
           <div id="pulse-blog-container" class="pulse-blog-box">
-            <p style="color: var(--text-muted); text-align: center; margin-top: 40px;"><i class="ph-bold ph-spinner-gap" style="animation: spin 1s linear infinite;"></i> Fetching logs...</p>
+            <p class="pulse-loading"><i class="ph-bold ph-spinner-gap"></i> Fetching logs...</p>
           </div>
         </div>
 
-        <div class="pulse-col">
-          <h4 class="pulse-heading"><i class="ph-bold ph-terminal-window"></i> Live Ticker</h4>
-          
+        <div class="pulse-col pulse-live">
+          <div class="pulse-panel-heading">
+            <span><i class="ph-bold ph-terminal-window"></i> Live Ticker</span>
+            <small>Latest signals</small>
+          </div>
           <div class="pulse-ticker-box"></div>
-          
         </div>
-
-      </div>
-
-      <div style="text-align: center; margin-top: 20px;">
-        <a href="ecosystem.html" class="btn btn-secondary magnetic-btn" style="border-radius: 30px; padding: 10px 24px; font-size: 0.85rem; display: inline-flex; gap: 8px;">
-          View Ecosystem Archive <i class="ph-bold ph-arrow-right"></i>
-        </a>
       </div>
     </div>
 
