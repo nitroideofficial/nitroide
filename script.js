@@ -8,6 +8,7 @@
 	const body = document.body;
 	let htmlMonaco, cssMonaco, jsMonaco;
 	let isIdeInitialized = false;
+	let isRestoringSnapshot = false;
 	let cdnLinks = [];
 
 	// --- DYNAMIC VIRTUAL FILE SYSTEM ---
@@ -706,6 +707,7 @@
 	  { id: 'focus-css', icon: 'ph-file-css', label: 'Focus CSS', action: () => focusPanel('css') },
 	  { id: 'focus-js', icon: 'ph-file-js', label: 'Focus JavaScript', action: () => focusPanel('js') },
 	  { id: 'compile', icon: 'ph-play', label: 'Compile Workspace', action: () => smartRun(true) },
+	  { id: 'time-machine', icon: 'ph-clock-counter-clockwise', label: 'Open Local Time Machine', action: () => openTimeMachine() },
 	  { id: 'preview', icon: 'ph-browser', label: 'Show Preview', action: () => switchOutputTab('preview', getOutputTabButton('preview')) },
 	  { id: 'console', icon: 'ph-terminal', label: 'Show Console', action: () => switchOutputTab('console', getOutputTabButton('console')) },
 	  { id: 'state', icon: 'ph-tree-structure', label: 'Show State Visualizer', action: () => switchOutputTab('state', getOutputTabButton('state')) },
@@ -884,6 +886,7 @@
 	function handleAutoRunToggle() { if(document.getElementById('autoRunToggle').checked) smartRun(false); }
 	function clearConsole(manual = false) { const logs = document.getElementById('consoleLogs'); if(logs) logs.innerHTML = ""; }
 	function queueUpdate(panelType = 'all') {
+	  if (isRestoringSnapshot) return;
 	  clearTimeout(runTimeout);
 	  if (!document.getElementById('autoRunToggle').checked) return;
 	  runTimeout = setTimeout(() => {
@@ -1072,6 +1075,280 @@
 	  return combinedJS;
 	}
 
+	const TIME_MACHINE_LIMIT = 12;
+
+	function getTimeMachineKey(projectId = currentProjectId) {
+	  return `nitro_time_machine_${projectId}`;
+	}
+
+	function cloneTimeMachineData(value, fallback = {}) {
+	  try {
+		return JSON.parse(JSON.stringify(value || fallback));
+	  } catch (e) {
+		return fallback;
+	  }
+	}
+
+	function escapeTimeMachineHTML(value) {
+	  return String(value ?? '').replace(/[&<>"']/g, char => ({
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#39;'
+	  }[char]));
+	}
+
+	function readTimeSnapshots(projectId = currentProjectId) {
+	  try {
+		const snapshots = JSON.parse(localStorage.getItem(getTimeMachineKey(projectId))) || [];
+		return Array.isArray(snapshots) ? snapshots.filter(snapshot => snapshot && snapshot.id) : [];
+	  } catch (e) {
+		return [];
+	  }
+	}
+
+	function writeTimeSnapshots(snapshots, projectId = currentProjectId) {
+	  const capped = (Array.isArray(snapshots) ? snapshots : []).slice(0, TIME_MACHINE_LIMIT);
+	  const key = getTimeMachineKey(projectId);
+	  const attemptSizes = [...new Set([capped.length, 8, 4, 2, 1].filter(size => size > 0 && size <= capped.length))];
+
+	  for (const size of attemptSizes) {
+		try {
+		  localStorage.setItem(key, JSON.stringify(capped.slice(0, size)));
+		  return true;
+		} catch (e) {}
+	  }
+
+	  showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> History storage is full.");
+	  return false;
+	}
+
+	function getSnapshotCharCount(snapshotVfs) {
+	  return Object.values(snapshotVfs || {}).reduce((sum, value) => sum + String(value || '').length, 0);
+	}
+
+	function formatSnapshotSize(chars = 0) {
+	  if (chars >= 1000) return `${(chars / 1000).toFixed(chars >= 10000 ? 0 : 1)}k chars`;
+	  return `${chars} chars`;
+	}
+
+	function formatSnapshotTime(timestamp) {
+	  return new Date(timestamp).toLocaleString([], {
+		month: 'short',
+		day: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit'
+	  });
+	}
+
+	function getConsoleSummary() {
+	  const entries = Array.from(document.querySelectorAll('#consoleLogs .console-entry'));
+	  const preview = entries.slice(-4).map(entry => {
+		const content = entry.querySelector('.console-content');
+		return (content ? content.textContent : entry.textContent || '').replace(/\s+/g, ' ').trim();
+	  }).filter(Boolean);
+
+	  return {
+		total: entries.length,
+		errors: entries.filter(entry => entry.classList.contains('con-err-line')).length,
+		warnings: entries.filter(entry => entry.classList.contains('con-warn-line')).length,
+		logs: entries.filter(entry => entry.classList.contains('con-log-line') || entry.classList.contains('con-ret-line')).length,
+		preview
+	  };
+	}
+
+	function saveTimeSnapshot(reason = 'compile') {
+	  const snapshotVfs = cloneTimeMachineData(vfs);
+	  const now = Date.now();
+	  const snapshot = {
+		id: `snap_${now}_${Math.random().toString(36).slice(2, 7)}`,
+		createdAt: now,
+		reason,
+		projectId: currentProjectId,
+		projectName: currentProject && currentProject.name ? currentProject.name : 'Workspace',
+		fileCount: Object.keys(snapshotVfs).length,
+		totalChars: getSnapshotCharCount(snapshotVfs),
+		activeFiles: cloneTimeMachineData(activeFiles, { html: 'index.html', css: 'style.css', js: 'script.js' }),
+		vfs: snapshotVfs,
+		console: { total: 0, errors: 0, warnings: 0, logs: 0, preview: [], pending: true }
+	  };
+
+	  const snapshots = readTimeSnapshots();
+	  if (!writeTimeSnapshots([snapshot, ...snapshots])) return null;
+	  renderTimeMachineList();
+	  setWorkspaceStatus('Snapshot saved', 'saved');
+	  return snapshot.id;
+	}
+
+	function finalizeTimeSnapshot(snapshotId) {
+	  if (!snapshotId) return;
+	  const snapshots = readTimeSnapshots();
+	  const snapshotIndex = snapshots.findIndex(snapshot => snapshot.id === snapshotId);
+	  if (snapshotIndex === -1) return;
+	  snapshots[snapshotIndex].console = { ...getConsoleSummary(), pending: false };
+	  writeTimeSnapshots(snapshots);
+	  renderTimeMachineList();
+	}
+
+	function getSnapshotHealth(snapshot) {
+	  const summary = snapshot.console || {};
+	  if (summary.pending) return { className: 'is-pending', icon: 'ph-spinner-gap', label: 'Capturing console' };
+	  if (summary.errors > 0) return { className: 'is-error', icon: 'ph-warning-circle', label: `${summary.errors} error${summary.errors === 1 ? '' : 's'}` };
+	  if (summary.warnings > 0) return { className: 'is-warning', icon: 'ph-warning', label: `${summary.warnings} warning${summary.warnings === 1 ? '' : 's'}` };
+	  if (summary.total > 0) return { className: 'is-clean', icon: 'ph-check-circle', label: `${summary.total} console item${summary.total === 1 ? '' : 's'}` };
+	  return { className: 'is-quiet', icon: 'ph-circle', label: 'No console output' };
+	}
+
+	function getSnapshotActiveLabel(snapshot) {
+	  const files = Object.values(snapshot.activeFiles || {}).filter(Boolean);
+	  return files.length ? files.map(escapeTimeMachineHTML).join(', ') : 'Default files';
+	}
+
+	function renderTimeMachineList() {
+	  const list = document.getElementById('timeMachineList');
+	  if (!list) return;
+	  const snapshots = readTimeSnapshots();
+
+	  if (!snapshots.length) {
+		list.innerHTML = `
+		  <div class="time-machine-empty">
+			<i class="ph-bold ph-clock-counter-clockwise"></i>
+			<h4>No restore points yet</h4>
+			<p>Press Compile to save the first local snapshot for this project.</p>
+		  </div>
+		`;
+		return;
+	  }
+
+	  list.innerHTML = snapshots.map((snapshot, index) => {
+		const health = getSnapshotHealth(snapshot);
+		const safeProjectName = escapeTimeMachineHTML(snapshot.projectName || 'Workspace');
+		const consolePreview = snapshot.console && snapshot.console.preview && snapshot.console.preview.length
+		  ? `<div class="time-snapshot-console">${snapshot.console.preview.map(line => `<span>${escapeTimeMachineHTML(line)}</span>`).join('')}</div>`
+		  : '';
+
+		return `
+		  <article class="time-snapshot-card">
+			<div class="time-snapshot-main">
+			  <div class="time-snapshot-icon"><i class="ph-bold ph-clock-counter-clockwise"></i></div>
+			  <div class="time-snapshot-copy">
+				<div class="time-snapshot-title-row">
+				  <h4>${index === 0 ? 'Latest compile' : 'Compile snapshot'}</h4>
+				  ${index === 0 ? '<span class="time-snapshot-pill">Newest</span>' : ''}
+				</div>
+				<p>${safeProjectName} - ${formatSnapshotTime(snapshot.createdAt)}</p>
+				<div class="time-snapshot-meta">
+				  <span><i class="ph-bold ph-files"></i> ${snapshot.fileCount || 0} files</span>
+				  <span><i class="ph-bold ph-text-aa"></i> ${formatSnapshotSize(snapshot.totalChars || 0)}</span>
+				  <span><i class="ph-bold ph-crosshair"></i> ${getSnapshotActiveLabel(snapshot)}</span>
+				</div>
+				<div class="time-snapshot-health ${health.className}">
+				  <i class="ph-bold ${health.icon}"></i> ${escapeTimeMachineHTML(health.label)}
+				</div>
+				${consolePreview}
+			  </div>
+			</div>
+			<div class="time-snapshot-actions">
+			  <button class="btn btn-compact primary-btn" onclick="restoreTimeSnapshot('${snapshot.id}')"><i class="ph-bold ph-arrow-counter-clockwise"></i> Restore</button>
+			</div>
+		  </article>
+		`;
+	  }).join('');
+	}
+
+	function openTimeMachine() {
+	  const menu = document.getElementById('optionsMenu');
+	  const modal = document.getElementById('timeMachineModal');
+	  if (menu) menu.classList.remove('active');
+	  renderTimeMachineList();
+	  if (modal) modal.classList.add('active');
+	}
+
+	function closeTimeMachine() {
+	  const modal = document.getElementById('timeMachineModal');
+	  if (modal) modal.classList.remove('active');
+	}
+
+	function handleTimeMachineBackdrop(event) {
+	  if (event.target && event.target.id === 'timeMachineModal') closeTimeMachine();
+	}
+
+	function clearTimeSnapshots() {
+	  if (!confirm('Clear all local snapshots for this project?')) return;
+	  localStorage.removeItem(getTimeMachineKey());
+	  renderTimeMachineList();
+	  setWorkspaceStatus('History cleared', 'saved');
+	  showToast("<i class='ph-bold ph-check-circle' style='margin-right:6px;'></i> Local history cleared.");
+	}
+
+	function pickSnapshotActiveFile(snapshotVfs, requestedFile, extension, fallbackFile) {
+	  if (requestedFile && Object.prototype.hasOwnProperty.call(snapshotVfs, requestedFile)) return requestedFile;
+	  const matchingFile = Object.keys(snapshotVfs).find(filename => filename.endsWith(extension));
+	  return matchingFile || fallbackFile;
+	}
+
+	function syncEditorFromSnapshot() {
+	  const htmlValue = vfs[activeFiles.html] ?? vfs['index.html'] ?? '';
+	  const cssValue = vfs[activeFiles.css] ?? vfs['style.css'] ?? '';
+	  const jsValue = vfs[activeFiles.js] ?? vfs['script.js'] ?? '';
+
+	  if (htmlMonaco) htmlMonaco.setValue(htmlValue);
+	  if (cssMonaco) cssMonaco.setValue(cssValue);
+	  if (jsMonaco) jsMonaco.setValue(jsValue);
+
+	  const htmlPill = document.getElementById('htmlPanelPillText');
+	  const cssPill = document.getElementById('cssPanelPillText');
+	  const jsPill = document.getElementById('jsPanelPillText');
+	  if (htmlPill) htmlPill.innerText = activeFiles.html;
+	  if (cssPill) cssPill.innerText = activeFiles.css;
+	  if (jsPill) jsPill.innerText = activeFiles.js;
+	}
+
+	function restoreTimeSnapshot(snapshotId) {
+	  const snapshot = readTimeSnapshots().find(item => item.id === snapshotId);
+	  if (!snapshot || !snapshot.vfs) {
+		showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Snapshot not found.");
+		return;
+	  }
+
+	  const nextVfs = cloneTimeMachineData(snapshot.vfs);
+	  if (!Object.keys(nextVfs).length) {
+		showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Snapshot is empty.");
+		return;
+	  }
+
+	  if (typeof nextVfs['index.html'] === 'undefined') nextVfs['index.html'] = '';
+	  if (typeof nextVfs['style.css'] === 'undefined') nextVfs['style.css'] = '';
+	  if (typeof nextVfs['script.js'] === 'undefined') nextVfs['script.js'] = '';
+
+	  const snapshotActive = snapshot.activeFiles || {};
+	  vfs = nextVfs;
+	  activeFiles = {
+		html: pickSnapshotActiveFile(vfs, snapshotActive.html, '.html', 'index.html'),
+		css: pickSnapshotActiveFile(vfs, snapshotActive.css, '.css', 'style.css'),
+		js: pickSnapshotActiveFile(vfs, snapshotActive.js, '.js', 'script.js')
+	  };
+
+	  currentProject.vfs = vfs;
+	  currentProject.activeFiles = activeFiles;
+	  currentProject.lastModified = Date.now();
+	  const projIndex = projects.findIndex(p => p.id === currentProjectId);
+	  if (projIndex > -1) projects[projIndex] = currentProject;
+	  localStorage.setItem('nitro_projects', JSON.stringify(projects));
+
+	  isRestoringSnapshot = true;
+	  syncEditorFromSnapshot();
+	  renderVFS();
+	  triggerLayoutUpdate();
+	  isRestoringSnapshot = false;
+
+	  closeTimeMachine();
+	  smartRun(false);
+	  setWorkspaceStatus('Snapshot restored', 'saved');
+	  showToast("<i class='ph-bold ph-arrow-counter-clockwise' style='margin-right:6px;'></i> Snapshot restored.");
+	}
+
 	function smartRun(manual = false) {
 	  if(!isIdeInitialized) return;
 	  setWorkspaceStatus(manual ? 'Compiling...' : 'Running...', 'running');
@@ -1088,8 +1365,10 @@
   if (projIndex > -1) projects[projIndex] = currentProject;
   localStorage.setItem('nitro_projects', JSON.stringify(projects));
 	  
+	  const snapshotId = manual ? saveTimeSnapshot('compile') : null;
 
 	  forceRun(collectHTML(), collectCSS(), collectJS(), document.getElementById('liveIframe'), { clearConsole: manual });
+	  if (snapshotId) setTimeout(() => finalizeTimeSnapshot(snapshotId), 900);
 	}
 
 	function forceRun(html, css, js, iframe, options = {}) {
@@ -1240,6 +1519,7 @@ function switchProject(id, options = {}) {
 function deleteProject(id) {
     if(confirm("Delete this project?")) {
         projects = projects.filter(p => p.id !== id);
+        localStorage.removeItem(getTimeMachineKey(id));
         localStorage.setItem('nitro_projects', JSON.stringify(projects));
         if(currentProjectId === id) switchProject(projects[0].id); else renderDashboard();
     }
