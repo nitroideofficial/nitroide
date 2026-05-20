@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 20, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The architectural bottleneck in modern web development isn’t the browser anymore—it’s the tooling ecosystem.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7462887388193730560/"
+},
+  {
+  date: "May 20, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The Edge is Your Machine: Rethinking Online Code Editors",
+  link: "https://nitroide.hashnode.dev/edge-is-your-machine-rethinking-online-code-editors"
+},
+  {
+  date: "May 20, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "We built a client-side IDE because waiting for a cloud container to spin up in 2026 is absurd.",
+  link: "https://peerlist.io/scroll/post/ACTHLKLB8GQPBLDAOH97E8L7D9PO9K"
+},
+  {
+  date: "May 20, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Browsers can render 3D environments at 60fps, yet your web editor lags when typing CSS.",
+  link: "https://x.com/trynitroide/status/2057121696759558278"
+},
+  {
   date: "May 19, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
