@@ -2002,6 +2002,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const tickerBox = document.querySelector('.pulse-ticker-box');
   const blogContainer = document.getElementById('pulse-blog-container');
   const archiveStream = document.getElementById('archive-stream');
+  const archiveTotal = document.getElementById('eco-total-updates');
+  const archivePlatforms = document.getElementById('eco-platform-count');
+  const archiveLatest = document.getElementById('eco-latest-date');
+  const archiveSearch = document.getElementById('eco-search');
+  const archiveFilterBar = document.getElementById('eco-platform-filters');
+  const archiveSortToggle = document.getElementById('eco-sort-toggle');
+  const archiveResultCount = document.getElementById('eco-result-count');
 
   let cachedDevTo = null;
 
@@ -2009,16 +2016,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tickerBox && typeof pulseLogs !== 'undefined') {
     tickerBox.innerHTML = '';
     const socialLogs = pulseLogs.filter(log => log.platform !== 'Hashnode');
-    const latestFour = socialLogs.slice(0, 3); 
+    const latestFour = socialLogs.slice(0, 4);
     
     latestFour.forEach(log => {
       tickerBox.innerHTML += `
-        <a href="${log.link}" target="_blank" class="ticker-item">
-          <span class="t-icon" style="color: ${log.color};"><i class="ph-bold ${log.icon}"></i></span>
+        <a href="${log.link}" target="_blank" rel="noopener" class="ticker-item" style="--ticker-color: ${log.color};">
+          <span class="t-icon"><i class="ph-bold ${log.icon}"></i></span>
           <div class="t-content-flex">
+            <span class="t-platform">${log.platform}</span>
             <span class="t-text">${log.title}</span>
             <span class="t-date">${log.date}</span>
           </div>
+          <i class="ph-bold ph-arrow-up-right t-arrow"></i>
         </a>
       `;
     });
@@ -2044,12 +2053,12 @@ document.addEventListener('DOMContentLoaded', () => {
           injectBlogHTML(cachedDevTo, 'devto');
         } else {
           // Handles empty Dev.to accounts safely
-          blogContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:40px;">No Dev.to articles published yet.</p>';
+          blogContainer.innerHTML = '<p class="pulse-empty-state">No Dev.to articles published yet.</p>';
         }
       } catch (e) {
         // Handles Ad-Blockers safely
         console.error("Dev.to Fetch Blocked:", e);
-        blogContainer.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:40px;">Failed to fetch (Check Ad-Blocker).</p>';
+        blogContainer.innerHTML = '<p class="pulse-empty-state">Dev.to could not load in this browser session.</p>';
       }
     } else if (platform === 'hashnode') {
       const latestHashnode = typeof pulseLogs !== 'undefined' ? pulseLogs.find(log => log.platform === 'Hashnode') : null;
@@ -2063,26 +2072,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function injectBlogHTML(data, platform) {
-    const icon = platform === 'devto' ? '<i class="ph-bold ph-dev-to-logo" style="color: #fff;"></i>' : '<i class="ph-bold ph-hash" style="color: #2962ff;"></i>';
+    const icon = platform === 'devto' ? '<i class="ph-bold ph-dev-to-logo"></i>' : '<i class="ph-bold ph-hash"></i>';
     blogContainer.innerHTML = `
-      <a href="${data.url}" target="_blank" style="text-decoration: none; display: flex; flex-direction: column; height: 100%;">
-        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 6px;">
-          ${icon} ${platform === 'devto' ? 'Dev.to Article' : 'Hashnode Blog'}
-          <span style="margin-left: auto; font-weight: normal;">${data.date}</span>
+      <a href="${data.url}" target="_blank" rel="noopener" class="pulse-blog-link ${platform === 'devto' ? 'is-devto' : 'is-hashnode'}">
+        <div class="pulse-blog-meta">
+          <span class="pulse-blog-source">${icon} ${platform === 'devto' ? 'Dev.to Article' : 'Hashnode Blog'}</span>
+          <span>${data.date}</span>
         </div>
-        <h3 style="font-size: 1.25rem; color: var(--text); margin-bottom: 10px; line-height: 1.3;">${data.title}</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0;">Explore the full technical breakdown and implementation details directly on the publishing network.</p>
-        <div style="margin-top: auto; padding-top: 20px; font-size: 0.85rem; color: #00e5ff; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+        <h3>${data.title}</h3>
+        <p>Explore the technical breakdown, decisions, and implementation details directly on the publishing network.</p>
+        <div class="pulse-read-more">
           Read Full Log <i class="ph-bold ph-arrow-right"></i>
         </div>
       </a>
     `;
   }
 
-  window.switchPulseTab = function(platform) {
+  window.switchPulseTab = function(platform, evt) {
     document.querySelectorAll('.p-tab').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
-    blogContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 40px;"><i class="ph-bold ph-spinner-gap" style="animation: spin 1s linear infinite;"></i> Fetching...</p>';
+    const activeTab = evt?.currentTarget || document.querySelector(`.p-tab[data-platform="${platform}"]`);
+    activeTab?.classList.add('active');
+    blogContainer.innerHTML = '<p class="pulse-loading"><i class="ph-bold ph-spinner-gap"></i> Fetching...</p>';
     renderArchitectureTab(platform);
   };
 
@@ -2090,31 +2100,150 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 3. COMPLETE ECOSYSTEM TIMELINE ARCHIVE (Bulletproof Sorting)
   if (archiveStream && typeof pulseLogs !== 'undefined') {
-    archiveStream.innerHTML = '<p style="color: var(--text-muted); text-align: center; margin-top: 40px;"><i class="ph-bold ph-spinner-gap" style="animation: spin 1s linear infinite;"></i> Syncing timelines...</p>';
-    
+    archiveStream.innerHTML = '<p class="pulse-loading"><i class="ph-bold ph-spinner-gap"></i> Syncing timelines...</p>';
+    const archiveState = {
+      logs: [],
+      platform: 'All',
+      query: '',
+      sort: 'desc'
+    };
+
+    function getLogTimestamp(log) {
+      if (Number.isFinite(log.timestamp)) return log.timestamp;
+      const parsed = new Date(log.date).getTime();
+      return Number.isNaN(parsed) ? 0 : parsed;
+    }
+     
+    function updateArchiveStats(logsArray) {
+      if (!archiveTotal || !archivePlatforms || !archiveLatest) return;
+      const sortedLogs = [...logsArray].sort((a, b) => getLogTimestamp(b) - getLogTimestamp(a));
+      const platforms = new Set(sortedLogs.map(log => log.platform).filter(Boolean));
+      archiveTotal.textContent = logsArray.length;
+      archivePlatforms.textContent = platforms.size;
+      archiveLatest.textContent = sortedLogs[0]?.date || 'No updates';
+    }
+
+    function formatStreamDate(dateText) {
+      const parsed = new Date(dateText);
+      if (Number.isNaN(parsed.getTime())) return { month: 'NEW', day: dateText };
+      return {
+        month: parsed.toLocaleDateString('en-US', { month: 'short' }),
+        day: parsed.toLocaleDateString('en-US', { day: '2-digit' })
+      };
+    }
+
+    function getVisibleArchiveLogs() {
+      const query = archiveState.query.trim().toLowerCase();
+      return archiveState.logs
+        .filter(log => archiveState.platform === 'All' || log.platform === archiveState.platform)
+        .filter(log => {
+          if (!query) return true;
+          return [log.title, log.platform, log.date]
+            .filter(Boolean)
+            .some(value => value.toLowerCase().includes(query));
+        })
+        .sort((a, b) => {
+          const delta = getLogTimestamp(b) - getLogTimestamp(a);
+          return archiveState.sort === 'desc' ? delta : -delta;
+        });
+    }
+
+    function renderArchiveFilters() {
+      if (!archiveFilterBar) return;
+      const platforms = ['All', ...new Set(archiveState.logs.map(log => log.platform).filter(Boolean))];
+      if (!platforms.includes(archiveState.platform)) archiveState.platform = 'All';
+
+      archiveFilterBar.innerHTML = platforms.map(platform => {
+        const count = platform === 'All'
+          ? archiveState.logs.length
+          : archiveState.logs.filter(log => log.platform === platform).length;
+        const isActive = platform === archiveState.platform ? ' is-active' : '';
+        return `
+          <button class="eco-filter-chip${isActive}" type="button" data-platform="${platform}">
+            ${platform}<span class="eco-filter-count">${count}</span>
+          </button>
+        `;
+      }).join('');
+
+      archiveFilterBar.querySelectorAll('.eco-filter-chip').forEach(button => {
+        button.addEventListener('click', () => {
+          archiveState.platform = button.dataset.platform || 'All';
+          renderArchive();
+        });
+      });
+    }
+
+    function updateArchiveResultCount(visibleCount) {
+      if (!archiveResultCount) return;
+      const noun = visibleCount === 1 ? 'update' : 'updates';
+      const sortLabel = archiveState.sort === 'desc' ? 'newest first' : 'oldest first';
+      const filterLabel = archiveState.platform === 'All' ? 'all platforms' : archiveState.platform;
+      archiveResultCount.textContent = `${visibleCount} ${noun} shown, ${sortLabel}, ${filterLabel}.`;
+    }
+
+    function renderArchive() {
+      updateArchiveStats(archiveState.logs);
+      renderArchiveFilters();
+      const visibleLogs = getVisibleArchiveLogs();
+      renderStream(visibleLogs);
+      updateArchiveResultCount(visibleLogs.length);
+    }
+
+    archiveSearch?.addEventListener('input', () => {
+      archiveState.query = archiveSearch.value;
+      renderArchive();
+    });
+
+    archiveSortToggle?.addEventListener('click', () => {
+      archiveState.sort = archiveState.sort === 'desc' ? 'asc' : 'desc';
+      archiveSortToggle.dataset.sort = archiveState.sort;
+      archiveSortToggle.innerHTML = archiveState.sort === 'desc'
+        ? '<i class="ph-bold ph-sort-descending"></i> Newest first'
+        : '<i class="ph-bold ph-sort-ascending"></i> Oldest first';
+      renderArchive();
+    });
+
+    function loadArchive(logsArray) {
+      archiveState.logs = logsArray
+        .map(log => ({ ...log, timestamp: getLogTimestamp(log) }))
+        .sort((a, b) => getLogTimestamp(b) - getLogTimestamp(a));
+      renderArchive();
+    }
+
     // Function to render the UI to prevent duplicate code
     function renderStream(logsArray) {
       archiveStream.innerHTML = '';
       if (logsArray.length === 0) {
-        archiveStream.innerHTML = '<p style="color: var(--text-muted); text-align: center;">No activity logs found.</p>';
+        archiveStream.innerHTML = `
+          <div class="eco-no-results">
+            <i class="ph-bold ph-magnifying-glass"></i>
+            <strong>No matching updates</strong>
+            <span>Try another search term or platform filter.</span>
+          </div>
+        `;
         return;
       }
       logsArray.forEach(log => {
-        const bgOpacity = log.platform === 'Dev.to' ? 'rgba(255,255,255,0.05)' : `${log.color}15`; 
+        const bgOpacity = log.platform === 'Dev.to' ? 'rgba(255,255,255,0.06)' : `${log.color}18`;
+        const dateParts = formatStreamDate(log.date);
         archiveStream.innerHTML += `
-          <a href="${log.link}" target="_blank" class="eco-stream-card">
-            <div class="stream-icon-box" style="color: ${log.color}; background: ${bgOpacity};">
+          <a href="${log.link}" target="_blank" rel="noopener" class="eco-stream-card" style="--stream-color: ${log.color}; --stream-bg: ${bgOpacity};">
+            <div class="stream-date-block">
+              <span>${dateParts.month}</span>
+              <strong>${dateParts.day}</strong>
+            </div>
+            <div class="stream-icon-box">
               <i class="ph-bold ${log.icon}"></i>
             </div>
             <div class="stream-content">
               <div class="stream-header">
-                <span class="stream-platform" style="color: ${log.color};">${log.platform}</span>
-                <span class="stream-date">• ${log.date}</span>
+                <span class="stream-platform">${log.platform}</span>
+                <span class="stream-date">${log.date}</span>
               </div>
               <div class="stream-title">${log.title}</div>
             </div>
             <div class="stream-action">
-              Open <i class="ph-bold ph-arrow-right"></i>
+              Open <i class="ph-bold ph-arrow-up-right"></i>
             </div>
           </a>
         `;
@@ -2140,13 +2269,13 @@ document.addEventListener('DOMContentLoaded', () => {
           }));
         }
         const combinedLogs = [...manualLogs, ...devLogs].sort((a, b) => b.timestamp - a.timestamp);
-        renderStream(combinedLogs);
+        loadArchive(combinedLogs);
       })
       .catch(err => {
          console.error("Archive Dev.to fetch failed (AdBlocker likely):", err);
          // If Dev.to fails, STILL render the manual logs perfectly!
          const safeLogs = [...manualLogs].sort((a, b) => b.timestamp - a.timestamp);
-         renderStream(safeLogs);
+         loadArchive(safeLogs);
       });
   }
 });
