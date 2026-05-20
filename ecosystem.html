@@ -88,22 +88,61 @@
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
 
-<div class="container relative-z">
-  <main class="changelog-container reveal-2 active" style="margin-top: 0px;">
-    
-    <div style="text-align: center; margin-bottom: 30px;">
-      <div class="badge" style="color: #00e5ff; border-color: rgba(0,229,255,0.2); background: rgba(0,229,255,0.05); margin-bottom: 20px;">
-        <i class="ph-bold ph-archive"></i> The Archive
+<div class="container relative-z ecosystem-page-container">
+  <main class="ecosystem-archive reveal-2 active">
+    <section class="ecosystem-archive-hero">
+      <div class="ecosystem-hero-copy">
+        <div class="badge pulse-badge">
+          <i class="ph-bold ph-archive"></i> The Archive
+        </div>
+        <h1 class="changelog-title">Ecosystem Pulse</h1>
+        <p class="changelog-desc">
+          A chronological record of community builds, architecture discussions, launch notes, and open-source progress.
+        </p>
       </div>
-      <h1 class="changelog-title" style="margin-bottom: 20px;">Ecosystem Pulse</h1>
-      <p class="changelog-desc" style="max-width: 600px; margin: 0 auto;">
-        A chronological record of our community builds, architecture discussions, and open-source journey.
-      </p>
-    </div>
 
-	  <div id="archive-stream" class="eco-stream-container">
+      <div class="ecosystem-hero-panel" aria-label="Ecosystem archive summary">
+        <div class="eco-metric">
+          <span id="eco-total-updates">--</span>
+          <small>Updates tracked</small>
+        </div>
+        <div class="eco-metric">
+          <span id="eco-platform-count">--</span>
+          <small>Platforms</small>
+        </div>
+        <div class="eco-metric eco-metric-wide">
+          <span id="eco-latest-date">Syncing</span>
+          <small>Latest activity</small>
+        </div>
       </div>
-	  
+    </section>
+
+    <section class="ecosystem-stream-shell">
+      <div class="ecosystem-stream-head">
+        <div>
+          <h2>Activity Stream</h2>
+          <p>Search, filter, and sort the NitroIDE activity archive.</p>
+        </div>
+        <a href="index.html#ecosystem-pulse" class="pulse-archive-link">
+          Back to Pulse <i class="ph-bold ph-arrow-up-right"></i>
+        </a>
+      </div>
+
+      <div class="ecosystem-controls" aria-label="Activity stream controls">
+        <label class="eco-search-field" for="eco-search">
+          <i class="ph-bold ph-magnifying-glass"></i>
+          <input id="eco-search" type="search" placeholder="Search updates..." autocomplete="off">
+        </label>
+        <button id="eco-sort-toggle" class="eco-sort-toggle" type="button" data-sort="desc">
+          <i class="ph-bold ph-sort-descending"></i> Newest first
+        </button>
+      </div>
+
+      <div id="eco-platform-filters" class="eco-platform-filters" aria-label="Filter activity by platform"></div>
+      <div id="eco-result-count" class="eco-result-count" aria-live="polite"></div>
+
+      <div id="archive-stream" class="eco-stream-container"></div>
+    </section>
   </main>
 </div>
 
