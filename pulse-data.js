@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 21, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The most powerful piece of software on your device is being severely underutilized by the tools built to create for it.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7463249747827580928/"
+},
+  {
+  date: "May 21, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The Client-Side Mandate: Redesigning the Online Code Editor",
+  link: "https://nitroide.hashnode.dev/redesigning-online-code-editor-client-side"
+},
+  {
+  date: "May 21, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "We dropped the cloud backend for our web editor. Here is why your browser is better off without it.",
+  link: "https://peerlist.io/scroll/post/ACTH9OBPDEG6O8PGQI8777NNARLQ9J"
+},
+  {
+  date: "May 21, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "We expect browsers to run AAA games via WebAssembly, but we accept network lag when writing JavaScript.",
+  link: "https://x.com/trynitroide/status/2057484129646825590"
+},
+  {
   date: "May 20, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
