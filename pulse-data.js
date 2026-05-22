@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 22, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "When did we decide that an online IDE required cloud infrastructure?",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7463612177162190848/"
+},
+  {
+  date: "May 22, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Abandoning the Cloud: Engineering a Local-First Code Editor",
+  link: "https://nitroide.hashnode.dev/abandoning-cloud-engineering-local-first-code-editor"
+},
+  {
+  date: "May 22, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "We stopped sending frontend code to the cloud. Here's why.",
+  link: "https://peerlist.io/scroll/post/ACTHR8D9PM9NRQRKR3R8M6MGLDBAPM"
+},
+  {
+  date: "May 22, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The modern browser became the most underrated operating system.",
+  link: "https://x.com/trynitroide/status/2057846571585384795"
+},
+  {
   date: "May 21, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
