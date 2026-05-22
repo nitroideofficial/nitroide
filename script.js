@@ -2360,10 +2360,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .filter(log => log.platform !== 'Hashnode')
       .map(log => ({ ...log, timestamp: getPulseTimestamp(log) }));
     renderTickerItems(manualTickerLogs);
-
-    fetchDevToArticles(4)
-      .then(devLogs => renderTickerItems([...devLogs, ...manualTickerLogs]))
-      .catch(err => console.error("Ticker Dev.to fetch failed:", err));
   }
 
   // 2. ROUTING TO ARCHITECTURE LOG TABS (Bulletproof Fetch)
