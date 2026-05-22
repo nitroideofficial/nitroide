@@ -2291,26 +2291,79 @@ document.addEventListener('DOMContentLoaded', () => {
   const archiveResultCount = document.getElementById('eco-result-count');
 
   let cachedDevTo = null;
+  const DEVTO_USERNAME = 'nitroide';
+  const DEVTO_CACHE_TTL = 5 * 60 * 1000;
+
+  function getPulseTimestamp(item) {
+    if (Number.isFinite(item?.timestamp)) return item.timestamp;
+    const sourceDate = item?.published_timestamp || item?.published_at || item?.created_at || item?.date;
+    const parsed = new Date(sourceDate).getTime();
+    return Number.isNaN(parsed) ? 0 : parsed;
+  }
+
+  function formatPulseDate(timestamp) {
+    if (!timestamp) return 'Latest';
+    return new Date(timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function mapDevToArticle(article) {
+    const timestamp = getPulseTimestamp(article);
+    return {
+      platform: 'Dev.to',
+      icon: 'ph-dev-to-logo',
+      color: '#ffffff',
+      title: article.title,
+      link: article.url,
+      url: article.url,
+      date: formatPulseDate(timestamp),
+      timestamp
+    };
+  }
+
+  async function fetchDevToArticles(limit = 5) {
+    const url = `https://dev.to/api/articles?username=${encodeURIComponent(DEVTO_USERNAME)}&per_page=${limit}&_=${Date.now()}`;
+    const response = await fetch(url, {
+      cache: 'no-store',
+      headers: { Accept: 'application/json' }
+    });
+    if (!response.ok) throw new Error(`Dev.to API ${response.status}`);
+    const data = await response.json();
+    if (!Array.isArray(data)) return [];
+    return data
+      .map(mapDevToArticle)
+      .sort((a, b) => getPulseTimestamp(b) - getPulseTimestamp(a));
+  }
+
+  function renderTickerItems(logs) {
+    if (!tickerBox) return;
+    const latestFour = logs
+      .map(log => ({ ...log, timestamp: getPulseTimestamp(log) }))
+      .sort((a, b) => getPulseTimestamp(b) - getPulseTimestamp(a))
+      .slice(0, 4);
+
+    tickerBox.innerHTML = latestFour.map(log => `
+      <a href="${log.link}" target="_blank" rel="noopener" class="ticker-item" style="--ticker-color: ${log.color};">
+        <span class="t-icon"><i class="ph-bold ${log.icon}"></i></span>
+        <div class="t-content-flex">
+          <span class="t-platform">${log.platform}</span>
+          <span class="t-text">${log.title}</span>
+          <span class="t-date">${log.date}</span>
+        </div>
+        <i class="ph-bold ph-arrow-up-right t-arrow"></i>
+      </a>
+    `).join('');
+  }
 
   // 1. ROUTING TO HOMEPAGE LIVE TICKER
   if (tickerBox && typeof pulseLogs !== 'undefined') {
-    tickerBox.innerHTML = '';
-    const socialLogs = pulseLogs.filter(log => log.platform !== 'Hashnode');
-    const latestFour = socialLogs.slice(0, 4);
-    
-    latestFour.forEach(log => {
-      tickerBox.innerHTML += `
-        <a href="${log.link}" target="_blank" rel="noopener" class="ticker-item" style="--ticker-color: ${log.color};">
-          <span class="t-icon"><i class="ph-bold ${log.icon}"></i></span>
-          <div class="t-content-flex">
-            <span class="t-platform">${log.platform}</span>
-            <span class="t-text">${log.title}</span>
-            <span class="t-date">${log.date}</span>
-          </div>
-          <i class="ph-bold ph-arrow-up-right t-arrow"></i>
-        </a>
-      `;
-    });
+    const manualTickerLogs = pulseLogs
+      .filter(log => log.platform !== 'Hashnode')
+      .map(log => ({ ...log, timestamp: getPulseTimestamp(log) }));
+    renderTickerItems(manualTickerLogs);
+
+    fetchDevToArticles(4)
+      .then(devLogs => renderTickerItems([...devLogs, ...manualTickerLogs]))
+      .catch(err => console.error("Ticker Dev.to fetch failed:", err));
   }
 
   // 2. ROUTING TO ARCHITECTURE LOG TABS (Bulletproof Fetch)
@@ -2318,17 +2371,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!blogContainer) return;
 
     if (platform === 'devto') {
-      if (cachedDevTo) return injectBlogHTML(cachedDevTo, 'devto');
+      if (cachedDevTo && Date.now() - cachedDevTo.fetchedAt < DEVTO_CACHE_TTL) {
+        return injectBlogHTML(cachedDevTo, 'devto');
+      }
       try {
-        const response = await fetch(`https://dev.to/api/articles?username=nitroide&per_page=1&_cb=${Date.now()}`);
-        if (!response.ok) throw new Error('API Error');
-        const data = await response.json();
+        const data = await fetchDevToArticles(1);
         
         if (Array.isArray(data) && data.length > 0) {
           cachedDevTo = {
             title: data[0].title,
             url: data[0].url,
-            date: new Date(data[0].published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            date: data[0].date,
+            fetchedAt: Date.now()
           };
           injectBlogHTML(cachedDevTo, 'devto');
         } else {
@@ -2389,9 +2443,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function getLogTimestamp(log) {
-      if (Number.isFinite(log.timestamp)) return log.timestamp;
-      const parsed = new Date(log.date).getTime();
-      return Number.isNaN(parsed) ? 0 : parsed;
+      return getPulseTimestamp(log);
     }
      
     function updateArchiveStats(logsArray) {
@@ -2531,23 +2583,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Prep Manual Logs First
-    const manualLogs = pulseLogs.map(log => ({ ...log, timestamp: new Date(log.date).getTime() }));
+    const manualLogs = pulseLogs.map(log => ({ ...log, timestamp: getPulseTimestamp(log) }));
 
     // Fetch Dev.to safely
-    fetch(`https://dev.to/api/articles?username=nitroide&per_page=5&_cb=${Date.now()}`)
-      .then(res => {
-        if (!res.ok) throw new Error('API Blocked');
-        return res.json();
-      })
-      .then(devData => {
-        let devLogs = [];
-        if (Array.isArray(devData)) {
-          devLogs = devData.map(article => ({
-            platform: 'Dev.to', icon: 'ph-dev-to-logo', color: '#ffffff', title: article.title, link: article.url,
-            date: new Date(article.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-            timestamp: new Date(article.published_at).getTime() 
-          }));
-        }
+    fetchDevToArticles(10)
+      .then(devLogs => {
         const combinedLogs = [...manualLogs, ...devLogs].sort((a, b) => b.timestamp - a.timestamp);
         loadArchive(combinedLogs);
       })
