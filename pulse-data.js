@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 23, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "When did we decide that an online IDE required cloud infrastructure?",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7463612177162190848/"
+},
+  {
+  date: "May 23, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Engineering Immediacy: Building a Zero-Latency Frontend Workspace",
+  link: "https://nitroide.hashnode.dev/engineering-immediacy-zero-latency-frontend-workspace"
+},
+  {
+  date: "May 23, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "We stripped the backend out of our web IDE. Here is what happened to the execution speed.",
+  link: "https://peerlist.io/scroll/post/ACTHJKN9MGD7GPOLJ3ONKDKGP7DG7N"
+},
+  {
+  date: "May 23, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Why are developers still waiting for their IDE to boot up?",
+  link: "https://x.com/trynitroide/status/2058209012450238753"
+},
+  {
   date: "May 22, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
