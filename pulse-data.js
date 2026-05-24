@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 24, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "We have severely underestimated the browser as an operating environment for developer tools.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7464347215877025792/"
+},
+  {
+  date: "May 24, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Why We Abandoned Cloud Containers for a Client-Side Web IDE",
+  link: "https://nitroide.hashnode.dev/abandoned-cloud-containers-client-side-web-ide"
+},
+  {
+  date: "May 24, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "We dropped the cloud backend from our web editor. Here is what it did to the execution speed.",
+  link: "https://peerlist.io/scroll/post/ACTHJKN9M6BGKEQOL1KKJ7AL7GND9L"
+},
+  {
+  date: "May 24, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Why does your browser feel faster than your IDE?",
+  link: "https://x.com/trynitroide/status/2058581558492340416"
+},
+  {
   date: "May 23, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
