@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 25, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "We have accepted a compromised developer experience for browser-based tooling.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7464699317321273344/"
+},
+  {
+  date: "May 25, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Why We Stripped the Backend from Our Frontend Sandbox",
+  link: "https://nitroide.hashnode.dev/stripped-backend-from-frontend-sandbox-ide"
+},
+  {
+  date: "May 25, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "How we embedded VS Code's engine into a zero-latency browser environment.",
+  link: "https://peerlist.io/scroll/post/ACTHQ7MQA7MJPNNBD16M8KJENNDLRO"
+},
+  {
+  date: "May 25, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The web tooling ecosystem has a serious bloat problem.",
+  link: "https://x.com/trynitroide/status/2058933653196120196"
+},
+  {
   date: "May 24, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
