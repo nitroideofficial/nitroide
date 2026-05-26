@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 26, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "We have normalized the boot sequence in modern web development. It is an architectural failure.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7465091134797578241/"
+},
+  {
+  date: "May 26, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Edge Compute: Engineering a Fast Online Code Editor",
+  link: "https://nitroide.hashnode.dev/edge-compute-fast-online-code-editor"
+},
+  {
+  date: "May 26, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "We stripped the container layer out of the traditional code sandbox.",
+  link: "https://peerlist.io/scroll/post/ACTHGNQP8ABKROPEJCKEAKR6JORLE9"
+},
+  {
+  date: "May 26, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "It’s 2026. If your web app has a 5-second loading screen, users leave. So why do developers accept it from their tooling?",
+  link: "https://x.com/trynitroide/status/2059325077787914453"
+},
+  {
   date: "May 25, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
