@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 28, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Software architecture has shifted drastically, but frontend tooling completely missed the memo.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7465811765491146752/"
+},
+  {
+  date: "May 28, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Breaking the Cloud Dependency in Frontend Tooling",
+  link: "https://nitroide.hashnode.dev/breaking-the-cloud-dependency-in-frontend-tooling"
+},
+  {
+  date: "May 28, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "We ripped the backend out of our web editor. Here is why your browser is better off without it.",
+  link: "https://peerlist.io/scroll/post/ACTHR8DRAPNAPKP8D1AN77J9PDJKO7"
+},
+  {
+  date: "May 28, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "We run AI models and complex design software directly in the browser.",
+  link: "https://x.com/trynitroide/status/2060045802052133271"
+},
+  {
   date: "May 27, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
