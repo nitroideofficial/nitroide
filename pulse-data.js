@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 30, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "We are witnessing a massive discrepancy between browser capabilities and developer productivity tools.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7466545499332894720/"
+},
+  {
+  date: "May 30, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "A Decade of Browser Evolution, A Decade of Tooling Stagnation",
+  link: "https://nitroide.hashnode.dev/decade-browser-evolution-tooling-stagnation"
+},
+  {
+  date: "May 30, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Are we building 2026 applications using 2016-era browser tools?",
+  link: "https://peerlist.io/scroll/post/ACTH6A7PJDNJ8PB76C9OJKBJN76QAM"
+},
+  {
+  date: "May 30, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Browsers evolved into operating systems. Web development tools barely adapted.",
+  link: "https://x.com/trynitroide/status/2060779556878033254"
+},
+  {
   date: "May 28, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
