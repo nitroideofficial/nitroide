@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "May 31, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The tech industry has a profound obsession with adding complexity, while ignoring the most optimized engine we already possess.",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7466874075542634499/"
+},
+  {
+  date: "May 31, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Stop Upgrading Your Build Tools and Look at Your Browser",
+  link: "https://nitroide.hashnode.dev/stop-upgrading-build-tools-look-at-browser"
+},
+  {
+  date: "May 31, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "I stopped chasing the latest build tools and started looking closely at the browser's rendering engine.",
+  link: "https://peerlist.io/scroll/post/ACTH9OBKBR8LEON8LI6GLMROJM7EDD"
+},
+  {
+  date: "May 31, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "You upgrade your framework, your bundler, and your CI/CD.",
+  link: "https://x.com/trynitroide/status/2061108078159016271"
+},
+  {
   date: "May 30, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
