@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Jun 1, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Why do so many promising startup ideas never make it past the weekend?",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7467261497182711808/"
+},
+  {
+  date: "Jun 1, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The Distance Between an Idea and a Prototype",
+  link: "https://nitroide.hashnode.dev/distance-between-idea-and-prototype-frontend"
+},
+  {
+  date: "Jun 1, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The 5-Second Idea: How quickly can you validate a new UI concept?",
+  link: "https://peerlist.io/scroll/post/ACTHA9EMELP7ELNAG2ABO8LAJ7A6NN"
+},
+  {
+  date: "Jun 1, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "he most expensive metric in building a side project is the time between I have an idea and I can see it working.",
+  link: "https://x.com/trynitroide/status/2061495630527431052"
+},
+  {
   date: "May 31, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
