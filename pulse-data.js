@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Jun 8, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "I’ve spent months building an online IDE, and I realized something counterintuitive: developers don’t actually need more tools.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7469778613832409092/"
+},
+  {
+  date: "Jun 8, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The Hidden Cost of Slow Feedback",
+  link: "https://nitroide.hashnode.dev/hidden-cost-of-slow-feedback-frontend"
+},
+  {
+  date: "Jun 8, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Stop optimizing your build step. Optimize your feedback loop instead.",
+  link: "https://peerlist.io/scroll/post/ACTHBARM7MEERNMRAFPBA68EDNLAJA"
+},
+  {
+  date: "Jun 8, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The biggest lie in web development is that you need a more complex stack to build better products.",
+  link: "https://x.com/trynitroide/status/2064012715732115634"
+},
+  {
   date: "Jun 1, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
