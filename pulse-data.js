@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Jul 1, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "If you look at the search intent of frontend developers, you learn a lot about their daily friction.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7478107157067137024/"
+},
+  {
+  date: "Jul 1, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "What Developers Actually Want From an Online Code Editor",
+  link: "https://nitroide.hashnode.dev/what-developers-want-online-code-editor"
+},
+  {
+  date: "Jul 1, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "What is your go-to HTML CSS JS editor for rapid prototyping?",
+  link: "https://peerlist.io/scroll/post/ACTHEOGB6OAAMLREK1RAQ7JA7MQDO8"
+},
+  {
+  date: "Jul 1, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "I checked our search analytics to see what developers actually Google before finding NitroIDE.",
+  link: "https://x.com/trynitroide/status/2072341403569721382"
+},
+  {
   date: "Jun 8, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
