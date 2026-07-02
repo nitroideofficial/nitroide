@@ -1,6 +1,38 @@
 // pulse-data.js - Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Jul 2, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The most overlooked skill in software engineering isn't writing perfect code. It's protecting your momentum.",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7478475842650546180/"
+},
+  {
+  date: "Jul 2, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Momentum Is a Developer's Most Valuable Resource",
+  link: "https://hashnode.com/edit/cmr3ovowg00000akr7v8q69w8"
+},
+  {
+  date: "Jul 2, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "How many unfinished side projects are sitting in your local directories right now?",
+  link: "https://peerlist.io/scroll/post/ACTH7B87DLNLAMDPRIRJB6R7N8QPOO"
+},
+  {
+  date: "Jul 2, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "I looked at my GitHub graveyard yesterday.",
+  link: "https://x.com/trynitroide/status/2072709934383554815"
+},
+  {
   date: "Jul 1, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
