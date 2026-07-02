@@ -1,4 +1,4 @@
-// pulse-data.js - Your Central Ecosystem Database
+// pulse-data.js  Your Central Ecosystem Database
 const pulseLogs = [
   {
   date: "Jul 2, 2026",
