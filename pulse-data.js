@@ -21,7 +21,7 @@ const pulseLogs = [
   platform: "Peerlist",
   icon: "ph-leaf",
   color: "#00aa45",
-  title: "I stopped cluttering my hard drive with "test-app-1" and "demo-project-final"",
+  title: "I stopped cluttering my hard drive with test-app-1 and demo-project-final",
   link: "https://peerlist.io/scroll/post/ACTHNN7PDPJ89MMJACKMAGGKN97EQO"
 },
   {
