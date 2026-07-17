@@ -1,38 +1,6 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
-  date: "Jul 17, 2026",
-  platform: "LinkedIn",
-  icon: "ph-linkedin-logo",
-  color: "#0a66c2",
-  title: "We are over-engineering our prototyping phase.",
-  link: "https://www.linkedin.com/feed/update/urn:li:activity:7483905858343718912/"
-},
-  {
-  date: "Jul 17, 2026",
-  platform: "Hashnode",
-  icon: "ph-hash",
-  color: "#2962ff",
-  title: "Small Experiments Build Better Software",
-  link: "https://nitroide.hashnode.dev/small-experiments-build-better-software?utm_source=hashnode&utm_medium=feed"
-},
-  {
-  date: "Jul 17, 2026",
-  platform: "Peerlist",
-  icon: "ph-leaf",
-  color: "#00aa45",
-  title: "I stopped cluttering my hard drive with test-app-1 and demo-project-final",
-  link: "https://peerlist.io/scroll/post/ACTHNN7PDPJ89MMJACKMAGGKN97EQO"
-},
-  {
-  date: "Jul 17, 2026",
-  platform: "X",
-  icon: "ph-twitter-logo",
-  color: "#1da1f2",
-  title: "How much time do you waste setting up local environments just to test a single UI component?",
-  link: "https://x.com/trynitroide/status/2078140175444828330"
-},
-  {
   date: "Jul 2, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
