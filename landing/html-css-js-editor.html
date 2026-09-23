@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-SH02J5Q7MB');
-  </script>
+  
+  
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,12 +106,17 @@
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
+<header>
+<nav>
 <nitro-header></nitro-header>
+</nav>
+</header>
 
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
 <div class="global-spotlight" id="globalSpotlight"></div>
 
+<main>
 <div class="container relative-z">
   <div id="home" class="view active">
     
@@ -268,11 +268,14 @@
 
   </div> <!-- Closes #home -->
 </div> <!-- Closes .container -->
+</main>
 
 <!-- INJECTED DYNAMIC FOOTER & SCRIPTS -->
+<footer>
 <nitro-footer></nitro-footer>
+</footer>
 <nitro-modals></nitro-modals>
-<script src="../script.js"></script>
+<script defer src="../script.js"></script>
 
 </body>
 </html>

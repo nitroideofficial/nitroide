@@ -1,28 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SH02J5Q7MB');
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How to Migrate from Replit to NitroIDE in 3 Minutes</title>
-  <meta name="title" content="How to Migrate from Replit to NitroIDE in 3 Minutes">
-  <meta name="description" content="Tired of Replit's pricing and latency? Follow our step-by-step guide to migrating your projects to NitroIDE for a faster, free, and offline-capable experience.">
-  <meta name="keywords" content="migrate from Replit, Replit alternative free, import Replit project, Replit to NitroIDE, export Replit to GitHub, free online IDE for Replit users, Replit pricing alternative">
+  <title>Moving a Frontend Project from Replit to NitroIDE (Manual Copy-Paste Guide)</title>
+  <meta name="title" content="Moving a Frontend Project from Replit to NitroIDE (Manual Copy-Paste Guide)">
+  <meta name="description" content="There's no automatic Replit importer in NitroIDE — and this guide doesn't pretend otherwise. Follow the honest, manual copy-paste steps to move an HTML/CSS/JS project from Replit to NitroIDE in about five minutes.">
+  <meta name="keywords" content="migrate from Replit, Replit alternative free, Replit to NitroIDE, free online code editor, browser HTML CSS JS editor, Replit manual export">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
-  
+
   <link rel="icon" type="image/png" href="../logo/logo_white.png">
   <link rel="apple-touch-icon" href="../logo/logo_white.png">
   <link rel="stylesheet" href="../styles.css">
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -37,22 +28,72 @@
 
 <div class="docs-container relative-z">
   <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
-    
+
     <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
 
-    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">PROTOTYPING & WORKFLOW • MAY 2026</div>
-    
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Migrating from Replit to NitroIDE.</h1>
-    
+    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">PROTOTYPING & WORKFLOW • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Moving a frontend project from Replit to NitroIDE.</h1>
+
     <!-- THE ARTICLE CONTENT -->
-    <p>Replit pioneered the social coding space, but many professional developers eventually outgrow it. Whether it's the frustration of 'waking up' sleeping repls, the latency of remote execution, or the rising cost of private workspaces, the need for a more robust tool is clear. NitroIDE provides a seamless exit path, offering a local-first, zero-latency environment that is 100% compatible with your existing projects.</p><h2>Step 1: The GitHub Bridge</h2><p>The fastest way to migrate is via GitHub. If your Replit project is already linked to a repository, NitroIDE can import it instantly. If not, use Replit's built-in Git tools to push your code to a private GitHub repo. NitroIDE utilizes a secure OAuth handshake to pull your code directly into your browser's encrypted OPFS storage.</p><div class="docs-code"><span class="code-comment">// NitroIDE automatically detects your Replit structure</span><br><span class="code-keyword">const</span> project = <span class="code-keyword">await</span> Nitro.<span class="code-func">importFromGitHub</span>({<br>&nbsp;&nbsp;<span class="code-attr">repo</span>: <span class="code-string">'user/my-replit-app'</span>,<br>&nbsp;&nbsp;<span class="code-attr">branch</span>: <span class="code-string">'main'</span><br>});<br><br><span class="code-comment">// Your .replit config is parsed and mapped to nitro.config.json</span><br>Nitro.<span class="code-func">mapEnvironment</span>(project.config);</div><div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-swap" style="color: #f43f5e;"></i><div><p><strong>Config Mapping:</strong> NitroIDE's engine is smart enough to read your <code>.replit</code> or <code>replit.nix</code> files. We automatically map your start commands and dependencies to our WebAssembly runtimes, ensuring your app boots exactly the same way—only faster.</p></div></div><h2>Step 2: Dependency Hydration</h2><p>Once imported, open the NitroIDE terminal. Run <code>npm install</code> or <code>cargo build</code>. Unlike Replit, which might take minutes to pull from a shared cache, NitroIDE's decentralized package manager pulls directly to your local machine, creating a persistent <code>node_modules</code> folder in your browser's IndexedDB.</p>
+    <p>Let's get the important part out of the way first: <strong>there is no automatic Replit importer in NitroIDE.</strong> No OAuth handshake, no "connect your Replit account" button, no sync. If you came here looking for a one-click migration, this page will not give you one — because that feature doesn't exist.</p>
+    <p>That isn't a bug; it's the architecture. Replit runs your code on cloud servers. NitroIDE is a 100% client-side editor: your code lives in your browser's own storage, the preview renders in an iframe on your machine, and nothing you type leaves your computer unless you export it.</p>
+    <p>The good news: for a frontend project — plain HTML, CSS, and JavaScript — the manual process takes about five minutes. This guide walks you through exactly that, nothing more.</p>
+
+    <h2>Before you start: the checklist</h2>
+    <p>Have these ready and the move goes smoothly: your repl open in a tab, a list of the files it actually needs, a note of any libraries it used (check for <code>npm</code> packages or CDN <code>&lt;script&gt;</code> tags), and five minutes.</p>
+    <p>If your repl runs a server — Node.js, Express, Flask, Django, a database, or anything behind Replit Deployments — stop here and read <a href="#nitroide-doesnt-do" style="color: #f43f5e;">"What NitroIDE doesn't do"</a> below first. This guide is for frontend projects only.</p>
+
+    <h2>Step 1: Copy your files out of Replit</h2>
+    <p>Open your repl on Replit. Open each file one at a time, select everything (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>A</kbd>), and copy it (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>C</kbd>). Paste each file's contents into a temporary text document on your computer, keeping the filename attached, so you don't lose track of which content belongs to which file.</p>
+    <div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-copy" style="color: #f43f5e;"></i><div><p><strong>Don't forget the small files:</strong> images, fonts, and data files can't be copy-pasted as text. Download those individually from Replit (right-click the file in the Replit sidebar and download it) so you can re-upload them later.</p></div></div>
+
+    <h2>Step 2: Recreate the file structure in NitroIDE</h2>
+    <p>Open <a href="https://nitroide.com/tools/codebox.html" style="color: #f43f5e;">NitroIDE Codebox</a>. In the file sidebar, create a new file for each one you copied from Replit, using the exact same filenames — <code>index.html</code>, <code>style.css</code>, <code>script.js</code>, or whatever your project uses. NitroIDE stores these in your browser's local storage as a virtual file system, so your project persists between visits on this device.</p>
+
+    <h2>Step 3: Paste each file's contents</h2>
+    <p>Open each new file in NitroIDE and paste in the contents you copied from Replit. Double-check the references in <code>index.html</code> match the filenames you created:</p>
+    <div class="docs-code"><span class="code-comment">&lt;!-- These href/src values must match the files you created in Step 2 --&gt;</span><br><span class="code-keyword">&lt;link</span> <span class="code-attr">rel</span>=<span class="code-string">"stylesheet"</span> <span class="code-attr">href</span>=<span class="code-string">"style.css"</span><span class="code-keyword">&gt;</span><br><span class="code-keyword">&lt;script</span> <span class="code-attr">src</span>=<span class="code-string">"script.js"</span><span class="code-keyword">&gt;&lt;/script&gt;</span></div>
+    <p>The preview updates live as you paste, so you'll see the project take shape file by file.</p>
+
+    <h2>Step 4: Replace npm packages with CDN links</h2>
+    <p>This is the one real translation step. NitroIDE has no package manager, so anything your repl pulled in with <code>npm</code> needs a CDN instead. Use the CDN panel's one-click buttons — <strong>+ Tailwind</strong>, <strong>+ jQuery</strong>, <strong>+ GSAP</strong> — or add the script tag manually:</p>
+    <div class="docs-code"><span class="code-comment">&lt;!-- Instead of: npm install lodash / import _ from 'lodash' --&gt;</span><br><span class="code-keyword">&lt;script</span> <span class="code-attr">src</span>=<span class="code-string">"https://unpkg.com/lodash@4.17.21/lodash.min.js"</span><span class="code-keyword">&gt;&lt;/script&gt;</span><br><br><span class="code-comment">&lt;!-- Instead of: npm install three --&gt;</span><br><span class="code-keyword">&lt;script</span> <span class="code-attr">src</span>=<span class="code-string">"https://unpkg.com/three@0.160.0/build/three.min.js"</span><span class="code-keyword">&gt;&lt;/script&gt;</span></div>
+    <p>Remove the old <code>import ... from 'package-name'</code> / <code>require(...)</code> lines from your JavaScript, since those assume a bundler and a <code>node_modules</code> folder that don't exist here. Libraries loaded from a CDN expose themselves as globals (like <code>_</code> or <code>THREE</code>), so your code can use them directly.</p>
+
+    <h2>Step 5: Preview, then Export to ZIP</h2>
+    <p>Click through your preview and test everything: buttons, animations, form behavior. When it works, use <strong>Export → Download ZIP</strong> in Codebox to save the finished project to your computer. That's your backup, your shareable copy, and your way of moving the project to another machine — your files live in this browser's storage, so the ZIP is how they leave it.</p>
+
+    <h2>A concrete example: a countdown timer in ~5 minutes</h2>
+    <p>Take a typical Replit "HTML, CSS, JS" repl: a countdown timer with <code>index.html</code>, <code>style.css</code>, <code>script.js</code>, and Tailwind via <code>npm</code>. Here's the real timeline:</p>
+    <ul>
+      <li><strong>Minute 1:</strong> Copy all three files out of Replit into a scratch document.</li>
+      <li><strong>Minute 2:</strong> Open Codebox, create <code>index.html</code>, <code>style.css</code>, <code>script.js</code>, paste each in.</li>
+      <li><strong>Minute 3:</strong> Hit <strong>+ Tailwind</strong> in the CDN panel, delete the old <code>import</code> lines. The preview renders the styled timer.</li>
+      <li><strong>Minute 4:</strong> Test the timer, fix any filename mismatches.</li>
+      <li><strong>Minute 5:</strong> Export → Download ZIP. Done — the project is yours, offline, no account needed.</li>
+    </ul>
+
+    <h2 id="nitroide-doesnt-do">What NitroIDE doesn't do</h2>
+    <p>Honesty requires the other half of the picture. NitroIDE is an editor for frontend code that runs in your browser. It does <strong>not</strong>:</p>
+    <ul>
+      <li><strong>Run npm or any package manager.</strong> There is no <code>npm install</code>, no <code>node_modules</code>, no lockfiles. Dependencies come from CDNs.</li>
+      <li><strong>Run a build step.</strong> No Webpack, Vite, Parcel, or bundlers; TypeScript and JSX are not compiled in-browser.</li>
+      <li><strong>Run server-side code.</strong> Node.js, Express, Python, Flask, Django, Ruby, PHP, databases, cron jobs, and Replit Deployments or "always-on" repls simply have nowhere to execute. Your backend stays on Replit (or moves to a host that runs servers).</li>
+      <li><strong>Import Replit projects automatically.</strong> No OAuth connection, no account linking, no one-click sync — the copy-paste steps above are the entire migration path.</li>
+      <li><strong>Offer multiplayer or real-time collaboration.</strong> It's a single-player editor on your machine.</li>
+    </ul>
+    <div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);"><i class="ph-fill ph-warning-circle" style="color: #f43f5e;"></i><div><p><strong>Who should NOT migrate:</strong> anyone whose project needs a backend, npm dependencies that have no CDN build, a build pipeline, or team collaboration. NitroIDE is the wrong tool for those projects, and we'd rather you know that now than after an hour of pasting.</p></div></div>
+
+    <h2>Is the manual move worth it?</h2>
+    <p>For a static site, portfolio, landing page, or client-side tool — yes. Five minutes of copy-paste buys you an editor that opens instantly, costs nothing, and keeps your code on your machine. If that trade sounds fair, the steps above are all you need.</p>
 
     <!-- THE DYNAMIC, PERFECTLY ALIGNED CTA BOX -->
     <div style="background: #f43f5e1A; border: 1px solid #f43f5e4D; border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
-      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Leave the Cloud Behind.</h3>
-      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Import your first Replit project today and feel the zero-latency difference.</p>
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Do the five-minute move.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">No importer, no account, no signup — just open the editor, create your files, and paste.</p>
       <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none; color: #000; background: #f43f5e;">
-        Import from GitHub <i class="ph-bold ph-arrow-square-out"></i>
+        Open NitroIDE Codebox <i class="ph-bold ph-arrow-square-out"></i>
       </a>
     </div>
 

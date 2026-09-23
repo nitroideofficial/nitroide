@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /tools/codebox.html
-Sitemap: https://nitroide.com/sitemap.xml
+Sitemap: https://nitroide.com/sitemap-index.xml

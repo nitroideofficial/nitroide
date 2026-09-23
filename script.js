@@ -1,5 +1,7 @@
 // --- 1. INCEPTION BLOCKER (Silent Safety Check) ---
-	if (window.self !== window.top) {
+	// Embed mode (?embed=1) is an intentional read-only viewer, so it is allowed inside iframes.
+	const _embedParamEarly = new URLSearchParams(window.location.search).get('embed');
+	if (window.self !== window.top && _embedParamEarly !== '1') {
 		console.warn("NitroIDE detected it is running inside an iframe. Aborting to prevent infinite loop.");
 		throw new Error("Recursive load blocked");
 	}
@@ -21,6 +23,115 @@
 	// --- CONTEXT-AWARE ROUTING ---
 	const urlParams = new URLSearchParams(window.location.search);
 	const targetEnv = urlParams.get('env');
+
+	// --- EMBED MODE (?embed=1): read-only full-bleed preview viewer ---
+	const isEmbedMode = urlParams.get('embed') === '1';
+	if (isEmbedMode) {
+		if (document.body) document.body.classList.add('embed-mode');
+		injectEmbedModeCSS();
+	}
+
+	// --- EXTERNAL WORKSPACE IMPORTS (?gist= / ?url= / ?template=) ---
+	// Kicked off at boot BEFORE the ?env= / ?code= handling below. If ?code= is also
+	// present it takes precedence (an explicit shared workspace) and the import is skipped.
+	const importGistId = (urlParams.get('gist') || '').trim();
+	const importRawUrl = (urlParams.get('url') || '').trim();
+	const importTemplateSlug = (urlParams.get('template') || '').trim();
+	const externalImportRequested = Boolean(importGistId || importRawUrl || importTemplateSlug);
+	let externalImportPromise = Promise.resolve();
+
+	function ensureCoreFiles(vfsObj) {
+		const out = Object.assign({}, vfsObj);
+		if (!out['index.html']) out['index.html'] = '\n';
+		if (!out['style.css']) out['style.css'] = '/* Imported workspace is missing style.css */\n';
+		if (!out['script.js']) out['script.js'] = '// Imported workspace is missing script.js\n';
+		return out;
+	}
+
+	async function fetchWithTimeout(resource, ms = 12000) {
+		const controller = new AbortController();
+		const timer = setTimeout(() => controller.abort(), ms);
+		try {
+			return await fetch(resource, { signal: controller.signal });
+		} finally {
+			clearTimeout(timer);
+		}
+	}
+
+	async function fetchGistWorkspace(gistId) {
+		const res = await fetchWithTimeout('https://api.github.com/gists/' + encodeURIComponent(gistId));
+		if (!res.ok) throw new Error('Gist request failed (HTTP ' + res.status + ')');
+		const data = await res.json();
+		const gistFiles = Object.values(data.files || {});
+		if (!gistFiles.length) throw new Error('Gist contains no files');
+		const picked = gistFiles.find(f => f.filename && f.filename.toLowerCase().endsWith('.html')) || gistFiles[0];
+		let gistContent = picked.content || '';
+		if (picked.truncated && picked.raw_url) {
+			const rawRes = await fetchWithTimeout(picked.raw_url);
+			if (!rawRes.ok) throw new Error('Could not download the gist file');
+			gistContent = await rawRes.text();
+		}
+		if (!gistContent) throw new Error('Gist file is empty');
+		return { vfs: ensureCoreFiles({ 'index.html': gistContent }), activeFiles: { html: 'index.html', css: 'style.css', js: 'script.js' } };
+	}
+
+	async function fetchRawUrlWorkspace(rawUrl) {
+		let parsed;
+		try { parsed = new URL(rawUrl); } catch (e) { throw new Error('Invalid URL'); }
+		if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') throw new Error('Only http(s) URLs are supported');
+		const res = await fetchWithTimeout(parsed.toString());
+		if (!res.ok) throw new Error('URL request failed (HTTP ' + res.status + ')');
+		const urlContent = await res.text();
+		if (!urlContent.trim()) throw new Error('URL returned empty content');
+		return { vfs: ensureCoreFiles({ 'index.html': urlContent }), activeFiles: { html: 'index.html', css: 'style.css', js: 'script.js' } };
+	}
+
+	async function fetchTemplateWorkspace(slug) {
+		const inSub = window.location.pathname.includes('/blog/') || window.location.pathname.includes('/tools/') || window.location.pathname.includes('/landing/');
+		const res = await fetchWithTimeout((inSub ? '../' : '') + 'templates.json');
+		if (!res.ok) throw new Error('Could not load templates.json (HTTP ' + res.status + ')');
+		const templates = await res.json();
+		const match = (Array.isArray(templates) ? templates : []).find(t => t && t.slug === slug);
+		if (!match || !match.files) throw new Error('Template "' + slug + '" not found');
+		return { vfs: ensureCoreFiles(match.files), activeFiles: { html: 'index.html', css: 'style.css', js: 'script.js' } };
+	}
+
+	function applyExternalImport(imported) {
+		vfs = imported.vfs;
+		activeFiles = imported.activeFiles;
+		// An explicit ?env= framework template still wins over an imported workspace.
+		if (targetEnv) {
+			vfs = JSON.parse(JSON.stringify(defaultVfs));
+			activeFiles = { html: 'index.html', css: 'style.css', js: 'script.js' };
+		}
+		if (isIdeInitialized) {
+			if (htmlMonaco) htmlMonaco.setValue(vfs[activeFiles.html] || '');
+			if (cssMonaco) cssMonaco.setValue(vfs[activeFiles.css] || '');
+			if (jsMonaco) jsMonaco.setValue(vfs[activeFiles.js] || '');
+			renderVFS();
+			smartRun();
+		}
+	}
+
+	if (externalImportRequested) {
+		const importSource = importGistId ? 'gist' : (importRawUrl ? 'URL' : 'template');
+		externalImportPromise = (async () => {
+			try {
+				showToast("<i class='ph-bold ph-spinner-gap' style='margin-right:6px;'></i> Importing " + importSource + "...");
+				const imported = importGistId
+					? await fetchGistWorkspace(importGistId)
+					: importRawUrl
+						? await fetchRawUrlWorkspace(importRawUrl)
+						: await fetchTemplateWorkspace(importTemplateSlug);
+				if (urlParams.get('code')) return; // ?code= is an explicit shared workspace - it wins.
+				applyExternalImport(imported);
+				showToast("<i class='ph-bold ph-check-circle' style='color:var(--success); margin-right:6px;'></i> " + importSource.charAt(0).toUpperCase() + importSource.slice(1) + " loaded!");
+			} catch (err) {
+				console.warn('NitroIDE external import failed:', err);
+				try { showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Import failed - loaded default workspace."); } catch (e) {}
+			}
+		})();
+	}
 
 	if (targetEnv === 'react') {
 	    // Pre-load React & Babel CDNs
@@ -505,8 +616,16 @@
 	function initIDE() {
 	  if (isIdeInitialized) return;
 
-	  if (window.self !== window.top) {
+	  if (window.self !== window.top && !isEmbedMode) {
 		console.warn("NitroIDE detected it is running inside an iframe. Aborting Monaco initialization."); return; 
+	  }
+
+	  if (window.self !== window.top && isEmbedMode) {
+		// Embed viewer inside an iframe: skip Monaco entirely and render the preview only.
+		document.body.classList.remove('workspace-booting');
+		const liveIframe = document.getElementById('liveIframe');
+		if (liveIframe) forceRun(collectHTML(), collectCSS(), collectJS(), liveIframe, {});
+		return;
 	  }
 
 	  initCustomResizers();
@@ -586,6 +705,11 @@
 		htmlMonaco = monaco.editor.create(document.getElementById('htmlWrap'), { ...config, language: 'html', value: vfs['index.html'] });
 		cssMonaco = monaco.editor.create(document.getElementById('cssWrap'), { ...config, language: 'css', value: vfs['style.css'] });
 		jsMonaco = monaco.editor.create(document.getElementById('jsWrap'), { ...config, language: 'javascript', value: vfs['script.js'] });
+
+		// Embed mode (?embed=1): read-only viewer - disable editing.
+		if (isEmbedMode) {
+			[htmlMonaco, cssMonaco, jsMonaco].forEach(ed => { if (ed) ed.updateOptions({ readOnly: true }); });
+		}
 
 		if(typeof emmetMonaco !== 'undefined') { emmetMonaco.emmetHTML(monaco); emmetMonaco.emmetCSS(monaco); }
 
@@ -1451,20 +1575,24 @@
 	}
 	
 	// --- SERVERLESS SHARE LOGIC ---
-function generateShareLink() {
-  if (typeof LZString === 'undefined') {
-      return showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Compression library missing.");
-  }
-  
-  showToast("<i class='ph-bold ph-spinner-gap' style='margin-right:6px;'></i> Generating link...");
-  
+// Builds the shareable URL for the current workspace. Returns null when the compression lib is missing.
+function buildShareUrl() {
+  if (typeof LZString === 'undefined') return null;
   // Compress the entire VFS and active file states
   const payload = JSON.stringify({ vfs: vfs, activeFiles: activeFiles });
   const compressed = LZString.compressToEncodedURIComponent(payload);
-  
   // Build the URL
-  const shareUrl = window.location.origin + window.location.pathname + "?code=" + compressed;
-  
+  return window.location.origin + window.location.pathname + "?code=" + compressed;
+}
+
+function generateShareLink() {
+  const shareUrl = buildShareUrl();
+  if (!shareUrl) {
+      return showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Compression library missing.");
+  }
+
+  showToast("<i class='ph-bold ph-spinner-gap' style='margin-right:6px;'></i> Generating link...");
+
   // Copy to clipboard
   navigator.clipboard.writeText(shareUrl).then(() => {
     showToast("<i class='ph-bold ph-check-circle' style='color:var(--success); margin-right:6px;'></i> Link copied to clipboard!");
@@ -1473,6 +1601,89 @@ function generateShareLink() {
     showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Failed to copy link.");
   });
 }
+
+// --- HEADER SHARE BUTTON (mirrors the ws-btn toolbar buttons in tools/codebox.html) ---
+function injectShareButton() {
+  const headerActions = document.querySelector('.ws-header .ws-right');
+  const compileBtn = headerActions ? headerActions.querySelector('.ws-compile-btn') : null;
+  if (!headerActions || !compileBtn || document.getElementById('shareBtn')) return;
+  const btn = document.createElement('button');
+  btn.id = 'shareBtn';
+  btn.className = 'ws-btn ws-icon-text-btn';
+  btn.title = 'Share workspace link';
+  btn.setAttribute('aria-label', 'Share workspace link');
+  btn.innerHTML = '<i class="ph-bold ph-share-network"></i><span class="ws-hide-mobile">Share</span>';
+  btn.addEventListener('click', generateShareLink);
+  headerActions.insertBefore(btn, compileBtn);
+}
+
+// --- EMBED MODE (?embed=1) STYLING + FOOTER ---
+function injectEmbedModeCSS() {
+  if (document.getElementById('nitroEmbedCSS')) return;
+  const style = document.createElement('style');
+  style.id = 'nitroEmbedCSS';
+  style.textContent = `
+    body.embed-mode .ws-header,
+    body.embed-mode #fileSidebar,
+    body.embed-mode #sidebarBackdrop,
+    body.embed-mode .editor-half,
+    body.embed-mode .ide-resizer,
+    body.embed-mode .output-tabs,
+    body.embed-mode #outConsole,
+    body.embed-mode #outState,
+    body.embed-mode #cdnManager,
+    body.embed-mode #optionsMenu,
+    body.embed-mode .bg-grid,
+    body.embed-mode .ambient-glow { display: none !important; }
+    body.embed-mode #codebox { height: 100vh !important; }
+    body.embed-mode .ide-workspace { display: block !important; height: calc(100vh - 46px) !important; overflow: hidden; }
+    body.embed-mode .ide-split { display: block !important; height: 100% !important; }
+    body.embed-mode .output-half { height: 100% !important; min-height: 0 !important; }
+    body.embed-mode #outPreview.iframe-wrap { display: block !important; height: 100% !important; }
+    body.embed-mode #liveIframe { width: 100% !important; height: 100% !important; }
+    body.embed-mode .nitro-embed-footer {
+      position: fixed; left: 0; right: 0; bottom: 0; height: 46px; z-index: 9000;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(10,10,12,0.94); border-top: 1px solid var(--border);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      font-size: 0.85rem; color: var(--text-muted);
+    }
+    body.embed-mode .nitro-embed-footer a {
+      color: #00e5ff; font-weight: 700; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    body.embed-mode .nitro-embed-footer a:hover { text-decoration: underline; }
+    html.light-mode body.embed-mode .nitro-embed-footer { background: rgba(255,255,255,0.94); }
+  `;
+  document.head.appendChild(style);
+}
+
+function injectEmbedFooter() {
+  if (document.querySelector('.nitro-embed-footer')) return;
+  let editUrl = buildShareUrl();
+  if (!editUrl) {
+    // Fallback when the compression lib is unavailable: reuse the current URL minus ?embed= (keeps ?code=).
+    try {
+      const u = new URL(window.location.href);
+      u.searchParams.delete('embed');
+      editUrl = u.toString();
+    } catch (e) { editUrl = window.location.pathname; }
+  }
+  const bar = document.createElement('div');
+  bar.className = 'nitro-embed-footer';
+  const link = document.createElement('a');
+  link.href = editUrl;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.innerHTML = '<i class="ph-bold ph-lightning"></i> Built with NitroIDE &mdash; open &amp; edit';
+  bar.appendChild(link);
+  document.body.appendChild(bar);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  injectShareButton();
+  if (typeof isEmbedMode !== 'undefined' && isEmbedMode) injectEmbedFooter();
+});
 
 	function openDashboard() {
     renderDashboard();
@@ -1580,8 +1791,13 @@ function enhanceMonaco() {
 
 window.onload = () => {
     if (document.getElementById('codebox')) { 
-        initIDE(); 
-        setTimeout(enhanceMonaco, 1500); // Give Monaco time to boot up before injecting upgrades
+        const bootIDE = () => { initIDE(); setTimeout(enhanceMonaco, 1500); }; // Give Monaco time to boot up before injecting upgrades
+        // Wait for any ?gist= / ?url= / ?template= import so the editors boot with the imported files.
+        if (externalImportRequested) {
+            Promise.race([externalImportPromise, new Promise(res => setTimeout(res, 10000))]).finally(bootIDE);
+        } else {
+            bootIDE();
+        }
     }
 };
 
@@ -1701,6 +1917,7 @@ class NitroHeader extends HTMLElement {
           </div>
           <div class="nav-actions">
             <a href="${rPath}blog/index.html" aria-label="Tutorials" class="theme-toggle" style="text-decoration: none; display: flex; align-items: center; gap: 6px; height: 36px; box-sizing: border-box;"><i class="ph-bold ph-book-open"></i><span class="hide-in-mobile">Tutorials</span></a>
+            <a href="${rPath}templates.html" aria-label="Templates" class="theme-toggle" style="text-decoration: none; display: flex; align-items: center; gap: 6px; height: 36px; box-sizing: border-box;"><i class="ph-bold ph-layout-template"></i><span class="hide-in-mobile">Templates</span></a>
             <button class="theme-toggle hide-in-mobile" onclick="toggleCmdK()" title="Command Palette" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-magnifying-glass"></i> <span class="hide-in-mobile" style="font-size:0.7rem; font-weight:700; opacity:0.7;">⌘K</span></button>
             <button class="theme-toggle" onclick="toggleTheme()" id="themeBtnFloat" aria-label="Toggle Dark Mode" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-sun"></i></button>
             <a href="${rPath}tools/codebox.html" class="btn btn-compact primary-btn hide-in-mobile" style="border-radius: 30px; padding: 0 16px; height: 36px; box-sizing: border-box; display: flex; align-items: center;">Open Workspace</a>
@@ -1716,6 +1933,7 @@ class NitroHeader extends HTMLElement {
               </div>
               <div class="nav-actions">
                 <a href="${rPath}blog/index.html" aria-label="Tutorials" class="theme-toggle" style="text-decoration: none; display: flex; align-items: center; gap: 6px; height: 36px; box-sizing: border-box;"><i class="ph-bold ph-book-open"></i><span class="hide-in-mobile">Tutorials</span></a>
+                <a href="${rPath}templates.html" aria-label="Templates" class="theme-toggle" style="text-decoration: none; display: flex; align-items: center; gap: 6px; height: 36px; box-sizing: border-box;"><i class="ph-bold ph-layout-template"></i><span class="hide-in-mobile">Templates</span></a>
                 <button class="theme-toggle hide-in-mobile" onclick="toggleCmdK()" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-magnifying-glass"></i> <span>Search...</span> <span class="cmd-badge">⌘K</span></button>
                 <button class="theme-toggle" id="themeBtn" aria-label="Toggle Dark Mode" onclick="toggleTheme()" style="height: 36px; box-sizing: border-box;"><i class="ph-bold ph-sun"></i></button>
                 <a href="${rPath}tools/codebox.html" class="btn btn-compact primary-btn" style="border-radius: 30px; padding: 0 16px; height: 36px; box-sizing: border-box; display: flex; align-items: center;">Open Workspace</a>
@@ -2142,29 +2360,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if(fab) { if (window.scrollY > 500) fab.classList.add('visible'); else fab.classList.remove('visible'); }
     });
     
-    // Visitor Counter with Graceful Fallback
-    const hasVisited = localStorage.getItem('nitroide_visited');
-    const getUrl = "https://abacus.jasoncameron.dev/get/nitroide/visits";
-    
-    fetch(hasVisited ? getUrl : "https://abacus.jasoncameron.dev/hit/nitroide/visits")
-      .then(res => {
-        if (!res.ok) throw new Error("API Down"); 
-        return res.json();
-      })
-      .then(data => {
-        const countEl = document.getElementById("visitor-count");
-        if (countEl && data.value !== undefined) { 
-          countEl.innerText = data.value.toLocaleString(); 
-          if (!hasVisited) localStorage.setItem('nitroide_visited', 'true'); 
-        }
-      })
-      .catch((err) => {
-        const countEl = document.getElementById("visitor-count");
-        if (countEl) {
-          countEl.innerText = "14,285"; 
-        }
-        console.warn("Visitor API unavailable, using fallback count.");
-      });
 });
 
 

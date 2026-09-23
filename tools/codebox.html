@@ -1,20 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        var gtagScript = document.createElement('script');
-        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB";
-        gtagScript.async = true;
-        document.head.appendChild(gtagScript);
-        gtag('js', new Date());
-        gtag('config', 'G-SH02J5Q7MB');
-      }, 2500);
-    });
-  </script>
+  
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -330,5 +317,44 @@
 </div>
 <div id="toast" class="toast"></div>
 <script src="../script.js"></script>
+<script>
+// PWA: register service worker + PWA install prompt (codebox page only)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+
+let _deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  _deferredInstallPrompt = e;
+
+  // Subtle floating install button, dark-theme matched
+  if (document.getElementById('nitroide-install-btn')) return;
+  const btn = document.createElement('button');
+  btn.id = 'nitroide-install-btn';
+  btn.textContent = 'Install NitroIDE';
+  btn.style.cssText =
+    'position:fixed;bottom:20px;right:20px;z-index:9999;' +
+    'background:#1a1a1a;color:#f0f0f0;border:1px solid #333;' +
+    'border-radius:10px;padding:9px 16px;font-size:13px;cursor:pointer;' +
+    'box-shadow:0 4px 16px rgba(0,0,0,0.5);opacity:0.92;';
+  btn.addEventListener('click', async () => {
+    if (!_deferredInstallPrompt) return;
+    _deferredInstallPrompt.prompt();
+    await _deferredInstallPrompt.userChoice;
+    _deferredInstallPrompt = null;
+    btn.remove();
+  });
+  document.body.appendChild(btn);
+});
+
+window.addEventListener('appinstalled', () => {
+  _deferredInstallPrompt = null;
+  const btn = document.getElementById('nitroide-install-btn');
+  if (btn) btn.remove();
+});
+</script>
 </body>
 </html>
