@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Hardware APIs: Serial, Bluetooth, HID, USB &amp; MIDI | NitroIDE</title>
+  <meta name="title" content="Browser Hardware APIs: Serial, Bluetooth, HID, USB &amp; MIDI | NitroIDE">
+  <meta name="description" content="Web Serial, WebUSB, WebHID, Web Bluetooth, Web MIDI and WebNN — control real hardware from a web page, with runnable patterns and honest browser-support limits.">
+  <meta name="keywords" content="web serial api arduino, webusb tutorial, webhid api, web bluetooth ble browser, web midi api, webnn status">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#22c55e">
+  <meta property="og:title" content="Browser Hardware APIs: Serial, Bluetooth, HID, USB &amp; MIDI | NitroIDE">
+  <meta property="og:description" content="Web Serial, WebUSB, WebHID, Web Bluetooth, Web MIDI and WebNN — control real hardware from a web page, with runnable patterns and honest browser-support limits.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/browser-hardware-apis-serial-bluetooth-hid-guide.html">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Talk to Real Hardware From a Web Page.",
+    "description": "Web Serial, WebUSB, WebHID, Web Bluetooth, Web MIDI and WebNN — control real hardware from a web page, with runnable patterns and honest browser-support limits.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/browser-hardware-apis-serial-bluetooth-hid-guide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #22c55e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">HARDWARE INTEGRATION • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Talk to Real Hardware From a Web Page.</h1>
+
+    <p>No plugins, no Electron, no native drivers to install: modern Chromium can open serial ports, pair with Bluetooth devices, read raw HID input, flash USB microcontrollers, and receive MIDI — all from JavaScript, all permission-gated. This guide covers each API with working patterns and the honest limits (because every one of these has sharp edges).</p>
+
+    <p>Universal rules first: these APIs require <strong>HTTPS</strong> (or localhost), a <strong>user gesture</strong> to request access, and — with few exceptions — they are <strong>Chromium-only</strong>. If your users are on Firefox or Safari, you need a fallback plan.</p>
+
+    <h2>Web Serial: Arduino and IoT debugging</h2>
+    <p>The most practical of the bunch. Talk to Arduinos, ESP32s, and industrial controllers over USB-serial straight from the page:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> port = <span class="code-keyword">await</span> navigator.serial.<span class="code-func">requestPort</span>(); <span class="code-comment">// user picks the device</span><br><span class="code-keyword">await</span> port.<span class="code-func">open</span>({ <span class="code-attr">baudRate</span>: <span class="code-num">115200</span> });<br><span class="code-keyword">const</span> writer = port.writable.<span class="code-func">getWriter</span>();<br><span class="code-keyword">await</span> writer.<span class="code-func">write</span>(<span class="code-keyword">new</span> <span class="code-func">TextEncoder</span>().<span class="code-func">encode</span>(<span class="code-string">'LED_ON\n'</span>));<br>writer.<span class="code-func">releaseLock</span>();<br><span class="code-comment">// Reading: port.readable is a stream of Uint8Array chunks.</span><br><span class="code-keyword">const</span> reader = port.readable.<span class="code-func">getReader</span>();<br><span class="code-keyword">while</span> (<span class="code-keyword">true</span>) {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> { value, done } = <span class="code-keyword">await</span> reader.<span class="code-func">read</span>();<br>&nbsp;&nbsp;<span class="code-keyword">if</span> (done) <span class="code-keyword">break</span>;<br>&nbsp;&nbsp;console.<span class="code-func">log</span>(<span class="code-keyword">new</span> <span class="code-func">TextDecoder</span>().<span class="code-func">decode</span>(value));<br>}</div>
+
+    <p>Same API works for industrial hardware — PLCs, sensors, barcode scanners — anything speaking serial. Always <code>releaseLock()</code> your readers/writers and <code>close()</code> the port, or the device stays locked until the tab closes.</p>
+
+    <h2>WebUSB: flashing microcontrollers</h2>
+    <p>Serial covers UART devices; <strong>WebUSB</strong> goes lower — raw USB transfers for flashing firmware or talking to devices without a serial interface:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> device = <span class="code-keyword">await</span> navigator.usb.<span class="code-func">requestDevice</span>({<br>&nbsp;&nbsp;<span class="code-attr">filters</span>: [{ <span class="code-attr">vendorId</span>: <span class="code-num">0x2341</span> }] <span class="code-comment">// e.g. Arduino's VID</span><br>});<br><span class="code-keyword">await</span> device.<span class="code-func">open</span>();<br><span class="code-keyword">await</span> device.<span class="code-func">selectConfiguration</span>(<span class="code-num">1</span>);<br><span class="code-keyword">await</span> device.<span class="code-func">claimInterface</span>(<span class="code-num">0</span>);<br><span class="code-comment">// Now: device.transferOut(endpoint, firmwareChunk)</span></div>
+
+    <p>Honest caveat: the OS must not have already claimed the device with a kernel driver, and devices in bootloader/DFU mode sometimes need specific handling. This is genuinely how browser-based firmware flashers (like ESP Web Tools) work — it's production-proven, just fiddly.</p>
+
+    <h2>WebHID: raw keyboards and custom controllers</h2>
+    <p><strong>WebHID</strong> exposes Human Interface Devices at the raw report level — great for custom macro pads, game controllers, and reading keyboard scancodes the OS would normally swallow:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> [device] = <span class="code-keyword">await</span> navigator.hid.<span class="code-func">requestDevice</span>({ <span class="code-attr">filters</span>: [] });<br><span class="code-keyword">await</span> device.<span class="code-func">open</span>();<br>device.<span class="code-func">addEventListener</span>(<span class="code-string">'inputreport'</span>, (e) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> { data, reportId } = e;<br>&nbsp;&nbsp;<span class="code-func">handleRawInput</span>(reportId, <span class="code-keyword">new</span> <span class="code-func">Uint8Array</span>(data.buffer));<br>});</div>
+
+    <p>Security note: for obvious reasons, the browser blocks access to <em>protected</em> usages like standard keyboards and mice via WebHID — you get niche/custom devices, not a keylogger API.</p>
+
+    <h2>Web Bluetooth: BLE peripherals</h2>
+    <p>Connect to Bluetooth Low Energy devices — heart-rate monitors, smart bulbs, sensor tags:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> device = <span class="code-keyword">await</span> navigator.bluetooth.<span class="code-func">requestDevice</span>({<br>&nbsp;&nbsp;<span class="code-attr">filters</span>: [{ <span class="code-attr">services</span>: [<span class="code-string">'battery_service'</span>] }]<br>});<br><span class="code-keyword">const</span> server = <span class="code-keyword">await</span> device.gatt.<span class="code-func">connect</span>();<br><span class="code-keyword">const</span> service = <span class="code-keyword">await</span> server.<span class="code-func">getPrimaryService</span>(<span class="code-string">'battery_service'</span>);<br><span class="code-keyword">const</span> char = <span class="code-keyword">await</span> service.<span class="code-func">getCharacteristic</span>(<span class="code-string">'battery_level'</span>);<br><span class="code-keyword">const</span> value = <span class="code-keyword">await</span> char.<span class="code-func">readValue</span>();<br>console.<span class="code-func">log</span>(<span class="code-string">'Battery:'</span>, value.<span class="code-func">getUint8</span>(<span class="code-num">0</span>) + <span class="code-string">'%'</span>);</div>
+
+    <div class="pro-tip" style="border-color: rgba(34, 197, 94, 0.3); background: rgba(34, 197, 94, 0.05);">
+      <i class="ph-fill ph-bluetooth" style="color: #22c55e;"></i>
+      <div>
+        <p><strong>Web Bluetooth realities:</strong> GATT only — no classic Bluetooth audio. Range and reliability vary wildly by OS. And every connection starts with a browser picker the page can't bypass; there's no silent background scanning for websites.</p>
+      </div>
+    </div>
+
+    <h2>Web MIDI: hardware knobs for your app</h2>
+    <p>MIDI controllers make fantastic physical interfaces — map knobs to app parameters, pads to macros:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> access = <span class="code-keyword">await</span> navigator.<span class="code-func">requestMIDIAccess</span>();<br><span class="code-keyword">for</span> (<span class="code-keyword">const</span> input <span class="code-keyword">of</span> access.inputs.<span class="code-func">values</span>()) {<br>&nbsp;&nbsp;input.onmidimessage = (e) =&gt; {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> [status, note, velocity] = e.data;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (status === <span class="code-num">144</span> &amp;&amp; velocity &gt; <span class="code-num">0</span>) <span class="code-func">triggerMacro</span>(note);<br>&nbsp;&nbsp;};<br>}</div>
+
+    <p>Fun fact: this works for far more than music. A $30 MIDI pad becomes 16 physical macro buttons for any web app — streamers and video editors have used this trick for years.</p>
+
+    <h2>WebNN: local AI, with eyes open</h2>
+    <p><strong>WebNN</strong> (<code>navigator.ml</code>) promises GPU/NPU-accelerated ML inference in the browser. The honest status: it's still emerging, with real implementations only in some Chromium builds and APIs that have changed between drafts. If you need local inference <em>today</em>, WASM-based runtimes (like ONNX Runtime Web or Transformers.js) are the proven path; keep an eye on WebNN for the future.</p>
+
+    <div class="pro-tip" style="border-color: rgba(34, 197, 94, 0.3); background: rgba(34, 197, 94, 0.05);">
+      <i class="ph-fill ph-plugs" style="color: #22c55e;"></i>
+      <div>
+        <p><strong>Prototype the dashboard in NitroIDE:</strong> every snippet above runs in a real browser preview. Build your device dashboard UI — charts, controls, log viewers — against mocked data first, then wire in the hardware APIs when you're on a machine with the actual device plugged in.</p>
+      </div>
+    </div>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Build Hardware Dashboards in the Browser.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Prototype device UIs with zero setup — then connect real hardware.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch NitroIDE <i class="ph-bold ph-plugs"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>
