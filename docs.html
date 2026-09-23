@@ -113,17 +113,22 @@
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
 
+<header>
+<nav>
 <div class="header-row fixed-nav">
   <a href="index.html" class="logo">
-    <img src="logo/logo_white.png" alt="NitroIDE" class="logo-dark">
-    <img src="logo/logo_black.png" alt="NitroIDE" class="logo-light">
+    <img src="logo/logo_white.png" alt="NitroIDE logo" class="logo-dark">
+    <img src="logo/logo_black.png" alt="NitroIDE wordmark" class="logo-light">
   </a>
   <div class="nav-actions">
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn"><i class="ph-bold ph-sun"></i></button>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle dark mode"><i class="ph-bold ph-sun"></i></button>
     <a href="tools/codebox.html" class="btn btn-compact">Launch Workspace</a>
   </div>
 </div>
+</nav>
+</header>
 
+<main>
 <div class="docs-container">
   
   <div class="docs-sidebar" id="docsSidebar">
@@ -271,6 +276,7 @@ setInterval(() => {
     </section>
   </div>
 </div>
+</main>
 
 <script>
   function toggleTheme() { 

@@ -145,7 +145,9 @@
 <body>
 
 <!-- INJECTED COMPONENTS -->
+<header>
 <nitro-header></nitro-header>
+</header>
 
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
@@ -176,6 +178,12 @@
       <p class="reveal-3 hero-subtitle">
         The ultimate client-side IDE. Zero servers, absolute privacy. Built on the Monaco engine, running directly in your browser's memory.
       </p>
+
+      <div class="reveal-4 hero-launch-cta">
+        <a href="tools/codebox.html" class="btn-launch magnetic-btn primary-btn">Launch the IDE &#8594;</a>
+        <p class="hero-oneliner" style="margin-top: 0.9rem; color: var(--text-muted); font-size: 0.95rem;">A free editor in your browser &#8212; write HTML, CSS &amp; JS and see it live. No signup, no server.</p>
+      </div>
+
       <div class="reveal-4 execution-pipeline magnetic-btn hide-in-mobile">
          <div class="pipe-left">
            <div class="code-block-anim">
@@ -239,6 +247,7 @@
               });
             </div>
           </div>
+          <a href="tools/codebox.html" class="try-it-now" style="color: #00e5ff; text-decoration: none; font-size: 0.88rem;">Try it now &#8594;</a>
         </div>
         
         <div class="bento-card">
@@ -252,6 +261,7 @@
               <span class="code-prompt">&gt;</span> install react
             </div>
           </div>
+          <a href="tools/codebox.html" class="try-it-now" style="color: #00e5ff; text-decoration: none; font-size: 0.88rem;">Try it now &#8594;</a>
         </div>
         
         <div class="bento-card">
@@ -266,6 +276,7 @@
               );
             </div>
           </div>
+          <a href="tools/codebox.html" class="try-it-now" style="color: #00e5ff; text-decoration: none; font-size: 0.88rem;">Try it now &#8594;</a>
         </div>
         
         <div class="bento-card">
@@ -280,6 +291,7 @@
               zip.generateAsync();
             </div>
           </div>
+          <a href="tools/codebox.html" class="try-it-now" style="color: #00e5ff; text-decoration: none; font-size: 0.88rem;">Try it now &#8594;</a>
         </div>
         
         <div class="bento-card">
@@ -294,6 +306,7 @@
               frame.srcdoc = compiledCode;
             </div>
           </div>
+          <a href="tools/codebox.html" class="try-it-now" style="color: #00e5ff; text-decoration: none; font-size: 0.88rem;">Try it now &#8594;</a>
         </div>
       </div>
     </div>
@@ -308,6 +321,7 @@
           <li><i class="ph-bold ph-check"></i> <span><strong>Syntax Highlighted Errors:</strong> Click any error to instantly jump to that exact line in the editor.</span></li>
           <li><i class="ph-bold ph-check"></i> <span><strong>Integrated CLI:</strong> Type <code>install gsap</code>, <code>export zip</code>, or <code>format</code> directly into the console to control the workspace.</span></li>
         </ul>
+        <a href="tools/codebox.html" class="try-it-now" style="color: #00e5ff; text-decoration: none; font-size: 0.88rem;">Try it now &#8594;</a>
       </div>
       <div class="showcase-visual">
         <div class="mockup-window">
@@ -341,6 +355,7 @@
           <li><i class="ph-bold ph-check"></i> <span><strong>Device Emulation:</strong> Instantly toggle your live preview between Desktop, Tablet, and Mobile breakpoints.</span></li>
           <li><i class="ph-bold ph-check"></i> <span><strong>Virtual File System:</strong> Manage multiple `.js` and `.css` modules in a clean, draggable slide-out sidebar.</span></li>
         </ul>
+        <a href="tools/codebox.html" class="try-it-now" style="color: #00e5ff; text-decoration: none; font-size: 0.88rem;">Try it now &#8594;</a>
       </div>
       <div class="showcase-visual">
          <div class="mockup-window glass-mockup">
@@ -406,7 +421,7 @@
               <i class="ph-bold ph-trend-up"></i>
             </div>
             <div class="pulse-card-content">
-              <h5>Product Hunt Launch</h5>
+              <h3 style="margin: 0 0 6px; color: var(--text); font-size: .98rem; line-height: 1.25; font-weight: 600;">Product Hunt Launch</h3>
               <p>Support the 1.0 release and follow the public launch thread.</p>
             </div>
             <i class="ph-bold ph-arrow-up-right pulse-card-arrow"></i>
@@ -417,7 +432,7 @@
               <i class="ph-bold ph-users-three"></i>
             </div>
             <div class="pulse-card-content">
-              <h5>Commudle Spotlight</h5>
+              <h3 style="margin: 0 0 6px; color: var(--text); font-size: .98rem; line-height: 1.25; font-weight: 600;">Commudle Spotlight</h3>
               <p>Read the community build page for NitroIDE's zero-latency workspace.</p>
             </div>
             <i class="ph-bold ph-arrow-up-right pulse-card-arrow"></i>
@@ -430,10 +445,12 @@
 </div>
 
 <!-- INJECTED COMPONENTS & SCRIPT -->
+<footer>
 <nitro-footer></nitro-footer>
+</footer>
 <nitro-modals></nitro-modals>
 <div id="toast" class="toast"></div>
-<script src="pulse-data.js?v=20260522b"></script>
+<script defer src="pulse-data.js?v=20260522b"></script>
 <script defer src="script.js?v=20260522b"></script>
 
 </body>
