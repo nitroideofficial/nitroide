@@ -2,141 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://nitroide.com/</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/tools/codebox.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/docs.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/changelog.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/legal.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/chromebook-code-editor-free.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/codepen-alternative-no-login.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/codesandbox-lightweight-alternative.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/export-code-to-zip.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/html-css-js-editor.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/low-ram-code-editor.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/monaco-editor-online.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/offline-html-editor.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/private-code-editor-no-tracking.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/react-online-playground.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/responsive-design-tester.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/run-react-in-browser-no-install.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/tailwind-online-editor.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/test-tailwind-css-online.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/vanilla-javascript-sandbox.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/landing/vscode-online-alternative.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
     <loc>https://nitroide.com/blog/index.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://nitroide.com/blog/angular-online-compiler-browser-ide.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://nitroide.com/blog/ast-manipulation-auto-formatting-babel.html</loc>
@@ -204,17 +72,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/blog/cpp-online-compiler-desktop-speed-browser.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/blog/cross-document-view-transitions-mpa-ide.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/csharp-online-compiler-dotnet-wasm.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
@@ -239,27 +97,12 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/blog/cto-guide-reduce-aws-costs-browser-ide.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/blog/decentralized-state-management-webrtc-data-channels.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://nitroide.com/blog/digital-nomad-coding-offline-browser-ide.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/docker-alternative-webcontainers-silicon-valley.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/e2ee-collaborative-coding-ecdh-web-crypto.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
@@ -274,32 +117,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/blog/flutter-online-compiler-browser-preview.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/gitpod-enterprise-alternative-zero-trust.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/glitch-alternative-full-stack-ide.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/golang-online-compiler-wasm-runtime.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/blog/harfbuzz-wasm-canvas-text-shaping.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/haskell-online-compiler-functional-programming.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
@@ -319,27 +137,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/blog/java-online-compiler-browser-jvm.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/blog/language-server-protocol-lsp-web-workers.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/leetcode-alternative-technical-assessment.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/lua-online-compiler-game-dev.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/m4-ipad-pro-optimization-nitroide.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
@@ -364,11 +162,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/blog/nextjs-online-editor-full-stack-browser.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/blog/offline-first-browser-ide-pwa.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
@@ -389,17 +182,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/blog/php-online-compiler-browser-server.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/blog/predictive-prefetching-intersectionobserver-service-workers.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/python-online-compiler-data-science-wasm.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
@@ -409,27 +192,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/blog/replit-alternative-free-multiplayer-pair-programming.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/blog/ring-buffers-sharedarraybuffer-high-frequency-logs.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/ruby-online-compiler-wasm.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/run-vs-code-extensions-browser-ide.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/rust-online-compiler-browser-ide-cargo.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
@@ -479,27 +242,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/blog/solidity-online-compiler-web3-ide.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/sql-online-compiler-browser-database.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/blog/sqlite-wasm-browser-search-indexing.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/sveltekit-online-editor-wasm-ssr.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/swift-online-compiler-ios-browser.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
@@ -614,16 +357,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/blog/webcodecs-api-60fps-screen-recording-ide.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/webcodecs-webtransport-screen-sharing.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/blog/webgpu-compute-shaders-massive-ast-search.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
@@ -659,27 +392,12 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/blog/webrtc-xtermjs-terminal-collaboration.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/webtorrent-p2p-node-modules-cdn-bypass.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/blog/webtransport-quic-multiplexed-file-sync.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://nitroide.com/blog/webusb-api-flash-microcontrollers-browser.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/blog/zero-compute-cloud-hosting-browser-p2p.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
@@ -698,20 +416,5 @@
     <lastmod>2026-05-08</lastmod>
     <priority>0.6</priority>
   </url>
-  <url>
-    <loc>https://nitroide.com/blog/zig-online-compiler-low-level-web.html</loc>
-    <lastmod>2026-05-08</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/about.html</loc>
-    <lastmod>2026-05-10</lastmod>
-    <priority>0.8</priority>
-</url>
-  <url>
-    <loc>https://nitroide.com/ecosystem.html</loc>
-    <lastmod>2026-05-19</lastmod>
-    <priority>0.8</priority>
-</url>
 
 </urlset>
