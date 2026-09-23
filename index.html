@@ -438,6 +438,27 @@
             <i class="ph-bold ph-arrow-up-right pulse-card-arrow"></i>
           </a>
         </div>
+        <div class="pulse-col pulse-logs">
+          <div class="pulse-panel-heading pulse-panel-heading-row">
+            <span><i class="ph-bold ph-book-open-text"></i> Architecture Logs</span>
+            <div class="pulse-tabs" aria-label="Architecture log source">
+              <button class="p-tab active" type="button" data-platform="devto" onclick="switchPulseTab('devto', event)">Dev.to</button>
+              <button class="p-tab" type="button" data-platform="hashnode" onclick="switchPulseTab('hashnode', event)">Hashnode</button>
+            </div>
+          </div>
+
+          <div id="pulse-blog-container" class="pulse-blog-box">
+            <p class="pulse-loading"><i class="ph-bold ph-spinner-gap"></i> Fetching logs...</p>
+          </div>
+        </div>
+
+        <div class="pulse-col pulse-live">
+          <div class="pulse-panel-heading">
+            <span><i class="ph-bold ph-terminal-window"></i> Live Ticker</span>
+            <small>Latest signals</small>
+          </div>
+          <div class="pulse-ticker-box"></div>
+        </div>
       </div>
     </div>
 
