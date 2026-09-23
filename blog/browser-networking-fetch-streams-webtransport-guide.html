@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Networking: Fetch, Streams, Background Fetch &amp; WebTransport | NitroIDE</title>
+  <meta name="title" content="Browser Networking: Fetch, Streams, Background Fetch &amp; WebTransport | NitroIDE">
+  <meta name="description" content="Fetch streams, Background Fetch, compression dictionaries, WebTransport over QUIC, and service-worker API mocking — the browser networking toolkit with honest limits.">
+  <meta name="keywords" content="fetch streaming ReadableStream, Background Fetch API, WebTransport QUIC tutorial, compression dictionary transport, service worker mock api">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0ea5e9">
+  <meta property="og:title" content="Browser Networking: Fetch, Streams, Background Fetch &amp; WebTransport | NitroIDE">
+  <meta property="og:description" content="Fetch streams, Background Fetch, compression dictionaries, WebTransport over QUIC, and service-worker API mocking — the browser networking toolkit with honest limits.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/browser-networking-fetch-streams-webtransport-guide.html">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Everything the Browser Knows About the Network.",
+    "description": "Fetch streams, Background Fetch, compression dictionaries, WebTransport over QUIC, and service-worker API mocking — the browser networking toolkit with honest limits.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/browser-networking-fetch-streams-webtransport-guide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #0ea5e9; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NETWORK ARCHITECTURE • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Everything the Browser Knows About the Network.</h1>
+
+    <p>Most frontend developers know exactly one networking API: <code>fetch()</code>. But the browser's networking toolkit goes much deeper — streaming responses, resumable background downloads, dictionary-compressed payloads, and even raw QUIC connections. This guide tours the full stack, with the honest limits of each API spelled out.</p>
+
+    <h2>Beyond await fetch(): streaming responses</h2>
+    <p><code>fetch()</code> doesn't have to be all-or-nothing. The response body is a <code>ReadableStream</code> — you can process data as it arrives, which is how you build progress bars, live logs, and chat-style token streaming:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> res = <span class="code-keyword">await</span> <span class="code-func">fetch</span>(<span class="code-string">'/api/big-report'</span>);<br><span class="code-keyword">const</span> reader = res.body.<span class="code-func">getReader</span>();<br><span class="code-keyword">const</span> decoder = <span class="code-keyword">new</span> <span class="code-func">TextDecoder</span>();<br><span class="code-keyword">while</span> (<span class="code-keyword">true</span>) {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> { done, value } = <span class="code-keyword">await</span> reader.<span class="code-func">read</span>();<br>&nbsp;&nbsp;<span class="code-keyword">if</span> (done) <span class="code-keyword">break</span>;<br>&nbsp;&nbsp;<span class="code-func">appendChunk</span>(decoder.<span class="code-func">decode</span>(value, { <span class="code-attr">stream</span>: <span class="code-keyword">true</span> }));<br>&nbsp;&nbsp;<span class="code-func">updateProgress</span>(value.length);<br>}</div>
+
+    <p>Need to transform a stream mid-flight — say, decrypting or decompressing chunks? Pipe it through a <code>TransformStream</code>:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> upper = <span class="code-keyword">new</span> <span class="code-func">TransformStream</span>({<br>&nbsp;&nbsp;<span class="code-func">transform</span>(chunk, controller) {<br>&nbsp;&nbsp;&nbsp;&nbsp;controller.<span class="code-func">enqueue</span>(chunk.toUpperCase()); <span class="code-comment">// toy transform</span><br>&nbsp;&nbsp;}<br>});<br><span class="code-keyword">await</span> res.body.<span class="code-func">pipeThrough</span>(upper).<span class="code-func">pipeTo</span>(writableStream);</div>
+
+    <h2>Downloads that survive tab closes: Background Fetch</h2>
+    <p>Regular <code>fetch()</code> dies with your tab. The <strong>Background Fetch API</strong> hands large downloads (podcasts, datasets, asset packs) to the browser itself, which keeps downloading even if the user navigates away — and shows native progress UI:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> reg = <span class="code-keyword">await</span> navigator.serviceWorker.ready;<br><span class="code-keyword">const</span> bgFetch = <span class="code-keyword">await</span> reg.backgroundFetch.<span class="code-func">fetch</span>(<br>&nbsp;&nbsp;<span class="code-string">'asset-pack-42'</span>,<br>&nbsp;&nbsp;[<span class="code-string">'/assets/pack-1.zip'</span>, <span class="code-string">'/assets/pack-2.zip'</span>],<br>&nbsp;&nbsp;{ <span class="code-attr">title</span>: <span class="code-string">'Downloading asset pack'</span>, <span class="code-attr">icons</span>: [{ <span class="code-attr">src</span>: <span class="code-string">'/icon.png'</span>, <span class="code-attr">sizes</span>: <span class="code-string">'256x256'</span> }] }<br>);<br>bgFetch.<span class="code-func">addEventListener</span>(<span class="code-string">'progress'</span>, () =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> pct = bgFetch.downloaded / bgFetch.downloadTotal;<br>&nbsp;&nbsp;<span class="code-func">updateProgressBar</span>(pct);<br>});</div>
+
+    <p>Honest limits: it requires a registered service worker, it's Chromium-only for now, and it's designed for downloads (uploads aren't supported). For everyday small requests, plain <code>fetch()</code> is still the right tool.</p>
+
+    <h2>Shrinking repeat payloads: compression dictionaries</h2>
+    <p>If your app downloads many similar files — versions of a WASM module, map tiles, ML weights — most bytes repeat. <strong>Compression Dictionary Transport</strong> (rolling out in Chromium) lets the browser reuse a previously-downloaded file as a Brotli/Zstandard dictionary, so each subsequent download only transfers the <em>diff</em>:</p>
+
+    <div class="docs-code"><span class="code-comment">// Server marks a response as usable-as-dictionary:</span><br><span class="code-comment">//   Use-As-Dictionary: match="/app-v1.wasm"</span><br><span class="code-comment">// Later requests can then reference it and download far less.</span><br><span class="code-keyword">const</span> res = <span class="code-keyword">await</span> <span class="code-func">fetch</span>(<span class="code-string">'/app-v2.wasm'</span>); <span class="code-comment">// mostly delta bytes</span></div>
+
+    <p>This is an emerging standard — check current browser support before depending on it — but the direction is clear: the browser is becoming a smarter, delta-aware download manager.</p>
+
+    <div class="pro-tip" style="border-color: rgba(14, 165, 233, 0.3); background: rgba(14, 165, 233, 0.05);">
+      <i class="ph-fill ph-download-simple" style="color: #0ea5e9;"></i>
+      <div>
+        <p><strong>When to use what:</strong> small JSON → plain <code>fetch()</code>. Progressive rendering → streams. Multi-hundred-MB downloads the user might background → Background Fetch. Near-identical repeated payloads → compression dictionaries.</p>
+      </div>
+    </div>
+
+    <h2>WebTransport: QUIC without WebSockets' baggage</h2>
+    <p>WebSockets run over TCP, so one dropped packet stalls <em>every</em> stream on the connection (head-of-line blocking). <strong>WebTransport</strong> runs over HTTP/3's QUIC, giving you independent, multiplexed streams where a lost packet only delays its own stream:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> wt = <span class="code-keyword">new</span> <span class="code-func">WebTransport</span>(<span class="code-string">'https://example.com:4433/sync'</span>);<br><span class="code-keyword">await</span> wt.ready; <span class="code-comment">// QUIC handshake done</span><br><span class="code-comment">// Independent bidirectional stream — a stall here</span><br><span class="code-comment">// doesn't block your other streams:</span><br><span class="code-keyword">const</span> stream = <span class="code-keyword">await</span> wt.<span class="code-func">createBidirectionalStream</span>();<br><span class="code-keyword">const</span> writer = stream.writable.<span class="code-func">getWriter</span>();<br><span class="code-keyword">await</span> writer.<span class="code-func">write</span>(<span class="code-keyword">new</span> <span class="code-func">TextEncoder</span>().<span class="code-func">encode</span>(<span class="code-string">'hello quic'</span>));</div>
+
+    <p>The honest part: WebTransport needs a server that speaks HTTP/3 — you can't use it against a plain HTTPS endpoint, and there's no "WebTransport echo server" built into browsers for testing. It's the right tool for game networking, live media, and low-latency sync <em>when you control the server</em>. For everything else, WebSockets remain the pragmatic default.</p>
+
+    <h2>Mocking APIs with service workers</h2>
+    <p>Prototyping against an API that doesn't exist yet (or is blocked by CORS)? A service worker can intercept <code>fetch</code> and return synthetic responses — no backend, no proxy, fully offline:</p>
+
+    <div class="docs-code"><span class="code-comment">// sw.js</span><br>self.<span class="code-func">addEventListener</span>(<span class="code-string">'fetch'</span>, (event) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">if</span> (<span class="code-keyword">new</span> <span class="code-func">URL</span>(event.request.url).pathname === <span class="code-string">'/api/users'</span>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;event.<span class="code-func">respondWith</span>(<span class="code-func">Response</span>.<span class="code-func">json</span>([{ <span class="code-attr">id</span>: <span class="code-num">1</span>, <span class="code-attr">name</span>: <span class="code-string">'Ada'</span> }]));<br>&nbsp;&nbsp;}<br>});</div>
+
+    <p>This is genuinely useful inside a client-side IDE: build the whole frontend against mocked endpoints, then swap in the real API later without changing a line of UI code.</p>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Prototype Network-Heavy Frontends.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Streams, mocks, and offline patterns — test them all in a zero-setup browser IDE.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch NitroIDE <i class="ph-bold ph-globe"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

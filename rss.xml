@@ -5,161 +5,196 @@
     <link>https://nitroide.com/blog/</link>
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
-    <item>
-      <title>Bypassing WebSockets: Multiplexed Sync via WebTransport &amp; QUIC</title>
-      <link>https://nitroide.com/blog/webtransport-quic-multiplexed-file-sync</link>
-      <guid>https://nitroide.com/blog/webtransport-quic-multiplexed-file-sync</guid>
-      <description>WebSockets suffer from Head-of-Line blocking. Discover how NitroIDE uses the WebTransport API and HTTP/3 QUIC to multiplex streams with zero blocking.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+                <item>
+      <title>Web Workers &amp; Multithreading in the Browser: The Practical Guide | NitroIDE</title>
+      <link>https://nitroide.com/blog/web-workers-multithreading-browser-guide</link>
+      <guid>https://nitroide.com/blog/web-workers-multithreading-browser-guide</guid>
+      <description>SharedArrayBuffer, transferable objects, OffscreenCanvas, Atomics and worker-based language servers — how to move heavy work off the main thread with real, runnable examples.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>Native App Routing via Cross-Document View Transitions | NitroIDE</title>
-      <link>https://nitroide.com/blog/cross-document-view-transitions-mpa-ide</link>
-      <guid>https://nitroide.com/blog/cross-document-view-transitions-mpa-ide</guid>
-      <description>React Router is bloated. Discover how NitroIDE builds a multi-page app (MPA) that feels like an SPA using the native Cross-Document View Transitions API.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+      <title>Browser Storage &amp; Offline Apps: OPFS, IndexedDB and Service Workers | NitroIDE</title>
+      <link>https://nitroide.com/blog/browser-storage-offline-apps-opfs-indexeddb-guide</link>
+      <guid>https://nitroide.com/blog/browser-storage-offline-apps-opfs-indexeddb-guide</guid>
+      <description>OPFS, IndexedDB, service workers, background sync, Web Locks and client-side encryption — the full storage stack for offline-first browser apps, with runnable examples.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>Zero-Knowledge Architecture via HKDF Key Derivation | NitroIDE</title>
-      <link>https://nitroide.com/blog/hkdf-web-crypto-api-zero-knowledge</link>
-      <guid>https://nitroide.com/blog/hkdf-web-crypto-api-zero-knowledge</guid>
-      <description>Don't store raw passwords. Learn how NitroIDE uses the Web Crypto API, PBKDF2, and HKDF to derive secure, purpose-built encryption keys entirely client-side.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+      <title>Browser Networking: Fetch, Streams, Background Fetch &amp; WebTransport | NitroIDE</title>
+      <link>https://nitroide.com/blog/browser-networking-fetch-streams-webtransport-guide</link>
+      <guid>https://nitroide.com/blog/browser-networking-fetch-streams-webtransport-guide</guid>
+      <description>Fetch streams, Background Fetch, compression dictionaries, WebTransport over QUIC, and service-worker API mocking — the browser networking toolkit with honest limits.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>Beyond the Snippet: The Ultimate CodePen Alternative | NitroIDE</title>
-      <link>https://nitroide.com/blog/codepen-jsfiddle-alternative-full-stack-browser-ide</link>
-      <guid>https://nitroide.com/blog/codepen-jsfiddle-alternative-full-stack-browser-ide</guid>
-      <description>CodePen and JSFiddle are great for UI snippets, but terrible for real apps. Discover why NitroIDE is the best alternative for full-stack browser prototyping.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+      <title>Modern CSS for App UIs: Houdini, Container Queries &amp; View Transitions | NitroIDE</title>
+      <link>https://nitroide.com/blog/modern-css-app-ui-houdini-container-queries-guide</link>
+      <guid>https://nitroide.com/blog/modern-css-app-ui-houdini-container-queries-guide</guid>
+      <description>@property, Houdini Paint API, container queries, view transitions, Typed OM, Custom Highlight API and content-visibility — modern CSS techniques for app UIs, all runnable.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>Bypassing the Cloud: The Best CodeSandbox Alternative | NitroIDE</title>
-      <link>https://nitroide.com/blog/codesandbox-stackblitz-alternative-local-webcontainers</link>
-      <guid>https://nitroide.com/blog/codesandbox-stackblitz-alternative-local-webcontainers</guid>
-      <description>Tired of waiting for cloud containers to boot? See why NitroIDE's client-side WebAssembly architecture makes it the fastest CodeSandbox and StackBlitz alternative.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+      <title>Canvas &amp; Web Audio: A Hands-On Creative Coding Guide | NitroIDE</title>
+      <link>https://nitroide.com/blog/canvas-webaudio-creative-coding-guide</link>
+      <guid>https://nitroide.com/blog/canvas-webaudio-creative-coding-guide</guid>
+      <description>Canvas 2D, Web Audio synthesis, AudioWorklet sample-accurate timing, and UI sonification — hands-on creative coding with runnable browser examples.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>The Ultimate Online React IDE: Instant HMR Without Localhost | NitroIDE</title>
-      <link>https://nitroide.com/blog/react-online-compiler-browser-ide-hmr</link>
-      <guid>https://nitroide.com/blog/react-online-compiler-browser-ide-hmr</guid>
-      <description>Ditch create-react-app. Experience the fastest free online React compiler with instant Hot Module Replacement (HMR) and native NPM support right in your browser.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+      <title>WebAssembly in the Browser: What It Can (and Can't) Do | NitroIDE</title>
+      <link>https://nitroide.com/blog/webassembly-browser-honest-guide</link>
+      <guid>https://nitroide.com/blog/webassembly-browser-honest-guide</guid>
+      <description>What WebAssembly can and can't do in the browser: loading modules, linear memory, WasmGC, threads, SIMD, SQLite.wasm — plus honest limits on Python-in-WASM and WebGPU.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
+      <title>Browser Hardware APIs: Serial, Bluetooth, HID, USB &amp; MIDI | NitroIDE</title>
+      <link>https://nitroide.com/blog/browser-hardware-apis-serial-bluetooth-hid-guide</link>
+      <guid>https://nitroide.com/blog/browser-hardware-apis-serial-bluetooth-hid-guide</guid>
+      <description>Web Serial, WebUSB, WebHID, Web Bluetooth, Web MIDI and WebNN — control real hardware from a web page, with runnable patterns and honest browser-support limits.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Browser Performance: Scheduler, Observers &amp; Memory Done Right | NitroIDE</title>
+      <link>https://nitroide.com/blog/browser-performance-scheduler-observers-memory-guide</link>
+      <guid>https://nitroide.com/blog/browser-performance-scheduler-observers-memory-guide</guid>
+      <description>Scheduler API, PerformanceObserver, Compute Pressure, WeakRef memory management, and signals — the real browser performance toolkit, measured not guessed.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Browser Security: WebCrypto, Sandboxing &amp; Zero-Trust Patterns | NitroIDE</title>
+      <link>https://nitroide.com/blog/browser-security-webcrypto-sandboxing-guide</link>
+      <guid>https://nitroide.com/blog/browser-security-webcrypto-sandboxing-guide</guid>
+      <description>WebCrypto encryption, HKDF key derivation, sandboxed iframes, fenced frames, ShadowRealm and E2EE media — browser security patterns with honest threat models.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Prototype React, Vue &amp; TypeScript in the Browser — No Build Step | NitroIDE</title>
+      <link>https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide</link>
+      <guid>https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide</guid>
+      <description>Prototype React, Vue, and TypeScript in the browser with zero build step — import maps, esm.sh, in-browser transpile, and an honest comparison with cloud IDEs.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
+      <title>Web Workers &amp; Multithreading in the Browser: The Practical Guide | NitroIDE</title>
+      <link>https://nitroide.com/blog/web-workers-multithreading-browser-guide</link>
+      <guid>https://nitroide.com/blog/web-workers-multithreading-browser-guide</guid>
+      <description>SharedArrayBuffer, transferable objects, OffscreenCanvas, Atomics and worker-based language servers — how to move heavy work off the main thread with real, runnable examples.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
+      <title>Browser Storage &amp; Offline Apps: OPFS, IndexedDB and Service Workers | NitroIDE</title>
+      <link>https://nitroide.com/blog/browser-storage-offline-apps-opfs-indexeddb-guide</link>
+      <guid>https://nitroide.com/blog/browser-storage-offline-apps-opfs-indexeddb-guide</guid>
+      <description>OPFS, IndexedDB, service workers, background sync, Web Locks and client-side encryption — the full storage stack for offline-first browser apps, with runnable examples.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
+      <title>Browser Networking: Fetch, Streams, Background Fetch &amp; WebTransport | NitroIDE</title>
+      <link>https://nitroide.com/blog/browser-networking-fetch-streams-webtransport-guide</link>
+      <guid>https://nitroide.com/blog/browser-networking-fetch-streams-webtransport-guide</guid>
+      <description>Fetch streams, Background Fetch, compression dictionaries, WebTransport over QUIC, and service-worker API mocking — the browser networking toolkit with honest limits.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
+      <title>Modern CSS for App UIs: Houdini, Container Queries &amp; View Transitions | NitroIDE</title>
+      <link>https://nitroide.com/blog/modern-css-app-ui-houdini-container-queries-guide</link>
+      <guid>https://nitroide.com/blog/modern-css-app-ui-houdini-container-queries-guide</guid>
+      <description>@property, Houdini Paint API, container queries, view transitions, Typed OM, Custom Highlight API and content-visibility — modern CSS techniques for app UIs, all runnable.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
+      <title>Canvas &amp; Web Audio: A Hands-On Creative Coding Guide | NitroIDE</title>
+      <link>https://nitroide.com/blog/canvas-webaudio-creative-coding-guide</link>
+      <guid>https://nitroide.com/blog/canvas-webaudio-creative-coding-guide</guid>
+      <description>Canvas 2D, Web Audio synthesis, AudioWorklet sample-accurate timing, and UI sonification — hands-on creative coding with runnable browser examples.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
+      <title>WebAssembly in the Browser: What It Can (and Can't) Do | NitroIDE</title>
+      <link>https://nitroide.com/blog/webassembly-browser-honest-guide</link>
+      <guid>https://nitroide.com/blog/webassembly-browser-honest-guide</guid>
+      <description>What WebAssembly can and can't do in the browser: loading modules, linear memory, WasmGC, threads, SIMD, SQLite.wasm — plus honest limits on Python-in-WASM and WebGPU.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
+      <title>Browser Hardware APIs: Serial, Bluetooth, HID, USB &amp; MIDI | NitroIDE</title>
+      <link>https://nitroide.com/blog/browser-hardware-apis-serial-bluetooth-hid-guide</link>
+      <guid>https://nitroide.com/blog/browser-hardware-apis-serial-bluetooth-hid-guide</guid>
+      <description>Web Serial, WebUSB, WebHID, Web Bluetooth, Web MIDI and WebNN — control real hardware from a web page, with runnable patterns and honest browser-support limits.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
+      <title>Browser Performance: Scheduler, Observers &amp; Memory Done Right | NitroIDE</title>
+      <link>https://nitroide.com/blog/browser-performance-scheduler-observers-memory-guide</link>
+      <guid>https://nitroide.com/blog/browser-performance-scheduler-observers-memory-guide</guid>
+      <description>Scheduler API, PerformanceObserver, Compute Pressure, WeakRef memory management, and signals — the real browser performance toolkit, measured not guessed.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
+      <title>Browser Security: WebCrypto, Sandboxing &amp; Zero-Trust Patterns | NitroIDE</title>
+      <link>https://nitroide.com/blog/browser-security-webcrypto-sandboxing-guide</link>
+      <guid>https://nitroide.com/blog/browser-security-webcrypto-sandboxing-guide</guid>
+      <description>WebCrypto encryption, HKDF key derivation, sandboxed iframes, fenced frames, ShadowRealm and E2EE media — browser security patterns with honest threat models.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
+      <title>Prototype React, Vue &amp; TypeScript in the Browser — No Build Step | NitroIDE</title>
+      <link>https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide</link>
+      <guid>https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide</guid>
+      <description>Prototype React, Vue, and TypeScript in the browser with zero build step — import maps, esm.sh, in-browser transpile, and an honest comparison with cloud IDEs.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>Bringing Vim &amp; Emacs to the Web: The Power User's Online Editor</title>
       <link>https://nitroide.com/blog/vim-emacs-online-editor-keybindings</link>
       <guid>https://nitroide.com/blog/vim-emacs-online-editor-keybindings</guid>
       <description>Web IDEs usually break keyboard shortcuts. See how NitroIDE provides true Vim and Emacs emulation, giving power users desktop-grade keyboard control.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
+<item>
       <title>Migrating Your Local Monorepo to a Browser-Based Workspace | NitroIDE</title>
       <link>https://nitroide.com/blog/migrate-local-monorepo-browser-based-ide</link>
       <guid>https://nitroide.com/blog/migrate-local-monorepo-browser-based-ide</guid>
       <description>Most web IDEs crash when loading massive codebases. Learn how NitroIDE handles 50-package Turborepos with background indexing and zero UI lag.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
-      <title>The Best Coding Interview Platform: Zero-Latency Sandboxes | NitroIDE</title>
-      <link>https://nitroide.com/blog/technical-interview-coding-sandbox-zero-latency</link>
-      <guid>https://nitroide.com/blog/technical-interview-coding-sandbox-zero-latency</guid>
-      <description>Stop using laggy, stripped-down interview tools. Discover how NitroIDE provides a full-stack, zero-latency coding sandbox for technical engineering interviews.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Why Cloud VMs are Dead: The Gitpod &amp; Codespaces Alternative</title>
-      <link>https://nitroide.com/blog/gitpod-codespaces-alternative-local-web-containers</link>
-      <guid>https://nitroide.com/blog/gitpod-codespaces-alternative-local-web-containers</guid>
-      <description>Tired of paying for idle cloud compute? Learn why NitroIDE's client-side WebAssembly architecture is the ultimate free alternative to Gitpod and GitHub Codespaces.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
+<item>
       <title>The Best Free Online IDE for Students and Bootcamps in 2026</title>
       <link>https://nitroide.com/blog/best-free-online-ide-students-bootcamps</link>
       <guid>https://nitroide.com/blog/best-free-online-ide-students-bootcamps</guid>
       <description>Don't get trapped in premium subscriptions. Learn why NitroIDE's decentralized architecture makes it the most powerful free online IDE for students.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
-      <title>The Ultimate Online React IDE: Instant HMR Without Localhost | NitroIDE</title>
-      <link>https://nitroide.com/blog/react-online-compiler-browser-ide-hmr</link>
-      <guid>https://nitroide.com/blog/react-online-compiler-browser-ide-hmr</guid>
-      <description>Ditch create-react-app. Experience the fastest free online React compiler with instant Hot Module Replacement (HMR) and native NPM support right in your browser.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Bringing Vim &amp; Emacs to the Web: The Power User's Online Editor</title>
-      <link>https://nitroide.com/blog/vim-emacs-online-editor-keybindings</link>
-      <guid>https://nitroide.com/blog/vim-emacs-online-editor-keybindings</guid>
-      <description>Web IDEs usually break keyboard shortcuts. See how NitroIDE provides true Vim and Emacs emulation, giving power users desktop-grade keyboard control.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Migrating Your Local Monorepo to a Browser-Based Workspace | NitroIDE</title>
-      <link>https://nitroide.com/blog/migrate-local-monorepo-browser-based-ide</link>
-      <guid>https://nitroide.com/blog/migrate-local-monorepo-browser-based-ide</guid>
-      <description>Most web IDEs crash when loading massive codebases. Learn how NitroIDE handles 50-package Turborepos with background indexing and zero UI lag.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>The Best Coding Interview Platform: Zero-Latency Sandboxes | NitroIDE</title>
-      <link>https://nitroide.com/blog/technical-interview-coding-sandbox-zero-latency</link>
-      <guid>https://nitroide.com/blog/technical-interview-coding-sandbox-zero-latency</guid>
-      <description>Stop using laggy, stripped-down interview tools. Discover how NitroIDE provides a full-stack, zero-latency coding sandbox for technical engineering interviews.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Why Cloud VMs are Dead: The Gitpod &amp; Codespaces Alternative</title>
-      <link>https://nitroide.com/blog/gitpod-codespaces-alternative-local-web-containers</link>
-      <guid>https://nitroide.com/blog/gitpod-codespaces-alternative-local-web-containers</guid>
-      <description>Tired of paying for idle cloud compute? Learn why NitroIDE's client-side WebAssembly architecture is the ultimate free alternative to Gitpod and GitHub Codespaces.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>The Best Free Online IDE for Students and Bootcamps in 2026</title>
-      <link>https://nitroide.com/blog/best-free-online-ide-students-bootcamps</link>
-      <guid>https://nitroide.com/blog/best-free-online-ide-students-bootcamps</guid>
-      <description>Don't get trapped in premium subscriptions. Learn why NitroIDE's decentralized architecture makes it the most powerful free online IDE for students.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
+<item>
       <title>The Most Advanced HTML, CSS, &amp; JS Online Editor in 2026</title>
       <link>https://nitroide.com/blog/html-css-js-online-editor-playground</link>
       <guid>https://nitroide.com/blog/html-css-js-online-editor-playground</guid>
       <description>Move beyond basic playgrounds. NitroIDE is a professional frontend web IDE with real-time preview, Tailwind JIT, and instant auto-completion.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
+<item>
       <title>Offline-First Development: The IDE That Works on an Airplane | NitroIDE</title>
       <link>https://nitroide.com/blog/offline-first-browser-ide-pwa</link>
       <guid>https://nitroide.com/blog/offline-first-browser-ide-pwa</guid>
       <description>Cloud IDEs freeze without Wi-Fi. Learn how NitroIDE's PWA architecture and OPFS storage provide a flawless, 100% offline coding experience.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
-      <title>The Ultimate TypeScript Online Compiler: Multi-File Support | NitroIDE</title>
-      <link>https://nitroide.com/blog/typescript-online-compiler-multi-file-ide</link>
-      <guid>https://nitroide.com/blog/typescript-online-compiler-multi-file-ide</guid>
-      <description>The official TS Playground restricts you to a single file. Experience NitroIDE, a full-stack TypeScript browser IDE with NPM imports and native Language Servers.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
+<item>
       <title>The Best Code Editor for iPad Pro: Desktop-Grade Engineering on iOS</title>
       <link>https://nitroide.com/blog/best-code-editor-ipad-pro-m4-browser-ide</link>
       <guid>https://nitroide.com/blog/best-code-editor-ipad-pro-m4-browser-ide</guid>
       <description>Unlock your M-Series iPad. Discover how NitroIDE brings full Node.js, native terminal access, and desktop-grade React development to Safari via WebAssembly.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
+<item>
       <title>The Ultimate Digital Nomad Coding Setup: 100% Offline Browser IDE</title>
       <link>https://nitroide.com/blog/digital-nomad-coding-offline-browser-ide</link>
       <guid>https://nitroide.com/blog/digital-nomad-coding-offline-browser-ide</guid>
       <description>Don't let spotty Wi-Fi ruin your productivity. Learn how NitroIDE allows digital nomads to write, compile, and test full-stack apps completely offline.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
+<item>
       <title>How to Migrate from Replit to NitroIDE in 3 Minutes</title>
       <link>https://nitroide.com/blog/migrate-replit-to-nitroide-tutorial</link>
       <guid>https://nitroide.com/blog/migrate-replit-to-nitroide-tutorial</guid>
@@ -167,62 +202,34 @@
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>The 5 Best Free Online IDEs in 2026: The Ultimate Comparison</title>
+      <title>The Best Free Online IDEs in 2026: An Honest Comparison | NitroIDE</title>
       <link>https://nitroide.com/blog/best-online-ide-free-2026-comparison</link>
       <guid>https://nitroide.com/blog/best-online-ide-free-2026-comparison</guid>
-      <description>Looking for the best online code editor? We compare NitroIDE, VS Code Web, Replit, and CodeSandbox to help you find the perfect browser-based development environment.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+      <description>The best free online IDEs of 2026, compared honestly: Replit, CodeSandbox, StackBlitz, GitHub Codespaces, CodePen, and NitroIDE — with our bias disclosed and our losses admitted.</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
-      <title>True Multithreading in the Browser via SharedArrayBuffer</title>
-      <link>https://nitroide.com/blog/shared-array-buffer-multithreading</link>
-      <guid>https://nitroide.com/blog/shared-array-buffer-multithreading</guid>
-      <description>JavaScript is single-threaded, but your IDE shouldn't be. Learn how NitroIDE uses SharedArrayBuffer and Atomics for lock-free memory sharing across Web Workers.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>WasmGC: How NitroIDE Achieves Native Memory Management</title>
-      <link>https://nitroide.com/blog/webassembly-v8-optimization-wasmgc</link>
-      <guid>https://nitroide.com/blog/webassembly-v8-optimization-wasmgc</guid>
-      <description>WebAssembly just got a massive upgrade. Learn how NitroIDE leverages WasmGC in the V8 engine to eliminate memory leaks and garbage collection pauses.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Preventing Thermal Throttling with the Compute Pressure API</title>
-      <link>https://nitroide.com/blog/compute-pressure-api-thermal</link>
-      <guid>https://nitroide.com/blog/compute-pressure-api-thermal</guid>
-      <description>Don't let your web app melt your laptop. See how NitroIDE uses the experimental Compute Pressure API to dynamically adjust CPU workloads and save battery.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Global Search at 120fps: Harnessing WebGPU Compute Shaders</title>
-      <link>https://nitroide.com/blog/webgpu-compute-shaders-search</link>
-      <guid>https://nitroide.com/blog/webgpu-compute-shaders-search</guid>
-      <description>Searching a 10,000-file monorepo shouldn't freeze your tab. Discover how NitroIDE offloads Regex search operations directly to your graphics card via WebGPU.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
+<item>
       <title>OPFS vs IndexedDB: Building a Faster Virtual File System</title>
       <link>https://nitroide.com/blog/opfs-vs-indexeddb-virtual-file-system</link>
       <guid>https://nitroide.com/blog/opfs-vs-indexeddb-virtual-file-system</guid>
       <description>IndexedDB is too slow for compiling code. Read our deep dive into the Origin Private File System (OPFS) and how it enables native disk I/O in the browser.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
+<item>
       <title>Tutorial: How to Build a React App Without npm or Build Tools</title>
       <link>https://nitroide.com/blog/how-to-use-react-without-npm</link>
       <guid>https://nitroide.com/blog/how-to-use-react-without-npm</guid>
       <description>Tired of Webpack and Vite? Learn how to prototype React applications directly in your browser using unpkg CDN injection and zero build steps.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
+<item>
       <title>Guide: Mastering Tailwind CSS in the Browser</title>
       <link>https://nitroide.com/blog/tailwind-css-in-browser-no-postcss</link>
       <guid>https://nitroide.com/blog/tailwind-css-in-browser-no-postcss</guid>
       <description>Stop fighting with PostCSS. Here is how to test and perfect Tailwind utility classes with hot-module replacement directly in a browser environment.</description>
       <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
+<item>
       <title>Engineering: How We Built a Zero-Latency IDE</title>
       <link>https://nitroide.com/blog/zero-latency-local-browser-ide-architecture</link>
       <guid>https://nitroide.com/blog/zero-latency-local-browser-ide-architecture</guid>
@@ -230,402 +237,24 @@
       <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>Debugging Arduino and IoT Devices via the Web Serial API</title>
-      <link>https://nitroide.com/blog/web-serial-api-hardware-debugging</link>
-      <guid>https://nitroide.com/blog/web-serial-api-hardware-debugging</guid>
-      <description>Connect your browser to the physical world. Learn how NitroIDE uses the Web Serial API to flash code to Arduino and ESP32 boards directly from a web tab.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Secure Plugin Architecture: Sandboxing Third-Party Code</title>
-      <link>https://nitroide.com/blog/zero-trust-plugin-sandboxing</link>
-      <guid>https://nitroide.com/blog/zero-trust-plugin-sandboxing</guid>
-      <description>Third-party extensions are a major security risk. Discover how NitroIDE uses cross-origin iframes and MessageChannel to sandbox plugins securely.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>The Ultimate AWS Cloud9 Alternative | NitroIDE</title>
+      <title>Coding Offline on a Chromebook: An Honest Cloud9 Alternative | NitroIDE</title>
       <link>https://nitroide.com/blog/aws-cloud9-alternative-local-compute</link>
       <guid>https://nitroide.com/blog/aws-cloud9-alternative-local-compute</guid>
-      <description>Stop paying Amazon for remote EC2 instances. Discover why NitroIDE's local WebAssembly execution makes it the best AWS Cloud9 alternative.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+      <description>An honest Cloud9 alternative for frontend work: where a client-side browser IDE genuinely replaces EC2-backed development (Chromebooks, offline) and where it can't (backends, terminals).</description>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
-      <title>Vue.js Online Compiler: Native SFC Support | NitroIDE</title>
-      <link>https://nitroide.com/blog/vue-js-online-compiler-browser-sfc</link>
-      <guid>https://nitroide.com/blog/vue-js-online-compiler-browser-sfc</guid>
-      <description>The best Vue.js online editor. Compile Single-File Components (.vue) instantly in the browser with full Hot Module Replacement.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Controlling IoT Devices via the Web Bluetooth API</title>
-      <link>https://nitroide.com/blog/webbluetooth-iot-hardware-browser-ide</link>
-      <guid>https://nitroide.com/blog/webbluetooth-iot-hardware-browser-ide</guid>
-      <description>Connect your code to the real world. Learn how NitroIDE utilizes the Web Bluetooth API to interface with physical IoT devices directly from a browser IDE.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Blazing Fast IDE Search via SQLite WASM</title>
-      <link>https://nitroide.com/blog/sqlite-wasm-browser-search-indexing</link>
-      <guid>https://nitroide.com/blog/sqlite-wasm-browser-search-indexing</guid>
-      <description>How do we search 10,000 files in milliseconds? Learn how NitroIDE uses SQLite compiled to WebAssembly to index your entire codebase locally.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Running Local AI Models via the WebNN API</title>
-      <link>https://nitroide.com/blog/webnn-api-local-ai-browser</link>
-      <guid>https://nitroide.com/blog/webnn-api-local-ai-browser</guid>
-      <description>Stop paying for OpenAI tokens. Learn how NitroIDE utilizes the WebNN API to run AI auto-completion models locally on your device's NPU.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Building Audio Applications in a Browser IDE</title>
-      <link>https://nitroide.com/blog/webaudio-api-browser-synthesizer</link>
-      <guid>https://nitroide.com/blog/webaudio-api-browser-synthesizer</guid>
-      <description>Develop and test DSP algorithms and synthesizers entirely online. Discover how NitroIDE seamlessly integrates with the Web Audio API.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
+<item>
       <title>Visualizing RxJS and Redux State in Real-Time</title>
       <link>https://nitroide.com/blog/rxjs-redux-state-visualization-ide</link>
       <guid>https://nitroide.com/blog/rxjs-redux-state-visualization-ide</guid>
       <description>Stop console.logging your application state. Learn how NitroIDE integrates deeply with native browser dev tools to visualize complex state streams.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
-    <item>
-      <title>Yielding the Main Thread via the Scheduler.postTask API</title>
-      <link>https://nitroide.com/blog/scheduler-posttask-api-main-thread-yielding</link>
-      <guid>https://nitroide.com/blog/scheduler-posttask-api-main-thread-yielding</guid>
-      <description>Learn how NitroIDE keeps the UI at 120fps by intelligently yielding massive compilation tasks to the browser's native scheduling engine.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>WASM Tail Call Optimization: Fixing Infinite Recursion</title>
-      <link>https://nitroide.com/blog/wasm-tail-call-optimization-infinite-recursion</link>
-      <guid>https://nitroide.com/blog/wasm-tail-call-optimization-infinite-recursion</guid>
-      <description>Functional languages crash browsers without TCO. Discover how WebAssembly Tail Call Optimization allows NitroIDE to run infinite recursive loops safely.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Zero-Trust Plugin Sandboxing via the Fenced Frames API</title>
-      <link>https://nitroide.com/blog/fenced-frames-api-zero-trust-plugins</link>
-      <guid>https://nitroide.com/blog/fenced-frames-api-zero-trust-plugins</guid>
-      <description>Third-party extensions are a security nightmare. Learn how NitroIDE isolates VS Code extensions using the ultra-secure Fenced Frames API.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Zero-Copy Data Transfer: Transferable Streams in Web Workers</title>
-      <link>https://nitroide.com/blog/zero-copy-transferable-streams-web-workers</link>
-      <guid>https://nitroide.com/blog/zero-copy-transferable-streams-web-workers</guid>
-      <description>Passing large files between threads destroys performance. See how NitroIDE achieves zero-copy memory transfers using Transferable Streams.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>OffscreenCanvas: Rendering the Editor Minimap in a Background Worker</title>
-      <link>https://nitroide.com/blog/offscreencanvas-web-worker-minimap-rendering</link>
-      <guid>https://nitroide.com/blog/offscreencanvas-web-worker-minimap-rendering</guid>
-      <description>Scroll smoothly through 50,000 lines of code. Discover how NitroIDE delegates minimap rendering to the GPU via OffscreenCanvas.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Encrypted OPFS: AES-GCM Zero-Trust File Storage</title>
-      <link>https://nitroide.com/blog/opfs-sqlite-aes-gcm-zero-trust-storage</link>
-      <guid>https://nitroide.com/blog/opfs-sqlite-aes-gcm-zero-trust-storage</guid>
-      <description>Your local code should remain yours. Learn how NitroIDE encrypts every file in the Origin Private File System using AES-GCM.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>E2EE Video Calls via WebRTC Insertable Streams</title>
-      <link>https://nitroide.com/blog/webrtc-insertable-streams-frame-encryption</link>
-      <guid>https://nitroide.com/blog/webrtc-insertable-streams-frame-encryption</guid>
-      <description>Zoom isn't secure enough. Discover how NitroIDE provides End-to-End Encrypted pair programming video chat using WebRTC Insertable Streams.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Sub-Millisecond Execution via AudioWorklet</title>
-      <link>https://nitroide.com/blog/audioworklet-sub-millisecond-precision-clock-throttling</link>
-      <guid>https://nitroide.com/blog/audioworklet-sub-millisecond-precision-clock-throttling</guid>
-      <description>JavaScript's setTimeout is inaccurate. See how NitroIDE hacks the AudioWorklet API to achieve sub-millisecond execution precision for simulations.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Resilient Dependencies via the Background Fetch API</title>
-      <link>https://nitroide.com/blog/background-fetch-api-resilient-downloads-ide</link>
-      <guid>https://nitroide.com/blog/background-fetch-api-resilient-downloads-ide</guid>
-      <description>Never lose an NPM install to a dropped connection. How NitroIDE handles massive dependency downloads using the Background Fetch API.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Bypassing OS Shortcuts: Raw Keyboards via WebHID</title>
-      <link>https://nitroide.com/blog/webhid-api-raw-keyboard-scancodes-ide</link>
-      <guid>https://nitroide.com/blog/webhid-api-raw-keyboard-scancodes-ide</guid>
-      <description>Web IDEs always break Vim shortcuts. Learn how NitroIDE uses WebHID to read raw USB scancodes, providing flawless Vim and Emacs emulation.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Ultra-Fast Syntax Highlighting via the CSS Custom Highlight API</title>
-      <link>https://nitroide.com/blog/css-custom-highlight-api-syntax-monaco</link>
-      <guid>https://nitroide.com/blog/css-custom-highlight-api-syntax-monaco</guid>
-      <description>Wrapping code in thousands of &lt;span&gt; tags kills performance. See how NitroIDE leverages the CSS Custom Highlight API for instant syntax coloring.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Shrinking WASM Payloads: Shared Dictionary Compression</title>
-      <link>https://nitroide.com/blog/shared-dictionary-compression-api-brotli</link>
-      <guid>https://nitroide.com/blog/shared-dictionary-compression-api-brotli</guid>
-      <description>WebAssembly binaries are heavy. Learn how NitroIDE boots instantly over slow networks by utilizing Brotli and the Shared Dictionary Compression API.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Zero-Cost C++ Exceptions in the Browser</title>
-      <link>https://nitroide.com/blog/wasm-exception-handling-zero-cost-cpp</link>
-      <guid>https://nitroide.com/blog/wasm-exception-handling-zero-cost-cpp</guid>
-      <description>Exception handling in WASM used to be slow. Discover how NitroIDE uses native WebAssembly Exception Handling (WasmEH) for desktop-grade C++ execution.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Instant Video Previews: Service Worker Byte-Range Requests</title>
-      <link>https://nitroide.com/blog/service-worker-byte-range-requests-streaming</link>
-      <guid>https://nitroide.com/blog/service-worker-byte-range-requests-streaming</guid>
-      <description>Loading large video assets in web IDEs usually crashes the tab. Learn how NitroIDE handles massive media files via local Service Worker streaming.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Cross-Tab File Synchronization via the Web Locks API</title>
-      <link>https://nitroide.com/blog/weblocks-api-cross-tab-mutex-opfs</link>
-      <guid>https://nitroide.com/blog/weblocks-api-cross-tab-mutex-opfs</guid>
-      <description>Preventing data corruption when coding across multiple windows. How NitroIDE implements Mutex locks using the Web Locks API.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Perfect Terminal Typography: HarfBuzz compiled to WASM</title>
-      <link>https://nitroide.com/blog/harfbuzz-wasm-canvas-text-shaping</link>
-      <guid>https://nitroide.com/blog/harfbuzz-wasm-canvas-text-shaping</guid>
-      <description>The standard Canvas API ruins font ligatures. Learn how NitroIDE integrated the HarfBuzz text shaping engine to render flawless coding fonts.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Instant IDE Boot Times via V8 Heap Snapshots</title>
-      <link>https://nitroide.com/blog/v8-heap-snapshots-instant-ide-boot</link>
-      <guid>https://nitroide.com/blog/v8-heap-snapshots-instant-ide-boot</guid>
-      <description>Parsing megabytes of JavaScript takes time. See how NitroIDE bypasses script evaluation entirely by hydrating pre-computed V8 Heap Snapshots.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Rendering 10,000 Files: CSS content-visibility</title>
-      <link>https://nitroide.com/blog/content-visibility-dom-culling-massive-file-trees</link>
-      <guid>https://nitroide.com/blog/content-visibility-dom-culling-massive-file-trees</guid>
-      <description>A massive monorepo file tree will crash the browser DOM. Learn how NitroIDE uses CSS content-visibility for ultra-fast DOM culling.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Compiling Java &amp; Kotlin to the Web via WasmGC</title>
-      <link>https://nitroide.com/blog/wasmgc-compiling-managed-languages-browser-ide</link>
-      <guid>https://nitroide.com/blog/wasmgc-compiling-managed-languages-browser-ide</guid>
-      <description>WebAssembly finally supports Garbage Collection. See how NitroIDE leverages WasmGC to run Java, Kotlin, and Dart natively in the browser.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Binding IDE Macros to Physical Hardware via Web MIDI</title>
-      <link>https://nitroide.com/blog/web-midi-api-physical-hardware-macros-ide</link>
-      <guid>https://nitroide.com/blog/web-midi-api-physical-hardware-macros-ide</guid>
-      <description>Take your workflow physical. Learn how to map complex IDE commands and macros to DJ controllers and Stream Decks using the Web MIDI API.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Responsive IDE Layouts via CSS Container Queries</title>
-      <link>https://nitroide.com/blog/css-container-queries-ide-micro-frontends</link>
-      <guid>https://nitroide.com/blog/css-container-queries-ide-micro-frontends</guid>
-      <description>Media queries fail in complex IDE layouts. Discover how NitroIDE uses CSS Container Queries to build perfectly fluid, resizable editor panes.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>C++ Pthreads in the Browser: True Multithreading via WASM</title>
-      <link>https://nitroide.com/blog/wasm-pthreads-multi-threading-browser-html</link>
-      <guid>https://nitroide.com/blog/wasm-pthreads-multi-threading-browser-html</guid>
-      <description>WebAssembly now supports pthreads! Discover how NitroIDE compiles massive C++ multi-threaded applications to run natively in your browser tab.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Controlling Industrial Hardware via Web Serial IDEs</title>
-      <link>https://nitroide.com/blog/web-serial-api-industrial-hardware-browser</link>
-      <guid>https://nitroide.com/blog/web-serial-api-industrial-hardware-browser</guid>
-      <description>Flash PLCs and robotics hardware directly from Chrome. How NitroIDE leverages the Web Serial API for physical hardware engineering.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Syncing VFS State with Merkle Trees &amp; IndexedDB</title>
-      <link>https://nitroide.com/blog/merkle-trees-indexeddb-vfs-sync</link>
-      <guid>https://nitroide.com/blog/merkle-trees-indexeddb-vfs-sync</guid>
-      <description>How does NitroIDE instantly sync 10,000 files to GitHub? Read our deep dive on building a blazing fast Git client in the browser using Merkle Trees.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Zero-Diff UI Rendering: The TC39 Signals API</title>
-      <link>https://nitroide.com/blog/tc39-signals-api-zero-diff-rendering</link>
-      <guid>https://nitroide.com/blog/tc39-signals-api-zero-diff-rendering</guid>
-      <description>React's Virtual DOM is obsolete. Discover how NitroIDE's UI is built on the native TC39 Signals proposal for zero-overhead DOM updates.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Manual Memory Allocation in WASM Linear Memory</title>
-      <link>https://nitroide.com/blog/wasm-linear-memory-manual-allocation-browser</link>
-      <guid>https://nitroide.com/blog/wasm-linear-memory-manual-allocation-browser</guid>
-      <description>Take absolute control over your RAM. Learn how to manually allocate and free memory blocks in WebAssembly using C++ and NitroIDE.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Real-Time Memory Leak Detection via PerformanceObserver</title>
-      <link>https://nitroide.com/blog/performanceobserver-real-time-memory-leak-detection</link>
-      <guid>https://nitroide.com/blog/performanceobserver-real-time-memory-leak-detection</guid>
-      <description>Stop memory leaks before they crash your tab. How NitroIDE integrates the PerformanceObserver API to automatically detect orphaned JS objects.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Accessibility via UI Sonification and the Web Audio API</title>
-      <link>https://nitroide.com/blog/webaudio-api-ui-sonification-accessibility</link>
-      <guid>https://nitroide.com/blog/webaudio-api-ui-sonification-accessibility</guid>
-      <description>Web IDEs must be accessible. Learn how NitroIDE uses spatial audio to communicate build errors and UI state to visually impaired developers.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Flashing Microcontrollers Natively via WebUSB</title>
-      <link>https://nitroide.com/blog/webusb-api-flash-microcontrollers-browser</link>
-      <guid>https://nitroide.com/blog/webusb-api-flash-microcontrollers-browser</guid>
-      <description>Bypass proprietary flashing software. Discover how NitroIDE uses the WebUSB API to push compiled binaries directly to development boards.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Custom UI Rendering: Unleashing the CSS Houdini Paint API</title>
-      <link>https://nitroide.com/blog/css-houdini-paint-api-custom-rendering</link>
-      <guid>https://nitroide.com/blog/css-houdini-paint-api-custom-rendering</guid>
-      <description>CSS has limits. Learn how NitroIDE uses the Houdini Paint Worklet to execute raw JavaScript drawing commands directly on the browser's GPU render thread.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Instant Boot Times via Navigation Preload API</title>
-      <link>https://nitroide.com/blog/service-worker-navigation-preload-instant-boot</link>
-      <guid>https://nitroide.com/blog/service-worker-navigation-preload-instant-boot</guid>
-      <description>Service Workers introduce a boot delay. Learn how NitroIDE uses the Navigation Preload API to fetch workspace data before the worker even wakes up.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Decentralized State Management via WebRTC Data Channels</title>
-      <link>https://nitroide.com/blog/decentralized-state-management-webrtc-data-channels</link>
-      <guid>https://nitroide.com/blog/decentralized-state-management-webrtc-data-channels</guid>
-      <description>Redux is centralized. Discover how NitroIDE utilizes Yjs and WebRTC Data Channels to manage complex, conflict-free state across global multiplayer sessions.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Running Desktop LSPs Natively in Web Workers</title>
-      <link>https://nitroide.com/blog/language-server-protocol-lsp-web-workers</link>
-      <guid>https://nitroide.com/blog/language-server-protocol-lsp-web-workers</guid>
-      <description>IntelliSense shouldn't rely on the cloud. How NitroIDE compiles official Language Server Protocol (LSP) binaries to run locally in background threads.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>High-Frequency Log Streaming via Shared Ring Buffers</title>
-      <link>https://nitroide.com/blog/ring-buffers-sharedarraybuffer-high-frequency-logs</link>
-      <guid>https://nitroide.com/blog/ring-buffers-sharedarraybuffer-high-frequency-logs</guid>
-      <description>A 10,000 line-per-second console log will freeze any IDE. Learn how NitroIDE uses Atomics and Ring Buffers for lock-free terminal streaming.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Native File Watching via the FileSystemObserver API</title>
-      <link>https://nitroide.com/blog/filesystemobserver-native-file-watching-browser</link>
-      <guid>https://nitroide.com/blog/filesystemobserver-native-file-watching-browser</guid>
-      <description>Polling the disk is slow. See how NitroIDE integrates the new FileSystemObserver API to instantly detect external changes to your local workspace.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Sandboxing Execution Contexts via the ShadowRealms API</title>
-      <link>https://nitroide.com/blog/shadowrealms-api-sandboxing-untrusted-code</link>
-      <guid>https://nitroide.com/blog/shadowrealms-api-sandboxing-untrusted-code</guid>
-      <description>Iframes are heavy. Learn how NitroIDE securely evaluates untrusted user code instantly using the lightweight ShadowRealms API.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Predictive UI Prefetching via IntersectionObserver</title>
-      <link>https://nitroide.com/blog/predictive-prefetching-intersectionobserver-service-workers</link>
-      <guid>https://nitroide.com/blog/predictive-prefetching-intersectionobserver-service-workers</guid>
-      <description>Zero-latency navigation isn't magic; it's math. See how NitroIDE predictively caches IDE routes the moment a button enters your viewport.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Synchronous Thread Pausing via Atomics.wait()</title>
-      <link>https://nitroide.com/blog/synchronous-thread-pausing-atomics-wait</link>
-      <guid>https://nitroide.com/blog/synchronous-thread-pausing-atomics-wait</guid>
-      <description>C++ code expects synchronous blocking. Learn how NitroIDE uses Atomics.wait() to emulate thread pausing without freezing the browser.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>128-Bit Vector Processing: Leveraging WASM SIMD</title>
-      <link>https://nitroide.com/blog/wasm-simd-128-bit-vector-processing-browser</link>
-      <guid>https://nitroide.com/blog/wasm-simd-128-bit-vector-processing-browser</guid>
-      <description>Processing massive arrays? Discover how NitroIDE achieves native-grade matrix math by compiling C++ directly to 128-bit WebAssembly SIMD instructions.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Zero-Latency Voice Chat via AudioWorklet Processing</title>
-      <link>https://nitroide.com/blog/audioworklet-low-latency-webrtc-voice</link>
-      <guid>https://nitroide.com/blog/audioworklet-low-latency-webrtc-voice</guid>
-      <description>Pair programming requires perfect audio. See how NitroIDE bypasses standard WebRTC audio lag by utilizing custom AudioWorklet nodes.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Syncing the UI and the VFS via MutationObserver</title>
-      <link>https://nitroide.com/blog/mutationobserver-virtual-file-system-sync</link>
-      <guid>https://nitroide.com/blog/mutationobserver-virtual-file-system-sync</guid>
-      <description>How do you keep the DOM file tree perfectly in sync with the Virtual File System? A deep dive into efficient MutationObserver architectures.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Offline Git Commits via Service Worker Background Sync</title>
-      <link>https://nitroide.com/blog/service-worker-background-sync-offline-commits</link>
-      <guid>https://nitroide.com/blog/service-worker-background-sync-offline-commits</guid>
-      <description>Coding on an airplane? Discover how NitroIDE queues your Git commits locally and uses Background Sync to push them the second you reconnect.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>High-Performance Layouts: Bypassing Strings with CSS Typed OM</title>
-      <link>https://nitroide.com/blog/css-typed-om-high-performance-rendering</link>
-      <guid>https://nitroide.com/blog/css-typed-om-high-performance-rendering</guid>
-      <description>Concatenating CSS strings is slow. Learn how NitroIDE updates its complex UI using the CSS Typed Object Model for raw numerical performance.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Debugging Rust Natively: Implementing WASM Source Maps</title>
-      <link>https://nitroide.com/blog/wasm-source-maps-browser-debugging-rust</link>
-      <guid>https://nitroide.com/blog/wasm-source-maps-browser-debugging-rust</guid>
-      <description>When WASM crashes, reading bytecode is impossible. Discover how NitroIDE integrates Source Maps to map WebAssembly execution errors directly to your original Rust code.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Full-Stack Development: MOCK APIs via Service Workers</title>
-      <link>https://nitroide.com/blog/service-worker-api-mocking-browser-ide</link>
-      <guid>https://nitroide.com/blog/service-worker-api-mocking-browser-ide</guid>
-      <description>Building a frontend without a backend? Learn how NitroIDE uses Service Workers to intercept fetch requests and serve robust Mock APIs locally.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Preventing DOM Leaks with WeakRefs &amp; FinalizationRegistry</title>
-      <link>https://nitroide.com/blog/weakrefs-finalizationregistry-preventing-memory-leaks</link>
-      <guid>https://nitroide.com/blog/weakrefs-finalizationregistry-preventing-memory-leaks</guid>
-      <description>Caching data can crash a browser. Learn how NitroIDE safely caches massive AST structures using WeakRefs to avoid memory leaks.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
+<item>
       <title>In-Browser Code Formatting via Babel AST Manipulation</title>
       <link>https://nitroide.com/blog/ast-manipulation-auto-formatting-babel</link>
       <guid>https://nitroide.com/blog/ast-manipulation-auto-formatting-babel</guid>
       <description>Prettier is too heavy for the web. Learn how NitroIDE provides instant code formatting by compiling Babel into WebAssembly.</description>
-      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
-    </item>
-    <item>
-      <title>Subpixel Anti-Aliasing: Hacking Canvas for Perfect Text</title>
-      <link>https://nitroide.com/blog/canvas-2d-subpixel-text-rendering-monaco</link>
-      <guid>https://nitroide.com/blog/canvas-2d-subpixel-text-rendering-monaco</guid>
-      <description>Web IDEs often have blurry fonts. Discover how NitroIDE leverages Canvas 2D subpixel rendering for macOS-quality typography on Windows.</description>
       <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
     </item>
   </channel>

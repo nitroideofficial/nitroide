@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototype React, Vue &amp; TypeScript in the Browser — No Build Step | NitroIDE</title>
+  <meta name="title" content="Prototype React, Vue &amp; TypeScript in the Browser — No Build Step | NitroIDE">
+  <meta name="description" content="Prototype React, Vue, and TypeScript in the browser with zero build step — import maps, esm.sh, in-browser transpile, and an honest comparison with cloud IDEs.">
+  <meta name="keywords" content="react without npm cdn, vue esm browser no build, typescript in browser transpile, codesandbox alternative honest, codepen alternative frontend">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#38bdf8">
+  <meta property="og:title" content="Prototype React, Vue &amp; TypeScript in the Browser — No Build Step | NitroIDE">
+  <meta property="og:description" content="Prototype React, Vue, and TypeScript in the browser with zero build step — import maps, esm.sh, in-browser transpile, and an honest comparison with cloud IDEs.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide.html">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Skip npm. Prototype Frameworks at CDN Speed.",
+    "description": "Prototype React, Vue, and TypeScript in the browser with zero build step — import maps, esm.sh, in-browser transpile, and an honest comparison with cloud IDEs.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #38bdf8; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">FRAMEWORKS & TOOLS • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Skip npm. Prototype Frameworks at CDN Speed.</h1>
+
+    <p>Here's an honest truth most "online React IDE" pages won't tell you: <strong>you don't need npm, a bundler, or a cloud container to prototype with React, Vue, or TypeScript.</strong> Modern CDNs serve every package as native ES modules, and browsers import them directly. No install step, no build step, no waiting for a container to boot.</p>
+
+    <p>This guide shows the real patterns — React via esm.sh, Vue via ESM builds, TypeScript transpiled in-browser — and ends with a frank comparison of when a browser playground beats CodeSandbox, StackBlitz, or CodePen (and when it doesn't).</p>
+
+    <h2>React without npm: import maps + esm.sh</h2>
+    <p>esm.sh rewrites any npm package as browser-ready ES modules. Pair it with an <strong>import map</strong> and you get bare imports that just work:</p>
+
+    <div class="docs-code"><span class="code-tag">&lt;script</span> <span class="code-attr">type</span>=<span class="code-string">"importmap"</span><span class="code-tag">&gt;</span><br>{<br>&nbsp;&nbsp;<span class="code-string">"imports"</span>: {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"react"</span>: <span class="code-string">"https://esm.sh/react@19"</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"react-dom/client"</span>: <span class="code-string">"https://esm.sh/react-dom@19/client"</span><br>&nbsp;&nbsp;}<br>}<br><span class="code-tag">&lt;/script&gt;</span><br><span class="code-tag">&lt;script</span> <span class="code-attr">type</span>=<span class="code-string">"module"</span><span class="code-tag">&gt;</span><br><span class="code-keyword">import</span> React <span class="code-keyword">from</span> <span class="code-string">'react'</span>;<br><span class="code-keyword">import</span> { createRoot } <span class="code-keyword">from</span> <span class="code-string">'react-dom/client'</span>;<br><span class="code-keyword">const</span> App = () =&gt; React.<span class="code-func">createElement</span>(<span class="code-string">'h1'</span>, <span class="code-keyword">null</span>, <span class="code-string">'No build step!'</span>);<br><span class="code-func">createRoot</span>(document.<span class="code-func">getElementById</span>(<span class="code-string">'root'</span>)).<span class="code-func">render</span>(<span class="code-func">App</span>());<br><span class="code-tag">&lt;/script&gt;</span></div>
+
+    <p>Want JSX instead of <code>createElement</code>? Add htm (Hyperscript Tagged Markup) — JSX-like syntax with zero compilation:</p>
+
+    <div class="docs-code"><span class="code-keyword">import</span> htm <span class="code-keyword">from</span> <span class="code-string">'https://esm.sh/htm@3'</span>;<br><span class="code-keyword">const</span> html = htm.<span class="code-func">bind</span>(React.createElement);<br><span class="code-keyword">const</span> App = () =&gt; html<span class="code-string">`&lt;h1&gt;Hello, ${name}!&lt;/h1&gt;`</span>;</div>
+
+    <div class="pro-tip" style="border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.05);">
+      <i class="ph-fill ph-lightning" style="color: #38bdf8;"></i>
+      <div>
+        <p><strong>What about HMR?</strong> True Hot Module Replacement (state-preserving updates) needs a dev server watching your files. What a browser playground gives you instead is <strong>instant full reload</strong> — often under 50ms locally, which feels just as fast for prototypes. Anyone promising "real HMR" with zero infrastructure is stretching the term.</p>
+      </div>
+    </div>
+
+    <h2>Vue without a build: the ESM browser build</h2>
+    <p>Vue ships an official browser build with the template compiler included — in-DOM templates work with no compilation at all:</p>
+
+    <div class="docs-code"><span class="code-tag">&lt;div</span> <span class="code-attr">id</span>=<span class="code-string">"app"</span><span class="code-tag">&gt;</span>{{ message }}<span class="code-tag">&lt;/div&gt;</span><br><span class="code-tag">&lt;script</span> <span class="code-attr">type</span>=<span class="code-string">"module"</span><span class="code-tag">&gt;</span><br><span class="code-keyword">import</span> { createApp } <span class="code-keyword">from</span><br>&nbsp;&nbsp;<span class="code-string">'https://unpkg.com/vue@3/dist/vue.esm-browser.js'</span>;<br><span class="code-func">createApp</span>({ <span class="code-func">data</span>() { <span class="code-keyword">return</span> { <span class="code-attr">message</span>: <span class="code-string">'Vue, zero build'</span> }; } })<br>&nbsp;&nbsp;.<span class="code-func">mount</span>(<span class="code-string">'#app'</span>);<br><span class="code-tag">&lt;/script&gt;</span></div>
+
+    <p>Single-File Components (the <code>.vue</code> format) <em>can</em> be compiled in-browser via <code>@vue/compiler-sfc</code> from a CDN, but it's heavy and slow to boot — for quick prototypes, template strings or in-DOM templates are the pragmatic choice. Full SFC support is genuinely one of the things that justifies a real build pipeline.</p>
+
+    <h2>TypeScript without tsc: transpile in the browser</h2>
+    <p>The TypeScript compiler itself runs in the browser. Load it from a CDN and transpile on the fly — types get stripped, modern JS comes out:</p>
+
+    <div class="docs-code"><span class="code-keyword">import</span> ts <span class="code-keyword">from</span> <span class="code-string">'https://esm.sh/typescript@5'</span>;<br><span class="code-keyword">const</span> tsCode = <span class="code-string">`const greet = (name: string): string =&gt; ` + '`Hello, ${name}`;'</span>;<br><span class="code-keyword">const</span> js = ts.<span class="code-func">transpileModule</span>(tsCode, {<br>&nbsp;&nbsp;<span class="code-attr">compilerOptions</span>: { <span class="code-attr">module</span>: ts.ModuleKind.ESNext }<br>}).outputText;<br><span class="code-comment">// js is now plain runnable JavaScript — eval it or inject as a module</span><br><span class="code-keyword">new</span> <span class="code-func">Function</span>(js.replace(<span class="code-string">'export'</span>, <span class="code-string">''</span>));</div>
+
+    <p>Honest limits: this is <em>transpilation only</em> — no type checking (use an editor with Monaco's TS worker for squiggles), and multi-file projects need you to manage the module graph yourself. For learning TypeScript and small prototypes, it's plenty.</p>
+
+    <h2>The honest comparison: playground vs cloud IDEs</h2>
+    <p>So where does a client-side playground like NitroIDE actually fit next to the big names? Here's the frank version:</p>
+
+    <div class="docs-code"><span class="code-comment">NitroIDE (browser playground)</span><br><span class="code-comment">  + instant, works offline, zero setup, private by default</span><br><span class="code-comment">  − frontend only: HTML/CSS/JS. No Python, no Node, no terminal</span><br><span class="code-comment">CodeSandbox / StackBlitz (cloud containers)</span><br><span class="code-comment">  + real npm, real builds, shareable URLs, backend templates</span><br><span class="code-comment">  − needs internet, cold boots, free tiers have limits</span><br><span class="code-comment">CodePen / JSFiddle (snippet playgrounds)</span><br><span class="code-comment">  + fastest for tiny demos, huge community, embeds everywhere</span><br><span class="code-comment">  − not built for multi-file projects or app architecture</span></div>
+
+    <p>The rule of thumb: <strong>prototyping UI or learning a framework → browser playground.</strong> Building something with a backend, a database, or a real build pipeline → cloud IDE. Neither is "the best" — they solve different problems, and pretending otherwise is marketing, not engineering.</p>
+
+    <div class="pro-tip" style="border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.05);">
+      <i class="ph-fill ph-airplane" style="color: #38bdf8;"></i>
+      <div>
+        <p><strong>The offline superpower:</strong> once esm.sh modules are cached, CDN-based prototypes keep working without internet — and NitroIDE itself is an offline PWA. That's a workflow no cloud container can match: prototype React on a plane, push to a real repo later.</p>
+      </div>
+    </div>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Prototype Frameworks Instantly.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">React, Vue, and TypeScript via CDN — no npm, no build, no waiting.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch NitroIDE <i class="ph-bold ph-code"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

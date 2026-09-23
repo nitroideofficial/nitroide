@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas &amp; Web Audio: A Hands-On Creative Coding Guide | NitroIDE</title>
+  <meta name="title" content="Canvas &amp; Web Audio: A Hands-On Creative Coding Guide | NitroIDE">
+  <meta name="description" content="Canvas 2D, Web Audio synthesis, AudioWorklet sample-accurate timing, and UI sonification — hands-on creative coding with runnable browser examples.">
+  <meta name="keywords" content="canvas 2d tutorial, web audio api synthesizer, audioworklet tutorial, creative coding browser, ui sonification accessibility">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#f59e0b">
+  <meta property="og:title" content="Canvas &amp; Web Audio: A Hands-On Creative Coding Guide | NitroIDE">
+  <meta property="og:description" content="Canvas 2D, Web Audio synthesis, AudioWorklet sample-accurate timing, and UI sonification — hands-on creative coding with runnable browser examples.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/canvas-webaudio-creative-coding-guide.html">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Pixels and Waveforms: Creative Coding in the Browser.",
+    "description": "Canvas 2D, Web Audio synthesis, AudioWorklet sample-accurate timing, and UI sonification — hands-on creative coding with runnable browser examples.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/canvas-webaudio-creative-coding-guide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f59e0b; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">UI PERFORMANCE • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Pixels and Waveforms: Creative Coding in the Browser.</h1>
+
+    <p>Two browser APIs turn a plain web page into a creative instrument: <strong>Canvas 2D</strong> for pixels and the <strong>Web Audio API</strong> for sound. Together they cover generative art, data visualization, music tools, games, and accessible audio feedback. This guide is hands-on — every snippet runs if you paste it into NitroIDE's preview.</p>
+
+    <h2>Canvas 2D: the immediate-mode drawing board</h2>
+    <p>Canvas is immediate-mode: you issue draw commands, pixels appear. No scene graph, no retained objects — which makes it blazing fast for custom rendering:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> ctx = canvas.<span class="code-func">getContext</span>(<span class="code-string">'2d'</span>);<br><span class="code-keyword">function</span> <span class="code-func">frame</span>(t) {<br>&nbsp;&nbsp;ctx.fillStyle = <span class="code-string">'#0a0a0a'</span>;<br>&nbsp;&nbsp;ctx.<span class="code-func">fillRect</span>(<span class="code-num">0</span>, <span class="code-num">0</span>, canvas.width, canvas.height);<br>&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">let</span> i = <span class="code-num">0</span>; i &lt; <span class="code-num">120</span>; i++) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> x = canvas.width / <span class="code-num">2</span> + Math.<span class="code-func">cos</span>(t / <span class="code-num">500</span> + i) * i * <span class="code-num">2</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> y = canvas.height / <span class="code-num">2</span> + Math.<span class="code-func">sin</span>(t / <span class="code-num">500</span> + i) * i * <span class="code-num">2</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;ctx.fillStyle = <span class="code-string">`hsl(${(t / 20 + i * 3) % 360}, 80%, 60%)`</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;ctx.<span class="code-func">fillRect</span>(x, y, <span class="code-num">4</span>, <span class="code-num">4</span>);<br>&nbsp;&nbsp;}<br>&nbsp;&nbsp;requestAnimationFrame(frame);<br>}<br>requestAnimationFrame(frame);</div>
+
+    <div class="pro-tip" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);">
+      <i class="ph-fill ph-monitor" style="color: #f59e0b;"></i>
+      <div>
+        <p><strong>Crisp on every screen:</strong> canvas looks blurry on high-DPI displays unless you scale it. Multiply <code>canvas.width/height</code> by <code>devicePixelRatio</code> and call <code>ctx.scale(devicePixelRatio, devicePixelRatio)</code> — one of the most common canvas bugs, fixed in two lines.</p>
+      </div>
+    </div>
+
+    <h2>Crisp text on canvas</h2>
+    <p>Canvas text rendering is notoriously rough compared to DOM text. Practical fixes: always set an explicit <code>ctx.font</code> (don't rely on the 10px default), enable <code>ctx.textBaseline</code> deliberately, and for editor-grade typography consider shaping text properly — libraries like HarfBuzz compiled to WASM exist precisely because complex scripts need real text shaping, which canvas won't do for you.</p>
+
+    <h2>Web Audio: a modular synthesizer in JS</h2>
+    <p>The Web Audio API is a graph of nodes: sources → effects → destination. Building a playable synth takes surprisingly little code:</p>
+
+    <div class="docs-code"><span class="code-comment">// Browsers require a user gesture before audio starts</span><br>button.<span class="code-func">addEventListener</span>(<span class="code-string">'click'</span>, () =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> ctx = <span class="code-keyword">new</span> <span class="code-func">AudioContext</span>();<br>&nbsp;&nbsp;<span class="code-keyword">const</span> osc = ctx.<span class="code-func">createOscillator</span>();<br>&nbsp;&nbsp;<span class="code-keyword">const</span> gain = ctx.<span class="code-func">createGain</span>();<br>&nbsp;&nbsp;<span class="code-keyword">const</span> filter = ctx.<span class="code-func">createBiquadFilter</span>();<br>&nbsp;&nbsp;osc.type = <span class="code-string">'sawtooth'</span>; osc.frequency.value = <span class="code-num">220</span>;<br>&nbsp;&nbsp;filter.type = <span class="code-string">'lowpass'</span>; filter.frequency.value = <span class="code-num">1200</span>;<br>&nbsp;&nbsp;gain.gain.<span class="code-func">setValueAtTime</span>(<span class="code-num">0</span>, ctx.currentTime);<br>&nbsp;&nbsp;gain.gain.<span class="code-func">linearRampToValueAtTime</span>(<span class="code-num">0.4</span>, ctx.currentTime + <span class="code-num">0.05</span>);<br>&nbsp;&nbsp;gain.gain.<span class="code-func">exponentialRampToValueAtTime</span>(<span class="code-num">0.001</span>, ctx.currentTime + <span class="code-num">1.2</span>);<br>&nbsp;&nbsp;osc.<span class="code-func">connect</span>(filter).<span class="code-func">connect</span>(gain).<span class="code-func">connect</span>(ctx.destination);<br>&nbsp;&nbsp;osc.<span class="code-func">start</span>(); osc.<span class="code-func">stop</span>(ctx.currentTime + <span class="code-num">1.3</span>);<br>});</div>
+
+    <p>That envelope — quick attack, exponential decay — is what separates "beep" from "instrument." Everything is scheduled on the audio clock (<code>ctx.currentTime</code>), which is sample-accurate and independent of frame rate.</p>
+
+    <h2>Sample-accurate timing with AudioWorklet</h2>
+    <p>For custom DSP — a distortion effect, a granular sampler, a metronome that never drifts — you need code running on the audio thread itself. <strong>AudioWorklet</strong> replaced the old (now removed) ScriptProcessorNode:</p>
+
+    <div class="docs-code"><span class="code-comment">// metronome-processor.js — runs on the real-time audio thread</span><br><span class="code-keyword">class</span> <span class="code-func">Metronome</span> <span class="code-keyword">extends</span> AudioWorkletProcessor {<br>&nbsp;&nbsp;<span class="code-func">process</span>(inputs, outputs) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> out = outputs[<span class="code-num">0</span>][<span class="code-num">0</span>];<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">let</span> i = <span class="code-num">0</span>; i &lt; out.length; i++) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// emit a click every 0.5s, sample-accurate</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out[i] = (this.<span class="code-attr">pos</span>++ % <span class="code-num">24000</span> &lt; <span class="code-num">200</span>) ? <span class="code-num">0.8</span> : <span class="code-num">0</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return true</span>; <span class="code-comment">// keep alive</span><br>&nbsp;&nbsp;}<br>}<br><span class="code-func">registerProcessor</span>(<span class="code-string">'metronome'</span>, Metronome);</div>
+
+    <div class="docs-code"><span class="code-keyword">await</span> ctx.audioWorklet.<span class="code-func">addModule</span>(<span class="code-string">'metronome-processor.js'</span>);<br><span class="code-keyword">new</span> <span class="code-func">AudioWorkletNode</span>(ctx, <span class="code-string">'metronome'</span>).<span class="code-func">connect</span>(ctx.destination);</div>
+
+    <p>Because this runs on the audio rendering thread, timing is sample-accurate — no <code>setInterval</code> drift. Keep the <code>process()</code> method lean: no allocations, no async work, or you'll hear glitches.</p>
+
+    <h2>UI sonification: sound as accessibility</h2>
+    <p>Sound isn't just for music apps. Short, subtle audio cues — a soft tick on toggle, a rising pitch as a progress bar fills — give non-visual feedback that helps everyone, including screen-reader users navigating custom controls. The Web Audio snippets above are all you need; keep cues under 200&nbsp;ms and always respect <code>prefers-reduced-motion</code>-style user preferences for sound where your app offers a mute.</p>
+
+    <div class="pro-tip" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);">
+      <i class="ph-fill ph-speaker-high" style="color: #f59e0b;"></i>
+      <div>
+        <p><strong>The one rule of web audio:</strong> <code>AudioContext</code> starts suspended until a user gesture. Always create or resume it inside a click/keydown handler — otherwise you'll debug silence for an hour. This is a browser autoplay policy, not a bug in your code.</p>
+      </div>
+    </div>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Make Some Noise. Draw Some Pixels.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Creative coding needs instant feedback — get it in a zero-setup browser IDE.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch NitroIDE <i class="ph-bold ph-speaker-high"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

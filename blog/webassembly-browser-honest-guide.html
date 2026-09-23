@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebAssembly in the Browser: What It Can (and Can't) Do | NitroIDE</title>
+  <meta name="title" content="WebAssembly in the Browser: What It Can (and Can't) Do | NitroIDE">
+  <meta name="description" content="What WebAssembly can and can't do in the browser: loading modules, linear memory, WasmGC, threads, SIMD, SQLite.wasm — plus honest limits on Python-in-WASM and WebGPU.">
+  <meta name="keywords" content="webassembly tutorial honest, wasm vs python browser, sqlite wasm browser, wasm memory threads simd, wasmgc explained">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#3178c6">
+  <meta property="og:title" content="WebAssembly in the Browser: What It Can (and Can't) Do | NitroIDE">
+  <meta property="og:description" content="What WebAssembly can and can't do in the browser: loading modules, linear memory, WasmGC, threads, SIMD, SQLite.wasm — plus honest limits on Python-in-WASM and WebGPU.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/webassembly-browser-honest-guide.html">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "WebAssembly, Honestly: Power, Limits, and Real Use Cases.",
+    "description": "What WebAssembly can and can't do in the browser: loading modules, linear memory, WasmGC, threads, SIMD, SQLite.wasm — plus honest limits on Python-in-WASM and WebGPU.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/webassembly-browser-honest-guide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #3178c6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINEERING • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">WebAssembly, Honestly: Power, Limits, and Real Use Cases.</h1>
+
+    <p>Let's clear something up first: <strong>WebAssembly doesn't let you run Python, Java, or C# in a browser IDE the way a native runtime does.</strong> Tools like Pyodide (Python compiled to WASM) exist, but they're hundreds of megabytes, slow to boot, and can't touch the real filesystem or spawn processes. If someone promises you a full Python data-science environment inside a purely client-side web page, be skeptical.</p>
+
+    <p>What WebAssembly <em>actually</em> is: a portable, sandboxed binary format that lets you run near-native-speed code — compiled from C, C++, or Rust — inside the browser's security sandbox. That's genuinely powerful for the right jobs. This guide covers what those jobs are, how WASM really works, and how to use it from plain JavaScript.</p>
+
+    <h2>Loading a WASM module from JavaScript</h2>
+    <p>At its core, WebAssembly is just "functions you can call from JS, running at near-native speed." Here's the whole loading ceremony:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> { instance } = <span class="code-keyword">await</span> WebAssembly.<span class="code-func">instantiateStreaming</span>(<br>&nbsp;&nbsp;<span class="code-func">fetch</span>(<span class="code-string">'/add.wasm'</span>),<br>&nbsp;&nbsp;{ <span class="code-attr">env</span>: { <span class="code-attr">memory</span>: <span class="code-keyword">new</span> <span class="code-func">WebAssembly</span>.<span class="code-func">Memory</span>({ <span class="code-attr">initial</span>: <span class="code-num">1</span> }) } }<br>);<br><span class="code-comment">// Call a C function compiled to WASM, straight from JS:</span><br><span class="code-keyword">const</span> result = instance.exports.<span class="code-func">add</span>(<span class="code-num">40</span>, <span class="code-num">2</span>); <span class="code-comment">// 42</span></div>
+
+    <p><code>instantiateStreaming</code> compiles the module <em>while it downloads</em> — but it requires the server to send the correct <code>application/wasm</code> MIME type. Wrong MIME type is the #1 "my WASM won't load" bug.</p>
+
+    <h2>What WASM is genuinely great at</h2>
+    <p>The wins are all compute-heavy, self-contained workloads that already exist as C/C++/Rust libraries:</p>
+
+    <div class="docs-code"><span class="code-comment">// Real production WASM modules you can npm/CDN-install today:</span><br><span class="code-comment">// • @sqlite.org/sqlite-wasm — full SQLite in the browser</span><br><span class="code-comment">// • @ffmpeg/ffmpeg — video transcoding client-side</span><br><span class="code-comment">// • squoosh codecs — near-native image compression</span><br><span class="code-comment">// • harfbuzz-wasm — professional text shaping for canvas</span><br><span class="code-keyword">import</span> { <span class="code-func">sqlite3Worker1Promiser</span> } <span class="code-keyword">from</span> <span class="code-string">'https://esm.sh/@sqlite.org/sqlite-wasm@3'</span>;<br><span class="code-keyword">const</span> promiser = <span class="code-keyword">await new</span> <span class="code-func">Promise</span>(<span class="code-func">sqlite3Worker1Promiser</span>);<br><span class="code-keyword">const</span> dbId = (<span class="code-keyword">await</span> promiser(<span class="code-string">'open'</span>, { <span class="code-attr">filename</span>: <span class="code-string">':memory:'</span> })).dbId;<br><span class="code-keyword">await</span> <span class="code-func">promiser</span>(<span class="code-string">'exec'</span>, { <span class="code-attr">dbId</span>, <span class="code-attr">sql</span>: <span class="code-string">'CREATE TABLE t(a); INSERT INTO t VALUES (42);'</span> });</div>
+
+    <p>Notice the pattern: WASM modules do the heavy lifting (SQL parsing, video codecs), JavaScript orchestrates. Crossing the JS↔WASM boundary has a cost, so batch your calls — don't call into WASM per-pixel in a hot loop if you can process the whole buffer in one call.</p>
+
+    <div class="pro-tip" style="border-color: rgba(49, 120, 198, 0.3); background: rgba(49, 120, 198, 0.05);">
+      <i class="ph-fill ph-database" style="color: #3178c6;"></i>
+      <div>
+        <p><strong>Try it in NitroIDE:</strong> the preview pane is a real browser, so the SQLite snippet above runs there verbatim. A full SQL database with zero backend — that's the honest version of "full-stack in the browser."</p>
+      </div>
+    </div>
+
+    <h2>Memory: one big linear array</h2>
+    <p>A WASM module's memory is a single growable <code>ArrayBuffer</code> that both sides can read. Strings and structs cross the boundary as offsets into this buffer — which is why WASM bindings always involve some marshaling code:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> memory = <span class="code-keyword">new</span> <span class="code-func">WebAssembly</span>.<span class="code-func">Memory</span>({ <span class="code-attr">initial</span>: <span class="code-num">1</span> }); <span class="code-comment">// 1 page = 64 KiB</span><br><span class="code-comment">// JS side: write bytes the WASM module can read</span><br><span class="code-keyword">new</span> <span class="code-func">Uint8Array</span>(memory.buffer).<span class="code-func">set</span>([72, 105], <span class="code-num">0</span>); <span class="code-comment">// "Hi"</span><br><span class="code-comment">// WASM side (C): char* msg = (char*)0; // reads "Hi"</span></div>
+
+    <p>This manual-memory model is why higher-level conveniences took years to arrive — which brings us to the newer proposals.</p>
+
+    <h2>The proposals that matter (and their real status)</h2>
+    <p><strong>WasmGC — shipped.</strong> Lets WASM allocate garbage-collected structs and arrays directly, which is what finally makes compiling managed languages (Java, Kotlin, Dart) to the web practical. It's real and in stable browsers — but "compiling Java to the web" still means porting a runtime and libraries, not magically running your Spring app.</p>
+    <p><strong>Threads — shipped, with a catch.</strong> WASM threads use <code>SharedArrayBuffer</code>, so they need the same cross-origin isolation headers (<code>COOP</code>/<code>COEP</code>) as JS shared memory. Without those headers, threaded WASM silently falls back or fails.</p>
+    <p><strong>SIMD (128-bit vectors) — shipped.</strong> One instruction processes 4 floats at once — real speedups for image/audio processing. In Rust it's often automatic via autovectorization; in C++ you write intrinsics.</p>
+    <p><strong>Exception handling — shipped (legacy MVP).</strong> C++ exceptions now work across the WASM boundary without the old setjmp/longjmp hacks.</p>
+    <p><strong>Tail calls, extended const, source maps</strong> — in various stages of proposal or tooling support. Treat any blog claiming production-ready status with a quick check of the actual proposal repo.</p>
+
+    <h2>Debugging: source maps for WASM</h2>
+    <p>Debugging raw WASM is debugging assembly. Toolchains like Emscripten and Rust's wasm-pack can emit DWARF/source-map info so browser DevTools show you original C++/Rust source with breakpoints. It works — but setup is fiddly, and it's a DevTools feature, not something every IDE reimplements.</p>
+
+    <h2>WebGPU compute: the honest footnote</h2>
+    <p>You'll see claims about "WebGPU compute shaders" accelerating everything from search to physics. Reality check: WebGPU is Chromium-and-Safari-only (no Firefox stable as of this writing), requires the user to have a real GPU with up-to-date drivers, and writing WGSL shaders is genuinely hard. For 99% of frontend work, a well-written WASM module or even plain JS beats a half-understood compute shader. Reach for WebGPU when you've profiled and proven the CPU is the bottleneck — not before.</p>
+
+    <div class="pro-tip" style="border-color: rgba(49, 120, 198, 0.3); background: rgba(49, 120, 198, 0.05);">
+      <i class="ph-fill ph-scales" style="color: #3178c6;"></i>
+      <div>
+        <p><strong>The honest decision tree:</strong> plain JS too slow? → try workers first. Still too slow and it's numeric/codec-shaped work with an existing C/Rust library? → WASM. Need the GPU specifically? → WebGPU. Need Python's ecosystem? → you need a server (or Pyodide, with eyes open about the cost).</p>
+      </div>
+    </div>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(49, 120, 198, 0.05); border: 1px solid rgba(49, 120, 198, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Experiment With Real Browser Power.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Load WASM modules, stream data, and prototype — all client-side, all offline-capable.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch NitroIDE <i class="ph-bold ph-cube"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

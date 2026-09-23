@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Performance: Scheduler, Observers &amp; Memory Done Right | NitroIDE</title>
+  <meta name="title" content="Browser Performance: Scheduler, Observers &amp; Memory Done Right | NitroIDE">
+  <meta name="description" content="Scheduler API, PerformanceObserver, Compute Pressure, WeakRef memory management, and signals — the real browser performance toolkit, measured not guessed.">
+  <meta name="keywords" content="scheduler.postTask tutorial, scheduler.yield, PerformanceObserver longtask, compute pressure api, WeakRef FinalizationRegistry, signals proposal">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#f43f5e">
+  <meta property="og:title" content="Browser Performance: Scheduler, Observers &amp; Memory Done Right | NitroIDE">
+  <meta property="og:description" content="Scheduler API, PerformanceObserver, Compute Pressure, WeakRef memory management, and signals — the real browser performance toolkit, measured not guessed.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/browser-performance-scheduler-observers-memory-guide.html">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Make the Browser Fast on Purpose.",
+    "description": "Scheduler API, PerformanceObserver, Compute Pressure, WeakRef memory management, and signals — the real browser performance toolkit, measured not guessed.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/browser-performance-scheduler-observers-memory-guide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">UI PERFORMANCE • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Make the Browser Fast on Purpose.</h1>
+
+    <p>Performance isn't vibes — it's measurement plus a handful of platform primitives most developers never touch. This guide covers the real toolkit: yielding the main thread cooperatively, observing what's actually slow, adapting to thermal pressure, plugging memory leaks, and the fine-grained reactivity ideas reshaping UI frameworks.</p>
+
+    <h2>Yield like you mean it: the Scheduler API</h2>
+    <p>Long tasks block input. The old fix was <code>setTimeout(..., 0)</code> hacks; the modern fix is <code>scheduler.postTask()</code> with priorities, and <code>scheduler.yield()</code> to explicitly hand control back to the browser mid-task:</p>
+
+    <div class="docs-code"><span class="code-keyword">async function</span> <span class="code-func">processBigList</span>(items) {<br>&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">const</span> item <span class="code-keyword">of</span> items) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">heavyWork</span>(item);<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (<span class="code-func">shouldYield</span>()) <span class="code-keyword">await</span> scheduler.<span class="code-func">yield</span>(); <span class="code-comment">// let input/paint run</span><br>&nbsp;&nbsp;}<br>}<br><span class="code-comment">// Or schedule with explicit priority:</span><br>scheduler.<span class="code-func">postTask</span>(<span class="code-func">renderPreview</span>, { <span class="code-attr">priority</span>: <span class="code-string">'user-visible'</span> });<br>scheduler.<span class="code-func">postTask</span>(<span class="code-func">prefetchNext</span>, { <span class="code-attr">priority</span>: <span class="code-string">'background'</span> });</div>
+
+    <p>Priorities (<code>user-blocking</code> → <code>user-visible</code> → <code>background</code>) let the browser make intelligent scheduling decisions instead of treating your analytics ping and your keystroke handler as equals. <code>scheduler.yield()</code> is the key primitive: unlike <code>setTimeout</code>, it continues in the same task context with proper priority inheritance.</p>
+
+    <h2>Measure first: PerformanceObserver</h2>
+    <p>Guessing what's slow is how you "optimize" the wrong thing. <code>PerformanceObserver</code> streams real metrics — long tasks, layout shifts, paint timings — while your app runs:</p>
+
+    <div class="docs-code"><span class="code-keyword">new</span> <span class="code-func">PerformanceObserver</span>((list) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">const</span> entry <span class="code-keyword">of</span> list.<span class="code-func">getEntries</span>()) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (entry.duration &gt; <span class="code-num">50</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.<span class="code-func">warn</span>(<span class="code-string">'Long task:'</span>, entry.duration.<span class="code-func">toFixed</span>(<span class="code-num">1</span>) + <span class="code-string">'ms'</span>, entry.name);<br>&nbsp;&nbsp;}<br>}).<span class="code-func">observe</span>({ <span class="code-attr">type</span>: <span class="code-string">'longtask'</span>, <span class="code-attr">buffered</span>: <span class="code-keyword">true</span> });<br><span class="code-comment">// Also useful: 'largest-contentful-paint', 'layout-shift', 'event'</span></div>
+
+    <p>Ship this behind a sampling flag in production and you'll find the real bottlenecks — usually a third-party script or an accidental layout thrash, not the code you suspected.</p>
+
+    <div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);">
+      <i class="ph-fill ph-gauge" style="color: #f43f5e;"></i>
+      <div>
+        <p><strong>The 50ms rule:</strong> any task over ~50ms risks dropping frames and delaying input. When your observer flags one, the fix is almost always the same: chunk the work with <code>scheduler.yield()</code> or move it to a worker.</p>
+      </div>
+    </div>
+
+    <h2>Respect the hardware: Compute Pressure</h2>
+    <p>Not every device is a desktop. The <strong>Compute Pressure API</strong> tells your page when the CPU is thermally throttling, so heavy apps can degrade gracefully — fewer particles, lower resolution, paused background work:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> observer = <span class="code-keyword">new</span> <span class="code-func">PressureObserver</span>((records) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> { state } = records.<span class="code-func">at</span>(-<span class="code-num">1</span>); <span class="code-comment">// nominal|fair|serious|critical</span><br>&nbsp;&nbsp;<span class="code-keyword">if</span> (state === <span class="code-string">'serious'</span> || state === <span class="code-string">'critical'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-func">reduceWorkload</span>(); <span class="code-comment">// be a good citizen</span><br>}, { <span class="code-attr">sampleRate</span>: <span class="code-num">1</span> });<br><span class="code-keyword">await</span> observer.<span class="code-func">observe</span>(<span class="code-string">'cpu'</span>);</div>
+
+    <p>Honest status: this API has shipped in Chromium behind evolving availability — verify current support before relying on it, and always design the fallback (assume <code>nominal</code> when unavailable).</p>
+
+    <h2>Plug the leaks: WeakRef &amp; FinalizationRegistry</h2>
+    <p>Caches and listener registries are the classic leak sources: you forget an entry, it holds a DOM subtree alive forever. <code>WeakRef</code> lets you reference objects without preventing garbage collection:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> cache = <span class="code-keyword">new</span> <span class="code-func">Map</span>();<br><span class="code-keyword">function</span> <span class="code-func">getExpensive</span>(key) {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> ref = cache.<span class="code-func">get</span>(key);<br>&nbsp;&nbsp;<span class="code-keyword">const</span> cached = ref?.<span class="code-func">deref</span>();<br>&nbsp;&nbsp;<span class="code-keyword">if</span> (cached) <span class="code-keyword">return</span> cached; <span class="code-comment">// still alive — reuse</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> fresh = <span class="code-func">computeExpensive</span>(key);<br>&nbsp;&nbsp;cache.<span class="code-func">set</span>(key, <span class="code-keyword">new</span> <span class="code-func">WeakRef</span>(fresh)); <span class="code-comment">// GC may collect it</span><br>&nbsp;&nbsp;<span class="code-keyword">return</span> fresh;<br>}</div>
+
+    <p>And <code>FinalizationRegistry</code> lets you run cleanup when an object is collected — closing file handles, removing listeners. Important honesty: never rely on finalizers for <em>correctness</em> (GC timing is nondeterministic); use them for best-effort cleanup and diagnostics only.</p>
+
+    <h2>Instant boot: what V8 snapshots actually are</h2>
+    <p>You'll hear "V8 heap snapshots" presented as a trick you can use to speed up your app. The reality: heap snapshots are a <em>browser/DevTools</em> capability — DevTools can capture them for memory profiling, and Chromium itself uses snapshots to boot faster. As a web developer, your actionable version is: ship less JavaScript, code-split aggressively, and profile with the Memory panel. There's no <code>takeSnapshotForSpeed()</code> API for your app.</p>
+
+    <h2>Fine-grained reactivity: the Signals idea</h2>
+    <p>Frameworks re-render too much because they don't know <em>what</em> changed. The <strong>Signals</strong> proposal (TC39, not yet a standard) formalizes the pattern SolidJS, Preact, and Angular now share: tiny observable values with computed derivations and effects that re-run only when their exact dependencies change:</p>
+
+    <div class="docs-code"><span class="code-comment">// The signals *pattern* — available today via tiny libraries,</span><br><span class="code-comment">// proposed as a future language standard:</span><br><span class="code-keyword">const</span> count = <span class="code-func">signal</span>(<span class="code-num">0</span>);<br><span class="code-keyword">const</span> doubled = <span class="code-func">computed</span>(() =&gt; count.value * <span class="code-num">2</span>);<br><span class="code-func">effect</span>(() =&gt; <span class="code-func">renderBadge</span>(doubled.value));<br>count.value = <span class="code-num">5</span>; <span class="code-comment">// only the effect re-runs — no vdom diff</span></div>
+
+    <p>Honest status: <code>Signal</code> is a proposal, not a web standard — don't ship code importing it as a global. But the pattern is production-ready via libraries, and understanding it explains where UI frameworks are heading: away from coarse re-renders, toward surgical updates.</p>
+
+    <div class="pro-tip" style="border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05);">
+      <i class="ph-fill ph-lightning" style="color: #f43f5e;"></i>
+      <div>
+        <p><strong>The performance workflow that works:</strong> ① observe with PerformanceObserver, ② fix the biggest offender (yield or worker), ③ re-measure. Skip steps 1 and 3 and you're just guessing — and guesses are how apps get slower while feeling "optimized."</p>
+      </div>
+    </div>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(244, 63, 94, 0.05); border: 1px solid rgba(244, 63, 94, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Profile. Fix. Ship.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Test performance patterns instantly in a zero-latency browser IDE.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch NitroIDE <i class="ph-bold ph-gauge"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

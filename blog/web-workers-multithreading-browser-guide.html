@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Workers &amp; Multithreading in the Browser: The Practical Guide | NitroIDE</title>
+  <meta name="title" content="Web Workers &amp; Multithreading in the Browser: The Practical Guide | NitroIDE">
+  <meta name="description" content="SharedArrayBuffer, transferable objects, OffscreenCanvas, Atomics and worker-based language servers — how to move heavy work off the main thread with real, runnable examples.">
+  <meta name="keywords" content="web workers tutorial, SharedArrayBuffer Atomics, transferable objects, OffscreenCanvas worker, javascript multithreading browser">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#8b5cf6">
+  <meta property="og:title" content="Web Workers &amp; Multithreading in the Browser: The Practical Guide | NitroIDE">
+  <meta property="og:description" content="SharedArrayBuffer, transferable objects, OffscreenCanvas, Atomics and worker-based language servers — how to move heavy work off the main thread with real, runnable examples.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/web-workers-multithreading-browser-guide.html">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "True Multithreading in the Browser, Without the Pain.",
+    "description": "SharedArrayBuffer, transferable objects, OffscreenCanvas, Atomics and worker-based language servers — how to move heavy work off the main thread with real, runnable examples.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/web-workers-multithreading-browser-guide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #8b5cf6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINEERING • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">True Multithreading in the Browser, Without the Pain.</h1>
+
+    <p>JavaScript is single-threaded. That one fact explains half of all janky web apps: parse a big JSON file, crunch pixels, or run a search across ten thousand files on the main thread, and your UI freezes until it's done. The browser's answer is <strong>Web Workers</strong> — real OS-level threads you can spin up from JavaScript.</p>
+
+    <p>Here's the part most tutorials skip: workers aren't just "background threads." Combined with <code>SharedArrayBuffer</code>, transferable objects, and <code>OffscreenCanvas</code>, they form a complete multithreading toolkit. Every example below runs as-is — paste it into a NitroIDE preview (which is a real browser iframe) and watch it work.</p>
+
+    <h2>Your first worker in 30 seconds</h2>
+    <p>You don't even need a separate file. Create a worker from a <code>Blob</code> URL inline:</p>
+
+    <div class="docs-code"><span class="code-comment">// Heavy work leaves the main thread entirely</span><br><span class="code-keyword">const</span> workerCode = <span class="code-string">`
+  onmessage = (e) =&gt; {
+    let sum = 0;
+    for (let i = 0; i &lt; e.data; i++) sum += Math.sqrt(i);
+    postMessage(sum); // result comes back when ready
+  };
+`</span>;<br><span class="code-keyword">const</span> worker = <span class="code-keyword">new</span> <span class="code-func">Worker</span>(<br>&nbsp;&nbsp;URL.<span class="code-func">createObjectURL</span>(<span class="code-keyword">new</span> <span class="code-func">Blob</span>([workerCode], { <span class="code-attr">type</span>: <span class="code-string">'text/javascript'</span> }))<br>);<br>worker.onmessage = (e) =&gt; console.<span class="code-func">log</span>(<span class="code-string">'done:'</span>, e.<span class="code-attr">data</span>);<br>worker.<span class="code-func">postMessage</span>(<span class="code-num">50_000_000</span>); <span class="code-comment">// UI stays silky while this crunches</span></div>
+
+    <p>The main thread never blocks. Animations keep running, clicks keep registering. That alone fixes most "the page froze" bugs.</p>
+
+    <div class="pro-tip" style="border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.05);">
+      <i class="ph-fill ph-cpu" style="color: #8b5cf6;"></i>
+      <div>
+        <p><strong>Real-world proof:</strong> The Monaco editor inside NitroIDE runs its TypeScript language features in a web worker. Autocomplete, hover info, and error checking all happen off the main thread — which is why typing stays instant even in large files.</p>
+      </div>
+    </div>
+
+    <h2>Stop copying: transferable objects</h2>
+    <p>By default, <code>postMessage</code> <em>clones</em> your data (structured clone). Sending a 100&nbsp;MB image buffer to a worker means copying 100&nbsp;MB. Transferables fix that — ownership of the buffer moves to the worker with zero copying:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> buffer = <span class="code-keyword">new</span> <span class="code-func">ArrayBuffer</span>(<span class="code-num">100</span> * <span class="code-num">1024</span> * <span class="code-num">1024</span>);<br><span class="code-comment">// The second argument TRANSFERS ownership — no copy, no clone</span><br>worker.<span class="code-func">postMessage</span>({ <span class="code-attr">pixels</span>: buffer }, [buffer]);<br>console.<span class="code-func">log</span>(buffer.byteLength); <span class="code-comment">// 0 — it's gone from this thread now</span></div>
+
+    <p>Rule of thumb: if the buffer is bigger than a few hundred KB, transfer it. Cloning is fine for small JSON-ish messages.</p>
+
+    <h2>Shared memory with SharedArrayBuffer</h2>
+    <p>Sometimes transfer isn't enough — you want two threads reading and writing the <em>same</em> memory, like a progress counter or a streaming log. That's <code>SharedArrayBuffer</code> plus <code>Atomics</code>:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> shared = <span class="code-keyword">new</span> <span class="code-func">SharedArrayBuffer</span>(<span class="code-num">4</span>);<br><span class="code-keyword">const</span> counter = <span class="code-keyword">new</span> <span class="code-func">Int32Array</span>(shared);<br><span class="code-comment">// Main thread: wait efficiently until the worker signals</span><br>worker.<span class="code-func">postMessage</span>(shared);<br><span class="code-comment">// Inside the worker: Atomics.add(counter, 0, 1); Atomics.notify(counter, 0);</span><br><span class="code-func">Atomics</span>.<span class="code-func">wait</span>(counter, <span class="code-num">0</span>, <span class="code-num">0</span>); <span class="code-comment">// sleeps — burns zero CPU</span><br>console.<span class="code-func">log</span>(<span class="code-string">'worker finished, counter ='</span>, counter[<span class="code-num">0</span>]);</div>
+
+    <p>Two honest caveats. First, <code>SharedArrayBuffer</code> requires <strong>cross-origin isolation</strong> — your page must serve the <code>Cross-Origin-Opener-Policy</code> and <code>Cross-Origin-Embedder-Policy</code> headers, or the constructor throws. Second, <code>Atomics.wait</code> is <strong>only allowed inside workers</strong>; calling it on the main thread throws. Design accordingly: the main thread posts messages, workers do the waiting.</p>
+
+    <h2>Render off-thread with OffscreenCanvas</h2>
+    <p>Canvas drawing on the main thread competes with layout, input, and your framework. <code>OffscreenCanvas</code> moves rendering into a worker — perfect for minimaps, visualizations, and live previews:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> canvas = document.<span class="code-func">querySelector</span>(<span class="code-string">'canvas'</span>);<br><span class="code-keyword">const</span> offscreen = canvas.<span class="code-func">transferControlToOffscreen</span>();<br>worker.<span class="code-func">postMessage</span>({ <span class="code-attr">canvas</span>: offscreen }, [offscreen]);<br><span class="code-comment">// Inside the worker:</span><br><span class="code-comment">// const ctx = canvas.getContext('2d');</span><br><span class="code-comment">// (function frame() { ctx.fillRect(...); requestAnimationFrame(frame); })();</span></div>
+
+    <p>Note: inside a worker there's no <code>requestAnimationFrame</code> on <code>window</code> — but <code>OffscreenCanvas</code> contexts support their own animation loop patterns, and a simple <code>setInterval</code>-driven or message-driven render loop works fine.</p>
+
+    <h2>Pattern: a lock-free ring buffer for logs</h2>
+    <p>When a worker produces data faster than the main thread consumes it (think high-frequency logs or sensor streams), a <strong>ring buffer</strong> over shared memory is the classic answer — the writer never blocks, the reader never misses:</p>
+
+    <div class="docs-code"><span class="code-comment">// 1024-slot ring buffer of float64 values in shared memory</span><br><span class="code-keyword">const</span> SIZE = <span class="code-num">1024</span>;<br><span class="code-keyword">const</span> sab = <span class="code-keyword">new</span> <span class="code-func">SharedArrayBuffer</span>(<span class="code-num">8</span> * SIZE + <span class="code-num">8</span>);<br><span class="code-keyword">const</span> head = <span class="code-keyword">new</span> <span class="code-func">Int32Array</span>(sab, <span class="code-num">0</span>, <span class="code-num">1</span>);      <span class="code-comment">// write cursor</span><br><span class="code-keyword">const</span> data = <span class="code-keyword">new</span> <span class="code-func">Float64Array</span>(sab, <span class="code-num">8</span>);     <span class="code-comment">// the ring</span><br><span class="code-comment">// Writer (worker): data[head[0] % SIZE] = v; Atomics.add(head, 0, 1);</span><br><span class="code-comment">// Reader (main):  poll Atomics.load(head, 0), drain new slots.</span></div>
+
+    <h2>When NOT to reach for workers</h2>
+    <p>Workers have startup cost (a few ms) and every message crosses a serialization boundary. Don't use them for tiny tasks, DOM access (workers have no DOM — that's the point), or anything that needs synchronous return values. A good rule: if it takes less than ~16&nbsp;ms, keep it on the main thread; if it can jank a frame, move it.</p>
+
+    <div class="pro-tip" style="border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.05);">
+      <i class="ph-fill ph-flask-conical" style="color: #8b5cf6;"></i>
+      <div>
+        <p><strong>Try it now:</strong> NitroIDE's preview pane is a real browser iframe with full worker support. Paste the Blob-worker example above into a new HTML file, open the console, and confirm the page stays responsive while 50 million square roots get crunched in the background.</p>
+      </div>
+    </div>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Move Work Off the Main Thread.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Prototype worker-based architectures instantly — no build step, no server, just your browser.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch NitroIDE <i class="ph-bold ph-cpu"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

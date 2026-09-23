@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Storage &amp; Offline Apps: OPFS, IndexedDB and Service Workers | NitroIDE</title>
+  <meta name="title" content="Browser Storage &amp; Offline Apps: OPFS, IndexedDB and Service Workers | NitroIDE">
+  <meta name="description" content="OPFS, IndexedDB, service workers, background sync, Web Locks and client-side encryption — the full storage stack for offline-first browser apps, with runnable examples.">
+  <meta name="keywords" content="OPFS tutorial, IndexedDB vs OPFS, service worker offline, background sync api, web locks api, webcrypto AES-GCM browser">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#10b981">
+  <meta property="og:title" content="Browser Storage &amp; Offline Apps: OPFS, IndexedDB and Service Workers | NitroIDE">
+  <meta property="og:description" content="OPFS, IndexedDB, service workers, background sync, Web Locks and client-side encryption — the full storage stack for offline-first browser apps, with runnable examples.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/browser-storage-offline-apps-opfs-indexeddb-guide.html">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Your Browser Is a Database. Use It Like One.",
+    "description": "OPFS, IndexedDB, service workers, background sync, Web Locks and client-side encryption — the full storage stack for offline-first browser apps, with runnable examples.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/browser-storage-offline-apps-opfs-indexeddb-guide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #10b981; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SYSTEM ARCHITECTURE • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Your Browser Is a Database. Use It Like One.</h1>
+
+    <p>Modern browsers ship a full storage stack: a private filesystem (OPFS), a transactional NoSQL database (IndexedDB), an HTTP cache you control (Cache Storage), and a background proxy (Service Workers) that decides what loads when the network dies. Used together, they let a web app work fully offline — no server required.</p>
+
+    <p>This guide walks the whole stack with runnable examples. And since NitroIDE itself is an offline-first PWA that persists your files locally, everything here mirrors patterns that work in production today.</p>
+
+    <h2>OPFS: a real filesystem in the browser</h2>
+    <p>The <strong>Origin Private File System</strong> gives your origin a private directory with near-native file performance — ideal for large assets, WASM modules, or virtual file systems:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> root = <span class="code-keyword">await</span> navigator.storage.<span class="code-func">getDirectory</span>();<br><span class="code-keyword">const</span> fileHandle = <span class="code-keyword">await</span> root.<span class="code-func">getFileHandle</span>(<span class="code-string">'project.zip'</span>, { <span class="code-attr">create</span>: <span class="code-keyword">true</span> });<br><span class="code-keyword">const</span> writable = <span class="code-keyword">await</span> fileHandle.<span class="code-func">createWritable</span>();<br><span class="code-keyword">await</span> writable.<span class="code-func">write</span>(blob);<br><span class="code-keyword">await</span> writable.<span class="code-func">close</span>();</div>
+
+    <p>Need synchronous, high-speed writes — e.g. streaming data from a worker? <strong>Sync access handles</strong> are the answer, but they only exist inside workers:</p>
+
+    <div class="docs-code"><span class="code-comment">// Inside a dedicated worker:</span><br><span class="code-keyword">const</span> root = <span class="code-keyword">await</span> navigator.storage.<span class="code-func">getDirectory</span>();<br><span class="code-keyword">const</span> fh = <span class="code-keyword">await</span> root.<span class="code-func">getFileHandle</span>(<span class="code-string">'data.bin'</span>, { <span class="code-attr">create</span>: <span class="code-keyword">true</span> });<br><span class="code-keyword">const</span> access = <span class="code-keyword">await</span> fh.<span class="code-func">createSyncAccessHandle</span>();<br>access.<span class="code-func">write</span>(buffer, { <span class="code-attr">at</span>: offset }); <span class="code-comment">// synchronous, zero-copy</span><br>access.<span class="code-func">flush</span>(); access.<span class="code-func">close</span>();</div>
+
+    <h2>IndexedDB: structured data with transactions</h2>
+    <p>OPFS is for files; <strong>IndexedDB</strong> is for structured records — settings, document metadata, search indexes. It's asynchronous and transactional, which makes the raw API verbose. In practice, keep a tiny promise wrapper or use a micro-library; the key ideas are object stores and indexes:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> db = <span class="code-keyword">await new</span> <span class="code-func">Promise</span>((res, rej) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> req = <span class="code-func">indexedDB</span>.<span class="code-func">open</span>(<span class="code-string">'nitro'</span>, <span class="code-num">1</span>);<br>&nbsp;&nbsp;req.onupgradeneeded = () =&gt; req.result.<span class="code-func">createObjectStore</span>(<span class="code-string">'files'</span>, { <span class="code-attr">keyPath</span>: <span class="code-string">'path'</span> });<br>&nbsp;&nbsp;req.onsuccess = () =&gt; <span class="code-func">res</span>(req.result);<br>&nbsp;&nbsp;req.onerror = () =&gt; <span class="code-func">rej</span>(req.error);<br>});<br><span class="code-keyword">const</span> tx = db.<span class="code-func">transaction</span>(<span class="code-string">'files'</span>, <span class="code-string">'readwrite'</span>);<br>tx.<span class="code-func">objectStore</span>(<span class="code-string">'files'</span>).<span class="code-func">put</span>({ <span class="code-attr">path</span>: <span class="code-string">'/index.html'</span>, <span class="code-attr">mtime</span>: Date.<span class="code-func">now</span>() });<br><span class="code-keyword">await new</span> <span class="code-func">Promise</span>((res, rej) =&gt; { tx.oncomplete = res; tx.onerror = rej; });</div>
+
+    <div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);">
+      <i class="ph-fill ph-database" style="color: #10b981;"></i>
+      <div>
+        <p><strong>OPFS vs IndexedDB — which one?</strong> Files and binary blobs → OPFS (faster, streaming-friendly). Structured records, queries, and indexes → IndexedDB. Many real apps use both: file bytes in OPFS, metadata and search indexes in IndexedDB.</p>
+      </div>
+    </div>
+
+    <h2>Service workers: your offline proxy</h2>
+    <p>A service worker sits between your page and the network. Register it once, and it can serve cached responses when offline, prefetch strategically, and even mock APIs during development:</p>
+
+    <div class="docs-code"><span class="code-comment">// sw.js — cache-first for app shell, network-first for data</span><br>self.<span class="code-func">addEventListener</span>(<span class="code-string">'fetch'</span>, (event) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">const</span> url = <span class="code-keyword">new</span> <span class="code-func">URL</span>(event.request.url);<br>&nbsp;&nbsp;<span class="code-keyword">if</span> (url.pathname.<span class="code-func">startsWith</span>(<span class="code-string">'/api/'</span>)) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Mock API responses entirely offline — great for prototyping</span><br>&nbsp;&nbsp;&nbsp;&nbsp;event.<span class="code-func">respondWith</span>(<span class="code-keyword">new</span> <span class="code-func">Response</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JSON.<span class="code-func">stringify</span>({ <span class="code-attr">users</span>: [{ <span class="code-attr">id</span>: <span class="code-num">1</span>, <span class="code-attr">name</span>: <span class="code-string">'Ada'</span> }] }),<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="code-attr">headers</span>: { <span class="code-string">'Content-Type'</span>: <span class="code-string">'application/json'</span> } }<br>&nbsp;&nbsp;&nbsp;&nbsp;));<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span>;<br>&nbsp;&nbsp;}<br>&nbsp;&nbsp;event.<span class="code-func">respondWith</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;caches.<span class="code-func">match</span>(event.request).<span class="code-func">then</span>(<span class="code-func">r</span> =&gt; r || <span class="code-func">fetch</span>(event.request))<br>&nbsp;&nbsp;);<br>});</div>
+
+    <p>Two honest requirements: service workers need <strong>HTTPS</strong> (or localhost), and their scope is limited to their directory and below. They also can't intercept the very first page load that registers them.</p>
+
+    <h2>Faster boots: navigation preload</h2>
+    <p>Normally a service worker delays navigation while it boots. <strong>Navigation preload</strong> lets the browser fetch the page in parallel with worker startup:</p>
+
+    <div class="docs-code"><span class="code-comment">// In the service worker's activate handler:</span><br><span class="code-keyword">await</span> self.registration.navigationPreload.<span class="code-func">enable</span>();<br><span class="code-comment">// Then in the fetch handler, use the preloaded response:</span><br><span class="code-keyword">const</span> preload = <span class="code-keyword">await</span> event.preloadResponse;<br>event.<span class="code-func">respondWith</span>(preload || <span class="code-func">fetch</span>(event.request));</div>
+
+    <h2>Sync when the network returns</h2>
+    <p><strong>Background Sync</strong> lets you queue work while offline and have the browser retry it when connectivity returns — the classic "offline commit" pattern:</p>
+
+    <div class="docs-code"><span class="code-comment">// Page: queue a sync when the user hits "save" offline</span><br><span class="code-keyword">await</span> navigator.serviceWorker.ready.<span class="code-func">then</span>(reg =&gt;<br>&nbsp;&nbsp;reg.sync.<span class="code-func">register</span>(<span class="code-string">'upload-changes'</span>)<br>);<br><span class="code-comment">// sw.js: the browser fires this when back online</span><br>self.<span class="code-func">addEventListener</span>(<span class="code-string">'sync'</span>, (event) =&gt; {<br>&nbsp;&nbsp;<span class="code-keyword">if</span> (event.tag === <span class="code-string">'upload-changes'</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;event.<span class="code-func">waitUntil</span>(<span class="code-func">uploadPendingChanges</span>());<br>});</div>
+
+    <h2>Coordinating tabs: Web Locks</h2>
+    <p>Two tabs editing the same OPFS file is a race condition waiting to happen. The <strong>Web Locks API</strong> gives you mutexes across tabs and workers:</p>
+
+    <div class="docs-code"><span class="code-keyword">await</span> navigator.locks.<span class="code-func">request</span>(<span class="code-string">'project-file'</span>, <span class="code-keyword">async</span> (lock) =&gt; {<br>&nbsp;&nbsp;<span class="code-comment">// Exclusive access across every tab and worker — safe to write</span><br>&nbsp;&nbsp;<span class="code-keyword">await</span> <span class="code-func">writeFileSafely</span>();<br>}); <span class="code-comment">// lock auto-releases here</span></div>
+
+    <h2>Client-side encryption with WebCrypto</h2>
+    <p>If you store sensitive data locally, encrypt it. <strong>AES-GCM</strong> via WebCrypto is straightforward — the honest caveat is key management: a key stored next to the data it protects only defends against other origins and casual snooping, not against someone with full device access:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> key = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">generateKey</span>(<br>&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'AES-GCM'</span>, <span class="code-attr">length</span>: <span class="code-num">256</span> }, <span class="code-keyword">true</span>, [<span class="code-string">'encrypt'</span>, <span class="code-string">'decrypt'</span>]);<br><span class="code-keyword">const</span> iv = crypto.<span class="code-func">getRandomValues</span>(<span class="code-keyword">new</span> <span class="code-func">Uint8Array</span>(<span class="code-num">12</span>));<br><span class="code-keyword">const</span> ct = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">encrypt</span>(<br>&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'AES-GCM'</span>, <span class="code-attr">iv</span> }, key,<br>&nbsp;&nbsp;<span class="code-keyword">new</span> <span class="code-func">TextEncoder</span>().<span class="code-func">encode</span>(secretText)<br>);<br><span class="code-comment">// Store {iv, ct} in OPFS/IndexedDB. Derive the key from a</span><br><span class="code-comment">// password with PBKDF2 or HKDF instead of storing it raw.</span></div>
+
+    <div class="pro-tip" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);">
+      <i class="ph-fill ph-wifi-slash" style="color: #10b981;"></i>
+      <div>
+        <p><strong>The offline test that matters:</strong> open DevTools → Network → set "Offline", then reload your app. If it boots and your data is there, your storage layer works. If it shows a dinosaur, you have a service worker gap. NitroIDE passes this test — it's a PWA that keeps working on airplane mode.</p>
+      </div>
+    </div>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Build Apps That Survive Airplane Mode.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Prototype offline-first frontends in a browser IDE that works offline itself.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch NitroIDE <i class="ph-bold ph-database"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>
