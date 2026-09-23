@@ -146,6 +146,10 @@
     <a href="#shortcuts" class="nav-link">Keyboard Shortcuts</a>
     <a href="#export" class="nav-link">Exporting Projects</a>
     
+    <div class="sidebar-heading">Sharing & Embedding</div>
+    <a href="#embed" class="nav-link">Embed NitroIDE</a>
+    <a href="#badge" class="nav-link">Open in NitroIDE Badge</a>
+    
     <div class="sidebar-heading">Support</div>
     <a href="#faq" class="nav-link">Frequently Asked Questions</a>
   </div>
@@ -251,6 +255,33 @@ setInterval(() => {
         <li><code>Download ZIP</code> : Utilizes client-side JSZip to download your full frontend project as a cleanly separated, production-ready folder.</li>
         <li><code>Export as 1-File</code> : Bundles all of your CSS modules, JS modules, and CDN links into a single portable HTML file.</li>
       </ul>
+    </section>
+
+    <section id="embed">
+      <h2>Embed NitroIDE</h2>
+      <p>You can embed any shared NitroIDE workspace directly into your own blog, documentation, or tutorial page with a single <code>iframe</code>. Append <code>?embed=1</code> to a codebox share URL to load a stripped-down, <strong>read-only</strong> viewer: the full IDE chrome (file explorer, console, and settings menus) is hidden, leaving only the editor and the live preview so readers can focus on the code and its output.</p>
+      <p>Take any share URL (the <code>code</code> parameter from a shared workspace link) and drop this snippet into your page, replacing <code>YOUR_SHARE_CODE</code>:</p>
+      <pre class="docs-code"><code>&lt;iframe src="https://nitroide.com/tools/codebox.html?embed=1&amp;code=YOUR_SHARE_CODE" width="100%" height="500" frameborder="0"&gt;&lt;/iframe&gt;</code></pre>
+      <div class="pro-tip">
+        <i class="ph-fill ph-lightbulb"></i>
+        <div>
+          <p><strong>Automatic attribution:</strong> Every embed carries a footer link reading "Built with NitroIDE &mdash; open &amp; edit". Clicking it opens the exact workspace in the full editor, so your readers can fork and experiment with a single click.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="badge">
+      <h2>Open in NitroIDE Badge</h2>
+      <p>Let anyone open your code in NitroIDE straight from a GitHub README, docs page, or gist with a one-click badge.</p>
+      <p>The <code>codebox.html</code> page accepts two URL parameters for this:</p>
+      <ul>
+        <li><code>?url=</code> &mdash; loads any publicly accessible <strong>raw file URL</strong> (for example a <code>raw.githubusercontent.com</code> link) directly into the editor.</li>
+        <li><code>?gist=</code> &mdash; loads a GitHub <strong>Gist</strong> by its ID, no raw URL required.</li>
+      </ul>
+      <p>Paste this Markdown into your README, replacing the placeholder with your raw file URL:</p>
+      <pre class="docs-code"><code>[![Open in NitroIDE](https://nitroide.com/logo/logo_white.png)](https://nitroide.com/tools/codebox.html?url=YOUR_RAW_FILE_URL)</code></pre>
+      <p>For a Gist, use this variant with your Gist ID instead:</p>
+      <pre class="docs-code"><code>[![Open in NitroIDE](https://nitroide.com/logo/logo_white.png)](https://nitroide.com/tools/codebox.html?gist=YOUR_GIST_ID)</code></pre>
     </section>
 
     <section id="faq">
