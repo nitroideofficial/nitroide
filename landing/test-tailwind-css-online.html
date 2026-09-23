@@ -356,10 +356,12 @@
 <nitro-modals></nitro-modals>
 <script src="../script.js"></script>
 
-<!-- Pre-load Tailwind CDN config logic (for this specific page) -->
+<!-- Pre-load Tailwind CDN config logic (for this specific page).
+     Note: cdnLinks/defaultVfs are declared globally by ../script.js,
+     so we assign (not redeclare) to avoid a SyntaxError. -->
 <script>
-  let cdnLinks = ['https://cdn.tailwindcss.com'];
-  let defaultVfs = {
+  cdnLinks = ['https://cdn.tailwindcss.com'];
+  defaultVfs = {
     'index.html': `<div class="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-4">\n  <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-4">\n    NitroIDE + Tailwind\n  </h1>\n  <p class="text-zinc-400 text-lg mb-8">Edit this code and see changes instantly.</p>\n  <button class="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-zinc-200 transition-colors">\n    Get Started\n  </button>\n</div>`,
     'style.css': `/* Tailwind handles the styling! */\nbody { margin: 0; }`,
     'script.js': `console.log("⚡ Tailwind Workspace initialized.");`
