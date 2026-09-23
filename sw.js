@@ -11,6 +11,8 @@ const APP_SHELL = [
   '/favicon.ico',
   '/logo/logo_white.png',
   '/logo/logo_black.png',
+  // Self-hosted LZString (share-link compression, MIT)
+  '/vendor/lz-string/lz-string.min.js',
   // Self-hosted Monaco editor (vendor/monaco/vs)
   '/vendor/monaco/vs/loader.js',
   '/vendor/monaco/vs/editor/editor.main.js',
