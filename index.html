@@ -1,30 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function(){ dataLayer.push(arguments); };
- 
-    window.addEventListener("load", function() {
-      var loadAnalytics = function() {
-        var gtagScript = document.createElement('script');
-        gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-SH02J5Q7MB";
-        gtagScript.async = true;
-        document.head.appendChild(gtagScript);
-
-        window.gtag('js', new Date());
-        window.gtag('config', 'G-SH02J5Q7MB');
-      };
-
-      setTimeout(function() {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(loadAnalytics, { timeout: 2500 });
-        } else {
-          loadAnalytics();
-        }
-      }, 2500);
-    });
-  </script>
+  
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="dns-prefetch" href="//www.googletagmanager.com">
-  <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+  
+  
   <link rel="dns-prefetch" href="//dev.to">
   <link rel="dns-prefetch" href="//unpkg.com">
   <link rel="preload" as="image" href="https://nitroide.com/logo/logo_white.png" fetchpriority="high">
@@ -163,23 +140,7 @@
     "description": "Code at the speed of thought. NitroIDE is a free, entirely client-side web IDE featuring the Monaco editor, live preview, and secure offline support."
   }
   </script>
-  <script>
-    window.addEventListener("load", function() {
-      var loadAds = function() {
-        var adScript = document.createElement("script");
-        adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3578199654426674";
-        adScript.async = true;
-        adScript.crossOrigin = "anonymous";
-        document.head.appendChild(adScript);
-      };
-
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadAds, { timeout: 4000 });
-      } else {
-        setTimeout(loadAds, 2500);
-      }
-    });
-  </script>
+  
 </head>
 <body>
 
@@ -215,11 +176,6 @@
       <p class="reveal-3 hero-subtitle">
         The ultimate client-side IDE. Zero servers, absolute privacy. Built on the Monaco engine, running directly in your browser's memory.
       </p>
-	  
-	  <div class="reveal-4 visitor-counter">
-        <span id="visitor-count">—</span><span class="visitor-label"> developers visited</span>
-      </div>
-
       <div class="reveal-4 execution-pipeline magnetic-btn hide-in-mobile">
          <div class="pipe-left">
            <div class="code-block-anim">
@@ -289,7 +245,7 @@
           <i class="ph-duotone ph-plugs-connected bento-icon"></i>
           <h2>React & CDN Playground</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Fetch any library from unpkg directly through the UI or CLI. Prototype <a href="react-online-playground.html" style="color: #00e5ff; text-decoration: none;">React applications</a> or Tailwind with zero setup.</p>
+            <p class="bento-text">Fetch any library from unpkg directly through the UI or CLI. Prototype <a href="tools/codebox.html?env=react" style="color: #00e5ff; text-decoration: none;">React applications</a> or Tailwind with zero setup.</p>
             <div class="bento-code">
               <span class="code-prompt">&gt;</span> install tailwind<br>
               <span style="color: var(--success);">⚡ Success: Injected tailwind.</span><br><br>
@@ -316,7 +272,7 @@
           <i class="ph-duotone ph-file-archive bento-icon"></i>
           <h2>Export Code to ZIP</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Download your entire frontend workspace as a <a href="export-code-to-zip.html" style="color: #00e5ff; text-decoration: none;">production-ready ZIP</a> or bundled HTML file directly to your local machine.</p>
+            <p class="bento-text">Download your entire frontend workspace as a <a href="tools/codebox.html" style="color: #00e5ff; text-decoration: none;">production-ready ZIP</a> or bundled HTML file directly to your local machine.</p>
             <div class="bento-code">
               <span class="code-keyword">const</span> zip = <span class="code-keyword">new</span> JSZip();<br>
               zip.file(<span class="code-string">"index.html"</span>, code);<br>
@@ -466,28 +422,6 @@
             </div>
             <i class="ph-bold ph-arrow-up-right pulse-card-arrow"></i>
           </a>
-        </div>
-
-        <div class="pulse-col pulse-logs">
-          <div class="pulse-panel-heading pulse-panel-heading-row">
-            <span><i class="ph-bold ph-book-open-text"></i> Architecture Logs</span>
-            <div class="pulse-tabs" aria-label="Architecture log source">
-              <button class="p-tab active" type="button" data-platform="devto" onclick="switchPulseTab('devto', event)">Dev.to</button>
-              <button class="p-tab" type="button" data-platform="hashnode" onclick="switchPulseTab('hashnode', event)">Hashnode</button>
-            </div>
-          </div>
-
-          <div id="pulse-blog-container" class="pulse-blog-box">
-            <p class="pulse-loading"><i class="ph-bold ph-spinner-gap"></i> Fetching logs...</p>
-          </div>
-        </div>
-
-        <div class="pulse-col pulse-live">
-          <div class="pulse-panel-heading">
-            <span><i class="ph-bold ph-terminal-window"></i> Live Ticker</span>
-            <small>Latest signals</small>
-          </div>
-          <div class="pulse-ticker-box"></div>
         </div>
       </div>
     </div>
