@@ -43,7 +43,7 @@ const APP_SHELL = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE)
-      .then((cache) => cache.addAll(APP_SHELL))
+      .then((cache) => cache.addAll(APP_SHELL).catch((err) => console.warn('NitroIDE SW: precache partially failed, continuing anyway:', err)))
       .then(() => self.skipWaiting())
   );
 });
