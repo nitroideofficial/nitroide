@@ -29,5 +29,5 @@
 - Source: open-source project by nitroideofficial on GitHub.
 
 ## Sitemap
-- [Sitemap index](https://nitroide.com/sitemap-index.xml)
+- [Sitemap index](https://nitroide.com/sitemap.xml)
 - [RSS feed](https://nitroide.com/rss.xml)

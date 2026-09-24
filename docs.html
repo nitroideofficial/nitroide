@@ -96,7 +96,7 @@
       }, {
         "@type": "Question",
         "name": "How do I share my code with other developers?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Because NitroIDE is a serverless environment, we do not host your code on a database to generate shareable URLs. To share your work, use the ZIP export feature." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Share button generates a link (nitroide.com/tools/codebox.html?code=...) with your project compressed into the URL itself — nothing is uploaded to any server. Anyone opening the link gets your workspace reconstructed locally in their browser. For very large projects the URL can get long; use ZIP export instead." }
       }, {
         "@type": "Question",
         "name": "Can I use NitroIDE on my phone or tablet?",
@@ -301,7 +301,7 @@ setInterval(() => {
       <p>Absolutely. While NitroIDE does not use a <code>package.json</code> or a traditional node server, you can instantly inject any NPM package using our integrated CDN manager. Just type <code>install react</code> or <code>install tailwind</code> in the Developer Console to pull the minified builds directly into your workspace.</p>
 
       <h3>How do I share my code with other developers?</h3>
-      <p>Because NitroIDE is a 100% serverless environment, we do not host your code on a database to generate shareable URLs (like traditional cloud editors). To share your work, simply use the <strong>Export Code to ZIP</strong> feature and send the standalone files, or push them directly to your own GitHub repository.</p>
+      <p>Yes — hit the <strong>Share</strong> button in the editor and you get a link like <code>nitroide.com/tools/codebox.html?code=...</code> with your entire project compressed into the URL itself. Nothing is uploaded to any server: opening the link reconstructs your workspace locally in the recipient's browser. For very large projects the URL can get long — then use <strong>Export Code to ZIP</strong> and send the standalone files, or push them to your own GitHub repository.</p>
 
       <h3>Can I use NitroIDE on my phone or tablet?</h3>
       <p>Yes! The NitroIDE interface is fully responsive. While typing complex logic on a mobile keyboard isn't always ideal, the workspace is perfect for quickly reviewing code, testing CSS media queries with our built-in device emulator, or debugging JavaScript on the go.</p>
