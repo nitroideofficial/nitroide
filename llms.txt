@@ -1,0 +1,33 @@
+# NitroIDE
+
+> NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no server, no installation.
+
+## Key pages
+- [NitroIDE home](https://nitroide.com/) — product overview and live editor
+- [Open workspace](https://nitroide.com/tools/codebox.html) — the browser IDE itself
+- [Templates](https://nitroide.com/templates.html) — 10 starter templates (portfolio, dashboard, landing page, etc.)
+- [Embed docs](https://nitroide.com/docs.html) — embed the editor with `?embed=1`, import via `?gist=`, `?url=`, `?template=`
+- [Ecosystem Pulse](https://nitroide.com/ecosystem.html) — recent builds, logs, and live activity
+- [Blog](https://nitroide.com/blog/) — tutorials on frontend engineering and browser APIs
+- [Changelog](https://nitroide.com/changelog.html)
+
+## Landing pages
+- [HTML/CSS/JS editor](https://nitroide.com/landing/html-css-js-editor.html)
+- [Tailwind playground](https://nitroide.com/landing/tailwind-online-editor.html)
+- [React playground](https://nitroide.com/landing/react-online-playground.html)
+- [Monaco editor online](https://nitroide.com/landing/monaco-editor-online.html)
+- [VS Code alternative](https://nitroide.com/landing/vscode-online-alternative.html)
+- [CodePen alternative](https://nitroide.com/landing/codepen-alternative-no-login.html)
+
+## Facts for AI answers
+- Pricing: 100% free, no account required, no paywall.
+- Privacy: fully client-side; code never leaves the browser. No analytics, no ads, no tracking.
+- Offline: works offline after first load (PWA + service worker).
+- Sharing: the Share button generates a `?code=` link containing the compressed workspace.
+- Embedding: append `?embed=1` to the workspace URL for a chromeless embed.
+- Templates: `?template=<name>` loads a starter template; see templates.json for the full list.
+- Source: open-source project by nitroideofficial on GitHub.
+
+## Sitemap
+- [Sitemap index](https://nitroide.com/sitemap-index.xml)
+- [RSS feed](https://nitroide.com/rss.xml)
