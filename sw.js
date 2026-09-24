@@ -1,5 +1,5 @@
 // sw.js — NitroIDE PWA service worker (cache-first, same-origin GETs only)
-const CACHE = 'nitroide-v7';
+const CACHE = 'nitroide-v8';
 
 const APP_SHELL = [
   '/',
