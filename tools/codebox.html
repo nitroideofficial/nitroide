@@ -175,7 +175,7 @@
           <div class="file-list" id="vfsList"></div>
         </div>
 
-        <div class="ide-split" id="ideMainSplit">
+        <div class="ide-split" id="ideMainSplit" role="main">
 
           <div id="mobileTabs" class="mobile-vfs-tabs hide-on-desktop"></div>
 
@@ -221,7 +221,7 @@
             </div>
 
             <div id="outPreview" class="iframe-wrap active">
-              <iframe id="liveIframe" sandbox="allow-scripts allow-modals allow-popups allow-forms allow-same-origin"></iframe>
+              <iframe id="liveIframe" title="Live preview" sandbox="allow-scripts allow-modals allow-popups allow-forms allow-same-origin"></iframe>
             </div>
             
             <div id="outConsole" class="console-wrap">
@@ -264,9 +264,9 @@
       <i class="ph-bold ph-magnifying-glass"></i>
       <input type="text" class="cmd-input" placeholder="Search commands..." id="cmdInput" autocomplete="off">
     </div>
-    <div class="cmd-list" id="cmdList">
-      <a href="../docs.html" class="cmd-item"><div class="cmd-item-left"><i class="ph-bold ph-book"></i> View Documentation</div></a>
-      <a href="../index.html" class="cmd-item"><div class="cmd-item-left"><i class="ph-bold ph-arrow-left"></i> Back to Home</div></a>
+    <div class="cmd-list" id="cmdList" role="listbox" aria-label="Workspace commands">
+      <a href="../docs.html" class="cmd-item" role="option"><div class="cmd-item-left"><i class="ph-bold ph-book"></i> View Documentation</div></a>
+      <a href="../index.html" class="cmd-item" role="option"><div class="cmd-item-left"><i class="ph-bold ph-arrow-left"></i> Back to Home</div></a>
     </div>
   </div>
 </div>
@@ -304,7 +304,7 @@
   <div class="feedback-card" style="max-width: 800px; width: 90%;">
     <div class="feedback-header">
       <h3><i class="ph-bold ph-kanban"></i> Project Manager</h3>
-      <button onclick="closeDashboard()"><i class="ph-bold ph-x"></i></button>
+      <button onclick="closeDashboard()" aria-label="Close dashboard"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="feedback-body">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">

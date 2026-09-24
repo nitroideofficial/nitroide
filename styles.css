@@ -2148,3 +2148,7 @@ html.light-mode .time-snapshot-meta span {
     width: 100%;
   }
 }
+
+/* CLS: reserve space for the JS-injected <nitro-header> (measured 116px desktop / 194px mobile) */
+nitro-header{display:block;min-height:116px}
+@media(max-width:768px){nitro-header{min-height:194px}}

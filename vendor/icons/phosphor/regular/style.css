@@ -1,4 +1,5 @@
 @font-face {
+  font-display: swap;
   font-family: "Phosphor";
   src:
     url("./Phosphor.woff2") format("woff2"),
