@@ -13,6 +13,9 @@
   <a href="https://nitroide.com/docs.html">
     <img src="https://img.shields.io/badge/Documentation-bb9af7?style=for-the-badge"/>
   </a>
+  <a href="https://github.com/nitroideofficial/nitroide">
+    <img src="https://img.shields.io/github/stars/nitroideofficial/nitroide?style=for-the-badge&logo=github"/>
+  </a>
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Made%20with-JavaScript-yellow?style=for-the-badge"/>
 </p>
