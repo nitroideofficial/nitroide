@@ -406,6 +406,7 @@ document.addEventListener('DOMContentLoaded', function(){
     else{ legacy(); }
   });
   shareBtn.parentNode.insertBefore(b, shareBtn.nextSibling);
+  if(typeof pinWsRight==="function") pinWsRight();
 });
 </script>
 </body>
