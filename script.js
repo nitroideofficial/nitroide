@@ -2142,29 +2142,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if(fab) { if (window.scrollY > 500) fab.classList.add('visible'); else fab.classList.remove('visible'); }
     });
     
-    // Visitor Counter with Graceful Fallback
-    const hasVisited = localStorage.getItem('nitroide_visited');
-    const getUrl = "https://abacus.jasoncameron.dev/get/nitroide/visits";
-    
-    fetch(hasVisited ? getUrl : "https://abacus.jasoncameron.dev/hit/nitroide/visits")
-      .then(res => {
-        if (!res.ok) throw new Error("API Down"); 
-        return res.json();
-      })
-      .then(data => {
-        const countEl = document.getElementById("visitor-count");
-        if (countEl && data.value !== undefined) { 
-          countEl.innerText = data.value.toLocaleString(); 
-          if (!hasVisited) localStorage.setItem('nitroide_visited', 'true'); 
-        }
-      })
-      .catch((err) => {
-        const countEl = document.getElementById("visitor-count");
-        if (countEl) {
-          countEl.innerText = "14,285"; 
-        }
-        console.warn("Visitor API unavailable, using fallback count.");
-      });
 });
 
 
