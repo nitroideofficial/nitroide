@@ -634,17 +634,20 @@
 	  const panelsToObserve = ['htmlPanel', 'cssPanel', 'jsPanel', 'editorTopSplit', 'outputBottomSplit', 'codebox'];
 	  panelsToObserve.forEach(id => { const el = document.getElementById(id); if(el) resizeObserver.observe(el); });
 
+	  // Monaco is self-hosted under /vendor/monaco/vs (absolute URL required:
+	  // the worker blob below resolves importScripts against the blob URL).
+	  const MONACO_BASE = location.origin + '/vendor/monaco/';
 	  window.MonacoEnvironment = {
 		getWorkerUrl: function(workerId, label) {
 		  const workerSource = `
-			self.MonacoEnvironment = { baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/' };
-			importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/base/worker/workerMain.js');
+			self.MonacoEnvironment = { baseUrl: '${MONACO_BASE}' };
+			importScripts('${MONACO_BASE}vs/base/worker/workerMain.js');
 		  `;
 		  return URL.createObjectURL(new Blob([workerSource], { type: 'text/javascript' }));
 		}
 	  };
 
-	  require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' }});
+	  require.config({ paths: { 'vs': MONACO_BASE + 'vs' }});
 	  require(['vs/editor/editor.main'], function() {
 		
 		// STANDARD DARK THEME
