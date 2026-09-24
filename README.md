@@ -44,7 +44,7 @@ No installs. No backend. No delays.
 
 ---
 
-## 🆕 What's New — v24.1 (September 2026)
+## 🆕 What's New — v25 (September 2026)
 
 * 🎯 **Zero layout shift** on the Ecosystem page (mobile CLS 0.255 → ~0)
 * ♿ **Editor accessibility** up from 78 → 95 on mobile
