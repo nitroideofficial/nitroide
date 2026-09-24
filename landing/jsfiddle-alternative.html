@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSFiddle Alternative with Monaco Editor | NitroIDE</title>
+  <meta name="title" content="JSFiddle Alternative with Monaco Editor | NitroIDE">
+  <meta name="description" content="A modern JSFiddle alternative: the Monaco editor, live preview, offline mode and multi-file workspaces — free, with no signup required.">
+  <meta name="keywords" content="jsfiddle alternative, jsfiddle alternative monaco, online code playground, html css js editor no signup">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
+  <link rel="canonical" href="https://nitroide.com/landing/jsfiddle-alternative.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nitroide.com/landing/jsfiddle-alternative.html">
+  <meta property="og:title" content="JSFiddle Alternative | NitroIDE">
+  <meta property="og:description" content="A modern JSFiddle alternative: the Monaco editor, live preview, offline mode and multi-file workspaces — free, with no signup required.">
+  <meta property="og:image" content="https://nitroide.com/og-banner.png">
+  <meta property="og:site_name" content="NitroIDE">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://nitroide.com/landing/jsfiddle-alternative.html">
+  <meta property="twitter:title" content="JSFiddle Alternative | NitroIDE">
+  <meta property="twitter:description" content="A modern JSFiddle alternative: the Monaco editor, live preview, offline mode and multi-file workspaces — free, with no signup required.">
+  <meta property="twitter:image" content="https://nitroide.com/og-banner.png">
+
+  <link rel="icon" type="image/x-icon" href="https://nitroide.com/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://nitroide.com/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://nitroide.com/favicon-192x192.png">
+  <link rel="apple-touch-icon" href="https://nitroide.com/apple-touch-icon.png">
+
+  <link rel="manifest" href="../manifest.json">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+  <style>
+    .cmp-wrap { overflow-x: auto; margin: 8px 0 0; border: 1px solid rgba(255,255,255,.09); border-radius: 18px; }
+    table.cmp { width: 100%; border-collapse: collapse; min-width: 560px; font-size: .95rem; }
+    table.cmp th, table.cmp td { text-align: left; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.07); }
+    table.cmp thead th { background: rgba(34,211,238,.07); font-weight: 700; }
+    table.cmp thead th:last-child { color: #22d3ee; }
+    table.cmp tbody tr:last-child td { border-bottom: 0; }
+    table.cmp td:first-child { color: var(--text-muted, #9b9bab); }
+    .cmp-yes { color: #28c840; font-weight: 600; }
+    .cmp-no { color: #ff5f57; font-weight: 600; }
+    .faq-block { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; padding: 20px 22px; }
+    .faq-item h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .faq-item p { margin: 0; color: var(--text-muted, #9b9bab); font-size: .94rem; }
+    .faq-item a { color: #22d3ee; }
+  </style>
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JSFiddle Alternative | NitroIDE",
+    "url": "https://nitroide.com/landing/jsfiddle-alternative.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" },
+    "description": "A modern JSFiddle alternative: the Monaco editor, live preview, offline mode and multi-file workspaces — free, with no signup required."
+  }
+  </script>
+</head>
+<body>
+
+<!-- INJECTED DYNAMIC HEADER -->
+<header>
+<nav>
+<nitro-header></nitro-header>
+</nav>
+</header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+<div class="global-spotlight" id="globalSpotlight"></div>
+
+<main>
+<div class="container relative-z">
+  <div id="home" class="view active">
+
+    <div class="premium-hero" id="heroSection">
+      <div class="badge-row">
+        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-arrows-left-right"></i> JSFiddle Alternative</div>
+        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Zero Latency</div>
+      </div>
+
+      <h1 class="reveal-2 hero-title-main">
+        The Modern.<br>
+        <span class="hollow-text">
+          JSFiddle Alternative.
+          <span class="glow-layer">JSFiddle Alternative.</span>
+          <span class="fill-layer">JSFiddle Alternative.</span>
+        </span>
+      </h1>
+
+      <p class="reveal-3 hero-subtitle">
+        JSFiddle is a classic for quick snippets — but it hasn't grown with you. NitroIDE keeps the instant-gratification playground and adds the Monaco editor, multi-file workspaces and offline mode.
+      </p>
+
+      <div class="reveal-5 hero-ctas">
+        <a href="../tools/codebox.html" class="btn-launch magnetic-btn primary-btn">Try NitroIDE Free <i class="ph-bold ph-terminal"></i></a>
+        <a href="../docs.html" class="btn-secondary magnetic-btn"><i class="ph-bold ph-book-open"></i> Read the Docs</a>
+      </div>
+    </div>
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>NitroIDE vs JSFiddle</h2>
+        <p>An honest side-by-side. JSFiddle is a solid tool — here's where the two differ, so you can pick what's right for your project.</p>
+      </div>
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <thead>
+            <tr><th></th><th>JSFiddle</th><th>NitroIDE</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Sign-up required</td><td>Optional (to save fiddles)</td><td><span class="cmp-yes">Never</span></td></tr>
+            <tr><td>Editor engine</td><td>CodeMirror-based panes</td><td>Monaco (VS Code's engine)</td></tr>
+            <tr><td>Live preview</td><td><span class="cmp-yes">Yes</span> (Result pane)</td><td><span class="cmp-yes">Yes</span> (live iframe + device modes)</td></tr>
+            <tr><td>Multi-file projects</td><td>Single fiddle per snippet</td><td>Full virtual file system</td></tr>
+            <tr><td>Works offline</td><td><span class="cmp-no">No</span></td><td><span class="cmp-yes">Yes</span></td></tr>
+            <tr><td>Code privacy</td><td>Fiddles stored on their servers</td><td>Local only, zero tracking</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>Bring Your Code With You</h2>
+        <p>Your fiddles don't have to stay fiddles. Paste the code into a fresh workspace, split it into proper files with the Explorer, and suddenly that snippet is a real project.</p>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-card">
+          <i class="ph-duotone ph-github-logo bento-icon"></i>
+          <h2>Import via Gist</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Paste any public Gist ID into <code>nitroide.com/tools/codebox.html?gist=YOUR_ID</code> and your code loads straight into the editor. No export dance.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <i class="ph-duotone ph-link bento-icon"></i>
+          <h2>Import via URL</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Got a raw file link? Append <code>?url=YOUR_RAW_URL</code> to the workspace address and NitroIDE fetches it directly into your session.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <i class="ph-duotone ph-stack bento-icon"></i>
+          <h2>Start From a Template</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Skip the blank page. Ten <a href="../templates.html" style="color:#22d3ee">starter templates</a> open instantly in the editor — portfolios, games, tools and more.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>Why Developers Switch</h2>
+        <p>JSFiddle nailed the quick-share playground. NitroIDE takes that same instant loop and gives it a professional editor, real project structure and total privacy.</p>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-card bento-large">
+          <i class="ph-duotone ph-lock-key bento-icon"></i>
+          <h2>Private by Architecture</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">There's no server to leak from. Your code executes in your browser's memory and is stored in your browser's localStorage. Nothing is uploaded, tracked or sold — privacy isn't a plan tier, it's how the app is built.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <i class="ph-duotone ph-wifi-slash bento-icon"></i>
+          <h2>Works Offline</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Install it as a PWA and keep coding on planes, trains and flaky café Wi-Fi. The editor, preview and your files all work without a connection.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <i class="ph-duotone ph-code bento-icon"></i>
+          <h2>Real Monaco Editor</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">The same editing engine as VS Code — multi-cursor, bracket matching, find/replace and Emmet built in. Your muscle memory transfers instantly.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <i class="ph-duotone ph-currency-dollar bento-icon"></i>
+          <h2>Free Forever</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">No credits, no compute limits, no "free tier" that quietly expires. Client-side means no servers to pay for, so the price is $0 — permanently.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>Common Questions</h2>
+        <p>Straight answers before you switch.</p>
+      </div>
+      <div class="faq-block">
+        <div class="faq-item"><h3>Is NitroIDE as fast to start as JSFiddle?</h3><p>Faster, arguably. There's no page of boilerplate — the workspace opens straight into an editable project with live preview already running, and no account wall in front of it.</p></div>
+        <div class="faq-item"><h3>Can I share my code like a fiddle link?</h3><p>Yes — use the Share button to generate a link, or export a single portable HTML file. You can also embed a live, read-only playground in any blog post with <code>?embed=1</code>.</p></div>
+        <div class="faq-item"><h3>What does NitroIDE do that JSFiddle doesn't?</h3><p>The big three: a real VS Code-grade editor (Monaco with Emmet), multi-file projects instead of one flat snippet, and full offline support as an installable PWA.</p></div>
+      </div>
+    </div>
+
+    <div class="pricing-section reveal-8" id="statsRow">
+      <div class="section-header">
+        <h2>Switch in 30 Seconds</h2>
+        <p>No signup, no install, no credit card. Your next project is one click away.</p>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3>Community Plan</h3>
+          <div class="price">$0<span>/forever</span></div>
+          <p>Everything is unlocked. No credit card required.</p>
+        </div>
+        <div class="pricing-features">
+          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
+          <div><i class="ph-bold ph-check-circle"></i> Offline PWA Support</div>
+          <div><i class="ph-bold ph-check-circle"></i> 100% Free &amp; Open Source Codebase</div>
+        </div>
+        <a href="../tools/codebox.html" class="btn-launch primary-btn full-width">Launch Workspace</a>
+      </div>
+    </div>
+
+  </div> <!-- Closes #home -->
+</div> <!-- Closes .container -->
+</main>
+
+<!-- INJECTED DYNAMIC FOOTER & SCRIPTS -->
+<footer>
+<nitro-footer></nitro-footer>
+</footer>
+<nitro-modals></nitro-modals>
+<script defer src="../script.js"></script>
+
+</body>
+</html>

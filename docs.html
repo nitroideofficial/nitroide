@@ -132,6 +132,7 @@
   <div class="docs-sidebar" id="docsSidebar">
     <div class="sidebar-heading" style="margin-top: 10px;">Overview</div>
     <a href="#intro" class="nav-link">Introduction</a>
+    <a href="#getting-started" class="nav-link">Getting Started</a>
     <a href="#vfs" class="nav-link">Virtual File System</a>
     
     <div class="sidebar-heading">Core Features</div>
@@ -150,6 +151,8 @@
     
     <div class="sidebar-heading">Support</div>
     <a href="#faq" class="nav-link">Frequently Asked Questions</a>
+    <a href="#install-app" class="nav-link">Install as an App</a>
+    <a href="#troubleshooting" class="nav-link">Troubleshooting</a>
   </div>
 
   <div class="docs-content">
@@ -302,6 +305,47 @@ setInterval(() => {
 
       <h3>Can I use NitroIDE on my phone or tablet?</h3>
       <p>Yes! The NitroIDE interface is fully responsive. While typing complex logic on a mobile keyboard isn't always ideal, the workspace is perfect for quickly reviewing code, testing CSS media queries with our built-in device emulator, or debugging JavaScript on the go.</p>
+    </section>
+
+    <section id="getting-started">
+      <h2>Getting Started in 2 Minutes</h2>
+      <p>New here? Here's the fastest path from zero to a running project:</p>
+      <ol>
+        <li><strong>Open the workspace</strong> — hit <a href="tools/codebox.html">Launch Workspace</a>. No signup, no download; the editor loads straight into a sample project.</li>
+        <li><strong>Pick a template</strong> — skip the blank page with one of ten <a href="templates.html">starter templates</a> (portfolio, todo app, games, tools). Each opens directly in the editor via <code>?template=slug</code>.</li>
+        <li><strong>Learn the palette</strong> — press <span class="key">Ctrl</span> + <span class="key">K</span> to open the command palette. Every IDE action (format, export, layouts, themes) lives there, fuzzy-searchable.</li>
+        <li><strong>Share or export</strong> — hit the Share button for a link, or <code>export zip</code> in the console to download your project. Done.</li>
+      </ol>
+      <div class="pro-tip">
+        <i class="ph-fill ph-lightbulb"></i>
+        <div>
+          <p><strong>Power-user move:</strong> memorize the <a href="cheatsheet.html">keyboard shortcut cheatsheet</a> — <span class="key">Ctrl</span> + <span class="key">S</span> saves and recompiles, and the Monaco editor shortcuts you know from VS Code all work.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="install-app">
+      <h2>Install as an App (PWA)</h2>
+      <p>NitroIDE is a Progressive Web App: install it and it behaves like a native desktop or mobile app, including <strong>offline support</strong>. Your code, the editor and the preview all keep working without a connection (open the workspace once while online so everything gets cached).</p>
+      <ul>
+        <li><strong>Chrome / Edge (desktop):</strong> open <a href="tools/codebox.html">the workspace</a>, then click the install icon in the address bar (or menu → <em>Save and share → Install page as app</em>).</li>
+        <li><strong>Android (Chrome):</strong> open the site, tap the ⋮ menu → <em>Add to Home screen</em> → <em>Install</em>.</li>
+        <li><strong>iPhone / iPad (Safari):</strong> open the site, tap Share → <em>Add to Home Screen</em>.</li>
+      </ul>
+      <p>Installed apps launch fullscreen in their own window, get their own taskbar/dock icon, and update automatically — the service worker always fetches the latest version when you're online.</p>
+    </section>
+
+    <section id="troubleshooting">
+      <h2>Troubleshooting</h2>
+      <p>Quick fixes for the most common hiccups:</p>
+      <h3>The editor (Monaco) fails to load</h3>
+      <p>The editor bundle is large, so a flaky connection can interrupt it. Hard-refresh (<span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">R</span>), disable aggressive ad/script blockers for nitroide.com, and try again. Your files are safe — they're stored separately in localStorage.</p>
+      <h3>localStorage is full / quota errors</h3>
+      <p>Browsers cap localStorage around 5–10 MB per site. If saves start failing, export finished projects (<code>export zip</code> in the console) and delete old ones from the Project Manager dashboard to free space.</p>
+      <h3>Share link is too long</h3>
+      <p>Share links encode your code in the URL, and browsers cap URL length around 2,000 characters. For big projects, use <code>export zip</code> or <em>Export as 1-File</em> and share the file instead.</p>
+      <h3>Offline mode isn't working</h3>
+      <p>Offline support kicks in after your first online visit — the service worker needs one successful load to cache the app. If it still fails, check that you're opening the installed app (or the same browser profile), not a private/incognito window, which blocks service workers.</p>
     </section>
   </div>
 </div>
