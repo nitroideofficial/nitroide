@@ -633,6 +633,12 @@
     scrollbar-width: none;
     flex: 0 1 auto;
     gap: 6px;
+    justify-content: flex-start;
+    margin-left: auto;
+  }
+
+  .workspace-body .ws-right .ws-btn {
+    flex-shrink: 0;
   }
 
   .workspace-body .ws-right::-webkit-scrollbar {
