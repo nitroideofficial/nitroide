@@ -40,8 +40,8 @@
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
-<script src="/vendor/monaco/vs/loader.js"></script>
-<script src="/vendor/lz-string/lz-string.min.js"></script>
+<script src="/vendor/monaco/vs/loader.js" defer></script>
+<script src="/vendor/lz-string/lz-string.min.js" defer></script>
 
   <script type="application/ld+json">
   {
@@ -128,7 +128,7 @@
           <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="changeFontSize(2)"><i class="ph-bold ph-plus"></i> Increase Font Size</button>
           <button class="dropdown-item" onclick="changeFontSize(-2)"><i class="ph-bold ph-minus"></i> Decrease Font Size</button>
-          <button class="dropdown-item" onclick="toggleWordWrap()"><i class="ph-bold ph-text-align-justify"></i> Toggle Word Wrap</button>
+          <button class="dropdown-item" id="wordWrapBtn" onclick="toggleWordWrap()"><i class="ph-bold ph-text-align-justify"></i> Toggle Word Wrap</button>
           <button class="dropdown-item" onclick="formatCode()"><i class="ph-bold ph-magic-wand"></i> Format Code</button>
           <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="setDevice('desktop')"><i class="ph-bold ph-monitor"></i> Desktop View</button>
@@ -181,7 +181,7 @@
 
           <div class="editor-half" id="editorTopSplit">
             <div id="htmlPanel" class="editor-panel">
-              <div class="editor-header-pill" onclick="togglePanel('htmlPanel')">
+              <div class="editor-header-pill" role="button" tabindex="0" onclick="togglePanel('htmlPanel')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePanel('htmlPanel')}">
                 <i class="ph-fill ph-file-html" style="color:#e34c26;"></i> <span id="htmlPanelPillText">index.html</span>
               </div>
               <div id="htmlWrap" style="flex: 1; min-height: 0; width: 100%;"></div>
@@ -190,7 +190,7 @@
             <div class="ide-resizer horiz"></div>
 
             <div id="cssPanel" class="editor-panel">
-              <div class="editor-header-pill" onclick="togglePanel('cssPanel')">
+              <div class="editor-header-pill" role="button" tabindex="0" onclick="togglePanel('cssPanel')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePanel('cssPanel')}">
                 <i class="ph-fill ph-file-css" style="color:#264de4;"></i> <span id="cssPanelPillText">style.css</span>
               </div>
               <div id="cssWrap" style="flex: 1; min-height: 0; width: 100%;"></div>
@@ -199,7 +199,7 @@
             <div class="ide-resizer horiz"></div>
 
             <div id="jsPanel" class="editor-panel">
-              <div class="editor-header-pill" onclick="togglePanel('jsPanel')">
+              <div class="editor-header-pill" role="button" tabindex="0" onclick="togglePanel('jsPanel')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();togglePanel('jsPanel')}">
                 <i class="ph-fill ph-file-js" style="color:#f7df1e;"></i> <span id="jsPanelPillText">script.js</span>
               </div>
               <div id="jsWrap" style="flex: 1; min-height: 0; width: 100%;"></div>
@@ -316,6 +316,21 @@
     </div>
   </div>
 </div>
+<div id="onboardOverlay" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:20px;box-sizing:border-box;">
+  <div role="dialog" aria-modal="true" aria-labelledby="onboardTitle" style="background:#111114;border:1px solid #2b2b30;border-radius:14px;padding:26px 26px 22px;max-width:400px;width:100%;color:#e4e4e7;font-family:system-ui,-apple-system,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,.6);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+      <h2 id="onboardTitle" style="margin:0;font-size:18px;font-weight:700;">Welcome to NitroIDE</h2>
+      <button id="onboardClose" aria-label="Dismiss onboarding" style="background:none;border:none;color:#a1a1aa;font-size:22px;cursor:pointer;line-height:1;padding:4px;">&times;</button>
+    </div>
+    <p style="margin:0 0 16px;font-size:14px;color:#a1a1aa;">Your first project in 30 seconds:</p>
+    <ol style="margin:0 0 20px;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;font-size:14px;">
+      <li><a id="onboardTemplateLink" href="?template=todo-app" style="color:#22d3ee;text-decoration:none;font-weight:600;">1. Open a template</a><span style="color:#71717a;font-size:13px;"> &mdash; start from a working app</span></li>
+      <li><span style="color:#22d3ee;font-weight:600;">2. Press <kbd style="background:#1c1c1f;border:1px solid #2b2b30;border-radius:6px;padding:2px 8px;font-family:inherit;">Ctrl+K</kbd></span><span style="color:#71717a;font-size:13px;"> &mdash; command palette</span></li>
+      <li><span style="color:#22d3ee;font-weight:600;">3. Share or export</span><span style="color:#71717a;font-size:13px;"> &mdash; send your project anywhere</span></li>
+    </ol>
+    <button id="onboardDone" style="width:100%;background:#22d3ee;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:700;color:#09090b;cursor:pointer;">Got it</button>
+  </div>
+</div>
 <div id="toast" class="toast"></div>
 <script src="../script.js"></script>
 <script>
@@ -355,6 +370,48 @@ window.addEventListener('appinstalled', () => {
   _deferredInstallPrompt = null;
   const btn = document.getElementById('nitroide-install-btn');
   if (btn) btn.remove();
+});
+
+// First-run onboarding overlay (gated on localStorage; skipped in embed mode)
+(function(){
+  var ov=document.getElementById('onboardOverlay');
+  if(!ov||window.location.search.indexOf('embed=1')>=0) return;
+  var seen=false;
+  try{ seen=!!localStorage.getItem('nitroide_onboarded'); }catch(e){ seen=true; }
+  function dismiss(){ try{ localStorage.setItem('nitroide_onboarded','1'); }catch(e){} ov.style.display='none'; }
+  if(!seen){ ov.style.display='flex'; }
+  var c=document.getElementById('onboardClose'), d=document.getElementById('onboardDone'), t=document.getElementById('onboardTemplateLink');
+  if(c) c.addEventListener('click', dismiss);
+  if(d) d.addEventListener('click', dismiss);
+  if(t) t.addEventListener('click', function(){ try{ localStorage.setItem('nitroide_onboarded','1'); }catch(e){} });
+})();
+
+// "Copy embed code" next to the Share button (after injectShareButton runs on DOMContentLoaded)
+document.addEventListener('DOMContentLoaded', function(){
+  if(document.getElementById('embedBtn')) return;
+  var shareBtn=document.getElementById('shareBtn');
+  if(!shareBtn) return;
+  var b=document.createElement('button');
+  b.id='embedBtn'; b.className='ws-btn ws-icon-text-btn';
+  b.title='Copy embed code'; b.setAttribute('aria-label','Copy embed code');
+  b.innerHTML='<i class="ph-bold ph-code"></i><span class="ws-hide-mobile">Embed</span>';
+  b.addEventListener('click', function(){
+    if(typeof buildShareUrl!=='function') return;
+    var url=buildShareUrl();
+    if(!url){ showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Compression library missing."); return; }
+    var snippet='<iframe src="'+url.replace('?code=','?embed=1&code=')+'" width="100%" height="500" frameborder="0"></iframe>';
+    function ok(){ showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> Embed code copied!"); }
+    function legacy(){
+      var ta=document.createElement('textarea');
+      ta.value=snippet; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); ok(); }catch(e){}
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(snippet).then(ok).catch(legacy); }
+    else{ legacy(); }
+  });
+  shareBtn.parentNode.insertBefore(b, shareBtn.nextSibling);
 });
 </script>
 </body>
