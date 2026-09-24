@@ -31,16 +31,17 @@
   <link rel="icon" type="image/png" sizes="192x192" href="https://nitroide.com/favicon-192x192.png">
   <link rel="apple-touch-icon" href="https://nitroide.com/apple-touch-icon.png">
   
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <script>if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');</script>
   
   <link rel="manifest" href="../manifest.json">
   <link rel="stylesheet" href="../styles.css">
   
-  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script src="/vendor/monaco/vs/loader.js"></script>
+<script src="/vendor/lz-string/lz-string.min.js"></script>
 
   <script type="application/ld+json">
   {
@@ -317,5 +318,44 @@
 </div>
 <div id="toast" class="toast"></div>
 <script src="../script.js"></script>
+<script>
+// PWA: register service worker + PWA install prompt (codebox page only)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+
+let _deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  _deferredInstallPrompt = e;
+
+  // Subtle floating install button, dark-theme matched
+  if (document.getElementById('nitroide-install-btn')) return;
+  const btn = document.createElement('button');
+  btn.id = 'nitroide-install-btn';
+  btn.textContent = 'Install NitroIDE';
+  btn.style.cssText =
+    'position:fixed;bottom:20px;right:20px;z-index:9999;' +
+    'background:#1a1a1a;color:#f0f0f0;border:1px solid #333;' +
+    'border-radius:10px;padding:9px 16px;font-size:13px;cursor:pointer;' +
+    'box-shadow:0 4px 16px rgba(0,0,0,0.5);opacity:0.92;';
+  btn.addEventListener('click', async () => {
+    if (!_deferredInstallPrompt) return;
+    _deferredInstallPrompt.prompt();
+    await _deferredInstallPrompt.userChoice;
+    _deferredInstallPrompt = null;
+    btn.remove();
+  });
+  document.body.appendChild(btn);
+});
+
+window.addEventListener('appinstalled', () => {
+  _deferredInstallPrompt = null;
+  const btn = document.getElementById('nitroide-install-btn');
+  if (btn) btn.remove();
+});
+</script>
 </body>
 </html>

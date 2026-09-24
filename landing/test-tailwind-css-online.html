@@ -35,13 +35,11 @@
   
   <link rel="manifest" href="../manifest.json">
   <link rel="stylesheet" href="../styles.css">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
-
-  <script type="application/ld+json">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -84,12 +82,17 @@
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
+<header>
+<nav>
 <nitro-header></nitro-header>
+</nav>
+</header>
 
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
 <div class="global-spotlight" id="globalSpotlight"></div>
 
+<main>
 <div class="container relative-z">
   <div id="home" class="view active">
     
@@ -342,16 +345,21 @@
 
   </div> <!-- Closes #home -->
 </div> <!-- Closes .container -->
+</main>
 
 <!-- INJECTED DYNAMIC FOOTER & SCRIPTS -->
+<footer>
 <nitro-footer></nitro-footer>
+</footer>
 <nitro-modals></nitro-modals>
 <script src="../script.js"></script>
 
-<!-- Pre-load Tailwind CDN config logic (for this specific page) -->
+<!-- Pre-load Tailwind CDN config logic (for this specific page).
+     Note: cdnLinks/defaultVfs are declared globally by ../script.js,
+     so we assign (not redeclare) to avoid a SyntaxError. -->
 <script>
-  let cdnLinks = ['https://cdn.tailwindcss.com'];
-  let defaultVfs = {
+  cdnLinks = ['https://cdn.tailwindcss.com'];
+  defaultVfs = {
     'index.html': `<div class="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-4">\n  <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-4">\n    NitroIDE + Tailwind\n  </h1>\n  <p class="text-zinc-400 text-lg mb-8">Edit this code and see changes instantly.</p>\n  <button class="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-zinc-200 transition-colors">\n    Get Started\n  </button>\n</div>`,
     'style.css': `/* Tailwind handles the styling! */\nbody { margin: 0; }`,
     'script.js': `console.log("⚡ Tailwind Workspace initialized.");`

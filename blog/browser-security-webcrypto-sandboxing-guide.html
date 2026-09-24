@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Security: WebCrypto, Sandboxing &amp; Zero-Trust Patterns | NitroIDE</title>
+  <meta name="title" content="Browser Security: WebCrypto, Sandboxing &amp; Zero-Trust Patterns | NitroIDE">
+  <meta name="description" content="WebCrypto encryption, HKDF key derivation, sandboxed iframes, fenced frames, ShadowRealm and E2EE media — browser security patterns with honest threat models.">
+  <meta name="keywords" content="webcrypto AES-GCM tutorial, HKDF key derivation, sandboxed iframe plugin, fenced frames, webrtc insertable streams E2EE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#ef4444">
+  <meta property="og:title" content="Browser Security: WebCrypto, Sandboxing &amp; Zero-Trust Patterns | NitroIDE">
+  <meta property="og:description" content="WebCrypto encryption, HKDF key derivation, sandboxed iframes, fenced frames, ShadowRealm and E2EE media — browser security patterns with honest threat models.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/browser-security-webcrypto-sandboxing-guide.html">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Encrypt, Isolate, Verify: Browser Security That Holds Up.",
+    "description": "WebCrypto encryption, HKDF key derivation, sandboxed iframes, fenced frames, ShadowRealm and E2EE media — browser security patterns with honest threat models.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/browser-security-webcrypto-sandboxing-guide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #ef4444; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SECURITY • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Encrypt, Isolate, Verify: Browser Security That Holds Up.</h1>
+
+    <p>Browser security has two halves: <strong>cryptography</strong> (WebCrypto gives you real AES, HKDF, and ECDH with no libraries) and <strong>isolation</strong> (sandboxes that contain untrusted code). This guide covers both — with the honest threat models, because crypto without a threat model is just math.</p>
+
+    <h2>Real encryption with WebCrypto</h2>
+    <p>No libraries, no hand-rolled ciphers: <code>crypto.subtle</code> gives you audited primitives. The workhorse is <strong>AES-GCM</strong> (authenticated encryption — it detects tampering):</p>
+
+    <div class="docs-code"><span class="code-keyword">async function</span> <span class="code-func">encryptNote</span>(plaintext, password) {<br>&nbsp;&nbsp;<span class="code-comment">// 1. Stretch the password into a key (never use it directly)</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> base = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">importKey</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'raw'</span>, <span class="code-keyword">new</span> <span class="code-func">TextEncoder</span>().<span class="code-func">encode</span>(password), <span class="code-string">'PBKDF2'</span>, <span class="code-keyword">false</span>, [<span class="code-string">'deriveKey'</span>]);<br>&nbsp;&nbsp;<span class="code-keyword">const</span> salt = crypto.<span class="code-func">getRandomValues</span>(<span class="code-keyword">new</span> <span class="code-func">Uint8Array</span>(<span class="code-num">16</span>));<br>&nbsp;&nbsp;<span class="code-keyword">const</span> key = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">deriveKey</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'PBKDF2'</span>, <span class="code-attr">salt</span>, <span class="code-attr">iterations</span>: <span class="code-num">600_000</span>, <span class="code-attr">hash</span>: <span class="code-string">'SHA-256'</span> },<br>&nbsp;&nbsp;&nbsp;&nbsp;base, { <span class="code-attr">name</span>: <span class="code-string">'AES-GCM'</span>, <span class="code-attr">length</span>: <span class="code-num">256</span> }, <span class="code-keyword">false</span>, [<span class="code-string">'encrypt'</span>, <span class="code-string">'decrypt'</span>]);<br>&nbsp;&nbsp;<span class="code-comment">// 2. Encrypt with a fresh random IV every time</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> iv = crypto.<span class="code-func">getRandomValues</span>(<span class="code-keyword">new</span> <span class="code-func">Uint8Array</span>(<span class="code-num">12</span>));<br>&nbsp;&nbsp;<span class="code-keyword">const</span> ct = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">encrypt</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'AES-GCM'</span>, <span class="code-attr">iv</span> }, key,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">new</span> <span class="code-func">TextEncoder</span>().<span class="code-func">encode</span>(plaintext));<br>&nbsp;&nbsp;<span class="code-keyword">return</span> { salt, iv, ct }; <span class="code-comment">// store all three</span><br>}</div>
+
+    <p>Three rules that matter more than the code: never reuse an IV with the same key, never skip the KDF step (raw passwords aren't keys), and store the salt alongside the ciphertext — it's not secret.</p>
+
+    <h2>One key, many purposes: HKDF</h2>
+    <p>Deriving your encryption key <em>and</em> your HMAC key from the same master secret is a classic mistake. <strong>HKDF</strong> derives independent, purpose-bound sub-keys from one master:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> fileKey = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">deriveKey</span>(<br>&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'HKDF'</span>, <span class="code-attr">hash</span>: <span class="code-string">'SHA-256'</span>, <span class="code-attr">salt</span>,<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-attr">info</span>: <span class="code-keyword">new</span> <span class="code-func">TextEncoder</span>().<span class="code-func">encode</span>(<span class="code-string">'file-encryption-v1'</span>) },<br>&nbsp;&nbsp;masterKey, { <span class="code-attr">name</span>: <span class="code-string">'AES-GCM'</span>, <span class="code-attr">length</span>: <span class="code-num">256</span> },<br>&nbsp;&nbsp;<span class="code-keyword">false</span>, [<span class="code-string">'encrypt'</span>, <span class="code-string">'decrypt'</span>]);</div>
+
+    <p>The <code>info</code> parameter is the whole point: different info strings → cryptographically independent keys. Compromise of one purpose never leaks another.</p>
+
+    <div class="pro-tip" style="border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05);">
+      <i class="ph-fill ph-key" style="color: #ef4444;"></i>
+      <div>
+        <p><strong>The honest threat model:</strong> client-side encryption protects data <em>at rest</em> from other origins, stolen backups, and curious server admins. It does <strong>not</strong> protect against a compromised device, malicious browser extensions, or XSS in your own page — if an attacker runs JS in your origin, they can read your keys. "Zero-knowledge" in a web app means the <em>server</em> never sees plaintext, not that the client is invulnerable.</p>
+      </div>
+    </div>
+
+    <h2>Sandboxing untrusted code: iframes done right</h2>
+    <p>Running user plugins or third-party widgets? The <strong>sandboxed iframe</strong> is the battle-tested primitive — it strips capabilities by default and you add back only what's needed:</p>
+
+    <div class="docs-code"><span class="code-tag">&lt;iframe</span><br>&nbsp;&nbsp;<span class="code-attr">sandbox</span>=<span class="code-string">"allow-scripts"</span><br>&nbsp;&nbsp;<span class="code-attr">src</span>=<span class="code-string">"https://plugins.example.com/widget.html"</span><br>&nbsp;&nbsp;<span class="code-attr">csp</span>=<span class="code-string">"default-src 'none'; script-src 'self'"</span><span class="code-tag">&gt;</span><br><span class="code-tag">&lt;/iframe&gt;</span></div>
+
+    <p>Without <code>allow-same-origin</code>, the iframe gets an opaque origin — it can't touch your DOM, cookies, or storage even if its script is malicious. Communicate across the boundary with <code>postMessage</code> and always validate <code>event.origin</code>. This is the pattern every serious plugin system (and every online code playground's preview pane) is built on.</p>
+
+    <h2>Fenced frames: the stricter sibling</h2>
+    <p><strong>Fenced frames</strong> (<code>&lt;fencedframe&gt;</code>) go further than sandboxed iframes: the embedder can't even <em>observe</em> what's inside — no reading its size, URL, or events. The honest context: this was built for privacy-preserving advertising (so ad tech can't fingerprint users across sites), it's Chromium-only, and for most app plugin systems a sandboxed iframe is the right, portable choice.</p>
+
+    <h2>ShadowRealm: lightweight JS sandboxes (emerging)</h2>
+    <p>Sometimes an iframe is too heavy — you want to run untrusted <em>JavaScript</em> (a user formula, a plugin script) in the same page. <strong>ShadowRealm</strong>, a Stage 3 TC39 proposal, creates a fresh JS realm with its own globals and no DOM access:</p>
+
+    <div class="docs-code"><span class="code-comment">// Proposed API — verify current browser support before using:</span><br><span class="code-keyword">const</span> realm = <span class="code-keyword">new</span> <span class="code-func">ShadowRealm</span>();<br><span class="code-keyword">const</span> result = <span class="code-keyword">await</span> realm.<span class="code-func">importValue</span>(<span class="code-string">'./plugin.js'</span>, <span class="code-string">'run'</span>);<br><span class="code-comment">// Plugin code runs isolated: no window, no document, no fetch</span><br><span class="code-comment">// unless you explicitly hand it wrapped capabilities.</span></div>
+
+    <p>Until it standardizes, the practical equivalents are sandboxed iframes, workers with no sensitive data, or vetted sandboxing libraries. Don't build production security on a proposal.</p>
+
+    <h2>E2EE media: WebRTC insertable streams</h2>
+    <p><strong>Insertable streams</strong> let you encrypt WebRTC audio/video frames before they hit the network — true end-to-end encryption for calls:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> sender = pc.<span class="code-func">addTrack</span>(videoTrack);<br><span class="code-keyword">const</span> streams = sender.<span class="code-func">createEncodedStreams</span>();<br><span class="code-keyword">const</span> transform = <span class="code-keyword">new</span> <span class="code-func">TransformStream</span>({<br>&nbsp;&nbsp;<span class="code-func">transform</span>(frame, controller) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// AES-GCM the frame bytes with a key exchanged out-of-band</span><br>&nbsp;&nbsp;&nbsp;&nbsp;controller.<span class="code-func">enqueue</span>(<span class="code-func">encryptFrame</span>(frame.data, sharedKey));<br>&nbsp;&nbsp;}<br>});<br>streams.readable.<span class="code-func">pipeThrough</span>(transform).<span class="code-func">pipeTo</span>(streams.writable);</div>
+
+    <p>The critical honesty: E2EE protects media <em>in transit</em>, but WebRTC still needs <strong>signaling</strong> (exchanging SDP offers/answers requires a server or manual copy-paste) and <strong>key exchange</strong> (the shared key must reach both peers securely — ECDH via WebCrypto is the standard answer). "P2P" never means "no server at all."</p>
+
+    <div class="pro-tip" style="border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05);">
+      <i class="ph-fill ph-shield-check" style="color: #ef4444;"></i>
+      <div>
+        <p><strong>Security checklist for any browser app:</strong> ① HTTPS everywhere (WebCrypto won't even expose some APIs on http), ② Content Security Policy headers, ③ sandboxed iframes for untrusted content, ④ KDF before encryption, fresh IVs, ⑤ validate every <code>postMessage</code> origin. Get these five right and you're ahead of most of the web.</p>
+      </div>
+    </div>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Prototype Security Patterns Safely.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">WebCrypto, sandboxing, and isolation — experiment in a local-first browser IDE.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch NitroIDE <i class="ph-bold ph-shield-check"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

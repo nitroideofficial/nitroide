@@ -34,13 +34,11 @@
   
   <link rel="manifest" href="../manifest.json">
   <link rel="stylesheet" href="../styles.css">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
-
-  <script type="application/ld+json">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -81,12 +79,17 @@
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
+<header>
+<nav>
 <nitro-header></nitro-header>
+</nav>
+</header>
 
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
 <div class="global-spotlight" id="globalSpotlight"></div>
 
+<main>
 <div class="container relative-z">
   
   <div class="premium-hero" style="margin-top: 60px;">
@@ -99,6 +102,17 @@
     <p class="reveal-3 hero-subtitle">
       Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.
     </p>
+  </div>
+
+  <!-- Newsletter signup (Buttondown placeholder) -->
+  <!-- TODO(owner): replace YOUR_USERNAME_HERE with real Buttondown username -->
+  <div class="newsletter-block" style="max-width: 640px; margin: 0 auto 40px; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+    <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+    <p style="margin: 0 0 16px; font-size: 14px; opacity: 0.65;">One short email when we publish. No spam, unsubscribe anytime.</p>
+    <form action="https://buttondown.email/api/emails/embed-subscribe/YOUR_USERNAME_HERE" method="post" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+      <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1; min-width: 200px; padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 14px;">
+      <button type="submit" style="padding: 10px 20px; border-radius: 8px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer;">Subscribe</button>
+    </form>
   </div>
 
   <div class="reveal-4 content-section">
@@ -120,9 +134,12 @@
   </div>
 
 </div> <!-- Closes .container -->
+</main>
 
 <!-- INJECTED DYNAMIC FOOTER & SCRIPTS -->
+<footer>
 <nitro-footer></nitro-footer>
+</footer>
 <nitro-modals></nitro-modals>
 <script src="../script.js"></script>
 

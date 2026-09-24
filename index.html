@@ -8,13 +8,8 @@
   <title>NitroIDE | Zero-Latency Browser IDE & Online Code Editor</title>
   
   <link rel="preconnect" href="https://nitroide.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   
   
-  <link rel="dns-prefetch" href="//dev.to">
-  <link rel="dns-prefetch" href="//unpkg.com">
   <link rel="preload" as="image" href="https://nitroide.com/logo/logo_white.png" fetchpriority="high">
   
   <meta name="title" content="NitroIDE | Zero-Latency Browser IDE & Online Code Editor">
@@ -59,13 +54,12 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="styles.css">
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
   
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/regular/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <noscript>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/regular/style.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css">
   </noscript>
 
   <script type="application/ld+json">
@@ -145,7 +139,9 @@
 <body>
 
 <!-- INJECTED COMPONENTS -->
+<header>
 <nitro-header></nitro-header>
+</header>
 
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
@@ -176,6 +172,7 @@
       <p class="reveal-3 hero-subtitle">
         The ultimate client-side IDE. Zero servers, absolute privacy. Built on the Monaco engine, running directly in your browser's memory.
       </p>
+
       <div class="reveal-4 execution-pipeline magnetic-btn hide-in-mobile">
          <div class="pipe-left">
            <div class="code-block-anim">
@@ -451,11 +448,13 @@
 </div>
 
 <!-- INJECTED COMPONENTS & SCRIPT -->
+<footer>
 <nitro-footer></nitro-footer>
+</footer>
 <nitro-modals></nitro-modals>
 <div id="toast" class="toast"></div>
-<script src="pulse-data.js?v=20260522b"></script>
-<script defer src="script.js?v=20260522b"></script>
+<script defer src="pulse-data.js?v=20260522b"></script>
+<script defer src="script.js?v=20260923"></script>
 
 </body>
 </html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern CSS for App UIs: Houdini, Container Queries &amp; View Transitions | NitroIDE</title>
+  <meta name="title" content="Modern CSS for App UIs: Houdini, Container Queries &amp; View Transitions | NitroIDE">
+  <meta name="description" content="@property, Houdini Paint API, container queries, view transitions, Typed OM, Custom Highlight API and content-visibility — modern CSS techniques for app UIs, all runnable.">
+  <meta name="keywords" content="css @property tutorial, houdini paint api, css container queries, view transitions api, css typed OM, content-visibility performance">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#ec4899">
+  <meta property="og:title" content="Modern CSS for App UIs: Houdini, Container Queries &amp; View Transitions | NitroIDE">
+  <meta property="og:description" content="@property, Houdini Paint API, container queries, view transitions, Typed OM, Custom Highlight API and content-visibility — modern CSS techniques for app UIs, all runnable.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/modern-css-app-ui-houdini-container-queries-guide.html">
+  <meta property="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NitroIDE",
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": "Web IDE",
+    "operatingSystem": "Web Browser",
+    "url": "https://nitroide.com/",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "sameAs": [
+      "https://github.com/nitroideofficial/nitroide",
+      "https://x.com/trynitroide",
+      "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "CSS Grew Up. Your App UI Should Too.",
+    "description": "@property, Houdini Paint API, container queries, view transitions, Typed OM, Custom Highlight API and content-visibility — modern CSS techniques for app UIs, all runnable.",
+    "author": {
+      "@type": "Organization",
+      "name": "NitroIDE"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NitroIDE",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nitroide.com/logo/logo_white.png"
+      }
+    },
+    "url": "https://nitroide.com/blog/modern-css-app-ui-houdini-container-queries-guide.html",
+    "image": "https://nitroide.com/og-banner.png"
+  }
+  </script>
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<div class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #ec4899; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">UI PERFORMANCE • SEPTEMBER 2026</div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">CSS Grew Up. Your App UI Should Too.</h1>
+
+    <p>CSS is no longer "the styling language." In the last few years it gained typed custom properties, container queries, native view transitions, programmatic highlight control, and a paint API that runs in a worker. If you're still writing app UIs like it's 2019, you're leaving real capability on the table.</p>
+
+    <p>Every example below is pure, runnable CSS/JS — paste it into NitroIDE's live preview and see it work instantly, no build step.</p>
+
+    <h2>Typed custom properties with @property</h2>
+    <p>Regular custom properties are dumb strings — the browser can't animate <code>--progress: 0%</code> to <code>--progress: 100%</code> because it doesn't know it's a percentage. <code>@property</code> registers the type, unlocking smooth animation of anything:</p>
+
+    <div class="docs-code"><span class="code-tag">@property</span> --angle {<br>&nbsp;&nbsp;<span class="code-attr">syntax</span>: <span class="code-string">'&lt;angle&gt;'</span>;<br>&nbsp;&nbsp;<span class="code-attr">inherits</span>: <span class="code-keyword">false</span>;<br>&nbsp;&nbsp;<span class="code-attr">initial-value</span>: <span class="code-num">0deg</span>;<br>}<br><span class="code-tag">.spinner</span> {<br>&nbsp;&nbsp;<span class="code-attr">background</span>: <span class="code-func">conic-gradient</span>(<span class="code-func">from</span> <span class="code-func">var</span>(--angle), #ec4899, #8b5cf6, #ec4899);<br>&nbsp;&nbsp;<span class="code-attr">animation</span>: spin <span class="code-num">2s</span> linear infinite;<br>}<br><span class="code-tag">@keyframes</span> spin { <span class="code-tag">to</span> { --angle: <span class="code-num">360deg</span>; } }</div>
+
+    <p>Without <code>@property</code>, that keyframe does nothing — the browser can't interpolate an untyped string. With it, you get GPU-friendly animated gradients with zero JavaScript.</p>
+
+    <h2>Paint with code: the Houdini Paint API</h2>
+    <p>Need a background pattern CSS can't express — wavy dividers, confetti, dynamic grids? The <strong>CSS Paint API</strong> lets you draw with canvas-like code in a worklet that runs off the main thread:</p>
+
+    <div class="docs-code"><span class="code-comment">// confetti-paint.js — registered as a paint worklet</span><br><span class="code-func">registerPaint</span>(<span class="code-string">'confetti'</span>, <span class="code-keyword">class</span> {<br>&nbsp;&nbsp;<span class="code-func">paint</span>(ctx, geom) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">let</span> i = <span class="code-num">0</span>; i &lt; <span class="code-num">60</span>; i++) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ctx.fillStyle = <span class="code-string">`hsl(${i * 6}, 80%, 60%)`</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ctx.<span class="code-func">fillRect</span>(Math.<span class="code-func">random</span>() * geom.width,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Math.<span class="code-func">random</span>() * geom.height, <span class="code-num">6</span>, <span class="code-num">6</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>});</div>
+
+    <div class="docs-code"><span class="code-comment">// usage:</span><br>CSS.paintWorklet.<span class="code-func">addModule</span>(<span class="code-string">'confetti-paint.js'</span>);<br><span class="code-tag">.party</span> { <span class="code-attr">background</span>: <span class="code-func">paint</span>(confetti); }</div>
+
+    <p>Honest note: Houdini's grand vision (layout, animation worklets) mostly stalled — but the Paint API shipped in Chromium and is genuinely useful for generative backgrounds and dynamic patterns.</p>
+
+    <h2>Container queries: components that respond to their box</h2>
+    <p>Media queries respond to the <em>viewport</em>. <strong>Container queries</strong> let a component respond to its <em>parent's</em> size — which is what you actually want for reusable cards, sidebars, and dashboard widgets:</p>
+
+    <div class="docs-code"><span class="code-tag">.card-wrapper</span> { <span class="code-attr">container-type</span>: inline-size; }<br><span class="code-tag">.card</span> { <span class="code-attr">display</span>: grid; <span class="code-attr">grid-template-columns</span>: <span class="code-num">1fr</span>; }<br><span class="code-tag">@container</span> (<span class="code-attr">min-width</span>: <span class="code-num">480px</span>) {<br>&nbsp;&nbsp;<span class="code-tag">.card</span> { <span class="code-attr">grid-template-columns</span>: <span class="code-num">200px</span> <span class="code-num">1fr</span>; }<br>}</div>
+
+    <p>Drop the same card in a narrow sidebar and a wide main column — it adapts to each context automatically. This is the single biggest layout upgrade for component-based UIs in years.</p>
+
+    <h2>Native page transitions</h2>
+    <p>The <strong>View Transitions API</strong> gives you animated transitions between DOM states with a few lines — no animation library:</p>
+
+    <div class="docs-code">document.<span class="code-func">startViewTransition</span>(() =&gt; {<br>&nbsp;&nbsp;<span class="code-func">renderNewPage</span>(); <span class="code-comment">// DOM updates happen inside</span><br>});<br><span class="code-comment">/* Opt elements into smooth morphing: */</span><br><span class="code-tag">.hero-image</span> { <span class="code-attr">view-transition-name</span>: hero; }</div>
+
+    <p>Elements with matching <code>view-transition-name</code> values morph between states automatically. For multi-page apps, <code>@view-transition { navigation: auto; }</code> enables the same effect across full page loads in Chromium — genuinely app-like navigation with one CSS rule.</p>
+
+    <div class="pro-tip" style="border-color: rgba(236, 72, 153, 0.3); background: rgba(236, 72, 153, 0.05);">
+      <i class="ph-fill ph-palette" style="color: #ec4899;"></i>
+      <div>
+        <p><strong>Performance note:</strong> view transitions snapshot the old and new states as images and animate those — the DOM itself isn't animating. Keep <code>view-transition-name</code> usage targeted; naming hundreds of elements can spike memory during the transition.</p>
+      </div>
+    </div>
+
+    <h2>Style without strings: CSS Typed OM</h2>
+    <p>Setting styles via strings (<code>el.style.opacity = '0.5'</code>) forces the browser to parse text on every write. The <strong>Typed OM</strong> works with real numeric values — faster in tight loops like drag handlers and scroll effects:</p>
+
+    <div class="docs-code"><span class="code-comment">// String parsing on every frame — slow:</span><br>el.style.transform = <span class="code-string">`translateX(${x}px)`</span>;<br><span class="code-comment">// Typed values, no parsing — fast:</span><br>el.attributeStyleMap.<span class="code-func">set</span>(<span class="code-string">'transform'</span>,<br>&nbsp;&nbsp;<span class="code-keyword">new</span> <span class="code-func">CSSTranslate</span>(CSS.<span class="code-func">px</span>(x), CSS.<span class="code-func">px</span>(<span class="code-num">0</span>)));</div>
+
+    <h2>Programmatic highlighting: the Custom Highlight API</h2>
+    <p><code>::selection</code> only covers user selections. The <strong>Custom Highlight API</strong> lets JavaScript highlight arbitrary ranges — the foundation of fast, custom syntax highlighting that doesn't fight the DOM:</p>
+
+    <div class="docs-code"><span class="code-keyword">const</span> range = <span class="code-keyword">new</span> <span class="code-func">Range</span>();<br>range.<span class="code-func">setStart</span>(textNode, <span class="code-num">0</span>);<br>range.<span class="code-func">setEnd</span>(textNode, <span class="code-num">9</span>);<br>CSS.highlights.<span class="code-func">set</span>(<span class="code-string">'search-match'</span>, <span class="code-keyword">new</span> <span class="code-func">Highlight</span>(range));</div>
+
+    <div class="docs-code"><span class="code-tag">::highlight</span>(search-match) {<br>&nbsp;&nbsp;<span class="code-attr">background-color</span>: #ec4899;<br>&nbsp;&nbsp;<span class="code-attr">color</span>: white;<br>}</div>
+
+    <h2>Rendering huge lists: content-visibility</h2>
+    <p>Rendering 10,000 file rows crushes layout. <code>content-visibility: auto</code> tells the browser to skip rendering off-screen subtrees entirely until they're scrolled near:</p>
+
+    <div class="docs-code"><span class="code-tag">.file-row</span> {<br>&nbsp;&nbsp;<span class="code-attr">content-visibility</span>: auto;<br>&nbsp;&nbsp;<span class="code-attr">contain-intrinsic-size</span>: auto <span class="code-num">48px</span>; <span class="code-comment">/* reserve space so scrollbars don't jump */</span><br>}</div>
+
+    <p>This single declaration can take a heavy list from seconds of layout to near-instant. The <code>contain-intrinsic-size</code> is essential — without it, the scrollbar thumb jitters as rows get measured.</p>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(236, 72, 153, 0.05); border: 1px solid rgba(236, 72, 153, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Style at the Speed of Thought.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Try every technique above in a live preview — no PostCSS, no config, just CSS.</p>
+      <a href="../tools/codebox.html" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch NitroIDE <i class="ph-bold ph-palette"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js"></script>
+
+</body>
+</html>

@@ -35,13 +35,11 @@
   
   <link rel="manifest" href="../manifest.json">
   <link rel="stylesheet" href="../styles.css">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
-
-  <script type="application/ld+json">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -84,12 +82,17 @@
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
+<header>
+<nav>
 <nitro-header></nitro-header>
+</nav>
+</header>
 
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
 <div class="global-spotlight" id="globalSpotlight"></div>
 
+<main>
 <div class="container relative-z">
   <div id="home" class="view active">
     
@@ -320,11 +323,14 @@
 
   </div> <!-- Closes #home -->
 </div> <!-- Closes .container -->
+</main>
 
 <!-- INJECTED DYNAMIC FOOTER & SCRIPTS -->
+<footer>
 <nitro-footer></nitro-footer>
+</footer>
 <nitro-modals></nitro-modals>
-<script src="../script.js"></script>
+<script defer src="../script.js"></script>
 
 </body>
 </html>
