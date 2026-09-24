@@ -653,8 +653,9 @@
     height: 32px;
   }
 
-  .workspace-body .ws-icon-text-btn {
-    width: 30px;
+  .workspace-body .ws-right .ws-icon-text-btn {
+    width: 28px;
+    min-width: 28px;
   }
 
   .workspace-body .ws-compile-btn {
