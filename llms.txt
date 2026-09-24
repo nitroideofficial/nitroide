@@ -21,7 +21,7 @@
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.
-- Privacy: fully client-side; code never leaves the browser. No analytics, no ads, no tracking.
+- Privacy: fully client-side; your code stays in your browser and is never sent to NitroIDE servers. No analytics, no ads, no tracking. (Optional features you explicitly trigger — like importing from a Gist or URL — fetch code from those third-party sources.)
 - Offline: works offline after first load (PWA + service worker).
 - Sharing: the Share button generates a `?code=` link containing the compressed workspace.
 - Embedding: append `?embed=1` to the workspace URL for a chromeless embed.
