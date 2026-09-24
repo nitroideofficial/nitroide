@@ -631,7 +631,7 @@
   .workspace-body .ws-right {
     overflow-x: auto;
     scrollbar-width: none;
-    gap: 6px;
+    gap: 4px;
     justify-content: flex-start;
   }
 
@@ -654,11 +654,11 @@
   }
 
   .workspace-body .ws-icon-text-btn {
-    width: 32px;
+    width: 30px;
   }
 
   .workspace-body .ws-compile-btn {
-    padding: 0 10px;
+    padding: 0 8px;
   }
 
   .workspace-body .workspace-status {
@@ -2167,3 +2167,11 @@ nitro-header{display:block;min-height:116px}
 .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#09090b;color:#22d3ee;padding:10px 16px;border:2px solid #22d3ee;border-radius:0 0 8px 0;font-weight:600;text-decoration:none}
 .skip-link:focus-visible{left:0}
 :focus-visible{outline:2px solid #22d3ee;outline-offset:2px}
+
+/* Codebox header on very narrow phones: slightly smaller logo so the
+   right-side buttons keep fitting and stay right-aligned. */
+@media (max-width: 400px) {
+  .workspace-body .ws-logo img {
+    height: 22px!important;
+  }
+}
