@@ -13,18 +13,24 @@
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <link rel="canonical" href="https://nitroide.com/blog/ast-manipulation-auto-formatting-babel.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/ast-manipulation-auto-formatting-babel.html">
   <meta property="og:title" content="Real-Time Auto-Formatting via AST Manipulation | NitroIDE">
   <meta property="og:description" content="Stop using regex formatters. Discover how NitroIDE uses Babel to parse, manipulate, and reconstruct Abstract Syntax Trees for flawless code formatting.">
   <meta property="og:image" content="https://nitroide.com/og-banner.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="NitroIDE zero-latency browser IDE preview">
   <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-07-17">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/ast-manipulation-auto-formatting-babel.html">
   <meta name="twitter:title" content="Real-Time Auto-Formatting via AST Manipulation | NitroIDE">
   <meta name="twitter:description" content="Stop using regex formatters. Discover how NitroIDE uses Babel to parse, manipulate, and reconstruct Abstract Syntax Trees for flawless code formatting.">
+  <meta name="twitter:image" content="https://nitroide.com/og-banner.png">
   <script type="application/ld+json">
-  {"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Real-Time Auto-Formatting via AST Manipulation | NitroIDE", "description": "Stop using regex formatters. Discover how NitroIDE uses Babel to parse, manipulate, and reconstruct Abstract Syntax Trees for flawless code formatting.", "author": {"@type": "Organization", "name": "NitroIDE"}, "publisher": {"@type": "Organization", "name": "NitroIDE"}, "mainEntityOfPage": "https://nitroide.com/blog/ast-manipulation-auto-formatting-babel.html"}
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Real-Time Auto-Formatting via AST Manipulation | NitroIDE","description":"Stop using regex formatters. Discover how NitroIDE uses Babel to parse, manipulate, and reconstruct Abstract Syntax Trees for flawless code formatting.","author":{"@type":"Organization","name":"NitroIDE"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/ast-manipulation-auto-formatting-babel.html","datePublished":"2026-07-17","dateModified":"2026-09-24"}
   </script>
   
   <link rel="icon" type="image/png" href="../logo/logo_white.png">
@@ -47,7 +53,7 @@
     
     <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
 
-    <div style="font-size: 0.85rem; color: #f43f5e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">COMPILER THEORY • MAY 2026</div>
+    <div style="font-size: 0.85rem; color: #00e5ff; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">COMPILER THEORY • <time datetime="2026-07-17">July 17, 2026</time></div>
     
     <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Flawless Auto-Formatting via AST Manipulation.</h1>
     
@@ -62,13 +68,30 @@
         Launch React Sandbox <i class="ph-bold ph-code"></i>
       </a>
     </div>
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; opacity: 0.65;">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="how-to-use-react-without-npm.html" style="color: #00e5ff; text-decoration: none; font-weight: 500;">Build React Apps Without npm | Browser AST Transpilation</a></li>
+      <li><a href="prototype-react-vue-typescript-browser-cdn-guide.html" style="color: #00e5ff; text-decoration: none; font-weight: 500;">Prototype React, Vue &amp; TypeScript — No Build Step | NitroIDE</a></li>
+      <li><a href="rxjs-redux-state-visualization-ide.html" style="color: #00e5ff; text-decoration: none; font-weight: 500;">Visualizing RxJS and Redux State in Real-Time | NitroIDE</a></li>
+      </ul>
+    </div>
 
   </div>
 </div>
 
 <nitro-footer></nitro-footer>
 <nitro-modals></nitro-modals>
-<script src="../script.js"></script>
+<script src="../script.js" defer></script>
 
 </body>
 </html>
