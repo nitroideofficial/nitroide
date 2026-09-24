@@ -631,9 +631,13 @@
   .workspace-body .ws-right {
     overflow-x: auto;
     scrollbar-width: none;
-    flex: 0 1 auto;
     gap: 6px;
     justify-content: flex-start;
+  }
+
+  /* Right-align the row when it fits; auto margin collapses to 0 on
+     overflow so extra buttons extend right and stay swipeable. */
+  .workspace-body .ws-right > :first-child {
     margin-left: auto;
   }
 
