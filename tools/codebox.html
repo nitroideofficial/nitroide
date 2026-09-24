@@ -334,13 +334,7 @@
 <div id="toast" class="toast"></div>
 <script src="../script.js"></script>
 <script>
-// PWA: register service worker + PWA install prompt (codebox page only)
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
-  });
-}
-
+// PWA install prompt (service worker is registered from script.js on all pages)
 let _deferredInstallPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
