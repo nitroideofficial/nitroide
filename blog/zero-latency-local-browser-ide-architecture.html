@@ -85,6 +85,65 @@
       </div>
     </div>
 
+        <h2>Where latency in cloud IDEs actually comes from</h2>
+    <p>To appreciate what "zero latency" means here, it helps to trace what happens when you press a key in a cloud IDE. The keystroke is captured in your browser, serialized, and sent over a WebSocket to a datacenter — possibly on another continent. A containerized process applies the edit, re-runs the language server, and sends a diff back. Your browser applies it and repaints. Even on a good connection that round trip takes tens of milliseconds, and on a bad one it takes hundreds.</p>
+    <p>That delay changes how an editor feels. Typing stops feeling like typing and starts feeling like dictation: you press keys, then wait for the screen to catch up. Autocomplete suggestions arrive for a word you finished typing a second ago. And that is the <em>good</em> case. The bad case is an idle container that has gone to sleep, and now your first keystroke of the morning waits on a cold boot that takes seconds.</p>
+    <p>There is also the failure surface. Your keystrokes depend on your Wi-Fi, your ISP, the provider's network, the provider's scheduler, and the health of a container you cannot see. Any one of those can turn a productive afternoon into a loading spinner. NitroIDE's architecture deletes that entire dependency chain: the only computer involved in editing and rendering your code is the one in front of you. If it has power and a browser, the IDE works at the speed of the hardware.</p>
+
+    <h2>The render path: debounced srcdoc swaps</h2>
+    <p>The naive version of the execution loop from the previous section rebuilds the entire preview document on every keystroke. That works, but for a large document it means re-parsing a big HTML string dozens of times per second — exactly the kind of main-thread churn that makes editors feel sluggish.</p>
+    <p>The fix is boring and effective: debounce the render. Wait until the user pauses typing, check whether anything actually changed since the last render, and only then rebuild the document. The result is a preview that feels instant while doing a fraction of the work:</p>
+
+    <div class="docs-code" style="border-color: #bb9af7; color: #e4e4e7;">
+<span class="code-comment">// Debounce the render so typing never triggers a rebuild storm</span>
+<span class="code-keyword">const</span> <span class="code-func">debounce</span> = (fn, wait) =&gt; {
+  <span class="code-keyword">let</span> t;
+  <span class="code-keyword">return</span> (...args) =&gt; {
+    <span class="code-func">clearTimeout</span>(t);
+    t = <span class="code-func">setTimeout</span>(() =&gt; <span class="code-func">fn</span>(...args), wait);
+  };
+};
+
+<span class="code-keyword">const</span> <span class="code-func">renderPreview</span> = <span class="code-func">debounce</span>((html, css, js, iframe) =&gt; {
+  <span class="code-keyword">const</span> doc = <span class="code-func">buildDocument</span>(html, css, js);
+  <span class="code-keyword">if</span> (doc !== iframe._lastDoc) {
+    iframe._lastDoc = doc;
+    iframe.<span class="code-attr">srcdoc</span> = doc;
+  }
+}, <span class="code-string">200</span>);
+    </div>
+
+    <p>Two details matter here. First, assigning <code>srcdoc</code> replaces the iframe's entire document, which means the preview is always a faithful render of the current code — there is no stale state to debug, and no hot-reload edge case where the preview disagrees with the editor. Second, because the iframe is sandboxed, a runaway <code>while</code> loop or a misbehaving script in your code can freeze the preview without taking down the editor. You reload the preview pane, not your whole session.</p>
+
+    <h2>The virtual file system: localStorage, IndexedDB, and compression</h2>
+    <p>A single text box is a playground; a file tree is an IDE. NitroIDE keeps a virtual file system — the familiar <code>index.html</code> / <code>style.css</code> / <code>script.js</code> workspace — entirely in browser storage. <code>localStorage</code> handles small, synchronous reads like UI preferences, while IndexedDB holds the heavy payload: your actual files.</p>
+    <p>Because browser storage has limits, the workspace snapshot is stringified and compressed with LZ-String before it is written. That keeps even large multi-file projects cheap to persist, so autosave can run on every meaningful edit without a hiccup. Reload the tab and the workspace is restored exactly as you left it — no login, no "restore session" dialog, no fetching your project from a server that might be down. Our <a href="offline-first-browser-ide-pwa.html">offline-first PWA guide</a> goes deeper on how the storage layer survives airplane mode.</p>
+
+    <div class="docs-code" style="border-color: #bb9af7; color: #e4e4e7;">
+<span class="code-comment">// Simplified: persist a compressed workspace snapshot</span>
+<span class="code-keyword">async function</span> <span class="code-func">autosave</span>(workspace) {
+  <span class="code-keyword">const</span> snapshot = <span class="code-func">LZString</span>.<span class="code-func">compressToUTF16</span>(
+    <span class="code-func">JSON</span>.<span class="code-func">stringify</span>(workspace.<span class="code-attr">files</span>)
+  );
+  <span class="code-keyword">await</span> <span class="code-func">idbPut</span>(<span class="code-string">'snapshots'</span>, {
+    <span class="code-attr">id</span>: <span class="code-string">'autosave'</span>,
+    <span class="code-attr">data</span>: snapshot,
+    <span class="code-attr">savedAt</span>: <span class="code-func">Date</span>.<span class="code-func">now</span>()
+  });
+}
+    </div>
+
+    <h2>Workers beyond Monaco: keeping the main thread free</h2>
+    <p>Monaco's own workers handle tokenization and IntelliSense, but the principle extends to everything else the IDE does. Any task that can block the main thread — validating a large file, computing a diff, serializing a workspace for export — is a candidate for a worker, or for being chunked into small slices of work. The main thread has exactly one job that matters to the user: responding to input and painting the screen. Everything else is a guest.</p>
+    <p>This is also why NitroIDE leans on cheap browser APIs for observation instead of polling. Watching the DOM for changes with a <code>MutationObserver</code>, deferring offscreen work with an <code>IntersectionObserver</code>, and scheduling non-urgent tasks with <code>requestIdleCallback</code> all keep the editor responsive under load. Our <a href="browser-performance-scheduler-observers-memory-guide.html">browser performance guide</a> breaks down these patterns — schedulers, observers, and memory hygiene — with working examples you can adapt to your own projects.</p>
+
+    <h2>What "zero latency" doesn't mean</h2>
+    <p>Honesty matters here, because the phrase invites overreading. Zero network latency does not mean infinite performance: your machine's CPU and RAM are the ceiling, and a project with thousands of files will still take time to parse. It does not mean NitroIDE replaces a backend — there is no server, so there is no Node.js runtime, no database, and no terminal. Frontend code runs locally and instantly; anything that needs a server still needs a server.</p>
+    <p>What it does mean is narrower and, we think, more valuable: for the work a browser can do, nothing stands between your keystroke and the result except your own hardware. No queue, no container scheduler, no billing meter. If you want the full inventory of what the IDE can and cannot do, the <a href="../docs.html">NitroIDE docs</a> keep an up-to-date list.</p>
+
+    <h2>A 30-second experiment you can run yourself</h2>
+    <p>You don't have to take any of this on faith. Open the editor, type something, and watch the preview update. Then open your browser's devtools, switch the network tab to "Offline," and keep working: edit files, switch between them, reload the page. Everything keeps working, because nothing in the loop ever needed the network in the first place. That is the whole architecture, demonstrated in half a minute.</p>
+
     <!-- PERFECTLY CENTERED CTA BOX -->
     <div style="background: rgba(187, 154, 247, 0.05); border: 1px solid rgba(187, 154, 247, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
       <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Experience Local Execution.</h3>

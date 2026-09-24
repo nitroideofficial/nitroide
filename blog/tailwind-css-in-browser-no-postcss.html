@@ -87,7 +87,69 @@
       </div>
     </div>
 
-    
+    <h2>How the JIT Engine Watches Your Markup</h2>
+    <p>Under the hood, the client-side compiler attaches itself to the preview iframe's document the moment it loads. A <code>MutationObserver</code> watches for two things: new elements being inserted into the DOM, and <code>class</code> attributes changing on elements that already exist. Every time you type in the Monaco editor and the preview patches the DOM, the observer collects the candidate class names and checks them against an in-memory cache.</p>
+    <p>If a candidate has been seen before, the lookup costs nothing — the rule already lives in the runtime stylesheet. If it is new, the engine runs Tailwind's candidate parser against it, generates the exact CSS declarations, and inserts the finished rule into a dedicated <code>&lt;style&gt;</code> tag at the end of the document head. The whole cycle, from keystroke to painted style, completes without a single network request.</p>
+    <p>This lazy generation is what makes the approach so efficient. A page that uses forty utility classes ends up with exactly forty rules in its stylesheet. There is no multi-megabyte development build to purge, no <code>content</code> glob to misconfigure, and no build step silently dropping a class because a template path wasn't covered. The stylesheet is always a perfect mirror of what the DOM actually uses.</p>
+    <p>Class removal is equally free. Delete a utility from your markup and the orphaned rule simply sits unused in the runtime stylesheet — it costs nothing at render time and vanishes entirely the next time the preview reloads. You never think about stylesheet hygiene; the compiler handles it as a side effect of doing its job.</p>
+
+    <h2>Variants, Breakpoints, and Dark Mode</h2>
+    <p>The same pipeline handles everything Tailwind can express, because variant prefixes are just part of the candidate string. When the observer sees <code>md:grid-cols-2</code>, the generated rule is wrapped in the appropriate <code>@media (min-width: 768px)</code> query. When it sees <code>dark:bg-zinc-900</code>, the rule is scoped to the dark-mode selector. State variants like <code>hover:</code>, <code>focus-visible:</code>, and <code>disabled:</code> become pseudo-class selectors. The mechanism never changes — only the cache key gets longer.</p>
+    <p>This is where rapid prototyping gets genuinely enjoyable. You can build a responsive card that adapts across breakpoints and color schemes in a single markup pass, watching each variant take effect the moment you type it:</p>
+
+    <div class="docs-code">
+<span class="code-comment">&lt;!-- Variants compile through the same lazy pipeline --&gt;</span>
+<span class="code-tag">&lt;article</span> <span class="code-attr">class</span>=<span class="code-string">"mx-auto max-w-sm rounded-2xl bg-white p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:bg-zinc-900 md:max-w-2xl md:p-8"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;h2</span> <span class="code-attr">class</span>=<span class="code-string">"text-xl font-bold text-zinc-900 dark:text-white md:text-2xl"</span><span class="code-tag">&gt;</span>
+    Zero-config responsive card
+  <span class="code-tag">&lt;/h2&gt;</span>
+  <span class="code-tag">&lt;p</span> <span class="code-attr">class</span>=<span class="code-string">"mt-2 text-sm text-zinc-600 dark:text-zinc-400 md:text-base"</span><span class="code-tag">&gt;</span>
+    Every variant above generated its CSS rule on first keystroke.
+  <span class="code-tag">&lt;/p&gt;</span>
+  <span class="code-tag">&lt;button</span> <span class="code-attr">class</span>=<span class="code-string">"mt-4 rounded-lg bg-cyan-500 px-4 py-2 font-semibold text-white hover:bg-cyan-400 focus-visible:outline focus-visible:outline-2 disabled:opacity-50"</span><span class="code-tag">&gt;</span>
+    Get started
+  <span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/article&gt;</span>
+    </div>
+
+    <p>Notice how little ceremony is involved. No config file declaring breakpoints, no PostCSS plugin enabling dark mode, no dev-server restart when you reach for a variant you have never used before. The compiler meets you exactly where your cursor is. If you want the full picture of the editing environment around this, our <a href="html-css-js-online-editor-playground.html" style="color: #00e5ff; text-decoration: none;">HTML, CSS &amp; JS playground guide</a> walks through the workspace itself, and the <a href="modern-css-app-ui-houdini-container-queries-guide.html" style="color: #00e5ff; text-decoration: none;">modern CSS guide</a> shows what the platform can do alongside utility classes.</p>
+
+    <h2>Customizing the Theme Without a Config File</h2>
+    <p>The most common follow-up question is: "what about <code>tailwind.config.js</code>?" The client-side runtime supports the same escape hatch as the official Play CDN — an inline configuration script evaluated before compilation begins. You can extend the theme with brand colors, custom fonts, or extra spacing scales directly in your HTML:</p>
+
+    <div class="docs-code">
+<span class="code-tag">&lt;script&gt;</span>
+  tailwind.config = {
+    <span class="code-attr">theme</span>: {
+      <span class="code-attr">extend</span>: {
+        <span class="code-attr">colors</span>: {
+          <span class="code-attr">brand</span>: {
+            <span class="code-num">500</span>: <span class="code-string">'#00e5ff'</span>,
+            <span class="code-num">600</span>: <span class="code-string">'#00b8d4'</span>,
+          },
+        },
+        <span class="code-attr">fontFamily</span>: {
+          <span class="code-attr">display</span>: [<span class="code-string">'Inter'</span>, <span class="code-string">'system-ui'</span>, <span class="code-string">'sans-serif'</span>],
+        },
+      },
+    },
+  };
+<span class="code-tag">&lt;/script&gt;</span>
+<span class="code-comment">&lt;!-- Now bg-brand-500 and font-display compile like built-ins --&gt;</span>
+    </div>
+
+    <p>Because the config is plain JavaScript running in the page, you can even compute values programmatically — generate a color scale from a single hex value, or derive spacing from a base unit. For one-off prototypes this is dramatically faster than maintaining a config file, and when the prototype graduates to a real project, the same object drops straight into a standard <code>tailwind.config.js</code> unchanged.</p>
+
+    <h2>A Realistic Workflow: Prototype to Production</h2>
+    <p>Here is how developers actually use this in practice. You open a workspace, scaffold the layout with utility classes, and iterate visually — nudging spacing, swapping color stops, trying breakpoints — with the preview updating as you type. Emmet abbreviations expand your markup skeleton, the JIT engine styles it, and you stay in a tight feedback loop that a local build pipeline simply cannot match for speed of experimentation.</p>
+    <p>When the design is right, the handoff is trivial. Your markup is standard Tailwind — every class is a real utility that a production build understands. Copy the HTML into your project, or use the one-click export to take the whole workspace with you, and your existing PostCSS pipeline generates the final stylesheet from the same classes. Nothing needs translating, because nothing was ever proprietary.</p>
+    <p>Staring at a blank file is the hardest part of any prototype, so start from something concrete instead: the <a href="../templates.html" style="color: #00e5ff; text-decoration: none;">templates gallery</a> has ready-made layouts — landing pages, dashboards, cards — that load straight into the editor with the JIT compiler already wired up. Tweak the utilities, watch the design respond, and you will have a working prototype before a local <code>npm install</code> would have finished.</p>
+
+    <h2>What It Replaces — and What It Honestly Doesn't</h2>
+    <p>Let's be clear about the boundaries. The client-side JIT replaces the <em>setup cost</em> of Tailwind: the installs, the config files, the dev server, and the waiting. It is ideal for prototypes, design experiments, documentation examples, interview exercises, and teaching — anywhere the goal is to move fast and see results instantly. Your code never leaves the browser while you work, and there is no account standing between you and the editor.</p>
+    <p>What it doesn't replace is a production build pipeline. If you are shipping a large application, you still want PostCSS generating a static stylesheet at build time: smaller payloads, no runtime compiler in the bundle, and full access to custom plugins. Think of the browser JIT as the sketchbook and the build pipeline as the print shop. Both have their place, and the classes you write transfer between them without modification.</p>
+    <p>That transferability is the real point. Utility-first CSS only works as a workflow if the classes mean the same thing everywhere. Because the browser compiler implements the same utility semantics as the build-time one, what you prototype is what you ship — the only difference is how fast you got there.</p>
+
     <div class="playground-embed" style="margin: 40px 0 0;">
       <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 12px;"><strong style="color: var(--text);">Try it live:</strong> edit and run this example right here, no signup needed.</p>
       <iframe src="/tools/codebox.html?embed=1&amp;template=tailwind-demo" title="Live NitroIDE playground: Tailwind via CDN" loading="lazy" style="width: 100%; height: 520px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; background: #0a0a0a;"></iframe>

@@ -78,6 +78,29 @@
       </div>
     </div>
 
+        <h2>Free-tier traps to watch for</h2>
+    <p>"Free" in the cloud-IDE market usually means "free until you actually use it." The common traps: compute minutes that evaporate mid-month, containers that sleep after inactivity and take a minute to wake, collaboration or private projects paywalled behind the cheapest paid tier, and storage fees that show up as line items nobody warned you about. None of these are scams — running servers costs money — but they mean the free tier is a trial with extra steps.</p>
+    <p>The honest way to evaluate a free tier is to ask what happens at the limit. Does the tool degrade (slower, sleeping containers) or stop (locked out until you pay)? Can you still access your code? A client-side tool sidesteps the question entirely: there is no meter, no sleep, no "upgrade to continue" — the free version is the whole product, because there's no server bill to subsidize.</p>
+
+    <h2>Privacy: where does your code actually go?</h2>
+    <p>Every cloud IDE necessarily receives your code — that's where it runs. That means your keystrokes, your files, and your half-finished ideas live on someone else's infrastructure, governed by their retention policies and their security practices. For most hobby projects that's fine. For client work under NDA, interview prep you don't want logged, or code you simply consider yours, it's worth asking whether the code needed to leave your machine at all.</p>
+    <p>This is the sharpest dividing line in the comparison above. Replit, CodeSandbox, StackBlitz, and Codespaces all execute your code on their servers — it's the product. CodePen runs snippets in your browser but stores them on its servers. NitroIDE is the outlier: your code never leaves your device unless you explicitly export it or create a share link. No account means there's nothing to correlate it with, either. Privacy here isn't a policy page; it's the absence of a server.</p>
+
+    <h2>The dead-Wi-Fi test</h2>
+    <p>Here's a test you can run on every tool in the comparison: open a project, turn off your Wi-Fi, and try to keep working. Replit, CodeSandbox, StackBlitz, and Codespaces fail immediately — the editor is a thin client and the computer doing the work just disappeared. CodePen's editor mostly survives for typing, but saving and previewing new work needs the network.</p>
+    <p>Only a local-first tool passes cleanly: editing, preview, file management, and even a page reload all work with the network off, because the network was never in the loop. If you code on planes, trains, or conference Wi-Fi, this single test outweighs most feature tables. Students on locked-down school networks, take note — this is also why our <a href="best-free-online-ide-students-bootcamps.html">guide for students and bootcamps</a> recommends keeping a local-first option in your toolkit.</p>
+
+    <h2>Sharing and embedding: the demo angle</h2>
+    <p>A comparison of online IDEs would be incomplete without the sharing story, because "online" is often shorthand for "easy to show someone." CodePen built an empire on this: a URL that renders your snippet, embeddable in any blog. The cloud IDEs offer shareable preview links too, usually requiring the viewer to have an account or wait for a container to boot.</p>
+    <p>NitroIDE's answer is share links that encode the project in the URL itself — the recipient opens it and gets the full workspace, no account, no boot wait — plus an embed mode designed for dropping live playgrounds into articles and docs. If you write tutorials, our <a href="html-css-js-online-editor-playground.html">HTML/CSS/JS playground guide</a> covers the embed workflow in detail, from a single demo block to a full interactive lesson.</p>
+
+    <h2>Switching tools is cheaper than you think</h2>
+    <p>The last honest point: IDE lock-in is mostly imaginary for frontend work. Your code is HTML, CSS, and JS files; moving it is copying text. The switching cost is relearning keyboard shortcuts and UI layout — an afternoon, not a migration project. So the rational strategy is to match the tool to the project: cloud IDE when you need a server, local-first when you don't, snippet tool when it's just a demo.</p>
+    <p>If you're currently on Replit and realizing most of your projects never needed the backend, the move is deliberately boring: our <a href="migrate-replit-to-nitroide-tutorial.html">Replit-to-NitroIDE migration tutorial</a> walks through copying a project over manually, verifying the preview, and settling into the faster loop. No importers, no magic — just files, moved once.</p>
+
+        <h2>Revisit the question yearly</h2>
+    <p>One last piece of practical advice: the "best" answer changes. Free tiers get restructured, tools get acquired, and your own projects drift between frontend and full-stack. Re-run the dead-Wi-Fi test and the does-it-need-a-server question once a year, or whenever a tool announces new pricing. The developers who get burned are the ones who picked a tool in 2023 and never re-evaluated — not the ones who switched when the facts changed.</p>
+
     <!-- PERFECTLY CENTERED CTA BOX -->
     <div style="background: rgba(139, 92, 246, 0.05); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
       <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Try the Fast One.</h3>

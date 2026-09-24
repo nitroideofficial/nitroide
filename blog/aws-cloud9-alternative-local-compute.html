@@ -81,6 +81,30 @@
     <h2>Who should still use Cloud9-style tools?</h2>
     <p>Backend developers. Data scientists. Anyone deploying to AWS. Students in courses that require a Linux terminal. DevOps work. If your workflow includes the words "SSH," "Docker," or "pip install," a client-side editor isn't your tool — and we'd rather tell you that than waste your afternoon.</p>
 
+        <h2>The cost math nobody shows you</h2>
+    <p>Cloud9's pricing was never the headline, but it shaped every session: you paid for the EC2 instance by the minute, plus storage whether the instance was running or not. For a backend developer running builds and tests all day, that was a fair trade. For someone learning JavaScript or tweaking a landing page, it meant paying datacenter rates for a machine that spent most of its time waiting for you to type.</p>
+    <p>The idle-instance trap was the quiet expensive part. Forget to stop the environment after a session and the meter kept running. Auto-hibernate helped, but "remember to turn off your IDE" is a strange thing to ask of a beginner. A client-side editor has no meter at all — free isn't a tier here, it's the architecture. There's no instance to forget, because there's no instance.</p>
+
+    <h2>The Chromebook case</h2>
+    <p>Chromebooks are where this comparison stops being theoretical. A Chromebook can't comfortably run VS Code, Docker, or a local Node toolchain — ChromeOS simply isn't built for it. Cloud9 was genuinely a good answer: the heavy lifting happened in AWS, and the Chromebook was just a terminal with nice fonts.</p>
+    <p>But the Chromebook is also the machine most likely to be offline — on a school bus, in a classroom with overloaded Wi-Fi, on a budget data plan. A cloud IDE on a Chromebook inherits both the device's weakness (no local toolchain) and the cloud's weakness (no offline). A local-first browser IDE resolves both at once: it needs nothing the Chromebook can't do, because everything it needs is already in the browser. For students on school-issued Chromebooks, that combination — free, offline, no install, no admin rights — is hard to beat.</p>
+
+    <h2>What fits and what doesn't: a concrete list</h2>
+    <p>Abstract "frontend only" warnings are easy to ignore, so here's the concrete version. NitroIDE-class tools are a genuine replacement for Cloud9 when the project is: landing pages and marketing sites, portfolios, CSS art and creative coding experiments, JavaScript games, class assignments in HTML/CSS/JS, prototypes you need to show someone <em>today</em>, accessibility and responsive-design practice — anything where the deliverable is a web page and the toolchain is a browser.</p>
+    <p>They are not a replacement when the project involves: a Python, Ruby, or PHP backend, a database, server-side rendering that needs Node, installing native packages, a terminal for git, ssh, or docker, or deploying to AWS. That list isn't a footnote — for backend work it's the whole job, and reaching for a browser editor there wastes an afternoon. Knowing which list you're on is the entire decision:</p>
+
+    <div class="docs-code"><span class="code-comment">Does your project need a server?</span><br><span class="code-comment">  YES → Cloud9 / Replit / Codespaces (you need a real machine)</span><br><span class="code-comment">  NO  → Is it HTML/CSS/JS?</span><br><span class="code-comment">        YES → a local browser IDE: faster, free, offline</span><br><span class="code-comment">        NO  → you need a real toolchain — use a desktop IDE</span></div>
+
+    <h2>A typical session without a server</h2>
+    <p>What does the Cloud9-free workflow actually look like? Open NitroIDE — no login, no instance to boot. Pick a template or a blank workspace: <code>index.html</code>, <code>style.css</code>, and <code>script.js</code> are already there. Type, and the live preview updates as you go — Emmet expansions, multi-cursor edits, the full Monaco editing experience. When the page looks right, export it or grab a share link. Total setup time: the seconds it took the page to load.</p>
+    <p>Compare that to the cloud ritual: log in, wait for the environment to wake, wait for the preview proxy, and hope the Wi-Fi holds through the demo. For frontend work, every step of that ritual is overhead with no payoff. Our architecture article explains <a href="zero-latency-local-browser-ide-architecture.html">why the local execution model is faster</a> at a technical level; the short version is that deleting the network from the loop deletes the waiting.</p>
+
+    <h2>Migrating off Cloud9 (or Replit) for frontend work</h2>
+    <p>If you're already on a cloud IDE and most of your projects turned out to be frontend, migration is unglamorous: copy your HTML, CSS, and JS files into a NitroIDE workspace, verify the preview matches, and export or share from there. There's no lock-in to unwind, because the code was always just files. If you're coming specifically from Replit, our <a href="migrate-replit-to-nitroide-tutorial.html">Replit-to-NitroIDE migration tutorial</a> walks through the manual move step by step. And if you're unsure whether a given project fits the local model, the <a href="../docs.html">docs</a> spell out the capabilities and limits plainly — we'd rather you check first than discover a missing terminal mid-project.</p>
+
+        <h2>When the answer is "both"</h2>
+    <p>Nothing in this article requires picking one tool forever. Plenty of developers keep a cloud IDE for backend work and a local browser IDE for frontend work, switching by project. The skill that matters isn't loyalty to a platform — it's the thirty-second assessment at the start of a project: does this need a server? Answer honestly, pick the matching tool, and you'll never pay for compute you didn't use or fight latency you didn't need.</p>
+
     <!-- PERFECTLY CENTERED CTA BOX -->
     <div style="background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
       <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Frontend Work, Zero Setup.</h3>
