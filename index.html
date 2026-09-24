@@ -7,8 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NitroIDE | Zero-Latency Browser IDE & Online Code Editor</title>
   
-  <link rel="preconnect" href="https://nitroide.com" crossorigin>
-  
   
   <link rel="preload" as="image" href="https://nitroide.com/logo/logo_white.png" fetchpriority="high">
   
@@ -76,7 +74,7 @@
     "applicationSubCategory": "Web IDE",
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
-    "softwareVersion": "24.0",
+    "softwareVersion": "25",
     "isAccessibleForFree": true,
     "browserRequirements": "Requires a modern browser with JavaScript enabled",
     "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
@@ -162,6 +160,7 @@
         <div class="reveal-1 badge badge-secondary">
           <i class="ph-bold ph-lightning"></i> Zero Latency
         </div>
+        <a class="reveal-1 badge badge-secondary" href="https://github.com/nitroideofficial/nitroide" target="_blank" rel="noopener" aria-label="NitroIDE on GitHub" style="text-decoration:none;color:inherit"><i class="ph-bold ph-star"></i> <img src="https://img.shields.io/github/stars/nitroideofficial/nitroide" alt="GitHub stars"></a>
       </div>
       
       <h1 class="reveal-2 hero-title-main">
@@ -458,7 +457,14 @@
 <nitro-modals></nitro-modals>
 <div id="toast" class="toast"></div>
 <script defer src="pulse-data.js?v=20260522b"></script>
-<script defer src="script.js?v=20260923"></script>
+<script defer src="script.js"></script>
+<!-- Decorative homepage mockup: terminal tab handler (no panes exist; tabs are visual only) -->
+<script>
+function switchTermTab(name, el){
+  var tabs = el && el.parentElement ? el.parentElement.querySelectorAll('.term-tab') : [];
+  tabs.forEach(function(t){ t.classList.toggle('active', t === el); });
+}
+</script>
 
 </body>
 </html>

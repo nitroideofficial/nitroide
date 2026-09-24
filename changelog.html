@@ -33,6 +33,7 @@
   <link rel="apple-touch-icon" href="https://nitroide.com/apple-touch-icon.png">
   
   <link rel="manifest" href="manifest.json">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Changelog" href="/rss-changelog.xml">
   <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
 <script>if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');</script>
@@ -71,7 +72,7 @@
     <img src="logo/logo_black.png" alt="NitroIDE" class="logo-light">
   </a>
   <div class="nav-actions">
-    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn"><i class="ph-bold ph-sun"></i></button>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle Dark Mode"><i class="ph-bold ph-sun"></i></button>
     <a href="tools/codebox.html" class="btn btn-compact primary-btn">Launch Workspace</a>
   </div>
 </div>
@@ -79,8 +80,6 @@
 <div class="changelog-container">
   <h1 class="changelog-title">Changelog</h1>
   
-  <!-- Newsletter signup (Buttondown placeholder) -->
-  <!-- TODO(owner): replace nitroide with real Buttondown username -->
   <div class="newsletter-block" style="max-width: 640px; margin: 0 auto 40px; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
     <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
     <p style="margin: 0 0 16px; font-size: 14px; opacity: 0.65;">One short email when we publish. No spam, unsubscribe anytime.</p>
@@ -118,7 +117,7 @@
       <div class="log-content">
         <p class="changelog-desc">A massive expansion of the NitroIDE ecosystem, introducing a high-performance blog hub, deep content search, and comprehensive SEO restructuring.</p>
         <ul>
-          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Massive Knowledge Hub:</strong> Launched the official NitroIDE Blog featuring 114 deeply technical articles covering web architecture, framework tutorials, and zero-latency engineering.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Massive Knowledge Hub:</strong> Launched the official NitroIDE Blog featuring 26 deeply technical articles covering web architecture, framework tutorials, and zero-latency engineering.</div></li>
           <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Deep Content Search:</strong> Upgraded the blog index search bar to perform real-time, client-side deep scanning of actual article content and paragraphs, not just titles.</div></li>
           <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Dynamic Bento Grid:</strong> Implemented an auto-sorting bento grid UI for articles with a live, dynamic counter.</div></li>
           <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> <strong>SEO & Sitemap Overhaul:</strong> Re-routed 16 landing pages into a dedicated <code>/landing/</code> directory and deployed a massive new <code>sitemap.xml</code> to guarantee flawless indexing of all 130+ pages.</div></li>

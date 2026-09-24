@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>NitroIDE Changelog</title>
+    <link>https://nitroide.com/changelog.html</link>
+    <description>Release notes for NitroIDE — new features, performance improvements, and bug fixes.</description>
+    <language>en-us</language>
+    <item>
+      <title>v25 — The Performance &amp; Polish Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v25</link>
+      <guid>https://nitroide.com/changelog.html#v25</guid>
+      <description>A focused quality pass: zero layout shift, a more accessible editor, honest copy, stronger article SEO, and a PWA cache fix so returning visitors always get the latest version. FIX Zero layout shift on Ecosystem: the header now reserves its exact measured space (116px desktop / 194px mobile), taking mobile CLS from 0.255 to ~0. | UPDATE Editor accessibility pass: mobile accessibility score 78 → 95 with labeled controls, proper command-palette roles, and a main landmark. | FIX PWA cache refresh: bumped the service-worker cache so returning visitors always receive the latest site instead of stale cached files. | UPDATE Honest copy: removed dead visitor counters from landing pages and softened unverifiable "fastest" claims. | UPDATE Article SEO: canonical, Open Graph, Twitter-card, and BlogPosting metadata on all articles. | FIX Icon loading: icon fonts now use font-display: swap — no more invisible-text flash while icons load. | FIX Footer heading structure: corrected heading order (h4 → h3) for a proper document outline; visually identical.</description>
+      <pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v24.0 — The Knowledge Hub Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v24.0</link>
+      <guid>https://nitroide.com/changelog.html#v24.0</guid>
+      <description>A massive expansion of the NitroIDE ecosystem, introducing a high-performance blog hub, deep content search, and comprehensive SEO restructuring. NEW Massive Knowledge Hub: Launched the official NitroIDE Blog featuring 26 deeply technical articles covering web architecture, framework tutorials, and zero-latency engineering. | NEW Deep Content Search: Upgraded the blog index search bar to perform real-time, client-side deep scanning of actual article content and paragraphs, not just titles. | NEW Dynamic Bento Grid: Implemented an auto-sorting bento grid UI for articles with a live, dynamic counter. | UPDATE SEO &amp; Sitemap Overhaul: Re-routed 16 landing pages into a dedicated /landing/ directory and deployed a massive new sitemap.xml to guarantee flawless indexing of all 130+ pages. | FIX Intelligent De-duplication: Added a silent JavaScript safety check to automatically filter out duplicate articles from the JSON database on load, ensuring grid integrity.</description>
+      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v23.0 — The Serverless Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v23.0</link>
+      <guid>https://nitroide.com/changelog.html#v23.0</guid>
+      <description>A monumental architectural upgrade transforming NitroIDE from a single sandbox into a full-blown local operating system with zero-latency sharing. NEW Project Manager Dashboard: Create, manage, and seamlessly switch between multiple local workspaces without overwriting your progress. | NEW Serverless Workspace Sharing: Instantly share entire codebases. Workspaces are ultra-compressed into the URL via LZ-String—no databases or logins required. | NEW Dynamic IntelliSense: The Monaco engine now supports React JSX natively and automatically fetches TypeScript definitions when you inject CDNs like jQuery or GSAP. | NEW Drag-and-Drop Import: Drag .zip folders or code files directly onto the IDE, or use the mobile-friendly native file picker to instantly unpack projects. | UPDATE Zero-Day Security Sandbox: Hardened the live preview iframe to strictly protect your local storage engine from malicious shared links. | UPDATE UI Polish: Automatically injected custom premium scrollbars into the live code previews so the interface stays gorgeous even when overflowing. | FIX Engine Stability: Patched critical edge-cases preventing the IDE from crashing when deleting active files or loading corrupted shared URLs. | FIX Drag-and-Drop Shield: Prevented the browser from navigating away and wiping local data when a file is accidentally dropped outside the IDE window. | FIX Persistent Settings: Editor font-size preferences are now properly saved to local storage and persist across hard refreshes. | FIX API Rate-Limiting: Optimized the live visitor counter polling interval to drastically reduce network requests and prevent backend bans.</description>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v22.5 — The Growth Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v22.5</link>
+      <guid>https://nitroide.com/changelog.html#v22.5</guid>
+      <description>A massive under-the-hood overhaul focused entirely on Search Engine Optimization, web accessibility, and hardware-accelerated performance to help scale our user base. NEW SEO Landing Pages: Deployed 5 highly-targeted entry points (React Playground, Monaco Sandbox, etc.) to capture specific developer search intents. | NEW PWA &amp; Open Graph: Injected Progressive Web App meta tags and Social Share cards so the IDE installs natively on mobile and unfurls beautifully on Discord and X. | NEW FAQ Rich Snippets: Wove FAQPage JSON-LD schema into the documentation to capture Google's "People Also Ask" search modules. | UPDATE Hardware Acceleration: Offloaded heavy CSS gradient animations to the GPU using will-change, ensuring a buttery 60FPS experience even on lower-end hardware. | UPDATE Perfect Accessibility: Surgically added aria-label tags to all icon-only UI buttons across the platform, achieving a flawless 100/100 Lighthouse A11y score. | UPDATE Technical SEO: Reconfigured robots.txt and the XML sitemap to cleanly route web crawlers through the new optimized site architecture.</description>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v22.0 — The Nitro Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v22.0</link>
+      <guid>https://nitroide.com/changelog.html#v22.0</guid>
+      <description>A massive leap forward in both aesthetic and architectural stability. We've rebranded to NitroIDE and rebuilt the workspace interface from the ground up for ultimate performance. NEW Rebranded to NitroIDE: A fresh identity to reflect our zero-latency execution engine. | NEW State Visualizer: Introduced the global Codebox.watch() hook for real-time JSON debugging and state tracking. | NEW Device Emulation: Test your CSS breakpoints instantly with Desktop, Tablet, and Mobile viewport toggles. | UPDATE Collapsible Output Drawer: Moved the Preview, Console, and State tabs to the bottom of the screen with a sleek minimize/expand chevron to maximize vertical code space. | UPDATE Bulletproof Mobile UI: Completely rewrote the workspace header architecture (.ws-header) to guarantee pixel-perfect responsiveness on all mobile devices without CSS bleed. | UPDATE Zip Export: Refined the export engine to instantly bundle your multi-file VFS into a production-ready `.zip` archive.</description>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v18.0 — The Polish Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v18.0</link>
+      <guid>https://nitroide.com/changelog.html#v18.0</guid>
+      <description>A leap forward in aesthetic engineering and core performance. We've stabilized the IDE while introducing powerful new workflow features. NEW Floating PiP Preview: You can now pop the live preview out of the IDE into a draggable, resizable glass window. | NEW In-App Feedback: A seamless, serverless feedback widget powered by FormSubmit allows direct communication with the developers.</description>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v17.5 — Engine Rewrite | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v17.5</link>
+      <guid>https://nitroide.com/changelog.html#v17.5</guid>
+      <description>UPDATE Replaced standard textareas with the official Monaco Editor (VS Code core), introducing Emmet support and syntax highlighting. | UPDATE Added magnetic resize sliders between code panels for custom layout geometries. | FIX The execution iframe no longer completely reloads when updating pure CSS, reducing flicker.</description>
+      <pubDate>Sun, 01 Feb 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v17.0 — The Architecture Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v17.0</link>
+      <guid>https://nitroide.com/changelog.html#v17.0</guid>
+      <description>NEW Virtual File System (VFS): Migrated from a single-file view to a multi-file explorer. You can now create custom components and separate your logic into distinct modules. | NEW Zip Exporting: Integrated jszip to allow downloading the entire VFS as a production-ready folder. | UPDATE Redesigned the Developer Console to capture unhandled promise rejections and structural DOM errors natively.</description>
+      <pubDate>Sat, 01 Nov 2025 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v16.0 — Initial Beta | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v16.0</link>
+      <guid>https://nitroide.com/changelog.html#v16.0</guid>
+      <description>NEW Launched the initial zero-latency client-side execution engine. | NEW Added the integrated CDN manager for fetching unpkg modules directly into the iframe header.</description>
+      <pubDate>Fri, 01 Aug 2025 00:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
