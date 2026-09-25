@@ -56,6 +56,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://nitroide.com/landing/codesandbox-vs-nitroide.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://nitroide.com/landing/export-code-to-zip.html</loc>
     <lastmod>2026-05-08</lastmod>
     <priority>0.7</priority>
