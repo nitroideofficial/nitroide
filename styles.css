@@ -2192,3 +2192,15 @@ html{overflow-x:clip}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+/* Mobile codebox app-lock 2026-09-25: stop the whole page rubber-banding/
+   scrolling on touch. Internal panes (Monaco, sidebar, preview) keep their
+   own scrolling. Desktop untouched. */
+@media (max-width: 768px) {
+  body.workspace-body {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    overscroll-behavior: none;
+  }
+}
