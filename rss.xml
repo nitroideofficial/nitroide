@@ -6,6 +6,13 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
                 <item>
+      <title>CodeSandbox &amp; StackBlitz Alternative: Frontend Dev Without the Cloud (2026) | NitroIDE</title>
+      <link>https://nitroide.com/blog/codesandbox-stackblitz-alternative-local-webcontainers.html</link>
+      <guid>https://nitroide.com/blog/codesandbox-stackblitz-alternative-local-webcontainers.html</guid>
+      <description>CodeSandbox runs your code on cloud containers; StackBlitz runs Node in your tab via WebContainers. NitroIDE skips both: a zero-latency client-side IDE for frontend work — no signup, no spin-up, no quotas.</description>
+      <pubDate>Fri, 25 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+
       <title>Web Workers &amp; Multithreading in the Browser: The Practical Guide | NitroIDE</title>
       <link>https://nitroide.com/blog/web-workers-multithreading-browser-guide.html</link>
       <guid>https://nitroide.com/blog/web-workers-multithreading-browser-guide.html</guid>
