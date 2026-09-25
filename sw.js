@@ -1,5 +1,5 @@
 // sw.js — NitroIDE PWA service worker (cache-first, same-origin GETs only)
-const CACHE = 'nitroide-v17';
+const CACHE = 'nitroide-v18';
 
 const APP_SHELL = [
   '/',
@@ -60,13 +60,20 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   // Only intercept same-origin GET requests (all core assets are self-hosted now)
   if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
+  // Share links (?code=, ?gist=, ...) all serve the same HTML shell — cache document
+  // navigations under the bare path so unique URLs can't bloat the cache.
+  var cacheKey = request;
+  try {
+    var u = new URL(request.url);
+    if (u.search && (request.mode === 'navigate' || request.destination === 'document')) cacheKey = u.origin + u.pathname;
+  } catch (e) {}
   event.respondWith(
-    caches.match(request).then((cached) =>
+    caches.match(cacheKey).then((cached) =>
       cached || fetch(request).then((response) => {
         const copy = response.clone();
-        caches.open(CACHE).then((cache) => cache.put(request, copy));
+        caches.open(CACHE).then((cache) => cache.put(cacheKey, copy));
         return response;
-      }).catch(() => caches.match(request))
+      }).catch(() => caches.match(cacheKey))
     )
   );
 });
