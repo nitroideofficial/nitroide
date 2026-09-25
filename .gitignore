@@ -1,0 +1,22 @@
+# Secrets & credentials — never commit
+.env*
+*.pem
+*.key
+*.p12
+credentials*.json
+secrets*.json
+
+# Dependencies
+node_modules/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local-only audit artifacts (kept out of git by policy)
+AUDIT-2026-09-24.md
+lighthouse/

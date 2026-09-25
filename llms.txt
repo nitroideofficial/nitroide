@@ -12,12 +12,27 @@
 - [Changelog](https://nitroide.com/changelog.html)
 
 ## Landing pages
-- [HTML/CSS/JS editor](https://nitroide.com/landing/html-css-js-editor.html)
-- [Tailwind playground](https://nitroide.com/landing/tailwind-online-editor.html)
-- [React playground](https://nitroide.com/landing/react-online-playground.html)
-- [Monaco editor online](https://nitroide.com/landing/monaco-editor-online.html)
-- [VS Code alternative](https://nitroide.com/landing/vscode-online-alternative.html)
-- [CodePen alternative](https://nitroide.com/landing/codepen-alternative-no-login.html)
+- [Code on Chromebook](https://nitroide.com/landing/chromebook-code-editor-free.html)
+- [CodePen Alternative: No Login, Free IDE](https://nitroide.com/landing/codepen-alternative-no-login.html)
+- [Lightweight CodeSandbox Alternative](https://nitroide.com/landing/codesandbox-lightweight-alternative.html)
+- [Export HTML, CSS & JS to ZIP](https://nitroide.com/landing/export-code-to-zip.html)
+- [HTML, CSS & JS Editor](https://nitroide.com/landing/html-css-js-editor.html)
+- [JSFiddle Alternative with Monaco Editor](https://nitroide.com/landing/jsfiddle-alternative.html)
+- [Best Low RAM Code Editor](https://nitroide.com/landing/low-ram-code-editor.html)
+- [Monaco Editor Online: Free Browser VS Code Sandbox](https://nitroide.com/landing/monaco-editor-online.html)
+- [Free Offline HTML Editor](https://nitroide.com/landing/offline-html-editor.html)
+- [Secure Private Code Editor](https://nitroide.com/landing/private-code-editor-no-tracking.html)
+- [React Online Playground](https://nitroide.com/landing/react-online-playground.html)
+- [Free Replit Alternative](https://nitroide.com/landing/replit-alternative-free.html)
+- [Responsive Design Tester: Check Media Queries Online](https://nitroide.com/landing/responsive-design-tester.html)
+- [Run React in Browser](https://nitroide.com/landing/run-react-in-browser-no-install.html)
+- [Lightweight StackBlitz Alternative](https://nitroide.com/landing/stackblitz-lightweight-alternative.html)
+- [Tailwind CSS Online Editor & Playground](https://nitroide.com/landing/tailwind-online-editor.html)
+- [Test Tailwind CSS Online](https://nitroide.com/landing/test-tailwind-css-online.html)
+- [Vanilla JavaScript Sandbox](https://nitroide.com/landing/vanilla-javascript-sandbox.html)
+- [Best VS Code Online Alternative](https://nitroide.com/landing/vscode-online-alternative.html)
+- [CodeSandbox vs NitroIDE](https://nitroide.com/landing/codesandbox-vs-nitroide.html)
+- [CodePen vs CodeSandbox](https://nitroide.com/landing/codepen-vs-codesandbox.html)
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.
