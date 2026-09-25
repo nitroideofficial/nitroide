@@ -2194,9 +2194,15 @@ html{overflow-x:clip}
 }
 
 /* Mobile codebox app-lock 2026-09-25: stop the whole page rubber-banding/
-   scrolling on touch. Internal panes (Monaco, sidebar, preview) keep their
-   own scrolling. Desktop untouched. */
+   scrolling on touch. iOS Safari scrolls the *html* element (the document
+   scroller) even when body is locked, so both must be locked. Internal
+   panes (Monaco, sidebar, preview) keep their own scrolling. Desktop
+   untouched. */
 @media (max-width: 768px) {
+  html:has(body.workspace-body) {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
   body.workspace-body {
     position: fixed;
     inset: 0;
