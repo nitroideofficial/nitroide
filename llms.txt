@@ -10,6 +10,7 @@
 - [Ecosystem Pulse](https://nitroide.com/ecosystem.html) — recent builds, logs, and live activity
 - [Blog](https://nitroide.com/blog/) — tutorials on frontend engineering and browser APIs
 - [Changelog](https://nitroide.com/changelog.html)
+- [Contact](https://nitroide.com/contact.html) — report bugs, request features, or say hello
 
 ## Landing pages
 - [Code on Chromebook](https://nitroide.com/landing/chromebook-code-editor-free.html)
