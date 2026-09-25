@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 25, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "I security-audited my own browser IDE this week. Found 2 critical XSS holes, zero security headers, and a broken RSS feed.",
+  link: "https://x.com/trynitroide/status/2103508969398640795"
+},
+  {
+  date: "Sep 25, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
