@@ -1,6 +1,38 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Sep 25, 2026",
+  platform: "dev.to",
+  icon: "ph-dev-to-logo",
+  color: "#0a0a0a",
+  title: "NitroIDE v25: I Security-Audited My Own Browser IDE — Here's Everything That Changed",
+  link: "https://dev.to/nitroide/nitroide-v25-i-security-audited-my-own-browser-ide-heres-everything-that-changed-48dn"
+},
+  {
+  date: "Sep 25, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "I did something uncomfortable this week: I attacked my own product.",
+  link: "https://www.linkedin.com/posts/yashpanchal-nitro_websecurity-buildinpublic-webdevelopment-share-7509261547828006914-OMai/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEWljucBrUQNYASrZZmwdH1ZPmzvo7LmsEQ"
+},
+  {
+  date: "Sep 25, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "NitroIDE v25: I Security-Audited My Own Browser IDE — Here's Everything That Changed",
+  link: "https://nitroide.hashnode.dev/nitroide-v25-i-security-audited-my-own-browser-ide-here-s-everything-that-changed"
+},
+  {
+  date: "Sep 25, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "NitroIDE v25: I security-audited my own browser IDE",
+  link: "https://peerlist.io/scroll/post/ACTHLKL7AAOLOR9MBIPQKQEK9N9MMO"
+},
+  {
   date: "Jul 17, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
