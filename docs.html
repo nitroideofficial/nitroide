@@ -346,6 +346,13 @@ setInterval(() => {
       <p>Share links encode your code in the URL, and browsers cap URL length around 2,000 characters. For big projects, use <code>export zip</code> or <em>Export as 1-File</em> and share the file instead.</p>
       <h3>Offline mode isn't working</h3>
       <p>Offline support kicks in after your first online visit — the service worker needs one successful load to cache the app. If it still fails, check that you're opening the installed app (or the same browser profile), not a private/incognito window, which blocks service workers.</p>
+      <h3>localStorage doesn't work inside the preview</h3>
+      <p>The preview runs in a sandboxed iframe with an opaque origin — a security isolation that stops code in shared links from touching your saved projects. That means <code>localStorage</code>, <code>sessionStorage</code>, and cookies are unavailable inside the preview pane; in Safari, touching them throws a <code>SecurityError</code>. Wrap storage access in <code>try/catch</code>:</p>
+      <pre class="docs-code"><code>function safeGet(key) {
+  try { return localStorage.getItem(key); }
+  catch (e) { return null; } // preview sandbox blocks storage
+}</code></pre>
+      <p>Your projects saved in the IDE itself are unaffected — this only applies to code running inside the preview.</p>
     </section>
   </div>
 </div>
