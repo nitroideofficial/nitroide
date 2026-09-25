@@ -2,14 +2,6 @@
 const pulseLogs = [
   {
   date: "Sep 25, 2026",
-  platform: "dev.to",
-  icon: "ph-dev-to-logo",
-  color: "#0a0a0a",
-  title: "NitroIDE v25: I Security-Audited My Own Browser IDE — Here's Everything That Changed",
-  link: "https://dev.to/nitroide/nitroide-v25-i-security-audited-my-own-browser-ide-heres-everything-that-changed-48dn"
-},
-  {
-  date: "Sep 25, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
