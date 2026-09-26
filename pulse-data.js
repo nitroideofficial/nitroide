@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 26, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The 0ms preview: instant rendering with no bundler",
+  link: "https://peerlist.io/scroll/post/ACTHA9E87RRP8NR9J3JA67JMOOABD9"
+},
+  {
+  date: "Sep 26, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
