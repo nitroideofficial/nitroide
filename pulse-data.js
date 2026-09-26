@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 26, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "NitroIDE's preview has zero network latency. Not 'fast' — literally 0ms. One iframe, srcdoc, and postMessage. A short thread on how it works.",
+  link: "https://x.com/trynitroide/status/2103845926062407921"
+},
+  {
+  date: "Sep 26, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
