@@ -5,6 +5,14 @@
     <link>https://nitroide.com/blog/</link>
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
+    <item>
+      <title>The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage | NitroIDE</title>
+      <link>https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html</link>
+      <guid>https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html</guid>
+      <description>NitroIDE's preview has zero network latency: one sandboxed iframe, srcdoc rendering, an anti-flicker double-buffer swap, and postMessage incremental updates — the full architecture, with honest tradeoffs.</description>
+      <pubDate>Sat, 26 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+
                 <item>
       <title>CodeSandbox &amp; StackBlitz Alternative: Frontend Dev Without the Cloud (2026) | NitroIDE</title>
       <link>https://nitroide.com/blog/codesandbox-stackblitz-alternative-local-webcontainers.html</link>

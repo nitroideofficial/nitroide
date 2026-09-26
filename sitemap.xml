@@ -347,6 +347,12 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://nitroide.com/contact.html</loc>
     <lastmod>2026-09-25</lastmod>
     <priority>0.6</priority>

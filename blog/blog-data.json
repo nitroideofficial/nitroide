@@ -1,5 +1,21 @@
 [
  {
+  "SLUG": "0ms-preview-srcdoc-postmessage-no-bundler",
+  "META_TITLE": "The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage | NitroIDE",
+  "META_DESC": "NitroIDE's preview has zero network latency: one sandboxed iframe, srcdoc rendering, an anti-flicker double-buffer swap, and postMessage incremental updates — the full architecture, with honest tradeoffs.",
+  "KEYWORDS": "iframe srcdoc, postMessage preview, live preview architecture, browser IDE latency, double buffering iframe, no bundler frontend, NitroIDE",
+  "THEME_COLOR": "#00e5ff",
+  "CATEGORY": "SYSTEM ARCHITECTURE",
+  "DATE": "SEPTEMBER 2026",
+  "H1_TITLE": "The 0ms preview: srcdoc + postMessage, no bundler.",
+  "CONTENT": "<p>Open CodeSandbox and the preview pipeline looks like this: keystroke &rarr; websocket &rarr; cloud container &rarr; bundler &rarr; HMR diff &rarr; back to your tab. NitroIDE does the same job with one iframe and zero network: the entire document is assembled as a string and assigned to the iframe's <code>srcdoc</code> attribute. This post covers the full architecture — the anti-flicker double-buffer swap, postMessage incremental updates, the v25 sandbox hardening, and the honest tradeoffs.</p>",
+  "CTA_TITLE": "Feel the 0ms Preview.",
+  "CTA_DESC": "Type and watch it render instantly — no bundler, no websocket, no waiting.",
+  "CTA_LINK": "../tools/codebox.html",
+  "CTA_BTN_TEXT": "Launch NitroIDE",
+  "CTA_ICON": "ph-gauge"
+ },
+ {
   "SLUG": "codesandbox-stackblitz-alternative-local-webcontainers",
   "META_TITLE": "CodeSandbox & StackBlitz Alternative: Frontend Dev Without the Cloud (2026) | NitroIDE",
   "META_DESC": "CodeSandbox runs your code on cloud containers; StackBlitz runs Node in your tab via WebContainers. NitroIDE skips both: a zero-latency client-side IDE for frontend work — no signup, no spin-up, no quotas.",

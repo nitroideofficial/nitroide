@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage | NitroIDE</title>
+  <meta name="title" content="The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage">
+  <meta name="description" content="NitroIDE's preview has zero network latency: one sandboxed iframe, srcdoc rendering, an anti-flicker double-buffer swap, and postMessage incremental updates. The full architecture, with honest tradeoffs.">
+  <meta name="keywords" content="iframe srcdoc, postMessage preview, live preview architecture, browser IDE latency, double buffering iframe, no bundler frontend, NitroIDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="canonical" href="https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html">
+  <meta property="og:title" content="The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage">
+  <meta property="og:description" content="One iframe, srcdoc, and postMessage — how NitroIDE gets an instant live preview with zero network latency and no bundler.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-09-26-0ms-preview.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="NitroIDE 0ms preview: srcdoc + postMessage, no bundler">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-09-26">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html">
+  <meta name="twitter:title" content="The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage">
+  <meta name="twitter:description" content="One iframe, srcdoc, and postMessage — how NitroIDE gets an instant live preview with zero network latency and no bundler.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-09-26-0ms-preview.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-09-26-0ms-preview.webp","headline":"The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage","description":"One iframe, srcdoc, and postMessage — how NitroIDE gets an instant live preview with zero network latency and no bundler.","author":{"@type":"Organization","name":"NitroIDE"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html","datePublished":"2026-09-26","dateModified":"2026-09-26"}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #00e5ff; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">SYSTEM ARCHITECTURE • <time datetime="2026-09-26">September 26, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">The 0ms preview: srcdoc + postMessage, no bundler.</h1>
+
+    <p>Open CodeSandbox and the preview pipeline looks like this: keystroke → websocket → cloud container → bundler → HMR diff → back to your tab. Every hop adds milliseconds, and a cold container adds seconds. It's a good system. It's also a Rube Goldberg machine for the specific job of <em>showing you what your HTML looks like</em>.</p>
+    <p>NitroIDE does the same job with one iframe and zero network. Not "low latency" — the network leg is literally 0ms, because there is no network leg. Your code goes from keystroke to pixels inside a single browser tab. This post is the full architecture: how the preview is built, why it never flickers, and the tradeoffs I accepted to get there.</p>
+
+    <h2>One iframe, not a pipeline</h2>
+    <p>The preview is a single <code>&lt;iframe&gt;</code>. The entire document — your HTML, your CSS in a <code>&lt;style&gt;</code> block, your JS in a <code>&lt;script&gt;</code> block, plus any CDN libraries you've injected — is assembled as one string and assigned to the iframe's <code>srcdoc</code> attribute.</p>
+    <p>If you haven't used <code>srcdoc</code> much: it tells the browser "parse this string as a complete HTML document," in-process, synchronously. No HTTP request happens. Nothing is fetched, uploaded, or proxied. The first render is just:</p>
+
+    <div class="docs-code" style="border-color: #00e5ff; color: #e4e4e7;">
+<span class="code-comment">// The entire render pipeline:</span>
+iframe.<span class="code-attr">srcdoc</span> = documentText;
+    </div>
+
+    <p>That's the entire reason the network latency is zero. There is no server to have latency with.</p>
+
+    <h2>The anti-flicker swap</h2>
+    <p>Setting <code>srcdoc</code> on the <em>live</em> frame works, but it has a visible cost: the browser tears down the old document and paints the new one, and between those two moments there's a white flash. On a preview that re-renders constantly, that flash is maddening.</p>
+    <p>So NitroIDE never re-renders the live frame directly. Instead it builds a <em>second</em> iframe offscreen — absolutely positioned over the live one, <code>opacity: 0</code>, <code>pointer-events: none</code> — sets <code>srcdoc</code> on the hidden frame, and only swaps it in when the <code>load</code> event fires:</p>
+
+    <div class="docs-code" style="border-color: #00e5ff; color: #e4e4e7;">
+<span class="code-comment">// Double-buffering, applied to an iframe</span>
+<span class="code-keyword">const</span> next = document.<span class="code-func">createElement</span>(<span class="code-string">'iframe'</span>);
+next.<span class="code-func">setAttribute</span>(<span class="code-string">'sandbox'</span>, current.<span class="code-func">getAttribute</span>(<span class="code-string">'sandbox'</span>));
+next.style.cssText = <span class="code-string">'position:absolute;inset:0;opacity:0;pointer-events:none'</span>;
+next.<span class="code-func">addEventListener</span>(<span class="code-string">'load'</span>, () =&gt; {
+  current.<span class="code-func">replaceWith</span>(next); <span class="code-comment">// old frame visible until new one is painted</span>
+}, { <span class="code-attr">once</span>: <span class="code-keyword">true</span> });
+next.srcdoc = documentText;
+    </div>
+
+    <p>The old frame stays fully visible until the replacement has finished parsing and painting. The user perceives an instant cut, never a blank. It's a double-buffering trick as old as game rendering, applied to an iframe.</p>
+
+    <h2>Incremental updates: HTML/CSS patch in place, only JS re-runs</h2>
+    <p>Full-document rebuilds are for structural changes. For the thing you actually do 500 times a day — tweak a color, nudge a margin, fix a typo — rebuilding the whole document would reset scroll position, focus, and any JS state. So the editor sends surgical updates through <code>postMessage</code>:</p>
+    <ul>
+      <li><code>{ type: "update-css" }</code> — the new stylesheet is patched into the live document. No rebuild, no state loss.</li>
+      <li><code>{ type: "update-html" }</code> — same treatment for markup edits.</li>
+      <li><code>{ type: "eval" }</code> — JavaScript changes are re-evaluated inside the preview context.</li>
+    </ul>
+    <p>No bundler sits anywhere in this path. Your <code>&lt;script&gt;</code> runs as your script — no transpilation, no module graph, no dev-server transform. That's a deliberate scope decision: NitroIDE is a frontend preview, not a build farm. What you type is what runs, which is exactly why the feedback loop feels instant.</p>
+
+    <div class="pro-tip" style="border-color: rgba(0, 229, 255, 0.3); background: rgba(0, 229, 255, 0.05);">
+      <i class="ph-fill ph-lightning" style="color: #00e5ff;"></i>
+      <div>
+        <p><strong>Why incremental matters:</strong> a full rebuild is cheap for the machine but expensive for <em>you</em> — it resets scroll, focus, and runtime state. Patching CSS and HTML in place keeps your context alive while you iterate.</p>
+      </div>
+    </div>
+
+    <h2>The return path: console, errors, and state come back up</h2>
+    <p>A preview that can't talk back is a black box. The iframe reports into the parent over the same <code>postMessage</code> channel: <code>console.log</code> output, runtime errors with line numbers, and the state-watcher's variable snapshots. The parent renders them in the IDE's console panel.</p>
+    <p>This channel is also where v25's security work lives. As I wrote about <a href="browser-security-webcrypto-sandboxing-guide.html">in the v25 hardening post</a>, the parent used to interpolate these messages into <code>innerHTML</code> unescaped — a crafted share link could have achieved full parent-origin XSS. The fix was a strict sanitizer that allowlists only the exact HTML vocabulary the console serializer legitimately produces, with everything else escaped or validated. The preview talks freely; the parent trusts nothing. That asymmetry is the whole design.</p>
+
+    <h2>The sandbox, honestly</h2>
+    <p>The preview iframe runs with <code>sandbox="allow-scripts allow-modals allow-popups allow-forms"</code>. Notice what's missing: <code>allow-same-origin</code>. Since v25, the preview runs on an opaque origin — it cannot read the parent's <code>localStorage</code>, where your saved projects live, even if a malicious share link tries.</p>
+    <p>I'll name the tradeoff plainly: user code in the preview that touches <code>localStorage</code> throws in Safari. That's the correct posture — CodePen and CodeSandbox behave identically — and it's the price of making share links safe by construction rather than by hope. Our <a href="../docs.html">docs Troubleshooting section</a> documents this for anyone who hits it.</p>
+
+    <h2>One-click CDN injection, still zero backend</h2>
+    <p>Mid-session you can inject Tailwind or any CDN library with one click. Implementation-wise it's the boring kind of elegant: the library's <code>&lt;script&gt;</code>/<code>&lt;link&gt;</code> tags are just folded into the <code>srcdoc</code> document string before render. The browser fetches them like any normal page would. No proxy, no bundler plugin, no config file — the thing a bundler would spend 400ms resolving is a string concatenation.</p>
+
+    <h2>Why this beats the cloud pipeline on latency</h2>
+    <div style="overflow-x: auto; margin: 24px 0;">
+    <table style="width: 100%; min-width: 620px; border-collapse: collapse; font-size: 0.92rem;">
+      <thead>
+        <tr style="background: rgba(0,229,255,0.08);">
+          <th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);"></th>
+          <th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">CodeSandbox</th>
+          <th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">StackBlitz</th>
+          <th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1); color: #00e5ff;">NitroIDE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Where code runs</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Cloud container</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">WebContainers (WASM)</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Your tab</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Preview transport</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Websocket + HMR</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">In-browser Node</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);"><code>srcdoc</code> string</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Network leg</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No (but WASM boot cost)</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); color: #00e5ff;"><strong>None</strong></td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Cold start</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Seconds</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Seconds</td>
+          <td style="padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">~0</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p>The honest footnote: "0ms" describes the network leg, not rendering. Layout and paint still cost what they cost in every browser — physics doesn't negotiate. But every <em>avoidable</em> millisecond (round trips, bundler transforms, container wake-ups) is gone, and the avoidable ones were always the big ones.</p>
+
+    <h2>What it can't do</h2>
+    <p>Intellectual honesty section, because "0ms" invites skepticism:</p>
+    <ul>
+      <li><strong>Re-running JS resets top-level state.</strong> The <code>{type:"eval"}</code> path doesn't preserve your variables across edits — that's precisely why the state watcher exists, to make the reset visible instead of mysterious.</li>
+      <li><strong>No backend.</strong> If your app needs a server, this preview isn't for you. It's a frontend renderer; it doesn't pretend otherwise.</li>
+      <li><strong>No real bundling.</strong> Import maps work, bare npm specifiers don't. Heavy framework builds with 400 dependencies still need a real toolchain. NitroIDE covers the 90% of frontend work that never needed one.</li>
+    </ul>
+
+    <h2>Try it</h2>
+    <p>NitroIDE is free, no signup, and the preview described above is the actual product: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-09-26">nitroide.com</a>. If you want the security half of this story, the v25 hardening post covers the sandbox design, and the <a href="https://nitroide.com/changelog.html?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-09-26">full changelog</a> has the details. Questions about the architecture — there's a newsletter signup in the footer if you want these writeups in your inbox.</p>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Feel the 0ms Preview.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Type and watch it render instantly — no bundler, no websocket, no waiting.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch the IDE <i class="ph-bold ph-terminal-window"></i></a>
+    </div>
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="zero-latency-local-browser-ide-architecture.html" style="color: #00e5ff; text-decoration: none; font-weight: 500;">Zero-Latency Browser IDE Architecture</a></li>
+      <li><a href="browser-security-webcrypto-sandboxing-guide.html" style="color: #00e5ff; text-decoration: none; font-weight: 500;">Browser Security: WebCrypto &amp; Sandboxing Patterns</a></li>
+      <li><a href="offline-first-browser-ide-pwa.html" style="color: #00e5ff; text-decoration: none; font-weight: 500;">Offline-First IDE: Code on an Airplane</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>
