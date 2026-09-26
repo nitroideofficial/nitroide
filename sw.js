@@ -1,5 +1,5 @@
-// sw.js — NitroIDE PWA service worker (cache-first, same-origin GETs only)
-const CACHE = 'nitroide-v36';
+// sw.js — NitroIDE PWA service worker (network-first for pages + script.js, cache-first for vendor assets)
+const CACHE = 'nitroide-v37';
 
 const APP_SHELL = [
   '/',
@@ -67,10 +67,27 @@ self.addEventListener('fetch', (event) => {
   // Share links (?code=, ?gist=, ...) all serve the same HTML shell — cache document
   // navigations under the bare path so unique URLs can't bloat the cache.
   var cacheKey = request;
+  var isDocument = false;
   try {
     var u = new URL(request.url);
-    if (u.search && (request.mode === 'navigate' || request.destination === 'document')) cacheKey = u.origin + u.pathname;
+    isDocument = (request.mode === 'navigate' || request.destination === 'document');
+    if (u.search && isDocument) cacheKey = u.origin + u.pathname;
   } catch (e) {}
+  // Network-first for pages and the main logic bundle: deploys show up on the
+  // next refresh instead of hiding behind the cache. Cache is offline fallback.
+  // Heavy vendor assets (Monaco, fonts, icons) stay cache-first for fast loads.
+  var networkFirst = isDocument;
+  try { if (new URL(request.url).pathname === '/script.js') networkFirst = true; } catch (e) {}
+  if (networkFirst) {
+    event.respondWith(
+      fetch(request).then(function (response) {
+        var copy = response.clone();
+        caches.open(CACHE).then(function (cache) { cache.put(cacheKey, copy); });
+        return response;
+      }).catch(function () { return caches.match(cacheKey); })
+    );
+    return;
+  }
   event.respondWith(
     caches.match(cacheKey).then((cached) =>
       cached || fetch(request).then((response) => {
