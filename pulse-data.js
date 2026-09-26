@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 26, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The 0ms Preview: How NitroIDE Renders Your Code Instantly With srcdoc + postMessage (No Bundler)",
+  link: "https://nitroide.hashnode.dev/the-0ms-preview-how-nitroide-renders-your-code-instantly-with-srcdoc-postmessage-no-bundler"
+},
+  {
+  date: "Sep 26, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
