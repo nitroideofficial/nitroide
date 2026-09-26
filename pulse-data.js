@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Sep 26, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "NitroIDE's live preview has zero network latency — and that's not a marketing line, it's an architectural fact.",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7509613371806248960/"
+},
+  {
   date: "Sep 25, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
