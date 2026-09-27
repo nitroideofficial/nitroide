@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Sep 27, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Your browser is the edge: the contrarian case against 'we'll need a backend for that'",
+  link: "https://x.com/trynitroide/status/2104187247905902873"
+},
+  {
   date: "Sep 26, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
