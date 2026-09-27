@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 27, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Your browser is the edge — the contrarian case against 'we'll need a backend for that'",
+  link: "https://peerlist.io/scroll/post/ACTH6A7Q6PG9KQJEJC9MBNJGM9RRG9"
+},
+  {
+  date: "Sep 27, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
