@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 27, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Your browser is the edge — the contrarian case against 'we'll need a backend for that'",
+  link: "https://nitroide.hashnode.dev/your-browser-is-the-edge-the-contrarian-case-against-we-ll-need-a-backend-for-that"
+},
+  {
+  date: "Sep 27, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
   color: "#00aa45",
