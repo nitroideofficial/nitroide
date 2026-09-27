@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 27, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The most expensive sentence in modern software might be 'we'll need a backend for that.'",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7509953941280030721/"
+},
+  {
+  date: "Sep 27, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
