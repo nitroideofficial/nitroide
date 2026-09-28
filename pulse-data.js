@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 28, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "What's the slowest part of your dev loop?",
+  link: "https://x.com/trynitroide/status/2104550199943106688"
+},
+  {
+  date: "Sep 28, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
