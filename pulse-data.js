@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 28, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "What's the slowest part of your dev loop?",
+  link: "https://peerlist.io/scroll/post/ACTH6A7QRLPLMQAN6COOERGA6NGE9O"
+},
+  {
+  date: "Sep 28, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
