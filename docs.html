@@ -149,6 +149,10 @@
     <a href="#embed" class="nav-link">Embed NitroIDE</a>
     <a href="#badge" class="nav-link">Open in NitroIDE Badge</a>
     
+    <div class="sidebar-heading">Publishing &amp; AI</div>
+    <a href="#deploy" class="nav-link">Deploying Projects</a>
+    <a href="#ai-keys" class="nav-link">Free AI API Keys</a>
+
     <div class="sidebar-heading">Support</div>
     <a href="#faq" class="nav-link">Frequently Asked Questions</a>
     <a href="#install-app" class="nav-link">Install as an App</a>
@@ -283,6 +287,29 @@ setInterval(() => {
       <pre class="docs-code"><code>[![Open in NitroIDE](https://nitroide.com/logo/logo_white.png)](https://nitroide.com/tools/codebox.html?url=YOUR_RAW_FILE_URL)</code></pre>
       <p>For a Gist, use this variant with your Gist ID instead:</p>
       <pre class="docs-code"><code>[![Open in NitroIDE](https://nitroide.com/logo/logo_white.png)](https://nitroide.com/tools/codebox.html?gist=YOUR_GIST_ID)</code></pre>
+    </section>
+
+    <section id="deploy">
+      <h2>Deploying Projects</h2>
+      <p>Your NitroIDE projects are plain static files, so they can go live on any static host today. Export your project as a ZIP (<a href="#export">see Exporting</a>), unzip it, then:</p>
+      <ul>
+        <li><strong>Netlify Drop</strong> : drag the unzipped folder onto <code>app.netlify.com/drop</code> — you get a live URL in seconds, no account needed for the drop itself.</li>
+        <li><strong>GitHub Pages</strong> : create a repo, upload the files, then enable Pages under Settings &rarr; Pages. Free <code>username.github.io/repo</code> hosting.</li>
+        <li><strong>Cloudflare Pages</strong> : drag-and-drop the folder in the Pages dashboard for a <code>*.pages.dev</code> URL on Cloudflare's edge.</li>
+      </ul>
+      <p><strong>Coming in v26 (The Publish Update):</strong> one-click deploy from inside the IDE — paste your own hosting token once (it stays in your browser, never on a server) and ship straight to a live URL. See the <a href="/roadmap.html">public roadmap</a>.</p>
+    </section>
+
+    <section id="ai-keys">
+      <h2>Free AI API Keys</h2>
+      <p>NitroIDE's upcoming AI assistant (v28) is bring-your-own-key: you paste your own model API key, it lives only in your browser, and calls go straight from your browser to the provider. NitroIDE never sees your key or your code — and it costs us nothing, so it costs you nothing.</p>
+      <p>You can grab a free key today from any of these (all have generous free tiers):</p>
+      <ul>
+        <li><strong>Google AI Studio</strong> : free Gemini API keys at <code>aistudio.google.com</code> — the most generous free tier.</li>
+        <li><strong>Groq</strong> : free keys at <code>console.groq.com</code> — extremely fast inference.</li>
+        <li><strong>OpenRouter</strong> : <code>openrouter.ai</code> — one key, many models, including free ones.</li>
+      </ul>
+      <p>Treat your key like a password: it will live only in your browser's local storage, and you can wipe it any time from Settings.</p>
     </section>
 
     <section id="faq">
