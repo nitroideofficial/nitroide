@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Sep 28, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "What's the slowest part of your dev loop?",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7510316534884552704/"
+},
+  {
   date: "Sep 27, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
