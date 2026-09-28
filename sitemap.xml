@@ -311,21 +311,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nitroide.com/roadmap.html</loc>
-    <lastmod>2026-09-28</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/templates/countdown.html</loc>
-    <lastmod>2026-09-28</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://nitroide.com/templates/link-in-bio.html</loc>
-    <lastmod>2026-09-28</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://nitroide.com/templates/markdown-preview.html</loc>
     <lastmod>2026-09-24</lastmod>
     <priority>0.7</priority>
@@ -371,5 +356,11 @@
     <loc>https://nitroide.com/contact.html</loc>
     <lastmod>2026-09-25</lastmod>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nitroide.com/roadmap.html</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
