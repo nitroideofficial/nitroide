@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 28, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "What's the slowest part of your dev loop?",
+  link: "https://nitroide.hashnode.dev/what-s-the-slowest-part-of-your-dev-loop"
+},
+  {
+  date: "Sep 28, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
