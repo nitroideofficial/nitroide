@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 29, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "I Deleted My Share Backend and Replaced It With a URL",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7510679433448448000/"
+},
+  {
+  date: "Sep 29, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
@@ -832,4 +840,5 @@ const pulseLogs = [
     title: "We just pushed a massive update to the execution engine...",
     link: "https://x.com/trynitroide/status/2054956322869899699"
   }
+];
 ];
