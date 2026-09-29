@@ -6,6 +6,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
     <item>
+      <title>I Deleted My Share Backend and Replaced It With a URL | NitroIDE</title>
+      <link>https://nitroide.com/blog/instant-code-sharing-zero-backend.html</link>
+      <guid>https://nitroide.com/blog/instant-code-sharing-zero-backend.html</guid>
+      <description>NitroIDE&apos;s share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service-worker bug it caused.</description>
+      <pubDate>Tue, 29 Sep 2026 00:00:00 +0000</pubDate>
+    </item>
+
+    <item>
       <title>The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage | NitroIDE</title>
       <link>https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html</link>
       <guid>https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html</guid>

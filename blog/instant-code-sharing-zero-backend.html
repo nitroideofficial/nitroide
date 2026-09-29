@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I Deleted My Share Backend and Replaced It With a URL | NitroIDE</title>
+  <meta name="title" content="I Deleted My Share Backend and Replaced It With a URL">
+  <meta name="description" content="NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service-worker bug it caused.">
+  <meta name="keywords" content="?code= share links, URL-encoded state, client-side compression, deflate base64url, no-backend sharing, NitroIDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="canonical" href="https://nitroide.com/blog/instant-code-sharing-zero-backend.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/instant-code-sharing-zero-backend.html">
+  <meta property="og:title" content="I Deleted My Share Backend and Replaced It With a URL">
+  <meta property="og:description" content="NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service-worker bug it caused.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-09-29-instant-code-sharing.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="NitroIDE instant code sharing: zero backend, one URL">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-09-29">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/instant-code-sharing-zero-backend.html">
+  <meta name="twitter:title" content="I Deleted My Share Backend and Replaced It With a URL">
+  <meta name="twitter:description" content="NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service-worker bug it caused.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-09-29-instant-code-sharing.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-09-29-instant-code-sharing.webp","headline":"I Deleted My Share Backend and Replaced It With a URL","description":"NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service-worker bug it caused.","author":{"@type":"Organization","name":"NitroIDE"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/instant-code-sharing-zero-backend.html","datePublished":"2026-09-29","dateModified":"2026-09-29"}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #22d3ee; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NO-SERVER ARCHITECTURE • <time datetime="2026-09-29">September 29, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">I deleted my share backend and replaced it with a URL.</h1>
+
+    <p>Every "share" feature you've ever used is really three servers in a trench coat: a database to store the thing, an auth system to gate it, and an API to move it around. When I set out to add code sharing to NitroIDE, I had a problem: NitroIDE has no servers. The whole IDE runs in your browser — editor, live preview, console — nothing phones home. So I did the dumbest thing that could possibly work: I stuffed the entire shared project <em>into the URL itself</em>.</p>
+    <p>It worked so well I never built the backend.</p>
+
+    <h2>The 30-second pitch</h2>
+    <p>Open NitroIDE, write some code, hit "Copy share link." What you get looks like this:</p>
+
+    <div class="docs-code" style="border-color: #22d3ee; color: #e4e4e7;">
+nitroide.com/tools/codebox.html?code=eJx…(a few thousand characters)…
+    </div>
+
+    <p>Send that to anyone. They open it and get your exact editor state <em>plus</em> a live, running preview of the code — no signup, no "view-only requires login," no expiry, no loading spinner waiting on a server. The URL is the database.</p>
+
+    <h2>How the engine works (the whole trick in three steps)</h2>
+    <p><strong>1. Compress.</strong> When you hit share, the code is deflated in the browser itself (the same DEFLATE algorithm behind gzip, run client-side). Most HTML/CSS/JS snippets compress to a third or a quarter of their size. A typical "check out this bug" demo — a few hundred lines — lands at 2–5 KB after compression. That matters because URLs have practical length limits (browsers tolerate tens of thousands of characters, but long URLs get mangled by chat apps, email clients, and URL shorteners), so every byte counts.</p>
+    <p><strong>2. Encode.</strong> The compressed bytes get base64url-encoded — the URL-safe variant of base64, no <code>+</code> or <code>/</code> that would break query parsing — and dropped into the <code>?code=</code> query parameter. No server saw your code at any point. It went from your editor to a string in your clipboard.</p>
+    <p><strong>3. Hydrate.</strong> On the receiving end, <code>codebox.html</code> reads <code>?code=</code>, reverses the pipeline — base64url decode, inflate, load into the editor — and feeds the result straight into the live preview via <code>srcdoc</code>. No network round-trip, no "fetching shared project…" state, no dependency on a server being up. From cold open to running code in well under a second on a decent connection, most of it just page load.</p>
+    <p>That's the entire share backend: <code>btoa</code> plus a compressor plus a URL.</p>
+
+    <h2>Why this fits the no-server philosophy (and what it forced)</h2>
+    <p>Building this way wasn't just cheapness — it changed the design. A server-backed share feature would need link expiry, permission levels, storage quotas, abuse reporting, a privacy policy section about stored user content. The URL-share needs none of it, because there's nothing stored anywhere. Your code never sat on my disk. There's no "NitroIDE servers were breached and shared links leaked" scenario, because there are no NitroIDE servers holding your links.</p>
+    <p>But it also forced honest constraints into the product:</p>
+    <ul>
+      <li><strong>Size limits are real.</strong> URLs can't be infinite, so this is for snippets, demos, and prototypes — not your 10,000-line project. Big work still goes through Export-to-ZIP. Rather than hide this, the share dialog shows the compressed size before you copy the link, so you know when you're pushing it.</li>
+      <li><strong>Share links are public by design.</strong> Anyone with the link has the code — same as a screenshot, same as a pastebin. Never put secrets, API keys, or tokens in a share link. I say this in the docs and I'll say it here: treat <code>?code=</code> links like screenshots.</li>
+      <li><strong>No analytics, no tracking.</strong> I genuinely cannot tell you how many times a link was opened, because nothing was stored and nothing was logged. For a privacy-positioned tool, that's a feature.</li>
+    </ul>
+
+    <h2>The bug that taught me the most</h2>
+    <p>The v25 audit (full story on the blog) surfaced a real flaw in this pipeline: the service worker was runtime-caching every <code>?code=</code> URL as a separate cache entry. Every share link anyone opened added another entry — the share engine was slowly stuffing the user's cache with garbage. The fix: cache document navigations under the bare path, ignoring the query string.</p>
+    <p>It's the kind of bug that only exists <em>because</em> the URL is the database — worth remembering if you build anything that encodes state into URLs. Your caching layer needs to know that <code>?code=X</code> and <code>?code=Y</code> are the same page with different payloads.</p>
+
+    <h2>Why I think this generalizes</h2>
+    <p>The <code>?code=</code> pattern is really "put the state in the address bar" taken to its logical end, and it works anywhere the state is small and compressible: playgrounds, form builders, chart configurators, regex testers. The industry default — reach for a database — is often a habit, not a requirement. Ask what breaks if the data lives in the link instead: sometimes the answer is "nothing, and now you have no storage costs, no GDPR surface for that data, and instant load times."</p>
+
+    <h2>Try it</h2>
+    <p>NitroIDE is free, no signup, and the share engine described above is the actual product: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-09-29">nitroide.com</a>. The code never leaves your machine — not even to share it. Questions about the architecture — there's a newsletter signup in the footer if you want these writeups in your inbox.</p>
+
+    <!-- PERFECTLY CENTERED CTA BOX -->
+    <div style="background: rgba(34, 211, 238, 0.05); border: 1px solid rgba(34, 211, 238, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
+      <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Share code without a server.</h3>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Compress, encode, copy a link. Your code never leaves your machine.</p>
+      <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch the IDE <i class="ph-bold ph-terminal-window"></i></a>
+    </div>
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="0ms-preview-srcdoc-postmessage-no-bundler.html" style="color: #22d3ee; text-decoration: none; font-weight: 500;">The 0ms Preview: srcdoc + postMessage, No Bundler</a></li>
+      <li><a href="browser-security-webcrypto-sandboxing-guide.html" style="color: #22d3ee; text-decoration: none; font-weight: 500;">Browser Security: WebCrypto &amp; Sandboxing Patterns</a></li>
+      <li><a href="zero-latency-local-browser-ide-architecture.html" style="color: #22d3ee; text-decoration: none; font-weight: 500;">Zero-Latency Browser IDE Architecture</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

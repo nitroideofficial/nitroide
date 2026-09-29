@@ -1,5 +1,20 @@
 [
  {
+  "SLUG": "instant-code-sharing-zero-backend",
+  "META_TITLE": "I Deleted My Share Backend and Replaced It With a URL | NitroIDE",
+  "META_DESC": "NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service-worker bug it caused.",
+  "KEYWORDS": "?code= share links, URL-encoded state, client-side compression, deflate base64url, no-backend sharing, NitroIDE",
+  "THEME_COLOR": "#22d3ee",
+  "CATEGORY": "NO-SERVER ARCHITECTURE",
+  "DATE": "SEPTEMBER 2026",
+  "H1_TITLE": "I deleted my share backend and replaced it with a URL.",
+  "CONTENT": "<p>Every share feature is three servers in a trench coat: a database, an auth system, and an API. NitroIDE has no servers — so I stuffed the entire shared project into the URL itself. This post covers the compression-and-encode pipeline, the honest limits it forced into the product, and the service-worker caching bug that only exists because the URL is the database.</p>",
+  "CTA_TITLE": "Share Code Without a Server.",
+  "CTA_DESC": "Compress, encode, copy a link. Your code never leaves your machine.",
+  "CTA_LINK": "../tools/codebox.html",
+  "CTA_ICON": "ph-gauge"
+ },
+ {
   "SLUG": "0ms-preview-srcdoc-postmessage-no-bundler",
   "META_TITLE": "The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage | NitroIDE",
   "META_DESC": "NitroIDE's preview has zero network latency: one sandboxed iframe, srcdoc rendering, an anti-flicker double-buffer swap, and postMessage incremental updates — the full architecture, with honest tradeoffs.",

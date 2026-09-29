@@ -363,4 +363,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://nitroide.com/blog/instant-code-sharing-zero-backend.html</loc>
+    <lastmod>2026-09-29</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
