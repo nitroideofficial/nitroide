@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 29, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "I Deleted My Share Backend and Replaced It With a URL",
+  link: "https://nitroide.hashnode.dev/i-deleted-my-share-backend-and-replaced-it-with-a-url"
+},
+  {
+  date: "Sep 29, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
