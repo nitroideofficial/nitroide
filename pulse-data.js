@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Sep 29, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "I Deleted My Share Backend and Replaced It With a URL",
+  link: "https://x.com/trynitroide/status/2104913136797282369"
+},
+  {
   date: "Sep 28, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
