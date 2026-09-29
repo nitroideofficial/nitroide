@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 29, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Code sharing with zero backend",
+  link: "https://peerlist.io/scroll/post/ACTHGNQGOPDBGN8K73AQB669D7K6E9"
+},
+  {
+  date: "Sep 29, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
