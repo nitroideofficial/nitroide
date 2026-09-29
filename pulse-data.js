@@ -849,4 +849,3 @@ const pulseLogs = [
     link: "https://x.com/trynitroide/status/2054956322869899699"
   }
 ];
-];
