@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Sep 30, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Which tool do you open 50 times a day without thinking?",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7511040030069489664/"
+},
+  {
   date: "Sep 29, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
