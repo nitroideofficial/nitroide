@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 30, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Which tool do you open 50 times a day without thinking?",
+  link: "https://nitroide.hashnode.dev/which-tool-do-you-open-50-times-a-day-without-thinking"
+},
+  {
+  date: "Sep 30, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
