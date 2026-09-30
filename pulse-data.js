@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 30, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Which tool do you open 50 times a day without thinking?",
+  link: "https://x.com/trynitroide/status/2105273757258731996"
+},
+  {
+  date: "Sep 30, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
