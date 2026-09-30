@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Sep 30, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Which tool do you open 50 times a day without thinking?",
+  link: "https://peerlist.io/scroll/post/ACTHOK8AADBQ6KKEKH8KPK77Q9OQG7"
+},
+  {
+  date: "Sep 30, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
