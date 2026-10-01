@@ -2211,3 +2211,4 @@ html{overflow-x:clip}
   }
 }
 .badge-row .badge{font-size:.72rem;padding:5px 12px;gap:6px}
+@media (max-width:480px){.badge-row{flex-wrap:nowrap;gap:6px}.badge-row .badge{font-size:.62rem;padding:4px 8px;gap:4px;white-space:nowrap}.badge-row .badge img{height:12px;width:auto}}
