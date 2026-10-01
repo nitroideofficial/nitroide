@@ -162,6 +162,11 @@
       status.classList.add('err');
       return;
     }
+    if (msg.length < 10) {
+      status.textContent = 'Please write a little more detail (at least 10 characters).';
+      status.classList.add('err');
+      return;
+    }
     btn.disabled = true;
     btnText.textContent = 'Sending...';
     fetch('/api/contact', {
@@ -169,15 +174,17 @@
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({ form: 'contact', name: name, email: email, message: msg, subject: 'NitroIDE contact: ' + name, website: document.getElementById('cWebsite').value })
     }).then(function (r) {
-      if (!r.ok) throw new Error('send failed');
-      return r.json();
-    }).then(function (data) {
-      if (!data.success) throw new Error('send failed');
+      return r.json().then(function (data) {
+        if (!r.ok || !data.success) throw new Error((data && data.error) || 'send failed');
+        return data;
+      });
+    }).then(function () {
       status.textContent = 'Message sent! We usually reply within a couple of days.';
       status.classList.add('ok');
       form.reset();
-    }).catch(function () {
-      status.textContent = 'Something went wrong sending your message. Please email us directly at contactnitroide@gmail.com.';
+    }).catch(function (err) {
+      var emsg = (err && err.message && err.message !== 'send failed') ? err.message : 'Something went wrong sending your message. Please email us directly at contactnitroide@gmail.com.';
+      status.textContent = emsg;
       status.classList.add('err');
     }).finally(function () {
       btn.disabled = false;
