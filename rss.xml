@@ -5,7 +5,14 @@
     <link>https://nitroide.com/blog/</link>
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
-    <item>
+        <item>
+      <title>I Published 91 Posts With 0 Followers. Here&apos;s What the Numbers Say | NitroIDE</title>
+      <link>https://nitroide.com/blog/91-posts-0-followers-lessons.html</link>
+      <guid>https://nitroide.com/blog/91-posts-0-followers-lessons.html</guid>
+      <description>91 posts. 0 followers. 3 connections. I audited the whole campaign — here&apos;s what won, what flopped, and the distribution lesson I&apos;m carrying forward.</description>
+      <pubDate>Thu, 01 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>I Deleted My Share Backend and Replaced It With a URL | NitroIDE</title>
       <link>https://nitroide.com/blog/instant-code-sharing-zero-backend.html</link>
       <guid>https://nitroide.com/blog/instant-code-sharing-zero-backend.html</guid>

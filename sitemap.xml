@@ -369,4 +369,10 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://nitroide.com/blog/91-posts-0-followers-lessons.html</loc>
+    <lastmod>2026-10-01</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
