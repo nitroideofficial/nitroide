@@ -2210,3 +2210,4 @@ html{overflow-x:clip}
     overscroll-behavior: none;
   }
 }
+.badge-row .badge{font-size:.72rem;padding:5px 12px;gap:6px}
