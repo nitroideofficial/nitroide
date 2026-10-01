@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 1, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "91 posts, 0 followers — the honest audit",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7511402497597464577/"
+},
+  {
+  date: "Oct 1, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
