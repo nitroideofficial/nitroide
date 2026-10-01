@@ -20,6 +20,8 @@
   <img src="https://img.shields.io/badge/Made%20with-JavaScript-yellow?style=for-the-badge"/>
 </p>
 
+<img src="assets/demo.gif" width="960" alt="NitroIDE demo — type HTML, CSS and JS, watch the live preview update instantly. No signup."/>
+
 </div>
 
 ---
