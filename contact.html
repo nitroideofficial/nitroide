@@ -110,6 +110,7 @@
           <label for="cMsg">Message</label>
           <textarea id="cMsg" name="message" placeholder="Tell us what's on your mind..." required></textarea>
         </div>
+        <input type="text" id="cWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;border:0;padding:0;" value="">
         <button type="submit" id="contactBtn" class="btn-launch primary-btn contact-send">
           <span id="contactBtnText">Send Message</span>
         </button>
@@ -163,10 +164,10 @@
     }
     btn.disabled = true;
     btnText.textContent = 'Sending...';
-    fetch('https://api.web3forms.com/submit', {
+    fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ access_key: '9f50b0a4-3074-466a-9007-e7c5555d1c07', name: name, email: email, message: msg, subject: 'NitroIDE contact: ' + name })
+      body: JSON.stringify({ form: 'contact', name: name, email: email, message: msg, subject: 'NitroIDE contact: ' + name, website: document.getElementById('cWebsite').value })
     }).then(function (r) {
       if (!r.ok) throw new Error('send failed');
       return r.json();
