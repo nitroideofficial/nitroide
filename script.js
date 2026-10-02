@@ -1,3 +1,11 @@
+/* CSP report-only (security audit 2026-10-02): OBSERVE ONLY, never blocks. Violations log to console. Tighten the policy from those logs before ever enforcing. */
+(function(){try{
+if(document.querySelector('meta[http-equiv="Content-Security-Policy-Report-Only"]'))return;
+var m=document.createElement('meta');
+m.setAttribute('http-equiv','Content-Security-Policy-Report-Only');
+m.setAttribute('content',"default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'");
+document.head.appendChild(m);
+}catch(e){}})();
 /* AdSense site verification (ca-pub-3578199654426674) — injected on every page via script.js */
 (function(){try{var a=document.createElement('script');a.async=true;a.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3578199654426674';a.setAttribute('crossorigin','anonymous');document.head.appendChild(a);}catch(e){}});
 /* Google Analytics 4 (G-SH02J5Q7MB) — injected on every page via script.js */
