@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 2, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "From idea to live URL in 30 seconds — the link IS the deployment.",
+  link: "https://x.com/trynitroide/status/2105998255926751234"
+},
+  {
+  date: "Oct 2, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
