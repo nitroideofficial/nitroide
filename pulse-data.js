@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 2, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "From idea to live URL in 30 seconds",
+  link: "https://peerlist.io/scroll/post/ACTHGNQG9KENMAQBMH8JRK8APLO8BG"
+},
+  {
+  date: "Oct 2, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
