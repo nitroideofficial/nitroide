@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 2, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The gap between 'I have an idea' and 'here's a live link' is where most ideas die.",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7511764045293645824/"
+},
+  {
   date: "Oct 1, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
