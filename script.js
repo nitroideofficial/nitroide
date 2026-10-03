@@ -540,18 +540,28 @@ function aiSetupRenderKeysList(){
   const el = document.getElementById('aiSetupKeysList');
   if (!el) return;
   try {
+    const active = aiGetProvider();
     el.innerHTML = Object.keys(AI_PROVIDERS).map(function(p){
       const has = !!aiGetKey(p);
       const model = has ? aiGetModel(p) : '';
       const label = AI_PROVIDERS[p].label;
-      return '<div class="ai-key-row ' + (has ? 'has' : 'missing') + '">' +
+      const isActive = has && p === active;
+      return '<div class="ai-key-row ' + (has ? 'has' : 'missing') + (isActive ? ' active' : '') + '"' + (has ? ' onclick="aiSetupSetActive(\'' + p + '\')" title="Set as active provider" style="cursor:pointer;"' : '') + '>' +
         '<span class="dot"></span>' +
         '<span class="pname">' + aiEscapeHtml(label) + '</span>' +
         '<span class="pmodel">' + (has ? aiEscapeHtml(model) : 'no key saved') + '</span>' +
-        (has ? '<button onclick="aiSetupRemoveProviderKey(\'' + p + '\')" title="Remove ' + aiEscapeHtml(label) + ' key"><i class="ph-bold ph-x"></i></button>' : '') +
+        (isActive ? '<span style="font-size:.65rem;color:#00e5ff;font-weight:700;">ACTIVE</span>' : '') +
+        (has ? '<button onclick="event.stopPropagation();aiSetupRemoveProviderKey(\'' + p + '\')" title="Remove ' + aiEscapeHtml(label) + ' key"><i class="ph-bold ph-x"></i></button>' : '') +
         '</div>';
     }).join('');
   } catch(e){}
+}
+function aiSetupSetActive(p){
+  if (!p || !AI_PROVIDERS[p] || !aiGetKey(p)) return;
+  try { localStorage.setItem('nitro_ai_provider', p); } catch(e){}
+  aiSetupRenderKeysList();
+  aiChatUpdateModelLabel();
+  showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> " + aiEscapeHtml(AI_PROVIDERS[p].label) + " is now the active provider.");
 }
 function aiSetupRemoveProviderKey(p){
   try {
