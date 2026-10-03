@@ -82,6 +82,9 @@
           <button class="ws-btn ws-icon-btn" onclick="toggleSidebar('toggle')" title="Toggle Explorer" aria-label="Toggle Explorer">
             <i class="ph-bold ph-sidebar-simple"></i>
           </button>
+          <button class="ws-btn ws-icon-btn" onclick="toggleCmdK()" title="Command palette (Ctrl+K)" aria-label="Command palette">
+            <i class="ph-bold ph-command"></i>
+          </button>
           <a href="../index.html" class="ws-logo" title="Back to Home">
             <img src="../logo/logo_white.png" alt="NitroIDE" class="logo-dark">
             <img src="../logo/logo_black.png" alt="NitroIDE" class="logo-light">
@@ -141,6 +144,7 @@
           <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="openTimeMachine()"><i class="ph-bold ph-clock-counter-clockwise"></i> Local Time Machine</button>
           <button class="dropdown-item" onclick="generateShareLink()"><i class="ph-bold ph-share-network"></i> Share Workspace</button>
+          <button class="dropdown-item" onclick="installAppHint()"><i class="ph-bold ph-download-simple"></i> Install App</button>
           <button class="dropdown-item" onclick="exportSingleFile()"><i class="ph-bold ph-file-code"></i> Export as 1-File</button>
           <button class="dropdown-item" onclick="downloadZip()"><i class="ph-bold ph-file-archive"></i> Download ZIP</button>
           <div class="dropdown-divider"></div>
@@ -255,6 +259,12 @@
         </div>
       </div>
     </div>
+
+    <!-- v27: mobile Code/Preview quick switch (phones/tablets only via hide-on-desktop) -->
+    <div id="mobileViewToggle" class="mobile-view-toggle hide-on-desktop" role="tablist" aria-label="Switch between code and preview">
+      <button class="mvt-btn active" data-view="code" onclick="setMobileView('code')" role="tab" aria-selected="true"><i class="ph-bold ph-code"></i><span>Code</span></button>
+      <button class="mvt-btn" data-view="preview" onclick="setMobileView('preview')" role="tab" aria-selected="false"><i class="ph-bold ph-browser"></i><span>Preview</span></button>
+    </div>
   </div>
 </div>
 
@@ -334,22 +344,42 @@
 <div id="toast" class="toast"></div>
 <script src="../script.js"></script>
 <script>
-// PWA install prompt (service worker is registered from script.js on all pages)
-let _deferredInstallPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  _deferredInstallPrompt = e;
+// v27: mobile editor pass -----------------------------------------------
+// Mobile Code/Preview quick toggle (uses the existing layout presets).
+function setMobileView(v) {
+  v = (v === 'preview') ? 'preview' : 'code';
+  try { localStorage.setItem('nitroide_mobile_view', v); } catch (e) {}
+  document.querySelectorAll('#mobileViewToggle .mvt-btn').forEach(function (b) {
+    var on = b.getAttribute('data-view') === v;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  if (typeof applyLayoutPreset === 'function') applyLayoutPreset(v);
+}
+(function initMobileView() {
+  var v = 'code';
+  try { v = localStorage.getItem('nitroide_mobile_view') || 'code'; } catch (e) {}
+  function apply() {
+    if (window.innerWidth > 768) return;
+    setMobileView(v);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
+  else apply();
+})();
 
-  // Subtle floating install button, dark-theme matched
+// PWA install: header button when installable (no floating overlap on mobile),
+// plus an Install App menu item that guides iOS users (no beforeinstallprompt there).
+let _deferredInstallPrompt = null;
+function _placeInstallBtn() {
   if (document.getElementById('nitroide-install-btn')) return;
-  const btn = document.createElement('button');
+  var host = document.querySelector('.ws-right');
+  if (!host) return;
+  var btn = document.createElement('button');
   btn.id = 'nitroide-install-btn';
-  btn.textContent = 'Install NitroIDE';
-  btn.style.cssText =
-    'position:fixed;bottom:20px;right:20px;z-index:9999;' +
-    'background:#1a1a1a;color:#f0f0f0;border:1px solid #333;' +
-    'border-radius:10px;padding:9px 16px;font-size:13px;cursor:pointer;' +
-    'box-shadow:0 4px 16px rgba(0,0,0,0.5);opacity:0.92;';
+  btn.className = 'ws-btn ws-icon-btn';
+  btn.title = 'Install NitroIDE app';
+  btn.setAttribute('aria-label', 'Install NitroIDE app');
+  btn.innerHTML = '<i class="ph-bold ph-download-simple"></i>';
   btn.addEventListener('click', async () => {
     if (!_deferredInstallPrompt) return;
     _deferredInstallPrompt.prompt();
@@ -357,14 +387,28 @@ window.addEventListener('beforeinstallprompt', (e) => {
     _deferredInstallPrompt = null;
     btn.remove();
   });
-  document.body.appendChild(btn);
+  var compileBtn = host.querySelector('.ws-compile-btn');
+  host.insertBefore(btn, compileBtn || host.firstChild);
+  if (typeof pinWsRight === 'function') pinWsRight();
+}
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  _deferredInstallPrompt = e;
+  _placeInstallBtn();
 });
-
 window.addEventListener('appinstalled', () => {
   _deferredInstallPrompt = null;
   const btn = document.getElementById('nitroide-install-btn');
   if (btn) btn.remove();
 });
+function installAppHint() {
+  if (_deferredInstallPrompt) { _deferredInstallPrompt.prompt(); return; }
+  if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+    showToast("To install on iOS: tap Share, then 'Add to Home Screen'.");
+  } else {
+    showToast("To install: open NitroIDE in Chrome/Edge, then choose Install from the browser menu.");
+  }
+}
 
 // First-run onboarding overlay (gated on localStorage; skipped in embed mode)
 (function(){
