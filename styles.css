@@ -614,6 +614,8 @@
   top: calc(100% + 4px);
   border-radius: 6px;
   background: color-mix(in srgb, var(--card) 96%, #000 4%);
+  max-height: calc(100dvh - 80px);
+  overflow-y: auto;
 }
 
 @media (min-width: 1200px) {
