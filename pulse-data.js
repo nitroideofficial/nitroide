@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 3, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools",
+  link: "https://nitroide.hashnode.dev/the-postmessage-sanitizer-a-recipe-for-anyone-building-iframe-tools"
+},
+  {
+  date: "Oct 3, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
