@@ -2326,6 +2326,7 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
 .ai-chat-send{width:34px;height:34px;flex-shrink:0;border-radius:50%;border:none;background:#00e5ff;color:#00181c;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:.15s;margin:0}
 .ai-chat-send:hover{transform:scale(1.06)}
 .ai-chat-send:disabled{opacity:.35;cursor:default;transform:none}
+.ai-chat-send.ai-stop-mode{background:var(--error);color:#fff}
 
 /* typing */
 .ai-typing{display:inline-flex;gap:5px;padding:8px 0;align-items:center}

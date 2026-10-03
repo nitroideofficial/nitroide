@@ -282,7 +282,7 @@
             <div id="aiChatContext" class="ai-chat-context"></div>
             <div class="ai-chat-input-wrap">
               <textarea id="aiChatInput" rows="1" placeholder="Ask about your code..." onkeydown="aiChatKeydown(event)" oninput="aiChatAutoresize()"></textarea>
-              <button class="ai-chat-send" onclick="aiChatSend()" aria-label="Send"><i class="ph-bold ph-arrow-up"></i></button>
+              <button class="ai-chat-send" onclick="aiChatSendOrStop()" aria-label="Send"><i class="ph-bold ph-arrow-up"></i></button>
             </div>
           </aside>
       </div>
@@ -321,7 +321,7 @@
     </ol>
     <div class="ai-privacy-note">
       <i class="ph-bold ph-shield-check"></i>
-      <span><b>Your keys never leave this browser</b> except to talk directly to the AI provider you chose. We don't store them, log them, or send them to our servers — there are no NitroIDE servers in this loop. Remove a key anytime and it's gone.</span>
+      <span><b>Your keys never leave this browser</b> except to talk directly to the AI provider you chose. We don't store them, log them, or send them to our servers — there are no NitroIDE servers in this loop. Remove a key anytime and it's gone.<br><span style="opacity:.85;">Gemini note: Google's API authentication sends your key as part of the request URL. Depending on your browser environment, URLs may be retained in browser history or related browser records. NitroIDE does not send your key to its own servers.</span></span>
     </div>
     <div class="feedback-body">
       <label style="font-size:.78rem;font-weight:600;">API Key</label>

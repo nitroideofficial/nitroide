@@ -942,24 +942,66 @@ function aiChatAutoresize(){
   const t = document.getElementById('aiChatInput');
   if (t) { t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight, 120) + 'px'; }
 }
+// ---- AI request lifecycle: timeout + in-flight guard + user cancellation ----
+var aiSending = false;          // authoritative in-flight guard: one AI generation at a time
+var aiAbortCtrl = null;         // AbortController for the in-flight AI request
+var aiAbortReason = null;       // 'timeout' | 'user' | null — set just before aborting
+var aiAbortTimer = null;        // 30s timeout handle for the in-flight request
+var AI_REQUEST_TIMEOUT_MS = 30000;
+
+function aiChatSendOrStop(){
+  if (aiSending) { aiChatStop(); return; }
+  aiChatSend();
+}
+function aiChatStop(){
+  if (!aiSending || !aiAbortCtrl) return;
+  aiAbortReason = 'user';
+  try { aiAbortCtrl.abort(); } catch(e){}
+}
+function aiSetSendState(sending){
+  const btn = document.querySelector('.ai-chat-send');
+  if (!btn) return;
+  if (sending) {
+    if (!btn.dataset.origHtml) btn.dataset.origHtml = btn.innerHTML;
+    btn.innerHTML = '<i class="ph-bold ph-stop"></i>';
+    btn.setAttribute('aria-label', 'Stop');
+    btn.title = 'Stop generation';
+    btn.classList.add('ai-stop-mode');
+    btn.disabled = false;
+  } else {
+    if (btn.dataset.origHtml) btn.innerHTML = btn.dataset.origHtml;
+    btn.setAttribute('aria-label', 'Send');
+    btn.title = '';
+    btn.classList.remove('ai-stop-mode');
+    btn.disabled = false;
+  }
+}
 async function aiChatSend(prefill){
   if (!aiHasKey()) { openAiSetupModal(); return; }
   const input = document.getElementById('aiChatInput');
   const text = (typeof prefill === 'string' ? prefill : (input ? input.value.trim() : ''));
   if (!text) return;
-  aiToggleSidebar(true);
-  aiLastUserText = text;
-  aiChatAddMsg('user', text);
-  if (input && typeof prefill !== 'string') { input.value = ''; aiChatAutoresize(); }
-  aiChatRenderContext();
-  const typing = document.createElement('div');
-  typing.className = 'ai-msg assistant';
-  typing.innerHTML = '<div class="ai-typing"><span></span><span></span><span></span></div>';
-  const box = document.getElementById('aiChatMessages');
-  if (box) { box.appendChild(typing); box.scrollTop = box.scrollHeight; }
-  const sendBtn = document.querySelector('.ai-chat-send');
-  if (sendBtn) sendBtn.disabled = true;
+  if (aiSending) return; // double-send guard: ignore while a generation is in flight
+  aiSending = true;
+  let typing = null;
   try {
+    aiAbortReason = null;
+    aiAbortCtrl = new AbortController();
+    aiAbortTimer = setTimeout(function(){
+      aiAbortReason = 'timeout';
+      try { if (aiAbortCtrl) aiAbortCtrl.abort(); } catch(e2){}
+    }, AI_REQUEST_TIMEOUT_MS);
+    aiToggleSidebar(true);
+    aiLastUserText = text;
+    aiChatAddMsg('user', text);
+    if (input && typeof prefill !== 'string') { input.value = ''; aiChatAutoresize(); }
+    aiChatRenderContext();
+    typing = document.createElement('div');
+    typing.className = 'ai-msg assistant';
+    typing.innerHTML = '<div class="ai-typing"><span></span><span></span><span></span></div>';
+    const box = document.getElementById('aiChatMessages');
+    if (box) { box.appendChild(typing); box.scrollTop = box.scrollHeight; }
+    aiSetSendState(true); // Send becomes Stop while generating
     const ctx = aiChatContext();
     let ctxText = '';
     for (const c of ctx) {
@@ -986,21 +1028,34 @@ async function aiChatSend(prefill){
     const hist = aiChatHistory.slice(0, -1).slice(-8);
     for (const m of hist) messages.push({ role: m.role, content: m.content });
     messages.push({ role: 'user', content: text + (ctxText ? '\n\nContext:' + ctxText : '') });
-    const out = await aiChatWithFallback(messages);
+    const out = await aiChatWithFallback(messages, aiAbortCtrl.signal);
     if (typing.parentNode) typing.parentNode.removeChild(typing);
+    typing = null;
     if (out.fallback) {
       try { showToast("<i class='ph-bold ph-info' style='margin-right:6px;'></i> " + aiEscapeHtml(AI_PROVIDERS[out.fallback].label) + " was rate-limited — answered with " + aiEscapeHtml(AI_PROVIDERS[out.provider].label) + "."); } catch(e){}
     }
     aiChatAddMsg('assistant', out.text);
     aiChatMaybeAutoApply(out.text);
   } catch(e){
-    if (typing.parentNode) typing.parentNode.removeChild(typing);
-    aiChatAddMsg('assistant', 'Sorry — ' + aiFriendlyError(e));
+    if (typing && typing.parentNode) typing.parentNode.removeChild(typing);
+    const m = String((e && e.message) || e);
+    if (m === 'ABORTED') {
+      // timeout vs user cancellation: never show a raw AbortError, never fall back
+      showToast(aiAbortReason === 'timeout'
+        ? "<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> The AI request timed out after 30 seconds. Please try again."
+        : "<i class='ph-bold ph-info' style='margin-right:6px;'></i> Generation stopped.");
+    } else {
+      aiChatAddMsg('assistant', 'Sorry — ' + aiFriendlyError(e));
+    }
   } finally {
-    if (sendBtn) sendBtn.disabled = false;
+    if (aiAbortTimer) { clearTimeout(aiAbortTimer); aiAbortTimer = null; }
+    aiAbortCtrl = null;
+    aiAbortReason = null;
+    aiSending = false;
+    aiSetSendState(false); // Stop becomes Send again
   }
 }
-async function aiChatWithHistory(messages, providerOverride){
+async function aiChatWithHistory(messages, providerOverride, signal){
   const p = providerOverride || aiGetProvider();
   const key = aiGetKey(p);
   const model = aiGetModel(p);
@@ -1014,9 +1069,9 @@ async function aiChatWithHistory(messages, providerOverride){
     const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + encodeURIComponent(model) + ':generateContent?key=' + encodeURIComponent(key);
     let res;
     try {
-      res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: signal,
         body: JSON.stringify({ system_instruction: { parts: [{ text: sysMsg ? sysMsg.content : '' }] }, contents: contents, generationConfig: { temperature: 0.3, maxOutputTokens: 8192 } }) });
-    } catch(e){ throw new Error('NETWORK'); }
+    } catch(e){ if (e && e.name === 'AbortError') throw new Error('ABORTED'); throw new Error('NETWORK'); }
     if (!res.ok) throw new Error('HTTP_' + res.status);
     const data = await res.json();
     const t = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text;
@@ -1029,9 +1084,9 @@ async function aiChatWithHistory(messages, providerOverride){
   if (p === 'openrouter') { headers['HTTP-Referer'] = 'https://nitroide.com'; headers['X-OpenRouter-Title'] = 'NitroIDE'; }
   let res;
   try {
-    res = await fetch(url, { method: 'POST', headers: headers,
+    res = await fetch(url, { method: 'POST', headers: headers, signal: signal,
       body: JSON.stringify({ model: model, messages: messages, temperature: 0.3, max_tokens: 8192 }) });
-  } catch(e){ throw new Error('NETWORK'); }
+  } catch(e){ if (e && e.name === 'AbortError') throw new Error('ABORTED'); throw new Error('NETWORK'); }
   if (!res.ok) throw new Error('HTTP_' + res.status);
   const data = await res.json();
   const t = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
@@ -1039,9 +1094,10 @@ async function aiChatWithHistory(messages, providerOverride){
   return t;
 }
 var aiLastUserText = '';
-async function aiChatWithFallback(messages){
+async function aiChatWithFallback(messages, signal){
   // Try the selected provider first, then any other provider with a saved key.
   // Falls through on rate limits / server errors / network issues only.
+  // ABORTED (user cancel or timeout) is never a fallback trigger — it is terminal.
   const order = [aiGetProvider()];
   try {
     Object.keys(AI_PROVIDERS).forEach(function(p){
@@ -1051,10 +1107,11 @@ async function aiChatWithFallback(messages){
   let lastErr = null, usedFallback = null;
   for (let i = 0; i < order.length; i++){
     try {
-      const out = await aiChatWithHistory(messages, order[i]);
+      const out = await aiChatWithHistory(messages, order[i], signal);
       return { text: out, provider: order[i], fallback: usedFallback };
     } catch(e){
       const m = String((e && e.message) || e);
+      if (m === 'ABORTED') throw e;
       if (/^HTTP_429$|^HTTP_5\d\d$|^NETWORK$/.test(m)) { lastErr = e; usedFallback = order[i]; continue; }
       throw e;
     }
