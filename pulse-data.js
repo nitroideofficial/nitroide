@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 3, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools",
+  link: "https://peerlist.io/scroll/post/ACTHLKL7GP7AL9RGG3POMRQ86LD89O"
+},
+  {
+  date: "Oct 3, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
