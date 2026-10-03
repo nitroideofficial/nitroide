@@ -318,7 +318,7 @@ function aiSideInitResize(){
     if (window.innerWidth <= 768) return;
     dragging = true; startX = e.clientX;
     startW = sb.getBoundingClientRect().width;
-    h.classList.add('dragging');
+    h.classList.add('dragging'); sb.classList.add('dragging');
     h.setPointerCapture(e.pointerId);
     e.preventDefault();
   });
@@ -330,7 +330,7 @@ function aiSideInitResize(){
   });
   const end = function(){
     if (!dragging) return;
-    dragging = false; h.classList.remove('dragging');
+    dragging = false; h.classList.remove('dragging'); sb.classList.remove('dragging');
     try { localStorage.setItem('nitro_ai_side_w', String(aiSideW)); } catch(e){}
   };
   h.addEventListener('pointerup', end);

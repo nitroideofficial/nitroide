@@ -2256,6 +2256,7 @@ html{overflow-x:clip}
 /* AI sidebar — narrow right dock (desktop), slide-over (mobile) */
 #aiSidebar{width:0;flex-shrink:0;overflow:hidden;display:flex;flex-direction:column;background:var(--card);border-left:1px solid transparent;transition:width .25s cubic-bezier(.16,1,.3,1),border-color .25s;min-height:0;position:relative}
 #aiSidebar{--ai-side-w:320px}
+#aiSidebar.dragging{transition:none}
 #aiSidebar.open{width:var(--ai-side-w);border-left-color:var(--border)}
 #aiSideResize{position:absolute;left:-6px;top:0;bottom:0;width:14px;cursor:ew-resize;z-index:10;touch-action:none}
 #aiSideResize::after{content:"";position:absolute;left:6px;top:0;bottom:0;width:2px;background:var(--border);border-radius:2px;transition:background .15s}
