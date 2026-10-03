@@ -84,19 +84,18 @@ next.srcdoc = documentText;
 
     <p>The old frame stays fully visible until the replacement has finished parsing and painting. The user perceives an instant cut, never a blank. It's a double-buffering trick as old as game rendering, applied to an iframe.</p>
 
-    <h2>Incremental updates: HTML/CSS patch in place, only JS re-runs</h2>
-    <p>Full-document rebuilds are for structural changes. For the thing you actually do 500 times a day — tweak a color, nudge a margin, fix a typo — rebuilding the whole document would reset scroll position, focus, and any JS state. So the editor sends surgical updates through <code>postMessage</code>:</p>
+    <h2>Incremental updates: CSS patches in place, HTML/JS rebuild</h2>
+    <p>Full-document rebuilds are for structural changes. For the thing you actually do 500 times a day — tweak a color, nudge a margin — rebuilding the whole document would reset scroll position, focus, and any JS state. So the editor sends surgical updates through <code>postMessage</code>:</p>
     <ul>
       <li><code>{ type: "update-css" }</code> — the new stylesheet is patched into the live document. No rebuild, no state loss.</li>
-      <li><code>{ type: "update-html" }</code> — same treatment for markup edits.</li>
-      <li><code>{ type: "eval" }</code> — JavaScript changes are re-evaluated inside the preview context.</li>
+      <li><code>{ type: "eval" }</code> — the console REPL evaluates commands inside the preview context.</li>
     </ul>
-    <p>No bundler sits anywhere in this path. Your <code>&lt;script&gt;</code> runs as your script — no transpilation, no module graph, no dev-server transform. That's a deliberate scope decision: NitroIDE is a frontend preview, not a build farm. What you type is what runs, which is exactly why the feedback loop feels instant.</p>
+    <p>HTML and JavaScript edits take the full rebuild path instead. Markup <em>used</em> to patch <code>document.body.innerHTML</code> in place, but that orphaned any DOM references the page's own scripts had cached — a clock's <code>getElementById</code> handles, for example — freezing live widgets on every keystroke. A clean rebuild is the only correct behavior for structural changes.</p>
 
     <div class="pro-tip" style="border-color: rgba(0, 229, 255, 0.3); background: rgba(0, 229, 255, 0.05);">
       <i class="ph-fill ph-lightning" style="color: #00e5ff;"></i>
       <div>
-        <p><strong>Why incremental matters:</strong> a full rebuild is cheap for the machine but expensive for <em>you</em> — it resets scroll, focus, and runtime state. Patching CSS and HTML in place keeps your context alive while you iterate.</p>
+        <p><strong>Why incremental matters:</strong> a full rebuild is cheap for the machine but expensive for <em>you</em> — it resets scroll, focus, and runtime state. Patching CSS in place keeps your context alive while you iterate on styles.</p>
       </div>
     </div>
 
