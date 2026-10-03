@@ -18,11 +18,14 @@ function injectShareButton(){const e=document.querySelector(".ws-header .ws-righ
 /* ================= v30: BYOK AI ================= */
 const AI_PROVIDERS = {
   groq: { label: 'Groq', defaultModel: 'openai/gpt-oss-20b', keyUrl: 'https://console.groq.com/keys',
-    help: 'Free, no card. Fastest with the most generous free daily limit. Get a key at console.groq.com/keys.' },
+    help: 'Free, no card. Fastest with the most generous free daily limit. Get a key at console.groq.com/keys.',
+    freePick: 'openai/gpt-oss-20b' },
   gemini: { label: 'Google Gemini', defaultModel: 'gemini-2.5-flash-lite', keyUrl: 'https://aistudio.google.com/apikey',
-    help: 'Free, no card at aistudio.google.com. Never enable billing on that project or you lose the free tier.' },
+    help: 'Free, no card at aistudio.google.com. Never enable billing on that project or you lose the free tier.',
+    freePick: 'gemini-2.5-flash-lite' },
   openrouter: { label: 'OpenRouter', defaultModel: 'qwen/qwen3.8-27b:free', keyUrl: 'https://openrouter.ai/keys',
-    help: 'Free :free models at openrouter.ai/keys — 50 requests/day. Access to 300+ models. Prompts may train models unless you opt out in their privacy settings.' }
+    help: 'Free :free models at openrouter.ai/keys — 50 requests/day. Access to 300+ models. Prompts may train models unless you opt out in their privacy settings.',
+    freePick: null }
 };
 function aiGetProvider(){ try { return localStorage.getItem('nitro_ai_provider') || 'groq'; } catch(e){ return 'groq'; } }
 function aiGetKey(p){ p = p || aiGetProvider(); try { return localStorage.getItem('nitro_ai_key_' + p) || ''; } catch(e){ return ''; } }
@@ -484,8 +487,19 @@ function aiSetupKeyTyped(){
       if (detEl) { detEl.style.color = 'var(--success)'; detEl.textContent = 'Detected: ' + AI_PROVIDERS[p].label + ' — ' + models.length + ' models available.'; }
       if (selEl) {
         const cur = aiGetModel(p);
-        selEl.innerHTML = models.map(function(m){ return '<option value="' + aiEscapeHtml(m) + '"' + (m === cur ? ' selected' : '') + '>' + aiEscapeHtml(m) + '</option>'; }).join('');
+        const freePick = AI_PROVIDERS[p].freePick;
+        selEl.innerHTML = models.map(function(m){
+          const star = (freePick && m === freePick) ? ' ★ best free' : '';
+          return '<option value="' + aiEscapeHtml(m) + '"' + (m === cur ? ' selected' : '') + '>' + aiEscapeHtml(m) + aiEscapeHtml(star) + '</option>';
+        }).join('');
         if (selEl.selectedIndex < 0) selEl.selectedIndex = 0;
+        // auto-select the best free model when nothing was chosen before
+        try {
+          const savedKey = 'nitro_ai_model_' + p;
+          if (!localStorage.getItem(savedKey) && freePick && models.indexOf(freePick) >= 0) {
+            selEl.value = freePick;
+          }
+        } catch(e){}
       }
     } catch(e){
       if (detEl) { detEl.style.color = 'var(--error)'; detEl.textContent = aiFriendlyError(e) + ' — you can still type a model name manually.'; }
