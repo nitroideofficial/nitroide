@@ -298,6 +298,45 @@ async function deployToNetlify(){
 }
 
 /* ================= v30.1: AI Chat panel ================= */
+var aiSideW = 0;
+function aiSideApplyW(){
+  const sb = document.getElementById('aiSidebar');
+  if (!sb) return;
+  try {
+    const saved = parseInt(localStorage.getItem('nitro_ai_side_w') || '0', 10);
+    if (saved >= 260 && saved <= 600) aiSideW = saved;
+  } catch(e){}
+  if (aiSideW) sb.style.setProperty('--ai-side-w', aiSideW + 'px');
+}
+function aiSideInitResize(){
+  const sb = document.getElementById('aiSidebar');
+  const h = document.getElementById('aiSideResize');
+  if (!sb || !h) return;
+  aiSideApplyW();
+  let dragging = false, startX = 0, startW = 0;
+  h.addEventListener('pointerdown', function(e){
+    if (window.innerWidth <= 768) return;
+    dragging = true; startX = e.clientX;
+    startW = sb.getBoundingClientRect().width;
+    h.classList.add('dragging');
+    h.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  h.addEventListener('pointermove', function(e){
+    if (!dragging) return;
+    const w = Math.min(600, Math.max(260, Math.round(startW + (startX - e.clientX))));
+    sb.style.setProperty('--ai-side-w', w + 'px');
+    aiSideW = w;
+  });
+  const end = function(){
+    if (!dragging) return;
+    dragging = false; h.classList.remove('dragging');
+    try { localStorage.setItem('nitro_ai_side_w', String(aiSideW)); } catch(e){}
+  };
+  h.addEventListener('pointerup', end);
+  h.addEventListener('pointercancel', end);
+}
+try { document.addEventListener('DOMContentLoaded', aiSideInitResize); } catch(e){}
 function aiToggleSidebar(force){
   const sb = document.getElementById('aiSidebar');
   const bd = document.getElementById('aiSidebarBackdrop');
@@ -365,6 +404,16 @@ try {
         if (ed) aiLastEditor = ed;
       }
     } catch(e){}
+try {
+  const aiPanelMap = [['htmlPanel','htmlMonaco'],['cssPanel','cssMonaco'],['jsPanel','jsMonaco']];
+  aiPanelMap.forEach(function(pair){
+    const p = document.getElementById(pair[0]);
+    if (!p) return;
+    p.addEventListener('pointerdown', function(){
+      try { const ed = window[pair[1]]; if (ed) aiLastEditor = ed; } catch(e){}
+    });
+  });
+} catch(e){}
   });
 } catch(e){}
 function aiDetectProvider(key){
