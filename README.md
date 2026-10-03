@@ -49,13 +49,12 @@ No installs. No backend. No delays.
 
 ---
 
-## 🆕 What's New — v26 (October 2026)
+## 🆕 What's New — v27 (October 2026)
 
-* 📨 **Self-hosted form backend** — contact & feedback now run on a Cloudflare Worker; no third-party form service sees your messages
-* 📊 **Private admin dashboard** — live stats, submission archive, CSV export, search, delete & reply
-* 📎 **Contact attachments** — up to 3 files (3 MB each) with your message
-* 🗣️ **"How did you hear about us?"** — optional survey on feedback + contact, so word-of-mouth is visible
-* 🔒 **Security** — branch protection on the repo, report-only CSP observing every page
+* ⌨️ **Command Palette in the options menu** — was Ctrl+K-only, now one tap away on touchscreens
+* 📲 **PWA install flow** — prompt moved to the header; new "Install App" menu item guides iOS users
+* 📐 **No more overflowing popups** — palette and options menu always fit the viewport and scroll internally
+* 🔍 **No iOS zoom jump** — palette search is 16px on mobile so Safari doesn't auto-zoom
 
 Full details: https://nitroide.com/changelog.html
 

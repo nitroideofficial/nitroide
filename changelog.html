@@ -91,11 +91,28 @@
 
   <div class="timeline">
 
-    <!-- THE NEW V26 UPDATE -->
+    <!-- THE NEW V27 UPDATE -->
     <div class="log-entry">
       <div class="log-dot"></div>
       <span class="log-date">October 2026</span>
-      <h2 class="log-version">v26 <span class="log-badge">The Creator Backend Update</span></h2>
+      <h2 class="log-version">v27 <span class="log-badge">The Mobile Editor Update</span></h2>
+      <div class="log-content">
+        <p class="changelog-desc">A mobile pass over the workspace: the command palette is now reachable on touchscreens, the PWA install flow is cleaner, and popups stop spilling past the screen edge.</p>
+        <ul>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Command Palette in the options menu:</strong> the palette was Ctrl+K-only and unreachable on touchscreens — it's now one tap away in the Prefs menu.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> <strong>PWA install flow:</strong> the install prompt moved from a floating button into the workspace header, and a new "Install App" menu item guides iOS users through Share → Add to Home Screen.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">FIX</span> <strong>Palette viewport overflow:</strong> the command palette used mismatched viewport units and spilled past the bottom edge on phones and short desktop windows — it now always fits, with the list scrolling internally.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">FIX</span> <strong>Options menu overflow:</strong> the Prefs dropdown had no height limit and ran off-screen on shorter windows — it now caps at the viewport height and scrolls.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> <strong>No more iOS zoom jump:</strong> the palette search box is 16px on mobile, so Safari no longer auto-zooms on focus.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- THE NEW V26 UPDATE -->
+    <div class="log-entry">
+      <div class="log-dot dim"></div>
+      <span class="log-date">October 2026</span>
+      <h2 class="log-version dim-text">v26 <span class="log-badge dim-badge">The Creator Backend Update</span></h2>
       <div class="log-content">
         <p class="changelog-desc">NitroIDE's forms now run on a fully self-hosted backend: a Cloudflare Worker with a private submission archive, a live admin dashboard, a "how did you hear about us" survey, and file attachments on the contact page.</p>
         <ul>
