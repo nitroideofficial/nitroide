@@ -301,6 +301,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://nitroide.com/templates/countdown.html</loc>
+    <lastmod>2026-10-03</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nitroide.com/templates/link-in-bio.html</loc>
+    <lastmod>2026-10-03</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://nitroide.com/templates/clock.html</loc>
     <lastmod>2026-09-24</lastmod>
     <priority>0.7</priority>

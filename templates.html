@@ -59,6 +59,20 @@
     .tpl-open { display: inline-flex; align-items: center; gap: 8px; justify-content: center; background: var(--accent); color: var(--btn-text); font-weight: 700; padding: 12px 20px; border-radius: 999px; text-decoration: none; transition: opacity .2s, transform .2s; }
     .tpl-open:hover { opacity: .9; transform: scale(1.02); }
     .tpl-note { text-align: center; color: var(--text-muted); font-size: .9rem; max-width: 640px; margin: -50px auto 90px; padding: 0 20px; }
+
+    .tpl-thumb { display: block; margin: -28px -28px 16px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); aspect-ratio: 1200 / 630; background: #0b0e14; }
+    .tpl-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .tpl-filters { max-width: 1200px; margin: 10px auto 0; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+    .tpl-search { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 10px 18px; min-width: 260px; flex: 1; max-width: 420px; }
+    .tpl-search i { color: var(--text-muted); }
+    .tpl-search input { flex: 1; background: none; border: none; outline: none; color: var(--text); font-size: .95rem; font-family: inherit; }
+    .tpl-search input::placeholder { color: var(--text-muted); }
+    .tpl-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tpl-pill { background: var(--card); border: 1px solid var(--border); color: var(--text-muted); border-radius: 999px; padding: 10px 18px; font-size: .9rem; font-weight: 600; cursor: pointer; transition: all .2s; font-family: inherit; }
+    .tpl-pill:hover { border-color: rgba(0,229,255,.45); color: var(--text); }
+    .tpl-pill.active { background: var(--accent); color: var(--btn-text); border-color: transparent; }
+    .tpl-empty { text-align: center; color: var(--text-muted); padding: 40px 20px 90px; font-size: 1rem; }
+    @media (max-width: 640px) { .tpl-filters { flex-direction: column; align-items: stretch; } .tpl-search { max-width: none; } }
   </style>
 
   <script type="application/ld+json">
@@ -101,9 +115,20 @@
     <p>Skip the blank page. Pick a template and it opens directly in NitroIDE — HTML, CSS and JS ready to remix, 100% in your browser.</p>
   </section>
 
+
+  <div class="tpl-filters">
+    <label class="tpl-search"><i class="ph-bold ph-magnifying-glass"></i><input type="search" id="tplSearch" placeholder="Search templates..." aria-label="Search templates" autocomplete="off"></label>
+    <div class="tpl-pills" role="group" aria-label="Filter by category">
+      <button class="tpl-pill active" data-cat="all" type="button">All</button>
+      <button class="tpl-pill" data-cat="websites" type="button">Websites</button>
+      <button class="tpl-pill" data-cat="apps" type="button">Apps &amp; Tools</button>
+      <button class="tpl-pill" data-cat="experiments" type="button">Experiments</button>
+    </div>
+  </div>
+
   <section class="tpl-grid" aria-label="Template gallery">
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="websites" data-search="personal portfolio portfolio a clean single-page portfolio with hero, work grid, about and contact sections."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/portfolio.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-user"></i></div>
       <h2>Personal Portfolio</h2>
       <p class="tpl-slug">template: portfolio</p>
@@ -111,7 +136,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=portfolio">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="websites" data-search="startup landing page landing page a modern saas landing page with hero, feature cards, stats and a signup form."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/landing-page.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-rocket-launch"></i></div>
       <h2>Startup Landing Page</h2>
       <p class="tpl-slug">template: landing-page</p>
@@ -119,7 +144,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=landing-page">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="experiments" data-search="pure css sunset css art a mountain sunset scene drawn entirely with css gradients and clip-paths. toggle day/night."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/css-art.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-palette"></i></div>
       <h2>Pure CSS Sunset</h2>
       <p class="tpl-slug">template: css-art</p>
@@ -127,7 +152,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=css-art">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="experiments" data-search="target tap game mini game a tiny canvas game: click the targets before the 30-second timer runs out."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/mini-game.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-target"></i></div>
       <h2>Target Tap Game</h2>
       <p class="tpl-slug">template: mini-game</p>
@@ -135,7 +160,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=mini-game">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="experiments" data-search="tailwind via cdn tailwind demo tailwind css loaded from cdn — utility-first cards, buttons and a counter."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/tailwind-demo.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-wind"></i></div>
       <h2>Tailwind via CDN</h2>
       <p class="tpl-slug">template: tailwind-demo</p>
@@ -143,7 +168,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=tailwind-demo">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="experiments" data-search="react 18 counter react counter react 18 loaded from cdn with hooks — a working counter, no build step or jsx compiler."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/react-counter.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-atom"></i></div>
       <h2>React 18 Counter</h2>
       <p class="tpl-slug">template: react-counter</p>
@@ -151,7 +176,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=react-counter">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="apps" data-search="todo app todo app a vanilla js todo list with add, complete, delete and localstorage persistence."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/todo-app.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-check-square"></i></div>
       <h2>Todo App</h2>
       <p class="tpl-slug">template: todo-app</p>
@@ -159,7 +184,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=todo-app">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="apps" data-search="analog + digital clock clock a smooth animated analog clock face with a live digital readout."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/clock.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-clock"></i></div>
       <h2>Analog + Digital Clock</h2>
       <p class="tpl-slug">template: clock</p>
@@ -167,7 +192,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=clock">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="apps" data-search="css gradient generator gradient generator an interactive tool: pick colors and angle, preview the gradient, copy the css."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/gradient-generator.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-paint-bucket"></i></div>
       <h2>CSS Gradient Generator</h2>
       <p class="tpl-slug">template: gradient-generator</p>
@@ -175,7 +200,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=gradient-generator">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="apps" data-search="markdown previewer markdown preview type markdown on the left and watch it render as html on the right, live."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/markdown-preview.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-file-text"></i></div>
       <h2>Markdown Previewer</h2>
       <p class="tpl-slug">template: markdown-preview</p>
@@ -183,7 +208,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=markdown-preview">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="apps" data-search="countdown timer countdown an event countdown with big glowing digits — set any target date and time, persisted in localstorage."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/countdown.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-clock"></i></div>
       <h2>Countdown Timer</h2>
       <p class="tpl-slug">template: countdown</p>
@@ -191,7 +216,7 @@
       <a class="tpl-open" href="tools/codebox.html?template=countdown">Open in NitroIDE <i class="ph-bold ph-arrow-right"></i></a>
     </article>
 
-    <article class="tpl-card">
+    <article class="tpl-card" data-category="websites" data-search="link in bio link in bio a polished personal links page — avatar, name, bio, link buttons and social icons. dark, mobile-first."><span class="tpl-thumb" aria-hidden="true"><img src="assets/templates/link-in-bio.webp" alt="" loading="lazy" width="1200" height="630"></span>
       <div class="tpl-icon"><i class="ph-bold ph-globe"></i></div>
       <h2>Link in Bio</h2>
       <p class="tpl-slug">template: link-in-bio</p>
@@ -200,6 +225,8 @@
     </article>
 
   </section>
+
+  <p class="tpl-empty" id="tplEmpty" hidden>No templates match your search. Try a different keyword.</p>
 
   <p class="tpl-note">Every template is three files — <code>index.html</code>, <code>style.css</code> and <code>script.js</code> — that load straight into the editor. Remix them freely; everything runs locally in your browser.</p>
   <p class="tpl-note" style="margin-top: -60px;">Have a starter worth sharing? <a href="https://github.com/nitroideofficial/nitroide/issues/new" style="color: #00e5ff;">Submit a template</a> via a GitHub issue.</p>
@@ -210,5 +237,38 @@
 </footer>
 
 <script src="script.js" defer></script>
+
+<script>
+(function () {
+  var search = document.getElementById('tplSearch');
+  var pills = document.querySelectorAll('.tpl-pill');
+  var cards = document.querySelectorAll('.tpl-card');
+  var empty = document.getElementById('tplEmpty');
+  var cat = 'all';
+  function apply() {
+    var q = search.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function (c) {
+      var okCat = cat === 'all' || c.dataset.category === cat;
+      var okQ = !q || c.getAttribute('data-search').indexOf(q) !== -1;
+      var show = okCat && okQ;
+      c.style.display = show ? '' : 'none';
+      if (show) shown++;
+    });
+    empty.hidden = shown !== 0;
+  }
+  search.addEventListener('input', apply);
+  pills.forEach(function (p) {
+    p.addEventListener('click', function () {
+      pills.forEach(function (x) { x.classList.remove('active'); });
+      p.classList.add('active');
+      cat = p.dataset.cat;
+      apply();
+    });
+  });
+})();
+</script>
+<p class="tpl-empty" id="tplEmpty" hidden>No templates match your search. Try a different keyword.</p>
+
 </body>
 </html>

@@ -49,12 +49,12 @@ No installs. No backend. No delays.
 
 ---
 
-## 🆕 What's New — v27 (October 2026)
+## 🆕 What's New — v28 (October 2026)
 
-* ⌨️ **Command Palette in the options menu** — was Ctrl+K-only, now one tap away on touchscreens
-* 📲 **PWA install flow** — prompt moved to the header; new "Install App" menu item guides iOS users
-* 📐 **No more overflowing popups** — palette and options menu always fit the viewport and scroll internally
-* 🔍 **No iOS zoom jump** — palette search is 16px on mobile so Safari doesn't auto-zoom
+* 🖼️ **Browsable template gallery** — search + category filters, live preview thumbnails on every card
+* 🔗 **Share dialog** — workspace title, copyable link, native share, X/WhatsApp/Telegram intents
+* 📇 **Richer link cards** — every template page unfurls with its own screenshot on social
+* 📄 **2 new template pages** — Countdown Timer and Link in Bio get full pages with live previews
 
 Full details: https://nitroide.com/changelog.html
 

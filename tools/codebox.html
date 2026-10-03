@@ -334,6 +334,27 @@
     <button id="onboardDone" style="width:100%;background:#22d3ee;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:700;color:#09090b;cursor:pointer;">Got it</button>
   </div>
 </div>
+<div class="feedback-backdrop" id="shareModal">
+  <div class="feedback-card">
+    <div class="feedback-header">
+      <h3><i class="ph-bold ph-share-network"></i> Share Workspace</h3>
+      <button onclick="toggleShareModal(false)" aria-label="Close share dialog"><i class="ph-bold ph-x"></i></button>
+    </div>
+    <div class="feedback-body">
+      <p class="feedback-desc" id="shareTitle" style="font-weight:600;color:var(--text);">Untitled workspace</p>
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <input id="shareLinkInput" readonly onclick="this.select()" aria-label="Share link" style="flex:1;min-width:0;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text-muted);font-size:.78rem;font-family:ui-monospace,monospace;">
+        <button class="btn btn-compact primary-btn" onclick="copyShareLink()"><i class="ph-bold ph-check"></i> Copy</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button id="shareNative" class="btn btn-compact" onclick="nativeShare()" style="display:none;"><i class="ph-bold ph-share-network"></i> Share via&hellip;</button>
+        <a id="shareX" class="btn btn-compact" target="_blank" rel="noopener">Post on X</a>
+        <a id="shareWa" class="btn btn-compact" target="_blank" rel="noopener">WhatsApp</a>
+        <a id="shareTg" class="btn btn-compact" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="toast" class="toast"></div>
 <script src="../script.js"></script>
 <script>
