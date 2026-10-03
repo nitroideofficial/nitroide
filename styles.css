@@ -2217,4 +2217,13 @@ html{overflow-x:clip}
 @media (max-width: 768px) {
   /* 16px+ inputs: stops iOS Safari auto-zooming on focus */
   .workspace-body .cmd-input { font-size: 16px; }
+
+  /* Keep the command palette inside the viewport on phones.
+     The old 15vh top offset used the *large* viewport while max-height used
+     the dynamic one, so the palette spilled past the bottom edge. */
+  .cmd-palette-backdrop { padding-top: 8dvh; }
+  .cmd-palette { max-height: calc(100dvh - 8dvh - 24px); }
+  .cmd-list { max-height: calc(100dvh - 8dvh - 100px); }
+  .workspace-body .cmd-palette { max-height: calc(100dvh - 8dvh - 24px); }
+  .workspace-body .cmd-list { max-height: calc(100dvh - 8dvh - 24px - 54px); }
 }
