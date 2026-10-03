@@ -394,7 +394,7 @@ function aiChatActivate(){
   aiChatUpdateModelLabel();
   if (!aiChatBooted) {
     aiChatBooted = true;
-    aiChatAddMsg('assistant', "Hey! I'm hooked into your workspace — I can see your code and console. Ask me anything: explain code, write something new, or debug an error. What are we building?");
+    aiChatAddMsg('assistant', "Hey! I can see your open file and console \u2014 just tell me what to fix or build, no need to paste code. What are we working on?");
   }
   aiChatRenderContext();
 }
@@ -421,21 +421,31 @@ function aiChatClear(){
   aiChatBooted = false;
   aiChatActivate();
 }
+function aiCurrentFile(){
+  try {
+    const ed = aiActiveEditor();
+    if (!ed || !ed.getModel) return null;
+    let fname = 'file';
+    try {
+      if (typeof activeFiles !== 'undefined' && activeFiles) {
+        if (typeof htmlMonaco !== 'undefined' && ed === htmlMonaco) fname = activeFiles.html || 'index.html';
+        else if (typeof cssMonaco !== 'undefined' && ed === cssMonaco) fname = activeFiles.css || 'style.css';
+        else if (typeof jsMonaco !== 'undefined' && ed === jsMonaco) fname = activeFiles.js || 'script.js';
+      }
+    } catch(e){}
+    return { name: fname, editor: ed, content: ed.getModel().getValue() || '' };
+  } catch(e){ return null; }
+}
 function aiChatContext(){
   const ctx = [];
   try {
-    const ed = aiActiveEditor();
-    if (ed && ed.getSelection && !ed.getSelection().isEmpty()) {
-      const code = ed.getModel().getValueInRange(ed.getSelection());
-      if (code && code.trim()) ctx.push({ label: 'Selected code', text: code.slice(0, 4000) });
-    }
-  } catch(e){}
-  try {
-    if (typeof activeFiles !== 'undefined' && activeFiles) {
-      const ed = aiActiveEditor();
-      let fname = '';
-      try { if (ed === htmlMonaco) fname = activeFiles.html; else if (ed === cssMonaco) fname = activeFiles.css; else if (ed === jsMonaco) fname = activeFiles.js; } catch(e2){}
-      if (fname) ctx.push({ label: 'File: ' + fname, text: '' });
+    const f = aiCurrentFile();
+    if (f && f.content.trim()) {
+      ctx.push({ label: 'Open file: ' + f.name, text: f.content.slice(0, 12000) });
+      try {
+        const sel = f.editor.getSelection && !f.editor.getSelection().isEmpty() ? f.editor.getModel().getValueInRange(f.editor.getSelection()) : '';
+        if (sel && sel.trim() && sel.trim() !== f.content.trim()) ctx.push({ label: 'Selected code (focus here)', text: sel.slice(0, 4000) });
+      } catch(e2){}
     }
   } catch(e){}
   try {
@@ -473,7 +483,7 @@ function aiChatMd(text){
       const idx = aiChatRegisterCode(code);
       html += '<pre><code>' + aiEscapeHtml(code) + '</code></pre>' +
         '<div class="ai-code-actions"><button onclick="aiChatInsertCode(' + idx + ')"><i class="ph-bold ph-check"></i> Insert at cursor</button>' +
-        '<button onclick="aiChatCopyCode(' + idx + ')">Copy</button></div>';
+        '<button onclick="aiChatReplaceFile(' + idx + ')">Replace file</button><button onclick="aiChatCopyCode(' + idx + ')">Copy</button></div>';
     } else {
       html += '<p>' + aiEscapeHtml(parts[i].trim()).replace(/\n/g, '<br>') + '</p>';
     }
@@ -481,7 +491,14 @@ function aiChatMd(text){
   return html;
 }
 var aiChatCodeStore = [];
-function aiChatRegisterCode(code){ aiChatCodeStore.push(code); return aiChatCodeStore.length - 1; }
+var aiChatCodeFile = [];
+function aiChatRegisterCode(code){
+  aiChatCodeStore.push(code);
+  let fname = '';
+  try { const f = aiCurrentFile(); if (f) fname = f.name; } catch(e){}
+  aiChatCodeFile.push(fname);
+  return aiChatCodeStore.length - 1;
+}
 function aiChatInsertCode(idx){
   const code = aiChatCodeStore[idx];
   if (!code) return;
@@ -492,6 +509,27 @@ function aiChatInsertCode(idx){
     ed.focus();
     showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> Code inserted.");
   } catch(e){ showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Could not insert."); }
+}
+function aiChatReplaceFile(idx){
+  const code = aiChatCodeStore[idx];
+  const fname = aiChatCodeFile[idx];
+  if (!code) return;
+  const label = fname || 'the current file';
+  if (!confirm('Replace the entire content of ' + label + ' with this code?\nYou can undo with Ctrl+Z.')) return;
+  try {
+    let ed = null;
+    if (typeof activeFiles !== 'undefined' && activeFiles) {
+      if (typeof htmlMonaco !== 'undefined' && activeFiles.html === fname) ed = htmlMonaco;
+      else if (typeof cssMonaco !== 'undefined' && activeFiles.css === fname) ed = cssMonaco;
+      else if (typeof jsMonaco !== 'undefined' && activeFiles.js === fname) ed = jsMonaco;
+    }
+    if (!ed) ed = aiActiveEditor();
+    if (!ed) throw new Error('no editor');
+    const model = ed.getModel();
+    ed.executeEdits('ai-chat-replace', [{ range: model.getFullModelRange(), text: code }]);
+    ed.focus();
+    showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> " + aiEscapeHtml(label) + " updated.");
+  } catch(e){ showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Could not replace file."); }
 }
 function aiChatCopyCode(idx){
   const code = aiChatCodeStore[idx] || '';
@@ -528,7 +566,7 @@ async function aiChatSend(prefill){
       if (c.text) ctxText += '\n\n[' + c.label + ']\n' + c.text;
       else ctxText += '\n\n[' + c.label + ']';
     }
-    const system = 'You are an AI coding assistant inside NitroIDE, a browser IDE for HTML/CSS/JS. Be concise and practical. When giving code, put it in triple-backtick blocks. No markdown headings.';
+    const system = 'You are an AI coding assistant inside NitroIDE, a browser IDE. The user\'s open file is attached below \u2014 you CAN see their code. Never ask them to paste code. When they ask to fix or change something, just do it: output the complete corrected file in a triple-backtick code block. Be concise. No markdown headings.';
     const messages = [{ role: 'system', content: system }];
     const hist = aiChatHistory.slice(0, -1).slice(-8);
     for (const m of hist) messages.push({ role: m.role, content: m.content });
