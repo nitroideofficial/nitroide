@@ -882,8 +882,8 @@ function aiRestoreCheckpoint(idx){
     const names = Object.keys(cp.files);
     let restored = 0;
     names.forEach(function(fname){
-      const ed = aiEditorForFile(fname) || aiActiveEditor();
-      if (!ed) return;
+      const ed = aiEditorForFile(fname);
+      if (!ed) return; // never restore a snapshot into the wrong file — skip unresolvable targets
       ed.executeEdits('ai-restore', [{ range: ed.getModel().getFullModelRange(), text: cp.files[fname] }]);
       restored++;
     });
