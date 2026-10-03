@@ -62,6 +62,7 @@ function aiActiveEditor(){
       if (ed && ed.getSelection && !ed.getSelection().isEmpty()) return ed;
     }
   } catch(e){}
+  if (typeof aiLastEditor !== 'undefined' && aiLastEditor) return aiLastEditor;
   try { return (typeof jsMonaco !== 'undefined' && jsMonaco) || (typeof htmlMonaco !== 'undefined' && htmlMonaco) || null; }
   catch(e){ return null; }
 }
@@ -315,6 +316,17 @@ async function deployToNetlify(){
 /* ================= v30.1: AI Chat panel ================= */
 var aiChatHistory = [];
 var aiChatBooted = false;
+var aiLastEditor = null;
+try {
+  document.addEventListener('focusin', function(){
+    try {
+      if (typeof monaco !== 'undefined' && monaco.editor && monaco.editor.getFocusedEditor) {
+        const ed = monaco.editor.getFocusedEditor();
+        if (ed) aiLastEditor = ed;
+      }
+    } catch(e){}
+  });
+} catch(e){}
 function aiDetectProvider(key){
   key = (key || '').trim();
   if (/^gsk_/.test(key)) return 'groq';
