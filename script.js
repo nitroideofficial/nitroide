@@ -392,6 +392,7 @@ function aiChatActivate(){
   if (setup) setup.style.display = 'none';
   if (main) main.style.display = 'flex';
   aiChatUpdateModelLabel();
+  aiChatUpdateAutoBtn();
   if (!aiChatBooted) {
     aiChatBooted = true;
     aiChatAddMsg('assistant', "Hey! I can see your open file and console \u2014 just tell me what to fix or build, no need to paste code. What are we working on?");
@@ -474,6 +475,25 @@ function aiChatAddMsg(role, text){
   box.scrollTop = box.scrollHeight;
   return div;
 }
+function aiExtractBlocks(text){
+  const parts = String(text).split(/```/);
+  const blocks = [];
+  for (let i = 1; i < parts.length; i += 2) {
+    const chunk = parts[i] || '';
+    const lm = chunk.match(/^([a-zA-Z0-9+#-]+)\n/);
+    const code = chunk.replace(/^[a-zA-Z0-9+#-]+\n/, '');
+    if (code.trim()) blocks.push({ lang: lm ? lm[1].toLowerCase() : '', code: code });
+  }
+  return blocks;
+}
+function aiLangMatchesFile(lang, fname){
+  fname = (fname || '').toLowerCase();
+  if (/\.html?$/.test(fname)) return ['html','xml','markup'].indexOf(lang) >= 0;
+  if (/\.css$/.test(fname)) return lang === 'css';
+  if (/\.jsx?$/.test(fname)) return ['js','javascript','jsx','ts','typescript'].indexOf(lang) >= 0;
+  return true;
+}
+function aiAutoApplyEnabled(){ try { return localStorage.getItem('nitro_ai_autoapply') !== '0'; } catch(e){ return true; } }
 function aiChatMd(text){
   const parts = String(text).split(/```/);
   let html = '';
@@ -574,6 +594,7 @@ async function aiChatSend(prefill){
     const out = await aiChatWithHistory(messages);
     if (typing.parentNode) typing.parentNode.removeChild(typing);
     aiChatAddMsg('assistant', out);
+    aiChatMaybeAutoApply(out);
   } catch(e){
     if (typing.parentNode) typing.parentNode.removeChild(typing);
     aiChatAddMsg('assistant', 'Sorry — ' + aiFriendlyError(e));
@@ -615,6 +636,37 @@ async function aiChatWithHistory(messages){
   const t = data && data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
   if (!t) throw new Error('EMPTY');
   return t;
+}
+function aiChatMaybeAutoApply(text){
+  if (!aiAutoApplyEnabled()) return;
+  const blocks = aiExtractBlocks(text);
+  if (!blocks.length) return;
+  let big = blocks[0];
+  for (const b of blocks) if (b.code.length > big.code.length) big = b;
+  if (big.code.split('\n').length < 10 && big.code.length < 400) return;
+  const f = aiCurrentFile();
+  if (!f || !f.editor || !f.content.trim()) return;
+  if (big.lang && !aiLangMatchesFile(big.lang, f.name)) return;
+  try {
+    const model = f.editor.getModel();
+    f.editor.executeEdits('ai-chat-auto', [{ range: model.getFullModelRange(), text: big.code }]);
+    showToast("<i class='ph-bold ph-magic-wand' style='color:var(--success);margin-right:6px;'></i> AI updated " + aiEscapeHtml(f.name) + " \u2014 Ctrl+Z to undo.");
+  } catch(e){}
+}
+function aiToggleAutoApply(){
+  let on = true;
+  try {
+    on = localStorage.getItem('nitro_ai_autoapply') === '0';
+    localStorage.setItem('nitro_ai_autoapply', on ? '1' : '0');
+  } catch(e){}
+  aiChatUpdateAutoBtn();
+}
+function aiChatUpdateAutoBtn(){
+  const b = document.getElementById('aiAutoApplyBtn');
+  if (!b) return;
+  const on = aiAutoApplyEnabled();
+  b.style.opacity = on ? '1' : '.35';
+  b.title = on ? 'Auto-apply AI code: ON' : 'Auto-apply AI code: OFF';
 }
 function aiChatOpenWith(prompt){
   switchOutputTab('aichat');

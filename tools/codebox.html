@@ -275,7 +275,8 @@
               <div id="aiChatMain" class="ai-chat-main" style="display:none;">
                 <div class="ai-chat-header">
                   <span id="aiChatModelLabel" class="ai-chat-model-label"></span>
-                  <div style="display:flex;gap:6px;">
+                  <div style="display:flex;gap:6px;align-items:center;">
+                    <button id="aiAutoApplyBtn" class="btn btn-compact btn-outline" onclick="aiToggleAutoApply()" title="Auto-apply AI code: ON" style="border:none;padding:4px;"><i class="ph-bold ph-magic-wand"></i></button>
                     <button class="btn btn-compact btn-outline" onclick="aiChatShowSetup()" title="Change key / model" style="border:none;padding:4px;"><i class="ph-bold ph-faders"></i></button>
                     <button class="btn btn-compact btn-outline" onclick="aiChatClear()" title="Clear chat" style="border:none;padding:4px;"><i class="ph-bold ph-trash"></i></button>
                   </div>
