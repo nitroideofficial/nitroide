@@ -2395,3 +2395,6 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
 .ai-key-row button{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:.75rem;padding:2px 4px}
 .ai-key-row button:hover{color:var(--error)}
 .ai-key-row.active{border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.06)}
+.ai-privacy-note{display:flex;gap:8px;align-items:flex-start;font-size:.74rem;color:var(--text-muted);background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.2);border-radius:8px;padding:9px 11px;margin:0 0 14px;line-height:1.5}
+.ai-privacy-note i{color:#00e5ff;font-size:.9rem;flex:none;margin-top:2px}
+.ai-privacy-note b{color:var(--text)}
