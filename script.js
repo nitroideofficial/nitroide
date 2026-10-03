@@ -781,11 +781,14 @@ function aiEditCardHtml(editIdx){
   edits.forEach(function(e){ files[e.file] = (files[e.file] || 0) + 1; });
   const summary = Object.keys(files).map(function(f){ return files[f] + ' \u00d7 ' + f; }).join(', ');
   const warnHtml = warns.length ? '<div class="ai-editcard-warns">' + warns.map(function(w){ return '<div class="ai-editcard-warn"><i class="ph-bold ph-warning"></i> ' + aiEscapeHtml(w) + '</div>'; }).join('') + '</div>' : '';
+  const applyBtn = warns.length
+    ? '<button class="apply" disabled style="opacity:.4;cursor:not-allowed;" title="Resolve the warnings above before applying">Apply</button>'
+    : '<button class="apply" onclick="aiApplyEditSet(' + editIdx + ')" title="Apply these edits">Apply</button>';
   return '<div class="ai-editcard"><div class="ai-editcard-head"><i class="ph-bold ph-magic-wand" style="color:#00e5ff;"></i>' +
     '<span><b>' + edits.length + ' surgical edit' + (edits.length > 1 ? 's' : '') + '</b> <span style="opacity:.65;font-weight:400;">' + aiEscapeHtml(summary) + '</span></span>' +
     '<span class="spacer"></span>' +
     '<button onclick="aiDiffOpenEdits(' + editIdx + ')" title="Preview changes">Diff</button>' +
-    '<button class="apply" onclick="aiApplyEditSet(' + editIdx + ')" title="Apply these edits">Apply</button></div>' +
+    applyBtn + '</div>' +
     warnHtml +
     '<div class="ai-editcard-list">' +
     edits.map(function(e, i){
@@ -799,8 +802,10 @@ function aiChatMd(text){
   // surgical edit blocks -> edit cards
   const edits = aiParseEdits(text);
   let editCardHtml = '';
+  aiLastEditIdx = -1;
   if (edits.length) {
     const editIdx = aiRegisterEdits(edits, aiValidateEdits(text, edits));
+    aiLastEditIdx = editIdx;
     editCardHtml = aiEditCardHtml(editIdx);
     text = text.replace(/<<<EDIT:[^>]+>>>\s*<<<FIND>>>[\s\S]*?<<<REPLACE>>>[\s\S]*?<<<END>>>/g, '').trim();
   }
@@ -1130,7 +1135,9 @@ function aiChatMaybeAutoApply(text){
   const edits = aiParseEdits(text);
   if (edits.length) {
     const warns = aiValidateEdits(text, edits);
-    const previews = aiPreviewEdits(aiRegisterEdits(edits, warns));
+    // reuse the card's registration when this is the just-rendered response (avoids double registration)
+    const editIdx = (typeof aiLastEditIdx !== 'undefined' && aiLastEditIdx >= 0) ? aiLastEditIdx : aiRegisterEdits(edits, warns);
+    const previews = aiPreviewEdits(editIdx);
     if (warns.length) return; // never auto-apply suspicious output — user reviews via card
     if (previews && previews.length && previews.every(function(p){ return p.failCount === 0; })) {
       try {
@@ -1138,8 +1145,8 @@ function aiChatMaybeAutoApply(text){
         const names = [];
         let totalOk = 0;
         previews.forEach(function(prev){
-          const ed = aiEditorForFile(prev.file) || aiActiveEditor();
-          if (!ed) return;
+          const ed = aiEditorForFile(prev.file);
+          if (!ed) return; // never guess the target — same rule as manual Apply
           ed.executeEdits('ai-chat-auto', [{ range: ed.getModel().getFullModelRange(), text: prev.modified }]);
           names.push(prev.file);
           totalOk += prev.okCount;
@@ -1187,6 +1194,13 @@ function aiChatUpdateAutoBtn(){
 }
 var aiDiffEditor = null;
 var aiDiffIdx = -1;
+var aiDiffModels = []; // monaco text models owned by the diff modal — disposed on close/switch
+function aiDiffDisposeModels(){
+  try {
+    aiDiffModels.forEach(function(m){ try { if (m && m.dispose) m.dispose(); } catch(e){} });
+  } catch(e){}
+  aiDiffModels = [];
+}
 function aiDiffLang(fname){
   fname = (fname || '').toLowerCase();
   if (/\.html?$/.test(fname)) return 'html';
@@ -1209,9 +1223,11 @@ function aiDiffOpen(codeIdx){
       const el = document.getElementById('aiDiffEditor');
       if (!el) return;
       if (aiDiffEditor) { aiDiffEditor.dispose(); aiDiffEditor = null; }
+      aiDiffDisposeModels();
       const lang = aiDiffLang(fname);
       const origModel = monaco.editor.createModel(original, lang);
       const modModel = monaco.editor.createModel(code, lang);
+      aiDiffModels.push(origModel, modModel);
       aiDiffEditor = monaco.editor.createDiffEditor(el, {
         theme: document.documentElement.classList.contains('light-mode') ? 'vs' : 'vs-dark',
         renderSideBySide: window.innerWidth > 700,
@@ -1253,13 +1269,17 @@ function aiDiffRenderFile(i){
     const el = document.getElementById('aiDiffEditor');
     if (!el) return;
     if (aiDiffEditor) { aiDiffEditor.dispose(); aiDiffEditor = null; }
+    aiDiffDisposeModels();
     const lang = aiDiffLang(prev.file);
+    const origModel = monaco.editor.createModel(prev.original, lang);
+    const modModel = monaco.editor.createModel(prev.modified, lang);
+    aiDiffModels.push(origModel, modModel);
     aiDiffEditor = monaco.editor.createDiffEditor(el, {
       theme: document.documentElement.classList.contains('light-mode') ? 'vs' : 'vs-dark',
       renderSideBySide: window.innerWidth > 700,
       readOnly: true, automaticLayout: true, scrollBeyondLastLine: false, minimap: { enabled: false }
     });
-    aiDiffEditor.setModel({ original: monaco.editor.createModel(prev.original, lang), modified: monaco.editor.createModel(prev.modified, lang) });
+    aiDiffEditor.setModel({ original: origModel, modified: modModel });
     const st = document.getElementById('aiDiffStats');
     if (st) st.textContent = prev.okCount + ' of ' + prev.total + ' edits found their target' + (prev.failCount ? ' (' + prev.failCount + ' not found)' : '');
   } catch(e){}
@@ -1278,6 +1298,7 @@ function aiDiffClose(){
   const m = document.getElementById('aiDiffModal');
   if (m) m.classList.remove('active');
   try { if (aiDiffEditor) { aiDiffEditor.dispose(); aiDiffEditor = null; } } catch(e){}
+  aiDiffDisposeModels();
   aiDiffIdx = -1;
   aiDiffEditIdx = -1;
   aiDiffPreviews = [];
@@ -1318,6 +1339,7 @@ try {
 } catch(e){}
 var aiEditStore = [];
 var aiEditWarnStore = {};
+var aiLastEditIdx = -1; // index registered by the most recent aiChatMd render (reused by auto-apply)
 function aiParseEdits(text){
   const edits = [];
   const re = /<<<EDIT:([^>]+)>>>\s*<<<FIND>>>([\s\S]*?)<<<REPLACE>>>([\s\S]*?)<<<END>>>/g;
@@ -1412,7 +1434,7 @@ function aiPreviewEdits(editIdx){
   });
   return Object.keys(byFile).map(function(fname){
     const f = byFile[fname];
-    const ed = aiEditorForFile(fname) || aiActiveEditor();
+    const ed = aiEditorForFile(fname);
     const original = ed ? ed.getModel().getValue() : '';
     const res = aiApplyEditsToContent(original, f);
     return { file: fname, original: original, modified: res.content,
@@ -1422,14 +1444,23 @@ function aiPreviewEdits(editIdx){
 function aiApplyEditSet(editIdx){
   const edits = aiEditStore[editIdx] || [];
   if (!edits.length) return;
+  const warns = aiEditWarnStore[editIdx] || [];
+  if (warns.length) {
+    // same rule as auto-apply: never apply warned output — user must review/regenerate first
+    aiChatAddMsg('assistant', '<div class="ai-statuscard warn">'
+      + '<div class="ai-statuscard-head"><i class="ph-bold ph-warning-circle"></i><b>Apply refused</b></div>'
+      + '<div class="ai-statuscard-row"><span>' + aiEscapeHtml(warns[0]) + (warns.length > 1 ? ' (+' + (warns.length - 1) + ' more)' : '')
+      + ' \u2014 resolve the warnings or ask the AI to regenerate before applying.</span></div></div>', true);
+    return;
+  }
   const byFile = {};
   edits.forEach(function(e){ (byFile[e.file] = byFile[e.file] || []).push(e); });
   const cpIdx = aiCheckpoint('surgical edits');
   const rows = [];
   Object.keys(byFile).forEach(function(fname){
     try {
-      const ed = aiEditorForFile(fname) || aiActiveEditor();
-      if (!ed) { rows.push({ file: fname, ok: 0, total: byFile[fname].length, fail: byFile[fname].length, err: 'no editor' }); return; }
+      const ed = aiEditorForFile(fname);
+      if (!ed) { rows.push({ file: fname, ok: 0, total: byFile[fname].length, fail: byFile[fname].length, err: 'target file could not be resolved \u2014 refused to guess' }); return; }
       const model = ed.getModel();
       const res = aiApplyEditsToContent(model.getValue(), byFile[fname]);
       ed.executeEdits('ai-surgical', [{ range: model.getFullModelRange(), text: res.content }]);
