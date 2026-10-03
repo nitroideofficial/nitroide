@@ -2,6 +2,14 @@
 
 > NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no server, no installation.
 
+## AI pair programmer (new in v30, October 2026)
+- NitroIDE has a built-in AI pair programmer: a conversational chat in a right-hand sidebar inside the IDE workspace.
+- **Bring your own key (BYOK):** works with Groq, Gemini, OpenRouter, and OpenAI. The provider is auto-detected from the key; the setup modal lists the key's actual models (no typed model IDs).
+- **Privacy:** the browser talks directly to the chosen AI provider. API keys are stored in the browser's own localStorage and are never sent to NitroIDE servers — there is no NitroIDE AI backend or proxy.
+- **Smart file selection:** the AI sees the attached files (index.html, style.css, script.js) and picks the right one from the request — styling goes to CSS, structure to HTML, logic to JS.
+- **Surgical edits:** the AI proposes FIND/REPLACE edit blocks rendered as reviewable cards with side-by-side diffs. Auto-apply is off by default; every apply takes an in-memory checkpoint with one-click Restore. Ambiguous or unknown edit targets are refused rather than guessed.
+- **Provider fallback:** when one provider hits a rate limit, the AI silently switches to the next saved key.
+
 ## Key pages
 - [NitroIDE home](https://nitroide.com/) — product overview and live editor
 - [Open workspace](https://nitroide.com/tools/codebox.html) — the browser IDE itself
@@ -37,7 +45,7 @@
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.
-- Privacy: fully client-side; your code stays in your browser and is never sent to NitroIDE servers. No analytics, no ads, no tracking. (Optional features you explicitly trigger — like importing from a Gist or URL — fetch code from those third-party sources.)
+- Privacy: fully client-side; your code stays in your browser and is never sent to NitroIDE servers. Analytics is Google Analytics 4 only; no other telemetry. (Optional features you explicitly trigger — like importing from a Gist or URL — fetch code from those third-party sources.)
 - Offline: works offline after first load (PWA + service worker).
 - Sharing: the Share button generates a `?code=` link containing the compressed workspace.
 - Embedding: append `?embed=1` to the workspace URL for a chromeless embed.

@@ -75,7 +75,7 @@
     "softwareVersion": "30",
     "isAccessibleForFree": true,
     "browserRequirements": "Requires a modern browser with JavaScript enabled",
-    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, offline support, and a built-in AI pair-programmer for HTML, CSS, and JavaScript.",
     "image": "https://nitroide.com/og-banner.png",
     "screenshot": "https://nitroide.com/og-banner.png",
     "featureList": [
@@ -84,7 +84,9 @@
       "Instant live preview",
       "Local code execution",
       "ZIP export",
-      "Offline-ready browser workspace"
+      "Offline-ready browser workspace",
+      "Built-in AI pair-programmer (bring your own key: Groq, Gemini, OpenRouter, OpenAI)",
+      "Surgical AI code edits with diff preview and one-click restore"
     ],
     "author": {
       "@type": "Person",
@@ -113,6 +115,47 @@
       "https://github.com/nitroideofficial/nitroide",
       "https://x.com/trynitroide",
       "https://www.instagram.com/nitroideofficial/"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does NitroIDE have AI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Since v30 (October 2026), NitroIDE includes a built-in AI pair-programmer: a conversational chat in a sidebar inside the IDE that can explain code, generate code, and make surgical find/replace edits with side-by-side diff previews."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which AI providers does NitroIDE support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "NitroIDE uses a bring-your-own-key model supporting Groq, Gemini, OpenRouter, and OpenAI. The provider is auto-detected from your key, and the setup modal lists your key's actual models."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does NitroIDE store my AI API key on its servers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Your API key is stored in your own browser's localStorage and your browser talks directly to the AI provider. NitroIDE has no AI backend or proxy, so your key never touches NitroIDE servers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is NitroIDE free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. NitroIDE is 100% free with no account required and no paywall. The AI pair-programmer uses your own provider API keys, many of which offer free tiers (Groq, Gemini, and OpenRouter all have free options)."
+        }
+      }
     ]
   }
   </script>

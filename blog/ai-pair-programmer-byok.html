@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises | NitroIDE</title>
+  <meta name="title" content="NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises">
+  <meta name="description" content="How NitroIDE's v30 AI pair programmer works: bring-your-own-key privacy (Groq, Gemini, OpenRouter, OpenAI), surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes instead of guessing.">
+  <meta name="keywords" content="AI pair programmer, browser IDE with AI, BYOK AI, Groq, Gemini, OpenRouter, AI code assistant privacy, surgical code edits, NitroIDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#00e5ff">
+  <link rel="canonical" href="https://nitroide.com/blog/ai-pair-programmer-byok.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/ai-pair-programmer-byok.html">
+  <meta property="og:title" content="NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises">
+  <meta property="og:description" content="How NitroIDE's v30 AI pair programmer works: bring-your-own-key privacy (Groq, Gemini, OpenRouter, OpenAI), surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes instead of guessing.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-03-ai-pair-programmer.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="NitroIDE v30 AI pair programmer: chat on the left, surgical diff on the right">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-10-03">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/ai-pair-programmer-byok.html">
+  <meta name="twitter:title" content="NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises">
+  <meta name="twitter:description" content="How NitroIDE's v30 AI pair programmer works: bring-your-own-key privacy (Groq, Gemini, OpenRouter, OpenAI), surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes instead of guessing.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-03-ai-pair-programmer.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-03-ai-pair-programmer.webp","headline":"NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises","description":"How NitroIDE's v30 AI pair programmer works: bring-your-own-key privacy (Groq, Gemini, OpenRouter, OpenAI), surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes instead of guessing.","author":{"@type":"Organization","name":"NitroIDE"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/ai-pair-programmer-byok.html","datePublished":"2026-10-03","dateModified":"2026-10-03"}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #00e5ff; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">AI • <time datetime="2026-10-03">October 3, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises</h1>
+
+    <p>The most useful bug report I got this year was one sentence long: <em>"AI always add and change things in script."</em> Not a stack trace, not a repro — just the lived experience of every developer who has watched an AI assistant confidently rewrite the wrong file, touch code it wasn't asked about, and leave no way back.</p>
+
+    <p>So for v30 I rebuilt NitroIDE's AI pair programmer from the ground up around a single design rule: <strong>the AI never touches what you didn't ask for, and everything it does touch is reviewable and reversible.</strong> Here's how it works — the privacy architecture, the surgical edit system, and the trust controls that refuse to guess.</p>
+
+    <h2>The privacy architecture: your key, your provider, our servers see nothing</h2>
+    <p>NitroIDE has no AI backend. There is no proxy, no relay, no "AI service" of ours sitting in the middle. When you paste an API key, your browser talks directly to the provider you chose:</p>
+    <p style="text-align: center; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; margin: 24px 0;">you → NitroIDE (browser) → Groq / Gemini / OpenRouter / OpenAI</p>
+    <p>Keys live in your browser's own <code>localStorage</code>, namespaced per provider, and are never sent to NitroIDE servers — there is simply no code path that does it. Groq, OpenRouter, and OpenAI go out as Bearer headers; Gemini uses the <code>?key=</code> query parameter because that's what Google's API requires (and the setup UI says so openly).</p>
+    <p>Bring your own key also means bring your own billing: Groq, Gemini, and OpenRouter all have free tiers, so the AI pair programmer costs nothing to try. The setup modal auto-detects the provider from your key and lists that key's actual models — no typed model IDs to get wrong.</p>
+
+    <h2>Surgical edits, not full-file rewrites</h2>
+    <p>The old pattern — AI dumps an entire rewritten file, you squint at it, you accept, something subtle breaks — is gone. The v30 AI is taught to respond with <strong>FIND/REPLACE edit blocks</strong>: small, anchored changes that get parsed into reviewable edit cards, each with a side-by-side diff.</p>
+    <p>Matching is whitespace-tolerant (fuzzy), so the AI doesn't fail because your indentation differs by a space. And auto-apply only kicks in when <em>every</em> proposed edit matches cleanly — one ambiguous block and the whole batch waits for your eyes. You Apply per card, or all at once, after reading the diffs.</p>
+
+    <h2>Trust controls: checkpoints, refusal, and no wrong-file edits</h2>
+    <p>This is the part the one-sentence bug report paid for:</p>
+    <ul>
+      <li><strong>Auto-apply is off by default.</strong> It's an opt-in wand toggle, not a default. Nothing changes in your files until you say so.</li>
+      <li><strong>Every apply takes a checkpoint.</strong> An in-memory snapshot of all attached files is taken before any edit lands, with a one-click Restore. Experiment freely; undo is always one tap away.</li>
+      <li><strong>Ambiguous edits are refused, not guessed.</strong> If an edit target can't be matched, manual Apply refuses it with a validation warning instead of applying something half-right.</li>
+      <li><strong>No wrong-file edits.</strong> The AI sees all attached files and picks the right one from your request — styling goes to <code>style.css</code>, structure to <code>index.html</code>, logic to <code>script.js</code>. There is no "active editor" fallback that can silently dump a change into whatever file you last clicked.</li>
+      <li><strong>Edit-intent gating.</strong> The AI doesn't get file context or edit powers until your message actually asks for a code change. Questions get answers, not diffs.</li>
+    </ul>
+    <p>The engine behind this passed 70+ adversarial tests: ambiguous matches blocked, malicious output validated, XSS escaped, checkpoints covering all files. The full hardening notes are in the <a href="https://nitroide.com/changelog.html" style="color: #00e5ff; text-decoration: none;">v30 changelog entry</a>.</p>
+
+    <h2>The details that make it feel instant</h2>
+    <ul>
+      <li><strong>Provider fallback:</strong> when one provider hits a rate limit, the AI silently switches to your next saved key. No dead ends mid-thought.</li>
+      <li><strong>30-second timeouts with a real Stop button:</strong> the send button becomes Stop during generation, and cancelling never triggers a pointless fallback retry.</li>
+      <li><strong>Removable context chips:</strong> you see exactly which files the AI can see, and you can detach any of them.</li>
+      <li><strong>Resizable sidebar:</strong> drag it from 260 to 600px; your width is remembered.</li>
+    </ul>
+
+    <h2>Try it</h2>
+    <p>Open the workspace, hit the AI button in the sidebar, paste a Groq, Gemini, OpenRouter, or OpenAI key, and ask it to change something small — a button color, a layout tweak. Watch it pick the right file, show you the diff, and wait for your approval. That pause, that diff, that Restore button: that's the whole design.</p>
+
+    <p>NitroIDE is free, no signup, and your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-03" style="color: #00e5ff; text-decoration: none;">nitroide.com</a></p>
+
+    <p>⭐ If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #00e5ff; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="0ms-preview-srcdoc-postmessage-no-bundler.html" style="color: #00e5ff; text-decoration: none; font-weight: 500;">The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage</a></li>
+      <li><a href="zero-latency-local-browser-ide-architecture.html" style="color: #00e5ff; text-decoration: none; font-weight: 500;">Zero-Latency Local Browser IDE Architecture</a></li>
+      <li><a href="postmessage-sanitizer.html" style="color: #00e5ff; text-decoration: none; font-weight: 500;">The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

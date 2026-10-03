@@ -1,5 +1,20 @@
 [
   {
+    "SLUG": "ai-pair-programmer-byok",
+    "META_TITLE": "NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises | NitroIDE",
+    "META_DESC": "How NitroIDE's v30 AI pair programmer works: bring-your-own-key privacy (Groq, Gemini, OpenRouter, OpenAI), surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes instead of guessing.",
+    "KEYWORDS": "AI pair programmer, browser IDE with AI, BYOK AI, Groq, Gemini, OpenRouter, AI code assistant privacy, surgical code edits, NitroIDE",
+    "THEME_COLOR": "#00e5ff",
+    "CATEGORY": "AI",
+    "DATE": "OCTOBER 2026",
+    "H1_TITLE": "NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises",
+    "CONTENT": "<p>The most useful bug report I got this year was one sentence: 'AI always add and change things in script.' So for v30 I rebuilt NitroIDE's AI pair programmer around one rule: the AI never touches what you didn't ask for. Here's the BYOK privacy architecture, the surgical find/replace edit system, and the trust controls that refuse to guess.</p>",
+    "CTA_TITLE": "Try the AI Pair Programmer",
+    "CTA_DESC": "Open the workspace, paste a Groq, Gemini, OpenRouter, or OpenAI key, and ask for one small change.",
+    "CTA_LINK": "../tools/codebox.html",
+    "CTA_ICON": "ph-duotone ph-magic-wand"
+  },
+  {
     "SLUG": "postmessage-sanitizer",
     "META_TITLE": "The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools | NitroIDE",
     "META_DESC": "How NitroIDE renders untrusted postMessage payloads from a preview iframe without XSS: token-based serialization, an allowlist renderer, strict field validation, and an attacker-tested Node harness. A copyable recipe.",

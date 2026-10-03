@@ -46,14 +46,17 @@ No installs. No backend. No delays.
 * 📱 Device preview (responsive testing)
 * 🔒 100% client-side privacy
 * 💾 Export as ZIP or single HTML
+* 🤖 Built-in AI pair programmer — bring your own key (Groq, Gemini, OpenRouter, OpenAI); surgical find/replace edits with diff preview and one-click restore
 
 ---
 
-## 🆕 What's New — v30 (October 2026)
+## 🆕 What's New — v30 "The AI Update" (October 2026)
 
-* 🤖 **BYOK AI** — paste your own Groq, Gemini, or OpenRouter key (free tiers work) for explain-code, generate-code, and fix-from-console, all called directly from your browser
-* 🚀 **One-click deploy** — publish your workspace to GitHub Pages or Netlify from inside the IDE
-* ☕ **Support NitroIDE** — Ko-fi card on the homepage
+* 🤖 **AI pair programmer, rebuilt** — conversational chat sidebar: smart file picker (CSS fixes go to CSS, structure to HTML, logic to JS), surgical find/replace edits with diff previews
+* 🔑 **Bring your own key** — Groq, Gemini, OpenRouter, and OpenAI with auto-detection; keys stay in your browser, never touch our servers
+* 🔄 **Auto provider fallback** — rate-limited? The AI silently switches to your next saved key
+* 🛡️ **Trust controls** — auto-apply off by default, checkpoint + one-click Restore before every apply, ambiguous edits refused instead of guessed
+* 🧪 **Hardened engine** — 70+ adversarial tests: ambiguous matches blocked, malicious output validated, XSS escaped
 
 Full details: https://nitroide.com/changelog.html
 
