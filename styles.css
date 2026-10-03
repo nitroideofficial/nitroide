@@ -2217,38 +2217,4 @@ html{overflow-x:clip}
 @media (max-width: 768px) {
   /* 16px+ inputs: stops iOS Safari auto-zooming on focus */
   .workspace-body .cmd-input { font-size: 16px; }
-
-  /* Floating Code/Preview quick switch, thumb-reachable */
-  .workspace-body .mobile-view-toggle {
-    position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-    z-index: 9000;
-    gap: 2px;
-    padding: 3px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--card) 92%, transparent);
-    border: 1px solid var(--border);
-    box-shadow: 0 8px 28px rgba(0,0,0,.45);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-  .workspace-body .mvt-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border: 0;
-    background: transparent;
-    color: var(--text-muted);
-    font-size: 13px;
-    font-weight: 700;
-    font-family: inherit;
-    padding: 9px 18px;
-    min-height: 40px;
-    border-radius: 999px;
-    cursor: pointer;
-  }
-  .workspace-body .mvt-btn i { font-size: 15px; }
-  .workspace-body .mvt-btn.active { background: #00e5ff; color: #000; }
 }

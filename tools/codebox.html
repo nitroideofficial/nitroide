@@ -82,9 +82,6 @@
           <button class="ws-btn ws-icon-btn" onclick="toggleSidebar('toggle')" title="Toggle Explorer" aria-label="Toggle Explorer">
             <i class="ph-bold ph-sidebar-simple"></i>
           </button>
-          <button class="ws-btn ws-icon-btn" onclick="toggleCmdK()" title="Command palette (Ctrl+K)" aria-label="Command palette">
-            <i class="ph-bold ph-command"></i>
-          </button>
           <a href="../index.html" class="ws-logo" title="Back to Home">
             <img src="../logo/logo_white.png" alt="NitroIDE" class="logo-dark">
             <img src="../logo/logo_black.png" alt="NitroIDE" class="logo-light">
@@ -259,12 +256,6 @@
         </div>
       </div>
     </div>
-
-    <!-- v27: mobile Code/Preview quick switch (phones/tablets only via hide-on-desktop) -->
-    <div id="mobileViewToggle" class="mobile-view-toggle hide-on-desktop" role="tablist" aria-label="Switch between code and preview">
-      <button class="mvt-btn active" data-view="code" onclick="setMobileView('code')" role="tab" aria-selected="true"><i class="ph-bold ph-code"></i><span>Code</span></button>
-      <button class="mvt-btn" data-view="preview" onclick="setMobileView('preview')" role="tab" aria-selected="false"><i class="ph-bold ph-browser"></i><span>Preview</span></button>
-    </div>
   </div>
 </div>
 
@@ -345,28 +336,6 @@
 <script src="../script.js"></script>
 <script>
 // v27: mobile editor pass -----------------------------------------------
-// Mobile Code/Preview quick toggle (uses the existing layout presets).
-function setMobileView(v) {
-  v = (v === 'preview') ? 'preview' : 'code';
-  try { localStorage.setItem('nitroide_mobile_view', v); } catch (e) {}
-  document.querySelectorAll('#mobileViewToggle .mvt-btn').forEach(function (b) {
-    var on = b.getAttribute('data-view') === v;
-    b.classList.toggle('active', on);
-    b.setAttribute('aria-selected', on ? 'true' : 'false');
-  });
-  if (typeof applyLayoutPreset === 'function') applyLayoutPreset(v);
-}
-(function initMobileView() {
-  var v = 'code';
-  try { v = localStorage.getItem('nitroide_mobile_view') || 'code'; } catch (e) {}
-  function apply() {
-    if (window.innerWidth > 768) return;
-    setMobileView(v);
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
-  else apply();
-})();
-
 // PWA install: header button when installable (no floating overlap on mobile),
 // plus an Install App menu item that guides iOS users (no beforeinstallprompt there).
 let _deferredInstallPrompt = null;
