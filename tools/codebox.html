@@ -313,6 +313,12 @@
       <button onclick="closeAiSetupModal()" aria-label="Close"><i class="ph-bold ph-x"></i></button>
     </div>
     <p class="feedback-desc">Bring your own key — free tiers work. Your key stays in this browser; the AI talks directly to the provider.</p>
+    <ol class="ai-setup-steps">
+      <li><b>Get a free key</b> — <a href="https://console.groq.com/keys" target="_blank" rel="noopener">Groq</a>, <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Gemini</a> or <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a> (no card needed).</li>
+      <li><b>Paste it below</b> — the provider is detected automatically.</li>
+      <li><b>Pick a model</b> from the list, then hit <b>Save</b>.</li>
+      <li><b>Open AI Chat</b> from the top bar and just ask — it already sees your open files.</li>
+    </ol>
     <div class="feedback-body">
       <label style="font-size:.78rem;font-weight:600;">API Key</label>
       <input id="aiSetupKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste key — provider auto-detected" oninput="aiSetupKeyTyped()" style="font-family:ui-monospace,monospace;font-size:.82rem;">

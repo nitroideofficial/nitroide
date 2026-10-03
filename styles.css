@@ -2377,3 +2377,6 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
   .ai-statuscard-row{flex-wrap:wrap}
   .ai-msg .ai-codeblock pre{font-size:.72rem}
 }
+.ai-setup-steps{margin:0 0 14px;padding-left:20px;font-size:.78rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px;line-height:1.5}
+.ai-setup-steps b{color:var(--text)}
+.ai-setup-steps a{color:#00e5ff}
