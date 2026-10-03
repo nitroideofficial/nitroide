@@ -143,6 +143,7 @@
           <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="openTimeMachine()"><i class="ph-bold ph-clock-counter-clockwise"></i> Local Time Machine</button>
           <button class="dropdown-item" onclick="toggleOptions();openShareModal()"><i class="ph-bold ph-share-network"></i> Share Workspace</button>
+          <button class="dropdown-item" onclick="openDeployModal('github')"><i class="ph-bold ph-rocket-launch"></i> Deploy — Publish Site</button>
           <button class="dropdown-item" onclick="installAppHint()"><i class="ph-bold ph-download-simple"></i> Install App</button>
           <button class="dropdown-item" onclick="exportSingleFile()"><i class="ph-bold ph-file-code"></i> Export as 1-File</button>
           <button class="dropdown-item" onclick="downloadZip()"><i class="ph-bold ph-file-archive"></i> Download ZIP</button>
@@ -352,6 +353,39 @@
         <a id="shareTg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span>Telegram</span></a>
       </div>
       <button id="shareNative" class="share-native-btn" onclick="nativeShare()" style="display:none;"><i class="ph-bold ph-share-network"></i> Share via&hellip;</button>
+    </div>
+  </div>
+</div>
+<div class="feedback-backdrop" id="deployModal">
+  <div class="feedback-card" style="max-width:560px;">
+    <div class="feedback-header">
+      <h3><i class="ph-bold ph-rocket-launch"></i> Deploy — One-Click Publish</h3>
+      <button onclick="deployCloseModal()" aria-label="Close deploy"><i class="ph-bold ph-x"></i></button>
+    </div>
+    <div class="feedback-body">
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <button id="deployTabGhBtn" class="filter-btn active" onclick="deploySwitchTab('github')">GitHub Pages</button>
+        <button id="deployTabNlBtn" class="filter-btn" onclick="deploySwitchTab('netlify')">Netlify</button>
+      </div>
+      <div id="deployTabGh">
+        <p class="feedback-desc" style="font-size:.82rem;">Free hosting at <strong>username.github.io/repo</strong>. Needs a classic personal access token with the <strong>repo</strong> scope (broad — it can touch all your repos, so use a short expiry).<br><a href="https://github.com/settings/tokens/new?scopes=repo&description=NitroIDE%20deploy" target="_blank" rel="noopener" style="color:#00e5ff;">Create token &rarr;</a></p>
+        <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">GitHub Token</label>
+        <input id="ghToken" type="password" autocomplete="off" spellcheck="false" placeholder="ghp_..." style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:ui-monospace,monospace;font-size:.85rem;margin-bottom:12px;">
+        <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Repo / Site Name</label>
+        <input id="ghRepo" type="text" autocomplete="off" spellcheck="false" placeholder="my-awesome-site" style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:.9rem;margin-bottom:14px;">
+        <button id="ghDeployBtn" class="btn btn-compact primary-btn" onclick="deployToGitHub()"><i class="ph-bold ph-rocket-launch"></i> Deploy to GitHub Pages</button>
+      </div>
+      <div id="deployTabNl" style="display:none;">
+        <p class="feedback-desc" style="font-size:.82rem;">Free hosting at <strong>name.netlify.app</strong> with instant CDN. Needs a personal access token — note it has <strong>full account access</strong>, so use a short expiry and delete it after.<br><a href="https://app.netlify.com/user/applications/personal" target="_blank" rel="noopener" style="color:#00e5ff;">Create token &rarr;</a></p>
+        <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Netlify Token</label>
+        <input id="nlToken" type="password" autocomplete="off" spellcheck="false" placeholder="Paste token..." style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:ui-monospace,monospace;font-size:.85rem;margin-bottom:12px;">
+        <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Site Name (optional)</label>
+        <input id="nlSite" type="text" autocomplete="off" spellcheck="false" placeholder="leave empty for a random name" style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:.9rem;margin-bottom:14px;">
+        <button id="nlDeployBtn" class="btn btn-compact primary-btn" onclick="deployToNetlify()"><i class="ph-bold ph-rocket-launch"></i> Deploy to Netlify</button>
+      </div>
+      <div id="deployLog" style="margin-top:14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;max-height:180px;overflow-y:auto;font-family:ui-monospace,monospace;"></div>
+      <div id="deployResult"></div>
+      <p class="feedback-desc" style="font-size:.78rem;margin-top:12px;opacity:.7;">Your token is used only for this deploy and cleared from the form after. It never touches NitroIDE servers — there are none.</p>
     </div>
   </div>
 </div>
