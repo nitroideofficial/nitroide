@@ -49,11 +49,11 @@ No installs. No backend. No delays.
 
 ---
 
-## 🆕 What's New — v29 (October 2026)
+## 🆕 What's New — v30 (October 2026)
 
-* 🪶 **3.5MB lighter** — removed unused Monaco language packs, 77 unneeded editor languages, and dead icon font weights
-* ⚡ **Leaner loading** — 76 pages no longer fetch dead stylesheets; service worker precache trimmed
-* 🧹 **Dead code pruned** — unused functions removed; options-menu Share now opens the share dialog
+* 🤖 **BYOK AI** — paste your own Groq, Gemini, or OpenRouter key (free tiers work) for explain-code, generate-code, and fix-from-console, all called directly from your browser
+* 🚀 **One-click deploy** — publish your workspace to GitHub Pages or Netlify from inside the IDE
+* ☕ **Support NitroIDE** — Ko-fi card on the homepage
 
 Full details: https://nitroide.com/changelog.html
 
