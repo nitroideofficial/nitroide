@@ -1093,6 +1093,11 @@ html.light-mode .eco-stream-card:hover { border-color: rgba(0,0,0,0.2); backgrou
   color: #4b89f5;
 }
 
+.pulse-kofi {
+  background: rgba(255, 94, 91, .12);
+  color: #ff5e5b;
+}
+
 .pulse-card-content {
   min-width: 0;
   flex: 1;
