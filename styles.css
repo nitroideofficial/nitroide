@@ -2338,3 +2338,14 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
 .ai-suggest-row{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 4px}
 .ai-suggest-row button{background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.22);color:var(--text);border-radius:20px;padding:6px 12px;font-size:.72rem;cursor:pointer;font-family:inherit;transition:.15s}
 .ai-suggest-row button:hover{background:rgba(0,229,255,.14);border-color:#00e5ff}
+
+.ai-editcard{border:1px solid rgba(0,229,255,.25);border-radius:12px;overflow:hidden;margin:4px 0;background:rgba(0,229,255,.04)}
+.ai-editcard-head{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--border);font-size:.76rem}
+.ai-editcard-head .spacer{flex:1}
+.ai-editcard-head button{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:3px 10px;font-size:.7rem;cursor:pointer;font-weight:600}
+.ai-editcard-head button.apply{background:#00e5ff;border-color:#00e5ff;color:#000}
+.ai-editcard-list{padding:6px}
+.ai-editcard-item{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border-radius:8px;font-size:.72rem}
+.ai-editcard-item .n{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:rgba(0,229,255,.15);color:#00e5ff;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700}
+.ai-editcard-item .f{flex-shrink:0;font-family:ui-monospace,monospace;color:var(--text-muted);padding-top:2px}
+.ai-editcard-item code{flex:1;font-family:ui-monospace,monospace;white-space:pre-wrap;word-break:break-word;opacity:.85;line-height:1.5}
