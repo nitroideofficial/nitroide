@@ -28,16 +28,19 @@ const AI_PROVIDERS = {
     help: 'Free :free models at openrouter.ai/keys — 50 requests/day. Access to 300+ models. Prompts may train models unless you opt out in their privacy settings.',
     freePick: null,
     baseUrl: 'https://openrouter.ai/api/v1' },
-  sambanova: { label: 'SambaNova', defaultModel: 'Meta-Llama-3.3-70B-Instruct', keyUrl: 'https://cloud.sambanova.ai/apis',
-    help: 'Free tier, no card, no phone verification. OpenAI-compatible. Get a key at cloud.sambanova.ai/apis.',
-    freePick: 'Meta-Llama-3.3-70B-Instruct',
-    baseUrl: 'https://api.sambanova.ai/v1' },
   openai: { label: 'OpenAI', defaultModel: 'gpt-4o-mini', keyUrl: 'https://platform.openai.com/api-keys',
     help: 'Paid API (separate from ChatGPT Plus/Go subscription). Cheapest coding model: gpt-4o-mini.',
     freePick: null,
     baseUrl: 'https://api.openai.com/v1' }
 };
-function aiGetProvider(){ try { return localStorage.getItem('nitro_ai_provider') || 'groq'; } catch(e){ return 'groq'; } }
+function aiGetProvider(){
+  try {
+    const p = localStorage.getItem('nitro_ai_provider') || 'groq';
+    if (AI_PROVIDERS[p]) return p;
+    const next = Object.keys(AI_PROVIDERS).find(function(q){ try { return localStorage.getItem('nitro_ai_key_' + q); } catch(e){ return null; } });
+    return next || 'groq';
+  } catch(e){ return 'groq'; }
+}
 function aiGetKey(p){ p = p || aiGetProvider(); try { return localStorage.getItem('nitro_ai_key_' + p) || ''; } catch(e){ return ''; } }
 function aiGetModel(p){ p = p || aiGetProvider(); try { return localStorage.getItem('nitro_ai_model_' + p) || AI_PROVIDERS[p].defaultModel; } catch(e){ return AI_PROVIDERS[p].defaultModel; } }
 function aiSetAll(p, key, model){
@@ -455,7 +458,7 @@ function aiDetectProvider(key){
   if (/^sk-or-v1-/.test(key)) return 'openrouter';
   if (/^AIza/.test(key) || /^AQ\./.test(key)) return 'gemini';
   if (/^sk-proj-/.test(key) || /^sk-[A-Za-z0-9_\-]{20,}/.test(key)) return 'openai';
-  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(key)) return 'sambanova';
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(key)) return null; // sambanova: no browser CORS, unsupported
   return null;
 }
 async function aiFetchModels(provider, key){
