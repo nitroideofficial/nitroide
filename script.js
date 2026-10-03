@@ -723,9 +723,11 @@ var aiChatCodeFile = [];
 var aiCheckpoints = [];
 function aiCheckpoint(label){
   try {
-    const f = aiCurrentFile();
-    if (!f || !f.content) return -1;
-    aiCheckpoints.push({ file: f.name, content: f.content, time: Date.now(), label: label || 'AI edit' });
+    const all = aiAllFiles();
+    if (!all.length) return -1;
+    const snap = {};
+    all.forEach(function(f){ if (f && f.name) snap[f.name] = f.content || ''; });
+    aiCheckpoints.push({ files: snap, time: Date.now(), label: label || 'AI edit' });
     if (aiCheckpoints.length > 10) aiCheckpoints.shift();
     return aiCheckpoints.length - 1;
   } catch(e){ return -1; }
@@ -755,14 +757,19 @@ function aiEditorForFile(fname){
 }
 function aiRestoreCheckpoint(idx){
   const cp = aiCheckpoints[idx];
-  if (!cp) return;
+  if (!cp || !cp.files) return;
   try {
-    const ed = aiEditorForFile(cp.file) || aiActiveEditor();
-    if (!ed) throw new Error('no editor');
-    const model = ed.getModel();
-    ed.executeEdits('ai-restore', [{ range: model.getFullModelRange(), text: cp.content }]);
-    ed.focus();
-    showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> Restored " + aiEscapeHtml(cp.file) + ".");
+    const names = Object.keys(cp.files);
+    let restored = 0;
+    names.forEach(function(fname){
+      const ed = aiEditorForFile(fname) || aiActiveEditor();
+      if (!ed) return;
+      ed.executeEdits('ai-restore', [{ range: ed.getModel().getFullModelRange(), text: cp.files[fname] }]);
+      restored++;
+    });
+    const ed0 = aiEditorForFile(names[0]);
+    if (ed0) ed0.focus();
+    showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> Restored " + restored + " file" + (restored > 1 ? "s" : "") + ".");
   } catch(e){ showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Could not restore."); }
 }
 function aiChatRegisterCode(code){
@@ -844,10 +851,10 @@ async function aiChatSend(prefill){
       if (c.text) ctxText += '\n\n[' + c.label + ']\n' + c.text;
       else ctxText += '\n\n[' + c.label + ']';
     }
-    const system = 'You are an AI pair-programmer inside NitroIDE, a browser IDE. You can see ALL THREE of the user\'s files: index.html (page structure), style.css (styling), script.js (behavior). The one they are currently viewing is marked "Open file". Rules: '
+    const system = 'You are an AI pair-programmer inside NitroIDE, a browser IDE. You can see ALL THREE of the user\'s files: index.html (page structure), style.css (styling), script.js (behavior). No file is marked as primary — you decide purely from the task. Rules: '
       + '1. NEVER ask the user to paste code or describe their project. You already see all their code. '
       + '2. If their message is vague (hi, hello, help), say in one line what their code does, then suggest 2-3 specific things you could do with it. '
-      + '3. ALWAYS edit the file that matches the task, not just the open one: colors, layout, fonts, spacing, responsive design \u2192 style.css. Page structure, elements, text content \u2192 index.html. Click handlers, logic, bugs in behavior \u2192 script.js. If a task spans files (e.g. add a button + style it), output edit blocks for EACH file. '
+      + '3. CHOOSE THE FILE FROM THE TASK YOURSELF \u2014 never default to any file. Read the request, decide which file it belongs to, edit exactly that one: colors, layout, fonts, spacing, responsive design \u2192 style.css ONLY. Page structure, elements, text content \u2192 index.html ONLY. Click handlers, logic, bugs in behavior \u2192 script.js ONLY. If a task spans files (e.g. add a button + style it), output edit blocks for EACH file. '
       + '4. When editing code, work SURGICALLY like a senior dev: change ONLY what is needed, in the right place. NEVER rewrite the whole file. Output each change as an edit block: <<<EDIT:filename>>> then <<<FIND>>> then exact lines copied from the attached file (enough to be unique) then <<<REPLACE>>> then the new code then <<<END>>>. Use one block per change; multiple blocks allowed. FIND must match the file EXACTLY or the edit fails. '
       + '5. Only output a full triple-backtick file when creating a brand-new file from scratch. '
       + '6. COMPLETENESS CHECK: before finishing, re-read the user\'s request and verify you output edit blocks for EVERY file the task touches. If the task needs HTML+CSS+JS changes, all three files must have blocks \u2014 never silently skip a file. ' + '7. After the edit blocks, write one short line saying what changed. Keep every reply short. No markdown headings.' + 'NEVER create new files or documentation unless explicitly asked \u2014 only edit the three existing files. ';
