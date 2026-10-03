@@ -100,6 +100,10 @@
             <i class="ph-bold ph-clock-counter-clockwise"></i>
             <span class="ws-hide-mobile">History</span>
           </button>
+          <button class="ws-btn ws-icon-text-btn" onclick="aiToggleSidebar()" id="aiSidebarBtn" title="AI Chat">
+            <i class="ph-bold ph-chat-teardrop-text"></i>
+            <span class="ws-hide-mobile">AI</span>
+          </button>
           <button class="ws-btn ws-icon-text-btn" onclick="toggleOptions()" id="optionsBtn" title="Preferences">
             <i class="ph-bold ph-faders"></i>
             <span class="ws-hide-mobile">Prefs</span>
@@ -117,7 +121,7 @@
 <button class="dropdown-item hide-on-desktop" onclick="openDashboard()"><i class="ph-bold ph-kanban"></i> Project Manager</button>
 <div class="dropdown-divider hide-on-desktop"></div>
           <button class="dropdown-item" onclick="toggleOptions();toggleCmdK()"><i class="ph-bold ph-command"></i> Command Palette <span style="margin-left:auto;opacity:.5;font-size:.75rem;">Ctrl+K</span></button>
-          <button class="dropdown-item" onclick="toggleOptions();switchOutputTab('aichat');aiChatShowSetup()"><i class="ph-bold ph-faders"></i> AI Chat Setup</button>
+          <button class="dropdown-item" onclick="toggleOptions();openAiSetupModal()"><i class="ph-bold ph-faders"></i> AI Key & Model</button>
           <div class="dropdown-divider"></div>
           <label class="toggle-wrap" title="Slide-out code map">
             <div style="display:flex; gap:8px; align-items:center;"><i class="ph-bold ph-map-trifold"></i> Code Minimap</div> 
@@ -218,7 +222,6 @@
               <div class="out-tab-group">
                 <button class="out-tab active" onclick="switchOutputTab('preview', this)"><i class="ph-bold ph-browser"></i> Preview</button>
                 <button class="out-tab" onclick="switchOutputTab('console', this)"><i class="ph-bold ph-terminal"></i> Console <span id="consoleBadge" style="background:var(--error); color:white; padding:2px 6px; border-radius:10px; font-size:0.7rem; display:none;"><i class="ph-bold ph-warning"></i></span></button>
-                <button class="out-tab" onclick="switchOutputTab('aichat', this)"><i class="ph-bold ph-chat-teardrop-text"></i> AI Chat</button>
                 <button class="out-tab" onclick="switchOutputTab('state', this)"><i class="ph-bold ph-tree-structure"></i> State</button>
               </div>
               
@@ -256,42 +259,51 @@
               <div id="stateVisualizer" style="padding: 15px; overflow: auto; flex: 1;"></div>
             </div>
 
-            <div id="outAiChat" class="console-wrap">
-              <div id="aiChatSetup" class="ai-chat-setup">
-                <div class="ai-chat-setup-card">
-                  <h3><i class="ph-bold ph-chat-teardrop-text"></i> Chat with AI</h3>
-                  <p>Bring your own key — free tiers work. Your key stays in this browser, and the AI talks directly to the provider. No servers, no accounts.</p>
-                  <label>API Key</label>
-                  <input id="aiChatKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your key — we detect the provider" oninput="aiChatKeyTyped()">
-                  <div id="aiChatDetected" class="ai-chat-detected"></div>
-                  <label style="margin-top:10px;">Model</label>
-                  <select id="aiChatModel"><option value="">Paste a key first...</option></select>
-                  <div class="ai-chat-setup-row">
-                    <button class="btn btn-compact primary-btn" onclick="aiChatSaveKey()"><i class="ph-bold ph-check"></i> Start Chatting</button>
-                  </div>
-                  <p class="ai-chat-help">Free keys, no card: <a href="https://console.groq.com/keys" target="_blank" rel="noopener">Groq</a> · <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Gemini</a> · <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a></p>
-                </div>
-              </div>
-              <div id="aiChatMain" class="ai-chat-main" style="display:none;">
-                <div class="ai-chat-header">
-                  <span id="aiChatModelLabel" class="ai-chat-model-label"></span>
-                  <div style="display:flex;gap:6px;align-items:center;">
-                    <button id="aiAutoApplyBtn" class="btn btn-compact btn-outline" onclick="aiToggleAutoApply()" title="Auto-apply AI code: ON" style="border:none;padding:4px;"><i class="ph-bold ph-magic-wand"></i></button>
-                    <button class="btn btn-compact btn-outline" onclick="aiChatShowSetup()" title="Change key / model" style="border:none;padding:4px;"><i class="ph-bold ph-faders"></i></button>
-                    <button class="btn btn-compact btn-outline" onclick="aiChatClear()" title="Clear chat" style="border:none;padding:4px;"><i class="ph-bold ph-trash"></i></button>
-                  </div>
-                </div>
-                <div id="aiChatMessages" class="ai-chat-messages"></div>
-                <div id="aiChatContext" class="ai-chat-context"></div>
-                <div class="ai-chat-input-wrap">
-                  <textarea id="aiChatInput" rows="1" placeholder="Ask about your code..." onkeydown="aiChatKeydown(event)" oninput="aiChatAutoresize()"></textarea>
-                  <button class="ai-chat-send" onclick="aiChatSend()" aria-label="Send"><i class="ph-bold ph-arrow-up"></i></button>
-                </div>
-              </div>
-            </div>
+
 
           </div>
+          
         </div>
+<div id="aiSidebarBackdrop" onclick="aiToggleSidebar(false)"></div>
+          <aside id="aiSidebar" aria-label="AI Chat">
+            <div class="ai-side-header">
+              <span class="ai-side-title"><i class="ph-bold ph-chat-teardrop-text"></i> AI Chat</span>
+              <span id="aiChatModelLabel" class="ai-chat-model-label"></span>
+              <div class="ai-side-actions">
+                <button id="aiAutoApplyBtn" class="btn btn-compact btn-outline" onclick="aiToggleAutoApply()" title="Auto-apply AI code: ON" style="border:none;padding:4px;"><i class="ph-bold ph-magic-wand"></i></button>
+                <button class="btn btn-compact btn-outline" onclick="aiChatClear()" title="Clear chat" style="border:none;padding:4px;"><i class="ph-bold ph-trash"></i></button>
+                <button class="btn btn-compact btn-outline" onclick="aiToggleSidebar(false)" title="Close" style="border:none;padding:4px;"><i class="ph-bold ph-x"></i></button>
+              </div>
+            </div>
+            <div id="aiChatMessages" class="ai-chat-messages"></div>
+            <div id="aiChatContext" class="ai-chat-context"></div>
+            <div class="ai-chat-input-wrap">
+              <textarea id="aiChatInput" rows="1" placeholder="Ask about your code..." onkeydown="aiChatKeydown(event)" oninput="aiChatAutoresize()"></textarea>
+              <button class="ai-chat-send" onclick="aiChatSend()" aria-label="Send"><i class="ph-bold ph-arrow-up"></i></button>
+            </div>
+          </aside>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="feedback-backdrop" id="aiSetupModal">
+  <div class="feedback-card" style="max-width:420px;">
+    <div class="feedback-header">
+      <h3><i class="ph-bold ph-faders"></i> AI Key & Model</h3>
+      <button onclick="closeAiSetupModal()" aria-label="Close"><i class="ph-bold ph-x"></i></button>
+    </div>
+    <p class="feedback-desc">Bring your own key — free tiers work. Your key stays in this browser; the AI talks directly to the provider.</p>
+    <div class="feedback-body">
+      <label style="font-size:.78rem;font-weight:600;">API Key</label>
+      <input id="aiSetupKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste key — provider auto-detected" oninput="aiSetupKeyTyped()" style="font-family:ui-monospace,monospace;font-size:.82rem;">
+      <div id="aiSetupDetected" class="ai-chat-detected"></div>
+      <label style="font-size:.78rem;font-weight:600;">Model</label>
+      <select id="aiSetupModel"><option value="">Paste a key first...</option></select>
+      <p class="ai-chat-help">Free keys, no card: <a href="https://console.groq.com/keys" target="_blank" rel="noopener">Groq</a> &middot; <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Gemini</a> &middot; <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a></p>
+      <div style="display:flex;gap:8px;margin-top:14px;">
+        <button class="btn btn-compact primary-btn" onclick="aiSetupSave()"><i class="ph-bold ph-check"></i> Save</button>
+        <button class="btn btn-compact btn-outline" onclick="aiSetupClearKey()" style="color:var(--error);">Remove key</button>
       </div>
     </div>
   </div>
