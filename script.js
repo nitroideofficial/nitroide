@@ -850,7 +850,7 @@ async function aiChatSend(prefill){
       + '3. ALWAYS edit the file that matches the task, not just the open one: colors, layout, fonts, spacing, responsive design \u2192 style.css. Page structure, elements, text content \u2192 index.html. Click handlers, logic, bugs in behavior \u2192 script.js. If a task spans files (e.g. add a button + style it), output edit blocks for EACH file. '
       + '4. When editing code, work SURGICALLY like a senior dev: change ONLY what is needed, in the right place. NEVER rewrite the whole file. Output each change as an edit block: <<<EDIT:filename>>> then <<<FIND>>> then exact lines copied from the attached file (enough to be unique) then <<<REPLACE>>> then the new code then <<<END>>>. Use one block per change; multiple blocks allowed. FIND must match the file EXACTLY or the edit fails. '
       + '5. Only output a full triple-backtick file when creating a brand-new file from scratch. '
-      + '6. After the edit blocks, write one short line saying what changed. Keep every reply short. No markdown headings.';
+      + '6. COMPLETENESS CHECK: before finishing, re-read the user\'s request and verify you output edit blocks for EVERY file the task touches. If the task needs HTML+CSS+JS changes, all three files must have blocks \u2014 never silently skip a file. ' + '7. After the edit blocks, write one short line saying what changed. Keep every reply short. No markdown headings.';
     const messages = [{ role: 'system', content: system }];
     const hist = aiChatHistory.slice(0, -1).slice(-8);
     for (const m of hist) messages.push({ role: m.role, content: m.content });
@@ -913,15 +913,21 @@ function aiChatMaybeAutoApply(text){
   // surgical edits auto-apply first (smarter path)
   const edits = aiParseEdits(text);
   if (edits.length) {
-    const prev = aiPreviewEdits(aiRegisterEdits(edits));
-    if (prev && prev.failCount === 0) {
+    const previews = aiPreviewEdits(aiRegisterEdits(edits));
+    if (previews && previews.length && previews.every(function(p){ return p.failCount === 0; })) {
       try {
-        const ed = aiEditorForFile(prev.file) || aiActiveEditor();
-        if (ed) {
-          const model = ed.getModel();
-          const cpIdx = aiCheckpoint('auto-apply edits');
-          ed.executeEdits('ai-chat-auto', [{ range: model.getFullModelRange(), text: prev.modified }]);
-          aiChatAddMsg('assistant', '<span class="ai-badge">\\u2726 Checkpoint</span><p>Applied ' + prev.okCount + ' surgical edit' + (prev.okCount > 1 ? 's' : '') + ' to <b>' + aiEscapeHtml(prev.file) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>', true);
+        const cpIdx = aiCheckpoint('auto-apply edits');
+        const names = [];
+        let totalOk = 0;
+        previews.forEach(function(prev){
+          const ed = aiEditorForFile(prev.file) || aiActiveEditor();
+          if (!ed) return;
+          ed.executeEdits('ai-chat-auto', [{ range: ed.getModel().getFullModelRange(), text: prev.modified }]);
+          names.push(prev.file);
+          totalOk += prev.okCount;
+        });
+        if (names.length) {
+          aiChatAddMsg('assistant', '<span class="ai-badge">\\u2726 Checkpoint</span><p>Applied ' + totalOk + ' surgical edit' + (totalOk > 1 ? 's' : '') + ' to <b>' + aiEscapeHtml(names.join(', ')) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>', true);
           return;
         }
       } catch(e){}
@@ -1009,31 +1015,45 @@ function aiDiffOpen(codeIdx){
   }, 80);
 }
 var aiDiffEditIdx = -1;
-function aiDiffOpenEdits(editIdx){
-  const prev = aiPreviewEdits(editIdx);
+var aiDiffPreviews = [];
+var aiDiffFileIdx = 0;
+function aiDiffRenderFile(i){
+  const prev = aiDiffPreviews[i];
   if (!prev) return;
+  aiDiffFileIdx = i;
+  const fl = document.getElementById('aiDiffFile');
+  if (fl) fl.textContent = prev.file + ' (' + prev.okCount + '/' + prev.total + ' edits match)';
+  const tabs = document.getElementById('aiDiffTabs');
+  if (tabs) {
+    tabs.innerHTML = aiDiffPreviews.map(function(p, j){
+      return '<button class="' + (j === i ? 'on' : '') + '" onclick="aiDiffRenderFile(' + j + ')">' + aiEscapeHtml(p.file) + '</button>';
+    }).join('');
+    tabs.style.display = aiDiffPreviews.length > 1 ? 'flex' : 'none';
+  }
+  try {
+    const el = document.getElementById('aiDiffEditor');
+    if (!el) return;
+    if (aiDiffEditor) { aiDiffEditor.dispose(); aiDiffEditor = null; }
+    const lang = aiDiffLang(prev.file);
+    aiDiffEditor = monaco.editor.createDiffEditor(el, {
+      theme: document.documentElement.classList.contains('light-mode') ? 'vs' : 'vs-dark',
+      renderSideBySide: window.innerWidth > 700,
+      readOnly: true, automaticLayout: true, scrollBeyondLastLine: false, minimap: { enabled: false }
+    });
+    aiDiffEditor.setModel({ original: monaco.editor.createModel(prev.original, lang), modified: monaco.editor.createModel(prev.modified, lang) });
+    const st = document.getElementById('aiDiffStats');
+    if (st) st.textContent = prev.okCount + ' of ' + prev.total + ' edits found their target' + (prev.failCount ? ' (' + prev.failCount + ' not found)' : '');
+  } catch(e){}
+}
+function aiDiffOpenEdits(editIdx){
+  const previews = aiPreviewEdits(editIdx);
+  if (!previews || !previews.length) return;
+  aiDiffPreviews = previews;
   aiDiffEditIdx = editIdx;
   aiDiffIdx = -1;
   const m = document.getElementById('aiDiffModal');
   if (m) m.classList.add('active');
-  const fl = document.getElementById('aiDiffFile');
-  if (fl) fl.textContent = prev.file + ' (' + prev.okCount + '/' + prev.total + ' edits match)';
-  setTimeout(function(){
-    try {
-      const el = document.getElementById('aiDiffEditor');
-      if (!el) return;
-      if (aiDiffEditor) { aiDiffEditor.dispose(); aiDiffEditor = null; }
-      const lang = aiDiffLang(prev.file);
-      aiDiffEditor = monaco.editor.createDiffEditor(el, {
-        theme: document.documentElement.classList.contains('light-mode') ? 'vs' : 'vs-dark',
-        renderSideBySide: window.innerWidth > 700,
-        readOnly: true, automaticLayout: true, scrollBeyondLastLine: false, minimap: { enabled: false }
-      });
-      aiDiffEditor.setModel({ original: monaco.editor.createModel(prev.original, lang), modified: monaco.editor.createModel(prev.modified, lang) });
-      const st = document.getElementById('aiDiffStats');
-      if (st) st.textContent = prev.okCount + ' of ' + prev.total + ' edits found their target' + (prev.failCount ? ' (' + prev.failCount + ' not found)' : '');
-    } catch(e){ aiDiffClose(); }
-  }, 80);
+  setTimeout(function(){ aiDiffRenderFile(0); }, 80);
 }
 function aiDiffClose(){
   const m = document.getElementById('aiDiffModal');
@@ -1041,6 +1061,8 @@ function aiDiffClose(){
   try { if (aiDiffEditor) { aiDiffEditor.dispose(); aiDiffEditor = null; } } catch(e){}
   aiDiffIdx = -1;
   aiDiffEditIdx = -1;
+  aiDiffPreviews = [];
+  aiDiffFileIdx = 0;
 }
 function aiDiffApply(){
   if (aiDiffEditIdx >= 0) {
@@ -1129,20 +1151,21 @@ function aiApplyEditsToContent(content, edits){
   return { content: out, applied: applied, failedIdx: failedIdx };
 }
 function aiPreviewEdits(editIdx){
-  // compute resulting file contents without applying; returns {file, original, modified, okCount, failCount}
+  // compute resulting file contents without applying; returns array of per-file {file, original, modified, okCount, failCount, total}
   const edits = aiEditStore[editIdx] || [];
   if (!edits.length) return null;
   const byFile = {};
   edits.forEach(function(e){
     (byFile[e.file] = byFile[e.file] || []).push(e);
   });
-  const files = Object.keys(byFile);
-  const f = byFile[files[0]];
-  const ed = aiEditorForFile(files[0]) || aiActiveEditor();
-  const original = ed ? ed.getModel().getValue() : '';
-  const res = aiApplyEditsToContent(original, f);
-  return { file: files[0], files: files, original: original, modified: res.content,
-           okCount: res.applied.filter(Boolean).length, failCount: res.failedIdx.length, total: f.length };
+  return Object.keys(byFile).map(function(fname){
+    const f = byFile[fname];
+    const ed = aiEditorForFile(fname) || aiActiveEditor();
+    const original = ed ? ed.getModel().getValue() : '';
+    const res = aiApplyEditsToContent(original, f);
+    return { file: fname, original: original, modified: res.content,
+             okCount: res.applied.filter(Boolean).length, failCount: res.failedIdx.length, total: f.length };
+  });
 }
 function aiApplyEditSet(editIdx){
   const edits = aiEditStore[editIdx] || [];
