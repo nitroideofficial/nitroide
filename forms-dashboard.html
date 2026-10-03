@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forms Dashboard — NitroIDE (private)</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #08080c; color: #e4e4e7; font-family: Inter, system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -0.5px; }
+  h1 span { color: #00e5ff; }
+  .sub { color: #71717a; font-size: 13px; margin-bottom: 28px; }
+  .card { background: #131318; border: 1px solid #26262b; border-radius: 14px; padding: 22px; margin-bottom: 20px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .stat { background: #131318; border: 1px solid #26262b; border-radius: 12px; padding: 16px; }
+  .stat .n { font-size: 26px; font-weight: 800; color: #00e5ff; }
+  .stat .l { font-size: 12px; color: #71717a; margin-top: 4px; }
+  input, select { background: #0b0b10; border: 1px solid #26262b; color: #e4e4e7; border-radius: 10px; padding: 11px 14px; font-size: 14px; width: 100%; }
+  input:focus, select:focus { outline: none; border-color: #00e5ff; }
+  button { background: #00e5ff; color: #000; border: 0; border-radius: 999px; padding: 11px 26px; font-weight: 700; font-size: 14px; cursor: pointer; }
+  button:hover { filter: brightness(1.1); }
+  button.ghost { background: transparent; border: 1px solid #26262b; color: #e4e4e7; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .err { color: #f87171; font-size: 13px; margin-top: 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; color: #71717a; font-weight: 600; font-size: 11.5px; letter-spacing: 1px; text-transform: uppercase; padding: 10px 12px; border-bottom: 1px solid #26262b; }
+  td { padding: 12px; border-bottom: 1px solid #1b1b21; vertical-align: top; }
+  tr:hover td { background: #16161c; }
+  .pill { display: inline-block; font-size: 11.5px; padding: 3px 10px; border-radius: 999px; background: #0b0b10; border: 1px solid #26262b; color: #a1a1aa; }
+  .pill.contact { color: #00e5ff; border-color: #00e5ff44; }
+  .msg { max-width: 420px; white-space: pre-wrap; word-break: break-word; color: #d4d4d8; }
+  .meta { font-size: 12px; color: #71717a; margin-top: 6px; }
+  .hidden { display: none !important; }
+  @media (max-width: 640px) { table, thead, tbody, th, td, tr { display: block; } thead { display: none; } td { border: 0; padding: 6px 0; } tr { border-bottom: 1px solid #26262b; padding: 10px 0; display: block; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>⚡ NitroIDE <span>Forms Dashboard</span></h1>
+  <p class="sub">Private — submission archive, stats &amp; export. Not linked anywhere on the site.</p>
+
+  <div class="card" id="loginCard">
+    <div class="row">
+      <input type="password" id="tokenInput" placeholder="Paste ADMIN_TOKEN" style="flex:1;min-width:220px" autocomplete="off">
+      <button onclick="login()">Unlock</button>
+    </div>
+    <div class="err hidden" id="loginErr"></div>
+  </div>
+
+  <div id="dash" class="hidden">
+    <div class="stats" id="statsRow"></div>
+    <div class="card">
+      <div class="row" style="justify-content:space-between;margin-bottom:14px">
+        <strong>Recent submissions</strong>
+        <div class="row">
+          <button class="ghost" onclick="exportCsv()">⬇ Export CSV</button>
+          <button class="ghost" onclick="logout()">Lock</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>When (IST)</th><th>Form</th><th>From</th><th>Heard via</th><th>Message</th></tr></thead>
+          <tbody id="subsBody"></tbody>
+        </table>
+      </div>
+      <div class="row" style="margin-top:14px;justify-content:center">
+        <button class="ghost hidden" id="moreBtn" onclick="loadMore()">Load more</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var token = sessionStorage.getItem("forms_admin_token") || "";
+  var cursor = null;
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function api(path) {
+    return fetch(path, { headers: { "Authorization": "Bearer " + token } });
+  }
+
+  window.login = function () {
+    token = document.getElementById("tokenInput").value.trim();
+    if (!token) return;
+    sessionStorage.setItem("forms_admin_token", token);
+    boot();
+  };
+  window.logout = function () {
+    token = "";
+    sessionStorage.removeItem("forms_admin_token");
+    document.getElementById("dash").classList.add("hidden");
+    document.getElementById("loginCard").classList.remove("hidden");
+    document.getElementById("tokenInput").value = "";
+  };
+  document.getElementById("tokenInput").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") login();
+  });
+
+  function boot() {
+    api("/api/forms/admin/stats").then(function (r) {
+      if (r.status === 401) throw new Error("Wrong token.");
+      if (!r.ok) throw new Error("Archive not available yet (HTTP " + r.status + ").");
+      return r.json();
+    }).then(function (d) {
+      document.getElementById("loginCard").classList.add("hidden");
+      document.getElementById("dash").classList.remove("hidden");
+      document.getElementById("loginErr").classList.add("hidden");
+      renderStats(d);
+      document.getElementById("subsBody").innerHTML = "";
+      cursor = null;
+      loadMore();
+    }).catch(function (e) {
+      var el = document.getElementById("loginErr");
+      el.textContent = e.message;
+      el.classList.remove("hidden");
+    });
+  }
+
+  function renderStats(d) {
+    var byForm = d.byForm || {};
+    var bySource = d.bySource || {};
+    var topSource = Object.keys(bySource).sort(function (a, b) { return bySource[b] - bySource[a]; })[0] || "—";
+    document.getElementById("statsRow").innerHTML =
+      stat(d.total, "total submissions") +
+      stat(byForm.contact || 0, "contact") +
+      stat(byForm.feedback || 0, "feedback") +
+      stat(esc(topSource), "top source");
+  }
+  function stat(n, l) {
+    return '<div class="stat"><div class="n">' + n + '</div><div class="l">' + l + "</div></div>";
+  }
+
+  window.loadMore = function () {
+    var url = "/api/forms/admin/subs?limit=50" + (cursor ? "&cursor=" + encodeURIComponent(cursor) : "");
+    api(url).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.success) throw new Error("load failed");
+      cursor = d.cursor;
+      var html = "";
+      (d.subs || []).forEach(function (s) {
+        var from = s.form === "contact" && s.name
+          ? esc(s.name) + ' &lt;' + esc(s.email) + "&gt;"
+          : "—";
+        var atts = (s.attachments || []).map(function (a) { return "📎 " + esc(a.name); }).join(" ");
+        html += "<tr>" +
+          "<td style='white-space:nowrap'>" + esc(s.when) + "</td>" +
+          "<td><span class='pill " + esc(s.form) + "'>" + esc(s.form) + "</span></td>" +
+          "<td>" + from + "</td>" +
+          "<td>" + esc(s.source || "—") + "</td>" +
+          "<td><div class='msg'>" + esc(s.message) + "</div>" +
+          (atts ? "<div class='meta'>" + atts + "</div>" : "") +
+          (s.subject ? "<div class='meta'>Subject: " + esc(s.subject) + "</div>" : "") +
+          (s.country && s.country !== "unknown" ? "<div class='meta'>" + esc(s.country) + "</div>" : "") +
+          "</td></tr>";
+      });
+      document.getElementById("subsBody").insertAdjacentHTML("beforeend", html);
+      document.getElementById("moreBtn").classList.toggle("hidden", !cursor);
+      if (!(d.subs || []).length && !document.getElementById("subsBody").children.length) {
+        document.getElementById("subsBody").innerHTML = "<tr><td colspan='5' style='color:#71717a'>No submissions yet.</td></tr>";
+      }
+    }).catch(function () { alert("Could not load submissions."); });
+  };
+
+  window.exportCsv = function () {
+    api("/api/forms/admin/export.csv").then(function (r) {
+      if (!r.ok) throw new Error("export failed");
+      return r.blob();
+    }).then(function (blob) {
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "nitroide-forms-export.csv";
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 5000);
+    }).catch(function () { alert("Export failed."); });
+  };
+
+  if (token) { document.getElementById("tokenInput").value = token; boot(); }
+})();
+</script>
+</body>
+</html>

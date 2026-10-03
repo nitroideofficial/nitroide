@@ -110,6 +110,17 @@
           <label for="cMsg">Message</label>
           <textarea id="cMsg" name="message" placeholder="Tell us what's on your mind..." required></textarea>
         </div>
+        <div class="contact-field">
+          <label for="cSource">How did you hear about us? <span style="opacity:.6">(optional)</span></label>
+          <select id="cSource" name="source" style="width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text);font-family:inherit;font-size:.9rem;">
+            <option value="">Prefer not to say</option>
+            <option>Google search</option>
+            <option>Social media</option>
+            <option>Friend / colleague</option>
+            <option>Directory site</option>
+            <option>Other</option>
+          </select>
+        </div>
         <input type="text" id="cWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;border:0;padding:0;" value="">
         <button type="submit" id="contactBtn" class="btn-launch primary-btn contact-send">
           <span id="contactBtnText">Send Message</span>
@@ -176,7 +187,7 @@
     fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ form: 'contact', name: name, email: email, message: msg, subject: 'NitroIDE contact: ' + name, website: document.getElementById('cWebsite').value })
+      body: JSON.stringify({ form: 'contact', name: name, email: email, message: msg, subject: 'NitroIDE contact: ' + name, source: (document.getElementById('cSource')||{}).value || '', website: document.getElementById('cWebsite').value })
     }).then(function (r) {
       return r.json().then(function (data) {
         if (!r.ok || !data.success) throw new Error((data && data.error) || 'send failed');
