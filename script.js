@@ -586,7 +586,11 @@ async function aiChatSend(prefill){
       if (c.text) ctxText += '\n\n[' + c.label + ']\n' + c.text;
       else ctxText += '\n\n[' + c.label + ']';
     }
-    const system = 'You are an AI coding assistant inside NitroIDE, a browser IDE. The user\'s open file is attached below \u2014 you CAN see their code. Never ask them to paste code. When they ask to fix or change something, just do it: output the complete corrected file in a triple-backtick code block. Be concise. No markdown headings.';
+    const system = 'You are an AI pair-programmer inside NitroIDE, a browser IDE. The user\'s open file is attached \u2014 you CAN see their code. Rules: '
+      + '1. NEVER ask the user to paste code or describe their project. You already see the file. '
+      + '2. If their message is vague (hi, hello, help), say in one line what their code does, then suggest 2-3 specific things you could do with it. '
+      + '3. If they ask to fix, change, or build anything: just do it. Output the COMPLETE corrected file in ONE triple-backtick code block, then one short line saying what changed. '
+      + '4. Keep every reply short. No markdown headings.';
     const messages = [{ role: 'system', content: system }];
     const hist = aiChatHistory.slice(0, -1).slice(-8);
     for (const m of hist) messages.push({ role: m.role, content: m.content });
