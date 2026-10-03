@@ -365,6 +365,12 @@
   .proj-card p { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
   .proj-actions { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border); }
   .proj-badge { background: rgba(0,229,255,0.1); color: #00e5ff; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+  /* Mobile: the AI setup card is taller than small viewports — let the
+     backdrop scroll instead of clipping the header/close button off-screen. */
+  @media (max-width: 640px) {
+    #aiSetupModal { display: block; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 12px; }
+    #aiSetupModal .feedback-card { margin: 8px auto; max-width: 100% !important; }
+  }
 </style>
 <div class="feedback-backdrop" id="timeMachineModal" onclick="handleTimeMachineBackdrop(event)">
   <div class="feedback-card time-machine-card">
