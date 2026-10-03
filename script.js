@@ -557,12 +557,40 @@ function aiCurrentFile(){
     return { name: fname, editor: ed, content: ed.getModel().getValue() || '' };
   } catch(e){ return null; }
 }
+function aiAllFiles(){
+  const out = [];
+  try {
+    const pairs = [
+      ['html', (typeof htmlMonaco !== 'undefined') ? htmlMonaco : null],
+      ['css', (typeof cssMonaco !== 'undefined') ? cssMonaco : null],
+      ['js', (typeof jsMonaco !== 'undefined') ? jsMonaco : null]
+    ];
+    pairs.forEach(function(pr){
+      if (!pr[1] || !pr[1].getModel) return;
+      let fname = pr[0] === 'html' ? 'index.html' : pr[0] === 'css' ? 'style.css' : 'script.js';
+      try {
+        if (typeof activeFiles !== 'undefined' && activeFiles) {
+          fname = pr[0] === 'html' ? (activeFiles.html || fname) : pr[0] === 'css' ? (activeFiles.css || fname) : (activeFiles.js || fname);
+        }
+      } catch(e){}
+      out.push({ key: pr[0], name: fname, editor: pr[1], content: pr[1].getModel().getValue() || '' });
+    });
+  } catch(e){}
+  return out;
+}
 function aiChatContext(){
   const ctx = [];
   try {
     const f = aiCurrentFile();
+    const all = aiAllFiles();
+    const openName = f ? f.name : null;
+    all.forEach(function(file){
+      if (!file.content.trim()) return;
+      const isOpen = file.name === openName;
+      const label = isOpen ? 'Open file: ' + file.name : file.name;
+      if (!aiExcludedCtx[label]) ctx.push({ label: label, text: file.content.slice(0, 8000) });
+    });
     if (f && f.content.trim()) {
-      if (!aiExcludedCtx['Open file: ' + f.name]) ctx.push({ label: 'Open file: ' + f.name, text: f.content.slice(0, 12000) });
       try {
         const sel = f.editor.getSelection && !f.editor.getSelection().isEmpty() ? f.editor.getModel().getValueInRange(f.editor.getSelection()) : '';
         if (sel && sel.trim() && sel.trim() !== f.content.trim() && !aiExcludedCtx['Selected code (focus here)']) ctx.push({ label: 'Selected code (focus here)', text: sel.slice(0, 4000) });
@@ -691,11 +719,24 @@ function aiCheckpoint(label){
 }
 function aiEditorForFile(fname){
   try {
+    fname = String(fname || '').toLowerCase().trim();
+    const getEd = function(k){
+      try {
+        if (k === 'html' && typeof htmlMonaco !== 'undefined') return htmlMonaco;
+        if (k === 'css' && typeof cssMonaco !== 'undefined') return cssMonaco;
+        if (k === 'js' && typeof jsMonaco !== 'undefined') return jsMonaco;
+      } catch(e){}
+      return null;
+    };
     if (typeof activeFiles !== 'undefined' && activeFiles) {
-      if (typeof htmlMonaco !== 'undefined' && activeFiles.html === fname) return htmlMonaco;
-      if (typeof cssMonaco !== 'undefined' && activeFiles.css === fname) return cssMonaco;
-      if (typeof jsMonaco !== 'undefined' && activeFiles.js === fname) return jsMonaco;
+      if (activeFiles.html && activeFiles.html.toLowerCase() === fname) return getEd('html');
+      if (activeFiles.css && activeFiles.css.toLowerCase() === fname) return getEd('css');
+      if (activeFiles.js && activeFiles.js.toLowerCase() === fname) return getEd('js');
     }
+    // extension fallback: style.css -> css editor, etc.
+    if (/\.css$/.test(fname)) return getEd('css');
+    if (/\.html?$/.test(fname)) return getEd('html');
+    if (/\.js$/.test(fname)) return getEd('js');
   } catch(e){}
   return null;
 }
@@ -790,12 +831,13 @@ async function aiChatSend(prefill){
       if (c.text) ctxText += '\n\n[' + c.label + ']\n' + c.text;
       else ctxText += '\n\n[' + c.label + ']';
     }
-    const system = 'You are an AI pair-programmer inside NitroIDE, a browser IDE. The user\'s open file is attached \u2014 you CAN see their code. Rules: '
-      + '1. NEVER ask the user to paste code or describe their project. You already see the file. '
+    const system = 'You are an AI pair-programmer inside NitroIDE, a browser IDE. You can see ALL THREE of the user\'s files: index.html (page structure), style.css (styling), script.js (behavior). The one they are currently viewing is marked "Open file". Rules: '
+      + '1. NEVER ask the user to paste code or describe their project. You already see all their code. '
       + '2. If their message is vague (hi, hello, help), say in one line what their code does, then suggest 2-3 specific things you could do with it. '
-      + '3. When editing code, work SURGICALLY like a senior dev: change ONLY what is needed, in the right place. NEVER rewrite the whole file. Output each change as an edit block: <<<EDIT:filename>>> then <<<FIND>>> then exact lines copied from the attached file (enough to be unique) then <<<REPLACE>>> then the new code then <<<END>>>. Use one block per change; multiple blocks allowed. FIND must match the file EXACTLY or the edit fails. '
-      + '4. Only output a full triple-backtick file when creating a brand-new file from scratch. '
-      + '5. After the edit blocks, write one short line saying what changed. Keep every reply short. No markdown headings.';
+      + '3. ALWAYS edit the file that matches the task, not just the open one: colors, layout, fonts, spacing, responsive design \u2192 style.css. Page structure, elements, text content \u2192 index.html. Click handlers, logic, bugs in behavior \u2192 script.js. If a task spans files (e.g. add a button + style it), output edit blocks for EACH file. '
+      + '4. When editing code, work SURGICALLY like a senior dev: change ONLY what is needed, in the right place. NEVER rewrite the whole file. Output each change as an edit block: <<<EDIT:filename>>> then <<<FIND>>> then exact lines copied from the attached file (enough to be unique) then <<<REPLACE>>> then the new code then <<<END>>>. Use one block per change; multiple blocks allowed. FIND must match the file EXACTLY or the edit fails. '
+      + '5. Only output a full triple-backtick file when creating a brand-new file from scratch. '
+      + '6. After the edit blocks, write one short line saying what changed. Keep every reply short. No markdown headings.';
     const messages = [{ role: 'system', content: system }];
     const hist = aiChatHistory.slice(0, -1).slice(-8);
     for (const m of hist) messages.push({ role: m.role, content: m.content });
