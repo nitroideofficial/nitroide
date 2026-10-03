@@ -305,6 +305,8 @@ function aiToggleSidebar(force){
   const open = typeof force === 'boolean' ? force : !sb.classList.contains('open');
   sb.classList.toggle('open', open);
   if (bd) bd.classList.toggle('open', open);
+  const btn = document.getElementById('aiSidebarBtn');
+  if (btn) { btn.style.color = open ? '#00e5ff' : ''; btn.style.borderColor = open ? 'rgba(0,229,255,.5)' : ''; }
   if (open) {
     aiChatEnsureBoot();
     setTimeout(aiChatRenderContext, 100);
@@ -499,7 +501,7 @@ function aiChatAddMsg(role, text){
   if (!box) return;
   const div = document.createElement('div');
   div.className = 'ai-msg ' + role;
-  div.innerHTML = role === 'user' ? aiEscapeHtml(text) : aiChatMd(text);
+  div.innerHTML = role === 'user' ? aiEscapeHtml(text) : '<span class="ai-badge">\u2726 AI</span>' + aiChatMd(text);
   box.appendChild(div);
   box.scrollTop = box.scrollHeight;
   return div;
@@ -528,13 +530,20 @@ function aiChatMd(text){
   let html = '';
   for (let i = 0; i < parts.length; i++) {
     if (i % 2 === 1) {
-      let code = parts[i].replace(/^[a-zA-Z0-9+#-]+\n/, '');
+      const chunk = parts[i] || '';
+      const lm = chunk.match(/^([a-zA-Z0-9+#-]+)\n/);
+      const lang = lm ? lm[1] : '';
+      const code = chunk.replace(/^[a-zA-Z0-9+#-]+\n/, '');
       const idx = aiChatRegisterCode(code);
-      html += '<pre><code>' + aiEscapeHtml(code) + '</code></pre>' +
-        '<div class="ai-code-actions"><button onclick="aiChatInsertCode(' + idx + ')"><i class="ph-bold ph-check"></i> Insert at cursor</button>' +
-        '<button onclick="aiChatReplaceFile(' + idx + ')">Replace file</button><button onclick="aiChatCopyCode(' + idx + ')">Copy</button></div>';
+      const langLabel = aiEscapeHtml(lang || 'code');
+      html += '<div class="ai-codeblock"><div class="ai-codeblock-head"><span class="lang">' + langLabel + '</span><span class="spacer"></span>' +
+        '<button class="apply" onclick="aiChatReplaceFile(' + idx + ')" title="Replace the open file with this code">Apply</button>' +
+        '<button onclick="aiChatInsertCode(' + idx + ')" title="Insert at cursor">Insert</button>' +
+        '<button onclick="aiChatCopyCode(' + idx + ')" title="Copy">Copy</button></div>' +
+        '<pre><code>' + aiEscapeHtml(code) + '</code></pre></div>';
     } else {
-      html += '<p>' + aiEscapeHtml(parts[i].trim()).replace(/\n/g, '<br>') + '</p>';
+      const t = parts[i].trim();
+      if (t) html += '<p>' + aiEscapeHtml(t).replace(/\n/g, '<br>') + '</p>';
     }
   }
   return html;
