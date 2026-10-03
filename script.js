@@ -455,6 +455,7 @@ function aiDetectProvider(key){
   if (/^sk-or-v1-/.test(key)) return 'openrouter';
   if (/^AIza/.test(key) || /^AQ\./.test(key)) return 'gemini';
   if (/^sk-proj-/.test(key) || /^sk-[A-Za-z0-9_\-]{20,}/.test(key)) return 'openai';
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(key)) return 'sambanova';
   return null;
 }
 async function aiFetchModels(provider, key){
