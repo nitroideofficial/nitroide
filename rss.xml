@@ -6,6 +6,13 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>NitroIDE&apos;s AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises | NitroIDE</title>
+      <link>https://nitroide.com/blog/ai-pair-programmer-byok.html</link>
+      <guid>https://nitroide.com/blog/ai-pair-programmer-byok.html</guid>
+      <description>How NitroIDE&apos;s v30 AI pair programmer works: bring-your-own-key privacy (Groq, Gemini, OpenRouter, OpenAI), surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes instead of guessing.</description>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools | NitroIDE</title>
       <link>https://nitroide.com/blog/postmessage-sanitizer.html</link>
       <guid>https://nitroide.com/blog/postmessage-sanitizer.html</guid>
