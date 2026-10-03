@@ -963,8 +963,9 @@ function aiChatUpdateAutoBtn(){
   const b = document.getElementById('aiAutoApplyBtn');
   if (!b) return;
   const on = aiAutoApplyEnabled();
-  b.style.opacity = on ? '1' : '.35';
-  b.title = on ? 'Auto-apply AI code: ON' : 'Auto-apply AI code: OFF';
+  b.classList.toggle('on', on);
+  b.style.opacity = on ? '1' : '.55';
+  b.title = on ? 'Auto-apply AI code: ON (click to disable)' : 'Auto-apply AI code: OFF (click to enable)';
 }
 var aiDiffEditor = null;
 var aiDiffIdx = -1;

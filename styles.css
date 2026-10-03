@@ -2274,8 +2274,8 @@ html{overflow-x:clip}
 
 /* ===== AI Sidebar Chat — polished UI ===== */
 .ai-side-header{display:flex;flex-direction:column;gap:0;padding:10px 12px 8px;border-bottom:1px solid var(--border);flex-shrink:0}
-.ai-side-header-top{display:flex;align-items:center;gap:8px}
-.ai-side-header .ai-side-title{flex:1}
+.ai-side-header-top{display:flex;align-items:center;gap:10px}
+.ai-side-header .ai-side-title{flex:0 0 auto}
 .ai-side-header-model{display:flex;margin-top:6px;min-width:0}
 #aiSidebar .ai-chat-model-label{font-size:.68rem;color:var(--text-muted);font-family:ui-monospace,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 .ai-side-title{font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:7px;letter-spacing:.2px}
@@ -2380,3 +2380,7 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
 .ai-setup-steps{margin:0 0 14px;padding-left:20px;font-size:.78rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px;line-height:1.5}
 .ai-setup-steps b{color:var(--text)}
 .ai-setup-steps a{color:#00e5ff}
+.ai-side-actions{display:flex;gap:6px;margin-left:2px}
+.ai-hbtn{display:inline-flex;align-items:center;justify-content:center;min-width:34px;min-height:34px;padding:7px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-size:.9rem;transition:background .15s,color .15s,border-color .15s}
+.ai-hbtn:hover{background:rgba(255,255,255,.12);color:var(--text);border-color:var(--text-muted)}
+.ai-hbtn.on{background:rgba(0,229,255,.15);border-color:rgba(0,229,255,.5);color:#00e5ff}
