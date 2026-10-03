@@ -5,6 +5,13 @@
     <link>https://nitroide.com/blog/</link>
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
+<item>
+      <title>The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools | NitroIDE</title>
+      <link>https://nitroide.com/blog/postmessage-sanitizer.html</link>
+      <guid>https://nitroide.com/blog/postmessage-sanitizer.html</guid>
+      <description>How NitroIDE renders untrusted postMessage payloads from a preview iframe without XSS: token-based serialization, an allowlist renderer, strict field validation, and an attacker-tested Node harness.</description>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
         <item>
       <title>I Published 91 Posts With 0 Followers. Here&apos;s What the Numbers Say | NitroIDE</title>
       <link>https://nitroide.com/blog/91-posts-0-followers-lessons.html</link>

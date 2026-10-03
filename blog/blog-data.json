@@ -1,5 +1,20 @@
 [
   {
+    "SLUG": "postmessage-sanitizer",
+    "META_TITLE": "The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools | NitroIDE",
+    "META_DESC": "How NitroIDE renders untrusted postMessage payloads from a preview iframe without XSS: token-based serialization, an allowlist renderer, strict field validation, and an attacker-tested Node harness. A copyable recipe.",
+    "KEYWORDS": "postMessage security, iframe XSS prevention, allowlist sanitizer, token-based rendering, textContent vs innerHTML, browser IDE security, NitroIDE",
+    "THEME_COLOR": "#f472b6",
+    "CATEGORY": "WEB SECURITY",
+    "DATE": "OCTOBER 2026",
+    "H1_TITLE": "The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools",
+    "CONTENT": "<p>When I security-audited NitroIDE for the v25 release, the worst hole I found wasn't in the iframe sandbox. It was in the trust my own parent page placed in its own iframe. Here's the 4-step recipe for the sanitizer that killed it: origin check, token serialization, allowlist rendering, hostile field validation, try/catch parses, and an attack suite you run before every ship.</p>",
+    "CTA_TITLE": "Ship the Recipe Yourself.",
+    "CTA_DESC": "NitroIDE is free, no signup, and runs entirely in your browser.",
+    "CTA_LINK": "../tools/codebox.html",
+    "CTA_ICON": "ph-shield"
+  },
+  {
     "SLUG": "91-posts-0-followers-lessons",
     "META_TITLE": "I Published 91 Posts With 0 Followers. Here's What the Numbers Say | NitroIDE",
     "META_DESC": "91 posts. 0 followers. 3 connections. I audited the whole campaign — here's what won, what flopped, and the distribution lesson I'm carrying forward.",
