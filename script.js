@@ -606,6 +606,7 @@ async function aiChatSend(prefill){
   const text = (typeof prefill === 'string' ? prefill : (input ? input.value.trim() : ''));
   if (!text) return;
   aiToggleSidebar(true);
+  aiLastUserText = text;
   aiChatAddMsg('user', text);
   if (input && typeof prefill !== 'string') { input.value = ''; aiChatAutoresize(); }
   aiChatRenderContext();
@@ -680,8 +681,13 @@ async function aiChatWithHistory(messages){
   if (!t) throw new Error('EMPTY');
   return t;
 }
+var aiLastUserText = '';
+function aiEditIntent(text){
+  return /\b(fix|change|update|modify|replace|add|create|make|build|write|implement|refactor|remove|delete|improve|correct|adjust|set|turn into|convert)\b/i.test(text || '');
+}
 function aiChatMaybeAutoApply(text){
   if (!aiAutoApplyEnabled()) return;
+  if (!aiEditIntent(aiLastUserText)) return;
   const fenceCount = (String(text).match(/```/g) || []).length;
   if (fenceCount % 2 !== 0) return;
   const blocks = aiExtractBlocks(text);
