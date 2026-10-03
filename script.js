@@ -41,6 +41,7 @@ function aiHasKey(){ return !!aiGetKey(); }
 
 function aiFriendlyError(err){
   const m = String((err && err.message) || err);
+  if (err && err.aiAllLimited) return 'All your saved providers are rate-limited right now. Free tiers reset daily — try again later.';
   if (m === 'NO_KEY') return 'No API key saved yet.';
   if (m === 'NETWORK') return 'Network blocked the request. Check your connection, or try another provider in AI Settings.';
   if (m === 'HTTP_401' || m === 'HTTP_403') return 'Key rejected (401/403). Check the key in AI Key & Model — make sure it was copied fully.';
@@ -874,10 +875,13 @@ async function aiChatSend(prefill){
     const hist = aiChatHistory.slice(0, -1).slice(-8);
     for (const m of hist) messages.push({ role: m.role, content: m.content });
     messages.push({ role: 'user', content: text + (ctxText ? '\n\nContext:' + ctxText : '') });
-    const out = await aiChatWithHistory(messages);
+    const out = await aiChatWithFallback(messages);
     if (typing.parentNode) typing.parentNode.removeChild(typing);
-    aiChatAddMsg('assistant', out);
-    aiChatMaybeAutoApply(out);
+    if (out.fallback) {
+      try { showToast("<i class='ph-bold ph-info' style='margin-right:6px;'></i> " + aiEscapeHtml(AI_PROVIDERS[out.fallback].label) + " was rate-limited — answered with " + aiEscapeHtml(AI_PROVIDERS[out.provider].label) + "."); } catch(e){}
+    }
+    aiChatAddMsg('assistant', out.text);
+    aiChatMaybeAutoApply(out.text);
   } catch(e){
     if (typing.parentNode) typing.parentNode.removeChild(typing);
     aiChatAddMsg('assistant', 'Sorry — ' + aiFriendlyError(e));
@@ -885,8 +889,8 @@ async function aiChatSend(prefill){
     if (sendBtn) sendBtn.disabled = false;
   }
 }
-async function aiChatWithHistory(messages){
-  const p = aiGetProvider();
+async function aiChatWithHistory(messages, providerOverride){
+  const p = providerOverride || aiGetProvider();
   const key = aiGetKey(p);
   const model = aiGetModel(p);
   if (!key) throw new Error('NO_KEY');
@@ -923,6 +927,30 @@ async function aiChatWithHistory(messages){
   return t;
 }
 var aiLastUserText = '';
+async function aiChatWithFallback(messages){
+  // Try the selected provider first, then any other provider with a saved key.
+  // Falls through on rate limits / server errors / network issues only.
+  const order = [aiGetProvider()];
+  try {
+    Object.keys(AI_PROVIDERS).forEach(function(p){
+      if (order.indexOf(p) === -1 && aiGetKey(p)) order.push(p);
+    });
+  } catch(e){}
+  let lastErr = null, usedFallback = null;
+  for (let i = 0; i < order.length; i++){
+    try {
+      const out = await aiChatWithHistory(messages, order[i]);
+      return { text: out, provider: order[i], fallback: usedFallback };
+    } catch(e){
+      const m = String((e && e.message) || e);
+      if (/^HTTP_429$|^HTTP_5\d\d$|^NETWORK$/.test(m)) { lastErr = e; usedFallback = order[i]; continue; }
+      throw e;
+    }
+  }
+  const err = lastErr || new Error('HTTP_429');
+  err.aiAllLimited = order.length > 1;
+  throw err;
+}
 function aiEditIntent(text){
   return /\b(fix|change|update|modify|replace|add|create|make|build|write|implement|refactor|remove|delete|improve|correct|adjust|set|turn into|convert)\b/i.test(text || '');
 }
