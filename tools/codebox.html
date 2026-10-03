@@ -117,7 +117,7 @@
 <button class="dropdown-item hide-on-desktop" onclick="openDashboard()"><i class="ph-bold ph-kanban"></i> Project Manager</button>
 <div class="dropdown-divider hide-on-desktop"></div>
           <button class="dropdown-item" onclick="toggleOptions();toggleCmdK()"><i class="ph-bold ph-command"></i> Command Palette <span style="margin-left:auto;opacity:.5;font-size:.75rem;">Ctrl+K</span></button>
-          <button class="dropdown-item" onclick="openAiSettings()"><i class="ph-bold ph-faders"></i> AI Settings <span style="margin-left:auto;opacity:.5;font-size:.75rem;">BYOK</span></button>
+          <button class="dropdown-item" onclick="toggleOptions();switchOutputTab('aichat');aiChatShowSetup()"><i class="ph-bold ph-faders"></i> AI Chat Setup</button>
           <div class="dropdown-divider"></div>
           <label class="toggle-wrap" title="Slide-out code map">
             <div style="display:flex; gap:8px; align-items:center;"><i class="ph-bold ph-map-trifold"></i> Code Minimap</div> 
@@ -218,6 +218,7 @@
               <div class="out-tab-group">
                 <button class="out-tab active" onclick="switchOutputTab('preview', this)"><i class="ph-bold ph-browser"></i> Preview</button>
                 <button class="out-tab" onclick="switchOutputTab('console', this)"><i class="ph-bold ph-terminal"></i> Console <span id="consoleBadge" style="background:var(--error); color:white; padding:2px 6px; border-radius:10px; font-size:0.7rem; display:none;"><i class="ph-bold ph-warning"></i></span></button>
+                <button class="out-tab" onclick="switchOutputTab('aichat', this)"><i class="ph-bold ph-chat-teardrop-text"></i> AI Chat</button>
                 <button class="out-tab" onclick="switchOutputTab('state', this)"><i class="ph-bold ph-tree-structure"></i> State</button>
               </div>
               
@@ -253,6 +254,39 @@
                   <button class="btn btn-compact btn-outline" onclick="clearState()" style="border:none; padding: 4px;" title="Clear State Cache"><i class="ph-bold ph-trash"></i></button>
               </div>
               <div id="stateVisualizer" style="padding: 15px; overflow: auto; flex: 1;"></div>
+            </div>
+
+            <div id="outAiChat" class="console-wrap">
+              <div id="aiChatSetup" class="ai-chat-setup">
+                <div class="ai-chat-setup-card">
+                  <h3><i class="ph-bold ph-chat-teardrop-text"></i> Chat with AI</h3>
+                  <p>Bring your own key — free tiers work. Your key stays in this browser, and the AI talks directly to the provider. No servers, no accounts.</p>
+                  <label>API Key</label>
+                  <input id="aiChatKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your key — we detect the provider" oninput="aiChatKeyTyped()">
+                  <div id="aiChatDetected" class="ai-chat-detected"></div>
+                  <label style="margin-top:10px;">Model</label>
+                  <select id="aiChatModel"><option value="">Paste a key first...</option></select>
+                  <div class="ai-chat-setup-row">
+                    <button class="btn btn-compact primary-btn" onclick="aiChatSaveKey()"><i class="ph-bold ph-check"></i> Start Chatting</button>
+                  </div>
+                  <p class="ai-chat-help">Free keys, no card: <a href="https://console.groq.com/keys" target="_blank" rel="noopener">Groq</a> · <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Gemini</a> · <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a></p>
+                </div>
+              </div>
+              <div id="aiChatMain" class="ai-chat-main" style="display:none;">
+                <div class="ai-chat-header">
+                  <span id="aiChatModelLabel" class="ai-chat-model-label"></span>
+                  <div style="display:flex;gap:6px;">
+                    <button class="btn btn-compact btn-outline" onclick="aiChatShowSetup()" title="Change key / model" style="border:none;padding:4px;"><i class="ph-bold ph-faders"></i></button>
+                    <button class="btn btn-compact btn-outline" onclick="aiChatClear()" title="Clear chat" style="border:none;padding:4px;"><i class="ph-bold ph-trash"></i></button>
+                  </div>
+                </div>
+                <div id="aiChatMessages" class="ai-chat-messages"></div>
+                <div id="aiChatContext" class="ai-chat-context"></div>
+                <div class="ai-chat-input-wrap">
+                  <textarea id="aiChatInput" rows="1" placeholder="Ask about your code..." onkeydown="aiChatKeydown(event)" oninput="aiChatAutoresize()"></textarea>
+                  <button class="ai-chat-send" onclick="aiChatSend()" aria-label="Send"><i class="ph-bold ph-arrow-up"></i></button>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -386,45 +420,6 @@
       <div id="deployLog" style="margin-top:14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;max-height:180px;overflow-y:auto;font-family:ui-monospace,monospace;"></div>
       <div id="deployResult"></div>
       <p class="feedback-desc" style="font-size:.78rem;margin-top:12px;opacity:.7;">Your token is used only for this deploy and cleared from the form after. It never touches NitroIDE servers — there are none.</p>
-    </div>
-  </div>
-</div>
-<div class="feedback-backdrop" id="aiSettingsModal">
-  <div class="feedback-card">
-    <div class="feedback-header">
-      <h3><i class="ph-bold ph-faders"></i> AI Settings</h3>
-      <button onclick="aiCloseSettings()" aria-label="Close AI settings"><i class="ph-bold ph-x"></i></button>
-    </div>
-    <div class="feedback-body">
-      <p class="feedback-desc">Bring your own key — the AI runs directly from your browser. Your key is stored only in this browser's localStorage, never sent anywhere except the provider you choose.</p>
-      <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Provider</label>
-      <select id="aiProvider" onchange="aiRefreshSettingsForm()" style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:.9rem;margin-bottom:14px;">
-        <option value="groq">Groq (recommended — fastest free tier)</option>
-        <option value="gemini">Google Gemini</option>
-        <option value="openrouter">OpenRouter (300+ models)</option>
-      </select>
-      <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">API Key</label>
-      <input id="aiKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste key..." style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:ui-monospace,monospace;font-size:.85rem;margin-bottom:14px;">
-      <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Model</label>
-      <input id="aiModel" type="text" autocomplete="off" spellcheck="false" oninput="this.dataset.touched='1'" style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:ui-monospace,monospace;font-size:.85rem;margin-bottom:14px;">
-      <p class="feedback-desc" id="aiHelp" style="font-size:.8rem;"></p>
-      <div id="aiTestOut" style="font-size:.85rem;margin-bottom:10px;min-height:1.2em;"></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn btn-compact primary-btn" onclick="aiSaveSettings()"><i class="ph-bold ph-check"></i> Save Key</button>
-        <button class="btn btn-compact" onclick="aiTestConnection()">Test</button>
-        <button class="btn btn-compact" onclick="aiClearKey()">Clear</button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="feedback-backdrop" id="aiResultModal">
-  <div class="feedback-card" style="max-width:640px;">
-    <div class="feedback-header">
-      <h3 id="aiResultTitle">AI</h3>
-      <button onclick="aiCloseResult()" aria-label="Close AI result"><i class="ph-bold ph-x"></i></button>
-    </div>
-    <div class="feedback-body">
-      <div id="aiResultBody" style="max-height:60vh;overflow-y:auto;"></div>
     </div>
   </div>
 </div>
