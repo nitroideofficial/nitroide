@@ -396,24 +396,37 @@ function aiChatEnsureBoot(){
 var aiChatHistory = [];
 var aiChatBooted = false;
 var aiLastEditor = null;
+function aiTrackEditor(ed){
+  if (ed) {
+    aiLastEditor = ed;
+    try {
+      const sb = document.getElementById('aiSidebar');
+      if (sb && sb.classList.contains('open')) aiChatRenderContext();
+    } catch(e){}
+  }
+}
 try {
   document.addEventListener('focusin', function(){
     try {
       if (typeof monaco !== 'undefined' && monaco.editor && monaco.editor.getFocusedEditor) {
-        const ed = monaco.editor.getFocusedEditor();
-        if (ed) aiLastEditor = ed;
+        aiTrackEditor(monaco.editor.getFocusedEditor());
       }
     } catch(e){}
-try {
-  const aiPanelMap = [['htmlPanel','htmlMonaco'],['cssPanel','cssMonaco'],['jsPanel','jsMonaco']];
-  aiPanelMap.forEach(function(pair){
-    const p = document.getElementById(pair[0]);
-    if (!p) return;
-    p.addEventListener('pointerdown', function(){
-      try { const ed = window[pair[1]]; if (ed) aiLastEditor = ed; } catch(e){}
-    });
   });
 } catch(e){}
+function aiEditorByKey(k){
+  try {
+    if (k === 'html') return (typeof htmlMonaco !== 'undefined') ? htmlMonaco : null;
+    if (k === 'css') return (typeof cssMonaco !== 'undefined') ? cssMonaco : null;
+    if (k === 'js') return (typeof jsMonaco !== 'undefined') ? jsMonaco : null;
+  } catch(e){}
+  return null;
+}
+try {
+  [['htmlPanel','html'],['cssPanel','css'],['jsPanel','js']].forEach(function(pair){
+    const p = document.getElementById(pair[0]);
+    if (!p) return;
+    p.addEventListener('pointerdown', function(){ aiTrackEditor(aiEditorByKey(pair[1])); });
   });
 } catch(e){}
 function aiDetectProvider(key){
