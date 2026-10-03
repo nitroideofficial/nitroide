@@ -117,6 +117,8 @@
         <div id="optionsMenu" class="options-dropdown">
 <button class="dropdown-item hide-on-desktop" onclick="openDashboard()"><i class="ph-bold ph-kanban"></i> Project Manager</button>
 <div class="dropdown-divider hide-on-desktop"></div>
+          <button class="dropdown-item" onclick="toggleOptions();toggleCmdK()"><i class="ph-bold ph-command"></i> Command Palette <span style="margin-left:auto;opacity:.5;font-size:.75rem;">Ctrl+K</span></button>
+          <div class="dropdown-divider"></div>
           <label class="toggle-wrap" title="Slide-out code map">
             <div style="display:flex; gap:8px; align-items:center;"><i class="ph-bold ph-map-trifold"></i> Code Minimap</div> 
             <input type="checkbox" id="minimapToggle" onchange="toggleMinimap()">
