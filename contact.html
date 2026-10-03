@@ -66,6 +66,11 @@
     }
     .contact-field input:focus, .contact-field textarea:focus { border-color: var(--accent, #00e5ff); }
     .contact-field textarea { min-height: 150px; resize: vertical; }
+    .contact-file-list { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .contact-file-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; background: var(--bg-secondary, #111114); border: 1px solid var(--border, #26262b); border-radius: 8px; padding: 8px 12px; font-size: 13.5px; color: var(--text); }
+    .contact-file-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .contact-file-row button { background: none; border: 0; color: var(--text-muted); cursor: pointer; font-size: 15px; padding: 2px 6px; }
+    .contact-file-row button:hover { color: #f87171; }
     .contact-send { width: 100%; justify-content: center; }
     .contact-note { font-size: 14px; color: var(--text-muted); margin-top: 14px; text-align: center; }
     .contact-status { display: none; margin-top: 14px; padding: 12px 16px; border-radius: 10px; font-size: 14px; }
@@ -122,6 +127,11 @@
           </select>
         </div>
         <input type="text" id="cWebsite" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;border:0;padding:0;" value="">
+        <div class="contact-field">
+          <label for="cFiles">Attachments <span style="opacity:.6">(optional, max 3 files, 3 MB each)</span></label>
+          <input type="file" id="cFiles" multiple>
+          <div id="cFileList" class="contact-file-list"></div>
+        </div>
         <button type="submit" id="contactBtn" class="btn-launch primary-btn contact-send">
           <span id="contactBtnText">Send Message</span>
         </button>
@@ -163,6 +173,67 @@
 (function () {
   var form = document.getElementById('contactForm');
   if (!form) return;
+
+  /* --- attachments (max 3 files, 3 MB each; sent as base64, Worker v2 forwards via Resend) --- */
+  var fileInput = document.getElementById('cFiles');
+  var fileListEl = document.getElementById('cFileList');
+  var selectedFiles = [];
+  var MAX_FILES = 3, MAX_BYTES = 3 * 1024 * 1024;
+  function escHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtSize(b) {
+    return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+  }
+  function setStatus(msg, isErr) {
+    var st = document.getElementById('contactStatus');
+    st.className = 'contact-status';
+    st.textContent = msg;
+    st.classList.add(isErr ? 'err' : 'ok');
+  }
+  function renderFileList() {
+    fileListEl.innerHTML = '';
+    selectedFiles.forEach(function (f, i) {
+      var row = document.createElement('div');
+      row.className = 'contact-file-row';
+      var label = document.createElement('span');
+      label.textContent = '\uD83D\uDCCE ' + f.name + ' (' + fmtSize(f.size) + ')';
+      var x = document.createElement('button');
+      x.type = 'button';
+      x.textContent = '\u2715';
+      x.setAttribute('aria-label', 'Remove ' + f.name);
+      x.onclick = function () { selectedFiles.splice(i, 1); renderFileList(); };
+      row.appendChild(label);
+      row.appendChild(x);
+      fileListEl.appendChild(row);
+    });
+  }
+  function readFileAsB64(f) {
+    return new Promise(function (res, rej) {
+      var r = new FileReader();
+      r.onload = function () {
+        var du = String(r.result || '');
+        res({ name: f.name, type: f.type || 'application/octet-stream', data: du.slice(du.indexOf(',') + 1) });
+      };
+      r.onerror = function () { rej(new Error('Could not read "' + f.name + '".')); };
+      r.readAsDataURL(f);
+    });
+  }
+  if (fileInput) {
+    fileInput.addEventListener('change', function () {
+      var fresh = Array.prototype.slice.call(fileInput.files);
+      for (var i = 0; i < fresh.length; i++) {
+        if (selectedFiles.length >= MAX_FILES) { setStatus('Maximum ' + MAX_FILES + ' files allowed.', true); break; }
+        if (fresh[i].size > MAX_BYTES) { setStatus('"' + fresh[i].name + '" is too large (max 3 MB each).', true); continue; }
+        selectedFiles.push(fresh[i]);
+      }
+      fileInput.value = '';
+      renderFileList();
+    });
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var name = document.getElementById('cName').value.trim();
@@ -183,11 +254,14 @@
       return;
     }
     btn.disabled = true;
-    btnText.textContent = 'Sending...';
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ form: 'contact', name: name, email: email, message: msg, subject: 'NitroIDE contact: ' + name, source: (document.getElementById('cSource')||{}).value || '', website: document.getElementById('cWebsite').value })
+    btnText.textContent = selectedFiles.length ? 'Reading files...' : 'Sending...';
+    Promise.all(selectedFiles.map(readFileAsB64)).then(function (atts) {
+      btnText.textContent = 'Sending...';
+      return fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ form: 'contact', name: name, email: email, message: msg, subject: 'NitroIDE contact: ' + name, source: (document.getElementById('cSource')||{}).value || '', attachments: atts, website: document.getElementById('cWebsite').value })
+      });
     }).then(function (r) {
       return r.json().then(function (data) {
         if (!r.ok || !data.success) throw new Error((data && data.error) || 'send failed');
@@ -197,6 +271,8 @@
       status.textContent = 'Message sent! We usually reply within a couple of days.';
       status.classList.add('ok');
       form.reset();
+      selectedFiles = [];
+      renderFileList();
     }).catch(function (err) {
       var emsg = (err && err.message && err.message !== 'send failed') ? err.message : 'Something went wrong sending your message. Please email us directly at contactnitroide@gmail.com.';
       status.textContent = emsg;
