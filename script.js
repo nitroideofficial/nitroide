@@ -1174,7 +1174,7 @@ function aiApplyEditsToContent(content, edits){
     let done = false;
     const exactCount = aiCountOccurrences(out, e.find);
     if (exactCount === 1) {
-      out = out.replace(e.find, e.replace);
+      out = out.replace(e.find, function(){ return e.replace; });
       done = true;
     } else if (exactCount > 1) {
       failReason[i] = 'ambiguous (' + exactCount + ' matches)';
