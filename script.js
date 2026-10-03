@@ -335,6 +335,11 @@ function aiSideInitResize(){
   };
   h.addEventListener('pointerup', end);
   h.addEventListener('pointercancel', end);
+  h.addEventListener('dblclick', function(){
+    aiSideW = 320;
+    sb.style.setProperty('--ai-side-w', '320px');
+    try { localStorage.setItem('nitro_ai_side_w', '320'); } catch(e){}
+  });
 }
 try { document.addEventListener('DOMContentLoaded', aiSideInitResize); } catch(e){}
 function aiToggleSidebar(force){
@@ -583,12 +588,9 @@ function aiChatContext(){
   try {
     const f = aiCurrentFile();
     const all = aiAllFiles();
-    const openName = f ? f.name : null;
     all.forEach(function(file){
       if (!file.content.trim()) return;
-      const isOpen = file.name === openName;
-      const label = isOpen ? 'Open file: ' + file.name : file.name;
-      if (!aiExcludedCtx[label]) ctx.push({ label: label, text: file.content.slice(0, 8000) });
+      if (!aiExcludedCtx[file.name]) ctx.push({ label: 'File: ' + file.name, text: file.content.slice(0, 8000) });
     });
     if (f && f.content.trim()) {
       try {
@@ -611,10 +613,14 @@ function aiChatRenderContext(){
   const el = document.getElementById('aiChatContext');
   if (!el) return;
   const ctx = aiChatContext();
+  try {
+    const openF = aiCurrentFile();
+    if (openF) ctx.forEach(function(c){ if (c.label === 'File: ' + openF.name) c.uiLabel = 'Viewing: ' + openF.name; });
+  } catch(e){}
   el.innerHTML = ctx.map(function(c){
     const ex = aiExcludedCtx[c.label] ? ' style="opacity:.35;text-decoration:line-through;"' : '';
     return '<span class="ai-ctx-chip"' + ex + ' title="Click to ' + (aiExcludedCtx[c.label] ? 'include' : 'exclude') + ' from next message">' +
-      '<span onclick="aiToggleCtx(\'' + aiEscapeHtml(c.label).replace(/'/g, "\\'") + '\')" style="cursor:pointer;">' + aiEscapeHtml(c.label) + '</span>' +
+      '<span onclick="aiToggleCtx(\'' + aiEscapeHtml(c.label).replace(/'/g, "\\'") + '\')" style="cursor:pointer;">' + aiEscapeHtml(c.uiLabel || c.label) + '</span>' +
       '<b onclick="aiToggleCtx(\'' + aiEscapeHtml(c.label).replace(/'/g, "\\'") + '\')" style="cursor:pointer;margin-left:4px;">\u00d7</b></span>';
   }).join('');
 }
