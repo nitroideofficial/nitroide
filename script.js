@@ -850,7 +850,7 @@ async function aiChatSend(prefill){
       + '3. ALWAYS edit the file that matches the task, not just the open one: colors, layout, fonts, spacing, responsive design \u2192 style.css. Page structure, elements, text content \u2192 index.html. Click handlers, logic, bugs in behavior \u2192 script.js. If a task spans files (e.g. add a button + style it), output edit blocks for EACH file. '
       + '4. When editing code, work SURGICALLY like a senior dev: change ONLY what is needed, in the right place. NEVER rewrite the whole file. Output each change as an edit block: <<<EDIT:filename>>> then <<<FIND>>> then exact lines copied from the attached file (enough to be unique) then <<<REPLACE>>> then the new code then <<<END>>>. Use one block per change; multiple blocks allowed. FIND must match the file EXACTLY or the edit fails. '
       + '5. Only output a full triple-backtick file when creating a brand-new file from scratch. '
-      + '6. COMPLETENESS CHECK: before finishing, re-read the user\'s request and verify you output edit blocks for EVERY file the task touches. If the task needs HTML+CSS+JS changes, all three files must have blocks \u2014 never silently skip a file. ' + '7. After the edit blocks, write one short line saying what changed. Keep every reply short. No markdown headings.';
+      + '6. COMPLETENESS CHECK: before finishing, re-read the user\'s request and verify you output edit blocks for EVERY file the task touches. If the task needs HTML+CSS+JS changes, all three files must have blocks \u2014 never silently skip a file. ' + '7. After the edit blocks, write one short line saying what changed. Keep every reply short. No markdown headings.' + 'NEVER create new files or documentation unless explicitly asked \u2014 only edit the three existing files. ';
     const messages = [{ role: 'system', content: system }];
     const hist = aiChatHistory.slice(0, -1).slice(-8);
     for (const m of hist) messages.push({ role: m.role, content: m.content });
@@ -1112,43 +1112,52 @@ function aiRegisterEdits(edits){
   aiEditStore.push(edits);
   return idx;
 }
+function aiCountOccurrences(haystack, needle){
+  if (!needle) return 0;
+  let count = 0, pos = 0;
+  while ((pos = haystack.indexOf(needle, pos)) !== -1) { count++; pos += needle.length || 1; }
+  return count;
+}
 function aiApplyEditsToContent(content, edits){
-  // returns {content, applied:[bool], failedIdx:[n]}
+  // returns {content, applied:[bool], failedIdx:[n], failReason:{i:reason}}
+  // Robust-Apply guard: exact match must be UNIQUE (refuse on 0 or 2+); fuzzy must have a single clear candidate
   let out = content;
-  const applied = [], failedIdx = [];
+  const applied = [], failedIdx = [], failReason = {};
+  const normLine = function(l){ return l.replace(/\s+$/,''); };
   edits.forEach(function(e, i){
     let done = false;
-    if (out.indexOf(e.find) !== -1) {
-      out = out.split(e.find).join(e.replace);
+    const exactCount = aiCountOccurrences(out, e.find);
+    if (exactCount === 1) {
+      out = out.replace(e.find, e.replace);
       done = true;
+    } else if (exactCount > 1) {
+      failReason[i] = 'ambiguous (' + exactCount + ' matches)';
     } else {
-      // fuzzy: ignore trailing whitespace differences per line
-      const norm = function(s){ return s.split('\n').map(function(l){ return l.replace(/\s+$/,''); }).join('\n'); };
-      const nf = norm(e.find), no = norm(out);
-      const pos = no.indexOf(nf);
-      if (pos !== -1) {
-        // map back: find the original segment via line alignment
-        const before = out.split('\n');
-        const findLines = e.find.split('\n');
-        let startLine = -1;
-        for (let li = 0; li + findLines.length <= before.length; li++) {
-          let ok = true;
-          for (let k = 0; k < findLines.length; k++) {
-            if (before[li+k].replace(/\s+$/,'') !== findLines[k].replace(/\s+$/,'')) { ok = false; break; }
-          }
-          if (ok) { startLine = li; break; }
+      // fuzzy: find all candidate start lines (trailing-whitespace-insensitive)
+      const before = out.split('\n');
+      const findLines = e.find.split('\n');
+      const candidates = [];
+      for (let li = 0; li + findLines.length <= before.length; li++) {
+        let ok = true;
+        for (let k = 0; k < findLines.length; k++) {
+          if (normLine(before[li+k]) !== normLine(findLines[k])) { ok = false; break; }
         }
-        if (startLine !== -1) {
-          before.splice(startLine, findLines.length, e.replace);
-          out = before.join('\n');
-          done = true;
-        }
+        if (ok) candidates.push(li);
+      }
+      if (candidates.length === 1) {
+        before.splice(candidates[0], findLines.length, e.replace);
+        out = before.join('\n');
+        done = true;
+      } else if (candidates.length > 1) {
+        failReason[i] = 'ambiguous (' + candidates.length + ' matches)';
+      } else {
+        failReason[i] = 'target not found';
       }
     }
     applied.push(done);
-    if (!done) failedIdx.push(i);
+    if (!done) { failedIdx.push(i); if (!failReason[i]) failReason[i] = 'target not found'; }
   });
-  return { content: out, applied: applied, failedIdx: failedIdx };
+  return { content: out, applied: applied, failedIdx: failedIdx, failReason: failReason };
 }
 function aiPreviewEdits(editIdx){
   // compute resulting file contents without applying; returns array of per-file {file, original, modified, okCount, failCount, total}
@@ -1182,7 +1191,8 @@ function aiApplyEditSet(editIdx){
       const res = aiApplyEditsToContent(model.getValue(), byFile[fname]);
       ed.executeEdits('ai-surgical', [{ range: model.getFullModelRange(), text: res.content }]);
       const okN = res.applied.filter(Boolean).length;
-      rows.push({ file: fname, ok: okN, total: byFile[fname].length, fail: res.failedIdx.length });
+      const reasons = (res.failReason ? Object.keys(res.failReason).map(function(k){ return res.failReason[k]; }) : []);
+      rows.push({ file: fname, ok: okN, total: byFile[fname].length, fail: res.failedIdx.length, reasons: reasons });
       ed.focus();
     } catch(e){ rows.push({ file: fname, ok: 0, total: byFile[fname].length, fail: byFile[fname].length, err: 'error' }); }
   });
@@ -1194,7 +1204,8 @@ function aiApplyEditSet(editIdx){
     + '</div>'
     + rows.map(function(r){
         const icon = r.fail === 0 ? '<i class="ph-bold ph-check" style="color:var(--success);"></i>' : '<i class="ph-bold ph-x" style="color:#f87171;"></i>';
-        const detail = r.err ? ' \u2014 ' + r.err : r.fail ? ' \u2014 ' + r.fail + ' target' + (r.fail > 1 ? 's' : '') + ' not found in file' : '';
+        const r0 = (r.reasons && r.reasons[0]) || '';
+        const detail = r.err ? ' \u2014 ' + r.err : r.fail ? ' \u2014 ' + aiEscapeHtml(r0 || (r.fail + ' target' + (r.fail > 1 ? 's' : '') + ' not found')) : '';
         return '<div class="ai-statuscard-row">' + icon + '<span class="f">' + aiEscapeHtml(r.file) + '</span>'
           + '<span>' + r.ok + '/' + r.total + ' edits' + aiEscapeHtml(detail) + '</span></div>';
       }).join('')

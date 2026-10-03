@@ -2263,17 +2263,21 @@ html{overflow-x:clip}
 #aiSideResize::before{content:"";position:absolute;left:4px;top:50%;transform:translateY(-50%);width:6px;height:32px;border-left:2px dotted var(--text-muted);opacity:.5;transition:opacity .15s,border-color .15s}
 #aiSideResize:hover::after,#aiSideResize.dragging::after{background:#00e5ff}
 #aiSideResize:hover::before,#aiSideResize.dragging::before{opacity:1;border-color:#00e5ff}
-.ai-side-header{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--border);flex-shrink:0;white-space:nowrap}
 #aiSidebarBackdrop{display:none}
 @media (max-width:768px){
   #aiSidebar{position:fixed;top:0;right:0;height:100dvh;width:min(340px,94vw);z-index:9999;border-left:1px solid var(--border);box-shadow:-10px 0 30px rgba(0,0,0,.5);transform:translateX(105%);transition:transform .3s cubic-bezier(.16,1,.3,1)}
   #aiSidebar.open{transform:none;width:min(340px,94vw)}
+  #aiSideResize{display:none}
   #aiSidebarBackdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9998;opacity:0;pointer-events:none;transition:opacity .3s}
   #aiSidebarBackdrop.open{opacity:1;pointer-events:auto}
 }
 
 /* ===== AI Sidebar Chat — polished UI ===== */
-#aiSidebar .ai-chat-model-label{font-size:.7rem;color:var(--text-muted);font-family:ui-monospace,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px}
+.ai-side-header{display:flex;flex-direction:column;gap:0;padding:10px 12px 8px;border-bottom:1px solid var(--border);flex-shrink:0}
+.ai-side-header-top{display:flex;align-items:center;gap:8px}
+.ai-side-header .ai-side-title{flex:1}
+.ai-side-header-model{display:flex;margin-top:6px;min-width:0}
+#aiSidebar .ai-chat-model-label{font-size:.68rem;color:var(--text-muted);font-family:ui-monospace,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 .ai-side-title{font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:7px;letter-spacing:.2px}
 .ai-side-title i{color:#00e5ff;font-size:1rem}
 .ai-side-actions{margin-left:auto;display:flex;gap:2px;align-items:center}
@@ -2366,3 +2370,10 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
 .ai-statuscard-row .f{font-family:ui-monospace,monospace;color:var(--text-muted)}
 #aiDiffTabs button{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-muted);border-radius:8px;padding:4px 12px;font-size:.72rem;cursor:pointer;font-family:ui-monospace,monospace}
 #aiDiffTabs button.on{background:rgba(0,229,255,.15);border-color:rgba(0,229,255,.4);color:#00e5ff}
+@media (max-width:768px){
+  .ai-side-header-top .btn{padding:10px !important;min-width:40px;min-height:40px}
+  .ai-side-header{padding:12px 14px 10px}
+  #aiDiffTabs{overflow-x:auto;padding:8px 14px 0}
+  .ai-statuscard-row{flex-wrap:wrap}
+  .ai-msg .ai-codeblock pre{font-size:.72rem}
+}

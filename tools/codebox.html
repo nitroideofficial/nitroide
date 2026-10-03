@@ -268,13 +268,15 @@
           <aside id="aiSidebar" aria-label="AI Chat">
             <div id="aiSideResize" title="Drag to resize"></div>
             <div class="ai-side-header">
+              <div class="ai-side-header-top">
               <span class="ai-side-title"><i class="ph-bold ph-chat-teardrop-text"></i> AI Chat</span>
-              <span id="aiChatModelLabel" class="ai-chat-model-label"></span>
               <div class="ai-side-actions">
                 <button id="aiAutoApplyBtn" class="btn btn-compact btn-outline" onclick="aiToggleAutoApply()" title="Auto-apply AI code: OFF (click to enable)" style="border:none;padding:4px;"><i class="ph-bold ph-magic-wand"></i></button>
                 <button class="btn btn-compact btn-outline" onclick="aiChatClear()" title="Clear chat" style="border:none;padding:4px;"><i class="ph-bold ph-trash"></i></button>
                 <button class="btn btn-compact btn-outline" onclick="aiToggleSidebar(false)" title="Close" style="border:none;padding:4px;"><i class="ph-bold ph-x"></i></button>
               </div>
+              </div>
+              <div class="ai-side-header-model"><span id="aiChatModelLabel" class="ai-chat-model-label"></span></div>
             </div>
             <div id="aiChatMessages" class="ai-chat-messages"></div>
             <div id="aiChatContext" class="ai-chat-context"></div>
