@@ -335,6 +335,12 @@ function aiChatSuggest(text){
   if (r && r.parentNode) r.parentNode.removeChild(r);
   aiChatSend(text);
 }
+function aiCodeToggle(btn){
+  const block = btn.closest('.ai-codeblock');
+  if (!block) return;
+  const isC = block.classList.toggle('collapsed');
+  btn.textContent = isC ? 'Expand' : 'Collapse';
+}
 function aiToggleCtx(label){
   if (aiExcludedCtx[label]) delete aiExcludedCtx[label]; else aiExcludedCtx[label] = 1;
   aiChatRenderContext();
@@ -528,7 +534,7 @@ function aiChatAddMsg(role, text){
   if (!box) return;
   const div = document.createElement('div');
   div.className = 'ai-msg ' + role;
-  div.innerHTML = role === 'user' ? aiEscapeHtml(text) : '<span class="ai-badge">\u2726 AI</span>' + aiChatMd(text);
+div.innerHTML = role === 'user' ? aiEscapeHtml(text) : aiChatMd(text);
   box.appendChild(div);
   box.scrollTop = box.scrollHeight;
   return div;
@@ -563,11 +569,17 @@ function aiChatMd(text){
       const code = chunk.replace(/^[a-zA-Z0-9+#-]+\n/, '');
       const idx = aiChatRegisterCode(code);
       const langLabel = aiEscapeHtml(lang || 'code');
-      html += '<div class="ai-codeblock"><div class="ai-codeblock-head"><span class="lang">' + langLabel + '</span><span class="spacer"></span>' +
+      const lineCount = code.split('\n').length;
+      const isLong = lineCount > 15;
+      const showNums = lineCount > 5;
+      const lineNums = showNums ? '<span class="ln">' + Array.from({length: lineCount}, function(_, i){ return (i+1); }).join('\n') + '</span>' : '';
+      html += '<div class="ai-codeblock' + (isLong ? ' collapsed' : '') + '"><div class="ai-codeblock-head"><span class="lang">' + langLabel + '</span>' +
+        (isLong ? '<button onclick="aiCodeToggle(this)">Expand</button>' : '') + '<span class="spacer"></span>' +
         '<button onclick="aiDiffOpen(' + idx + ')" title="Review changes side-by-side">Diff</button>' +
         '<button class="apply" onclick="aiChatReplaceFile(' + idx + ')" title="Replace the open file with this code">Apply</button>' +
         '<button onclick="aiChatInsertCode(' + idx + ')" title="Insert at cursor">Insert</button>' +
-        '<button onclick="aiChatCopyCode(' + idx + ')" title="Copy">Copy</button></div>' +
+        '<button onclick="aiChatCopyCode(' + idx + ', this)" title="Copy">Copy</button></div>' +
+        '<div class="ai-codeblock-body"><pre>' + lineNums + '<code>' + aiEscapeHtml(code) + '</code></pre></div></div>';
         '<pre><code>' + aiEscapeHtml(code) + '</code></pre></div>';
     } else {
       const t = parts[i].trim();
@@ -650,10 +662,14 @@ function aiChatReplaceFile(idx){
     showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> " + aiEscapeHtml(label) + " updated.");
   } catch(e){ showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Could not replace file."); }
 }
-function aiChatCopyCode(idx){
+function aiChatCopyCode(idx, btn){
   const code = aiChatCodeStore[idx] || '';
-  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(function(){ showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> Copied."); });
+  const done = function(){
+    if (btn) { const o = btn.textContent; btn.textContent = 'Copied!'; setTimeout(function(){ btn.textContent = o; }, 1200); }
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(done).catch(function(){});
 }
+
 function aiChatKeydown(e){
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); aiChatSend(); }
 }

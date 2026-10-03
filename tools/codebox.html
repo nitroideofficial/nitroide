@@ -287,6 +287,21 @@
   </div>
 </div>
 
+<div class="feedback-backdrop" id="aiDiffModal">
+  <div class="feedback-card" style="max-width:min(960px,94vw);width:94vw;height:min(80dvh,720px);display:flex;flex-direction:column;padding:0;overflow:hidden;">
+    <div class="feedback-header" style="padding:14px 18px;margin:0;border-bottom:1px solid var(--border);">
+      <h3 style="display:flex;align-items:center;gap:8px;"><i class="ph-bold ph-files" style="color:#00e5ff;"></i> Review Changes <span id="aiDiffFile" style="font-family:ui-monospace,monospace;font-size:.78rem;color:var(--text-muted);font-weight:400;"></span></h3>
+      <button onclick="aiDiffClose()" aria-label="Close"><i class="ph-bold ph-x"></i></button>
+    </div>
+    <div id="aiDiffEditor" style="flex:1;min-height:0;"></div>
+    <div style="display:flex;gap:8px;padding:12px 18px;border-top:1px solid var(--border);align-items:center;">
+      <span id="aiDiffStats" style="font-size:.76rem;color:var(--text-muted);margin-right:auto;"></span>
+      <button class="btn btn-compact btn-outline" onclick="aiDiffClose()">Discard</button>
+      <button class="btn btn-compact primary-btn" onclick="aiDiffApply()"><i class="ph-bold ph-check"></i> Apply Changes</button>
+    </div>
+  </div>
+</div>
+
 <div class="feedback-backdrop" id="aiSetupModal">
   <div class="feedback-card" style="max-width:420px;">
     <div class="feedback-header">

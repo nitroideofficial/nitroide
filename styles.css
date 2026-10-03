@@ -2275,11 +2275,11 @@ html{overflow-x:clip}
 
 /* messages */
 #aiSidebar .ai-chat-messages{flex:1;min-height:0;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin}
-.ai-msg{font-size:.8rem;line-height:1.65;word-wrap:break-word;animation:aiMsgIn .25s ease}
+.ai-msg{font-size:.875rem;line-height:1.65;word-wrap:break-word;animation:aiMsgIn .25s ease}
 @keyframes aiMsgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.ai-msg.user{align-self:flex-end;max-width:88%;background:linear-gradient(135deg,rgba(0,229,255,.16),rgba(0,229,255,.07));border:1px solid rgba(0,229,255,.22);border-radius:14px 14px 4px 14px;padding:8px 12px;white-space:pre-wrap;color:var(--text)}
-.ai-msg.assistant{align-self:stretch;color:var(--text)}
-.ai-msg.assistant .ai-badge{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;color:#00e5ff;letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px}
+.ai-msg.user{align-self:flex-end;max-width:85%;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.2);border-radius:18px 18px 4px 18px;padding:10px 14px;white-space:pre-wrap;color:var(--text)}
+.ai-msg.assistant{align-self:stretch;color:var(--text);padding:2px 0}
+.ai-badge{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;color:#00e5ff;letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px}
 .ai-msg.assistant p{margin:0 0 8px}
 .ai-msg.assistant p:last-child{margin-bottom:0}
 .ai-msg code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.76em;background:rgba(127,127,127,.14);padding:1px 5px;border-radius:5px}
@@ -2293,7 +2293,12 @@ html.light-mode .ai-codeblock{background:#f6f8fa}
 .ai-codeblock-head button{background:transparent;border:1px solid var(--border);color:var(--text-muted);border-radius:6px;padding:3px 9px;font-size:.68rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:4px;transition:.15s}
 .ai-codeblock-head button:hover{color:#00e5ff;border-color:#00e5ff}
 .ai-codeblock-head button.apply{color:#00e5ff;border-color:rgba(0,229,255,.4)}
-.ai-codeblock pre{margin:0;padding:10px 12px;overflow-x:auto;font-size:.76rem;line-height:1.6}
+.ai-codeblock pre{margin:0;padding:10px 0;overflow-x:auto;font-size:.76rem;line-height:1.6;display:flex}
+.ai-codeblock pre .ln{flex-shrink:0;user-select:none;text-align:right;padding:0 10px 0 12px;color:var(--text-muted);opacity:.45;border-right:1px solid var(--border);margin-right:12px;white-space:pre}
+.ai-codeblock pre code{flex:1;white-space:pre}
+.ai-codeblock.collapsed .ai-codeblock-body{max-height:180px;overflow:hidden;position:relative}
+.ai-codeblock.collapsed .ai-codeblock-body::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(transparent,rgba(13,17,23,.95));pointer-events:none}
+html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:linear-gradient(transparent,rgba(246,248,250,.95))}
 .ai-codeblock pre code{background:none;padding:0;font-size:1em}
 
 /* context chips */
