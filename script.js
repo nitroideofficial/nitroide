@@ -446,7 +446,7 @@ function aiDetectProvider(key){
   key = (key || '').trim();
   if (/^gsk_/.test(key)) return 'groq';
   if (/^sk-or-v1-/.test(key)) return 'openrouter';
-  if (/^AIza/.test(key)) return 'gemini';
+  if (/^AIza/.test(key) || /^AQ\./.test(key)) return 'gemini';
   if (/^sk-proj-/.test(key) || /^sk-[A-Za-z0-9_\-]{20,}/.test(key)) return 'openai';
   return null;
 }
@@ -483,7 +483,7 @@ function aiSetupKeyTyped(){
   if (aiChatModelTimer) clearTimeout(aiChatModelTimer);
   if (!key) { if (detEl) detEl.textContent = ''; if (selEl) selEl.innerHTML = '<option value="">Paste a key first...</option>'; return; }
   const p = aiDetectProvider(key);
-  if (!p) { if (detEl) { detEl.style.color = 'var(--warning)'; detEl.textContent = 'Could not detect provider — key should start with gsk_ (Groq), AIza (Gemini), sk-or-v1- (OpenRouter) or sk- (OpenAI). Check it was copied fully.'; } return; }
+  if (!p) { if (detEl) { detEl.style.color = 'var(--warning)'; detEl.textContent = 'Could not detect provider — key should start with gsk_ (Groq), AIza or AQ. (Gemini), sk-or-v1- (OpenRouter) or sk- (OpenAI). Check it was copied fully.'; } return; }
   if (detEl) { detEl.style.color = 'var(--text-muted)'; detEl.textContent = 'Detected: ' + AI_PROVIDERS[p].label + ' — fetching your models...'; }
   if (selEl) selEl.innerHTML = '<option value="">Loading models...</option>';
   aiChatModelTimer = setTimeout(async function(){
