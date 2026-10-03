@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 3, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools",
+  link: "https://x.com/trynitroide/status/2106361471957352939"
+},
+  {
+  date: "Oct 3, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
