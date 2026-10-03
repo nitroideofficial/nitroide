@@ -53,6 +53,7 @@ function aiFriendlyError(err){
   if (m === 'HTTP_401' || m === 'HTTP_403') return 'Key rejected (401/403). Check the key in AI Key & Model — make sure it was copied fully.';
   if (m === 'HTTP_429') return 'Rate limit hit. Free tiers are limited per day — try again later or switch provider in AI Key & Model.';
   if (m === 'HTTP_400') return 'Bad request (400). The model name may be wrong — check it in AI Key & Model.';
+  if (m === 'HTTP_404') return 'Model not found (404) — it was renamed or retired. Open AI Key & Model, paste your key again, and pick a model from the fresh list.';
   if (m === 'EMPTY') return 'The AI returned an empty response. Try again.';
   if (/^HTTP_/.test(m)) return 'Request failed (' + m.slice(5) + '). Try again or check AI Settings.';
   return 'Something went wrong. Try again.';
@@ -492,17 +493,28 @@ function aiSetupKeyTyped(){
       if (detEl) { detEl.style.color = 'var(--success)'; detEl.textContent = 'Detected: ' + AI_PROVIDERS[p].label + ' — ' + models.length + ' models available.'; }
       if (selEl) {
         const cur = aiGetModel(p);
-        const freePick = AI_PROVIDERS[p].freePick;
+        // adaptive best-free pick: prefer *flash-lite*, then *flash*, then the hardcoded hint
+        let freePick = AI_PROVIDERS[p].freePick;
+        if (p === 'gemini') {
+          freePick = models.find(function(m){ return /flash-lite/i.test(m); })
+            || models.find(function(m){ return /flash/i.test(m); })
+            || freePick;
+        }
         selEl.innerHTML = models.map(function(m){
           const star = (freePick && m === freePick) ? ' ★ best free' : '';
           return '<option value="' + aiEscapeHtml(m) + '"' + (m === cur ? ' selected' : '') + '>' + aiEscapeHtml(m) + aiEscapeHtml(star) + '</option>';
         }).join('');
         if (selEl.selectedIndex < 0) selEl.selectedIndex = 0;
-        // auto-select the best free model when nothing was chosen before
+        // auto-select the best free model when nothing was chosen before,
+        // or when the saved model no longer exists (renamed/retired -> 404)
         try {
           const savedKey = 'nitro_ai_model_' + p;
-          if (!localStorage.getItem(savedKey) && freePick && models.indexOf(freePick) >= 0) {
+          const saved = localStorage.getItem(savedKey);
+          if (freePick && models.indexOf(freePick) >= 0 && (!saved || models.indexOf(saved) < 0)) {
             selEl.value = freePick;
+          } else if (saved && models.indexOf(saved) < 0 && models.length) {
+            selEl.value = models[0];
+            if (detEl) detEl.textContent += ' Saved model no longer exists — picked ' + models[0] + ' instead.';
           }
         } catch(e){}
       }
