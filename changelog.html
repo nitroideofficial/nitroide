@@ -91,11 +91,26 @@
 
   <div class="timeline">
 
-    <!-- THE NEW V28 UPDATE -->
+    <!-- THE NEW V29 UPDATE -->
     <div class="log-entry">
       <div class="log-dot"></div>
       <span class="log-date">October 2026</span>
-      <h2 class="log-version">v28 <span class="log-badge">The Sharing &amp; Templates Update</span></h2>
+      <h2 class="log-version">v29 <span class="log-badge">The Performance Update</span></h2>
+      <div class="log-content">
+        <p class="changelog-desc">A full vendor and code audit: 3.5MB of dead weight removed, zero features touched.</p>
+        <ul>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> <strong>3.5MB lighter:</strong> removed 9 unused Monaco language packs (1.7MB), 77 unneeded editor languages, the JSON language service, and two icon font weights with zero uses.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> <strong>Leaner loading:</strong> 76 pages no longer request dead icon stylesheets; the service worker precache list trimmed to match.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">FIX</span> <strong>Dead code removed:</strong> pruned unused functions from the main script; the options-menu Share item now opens the share dialog instead of the old toast-only flow.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- THE NEW V28 UPDATE -->
+    <div class="log-entry">
+      <div class="log-dot dim"></div>
+      <span class="log-date">October 2026</span>
+      <h2 class="log-version dim-text">v28 <span class="log-badge dim-badge">The Sharing &amp; Templates Update</span></h2>
       <div class="log-content">
         <p class="changelog-desc">Templates get a real gallery and sharing gets a real dialog: find the right starter faster, and send your workspace anywhere with one tap.</p>
         <ul>

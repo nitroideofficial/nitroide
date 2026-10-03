@@ -49,12 +49,11 @@ No installs. No backend. No delays.
 
 ---
 
-## 🆕 What's New — v28 (October 2026)
+## 🆕 What's New — v29 (October 2026)
 
-* 🖼️ **Browsable template gallery** — search + category filters, live preview thumbnails on every card
-* 🔗 **Share dialog** — workspace title, copyable link, native share, X/WhatsApp/Telegram intents
-* 📇 **Richer link cards** — every template page unfurls with its own screenshot on social
-* 📄 **2 new template pages** — Countdown Timer and Link in Bio get full pages with live previews
+* 🪶 **3.5MB lighter** — removed unused Monaco language packs, 77 unneeded editor languages, and dead icon font weights
+* ⚡ **Leaner loading** — 76 pages no longer fetch dead stylesheets; service worker precache trimmed
+* 🧹 **Dead code pruned** — unused functions removed; options-menu Share now opens the share dialog
 
 Full details: https://nitroide.com/changelog.html
 

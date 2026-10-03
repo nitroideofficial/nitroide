@@ -38,7 +38,6 @@
   
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="/vendor/icons/phosphor/light/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
 <script src="/vendor/monaco/vs/loader.js" defer></script>
 <script src="/vendor/lz-string/lz-string.min.js" defer></script>
@@ -142,7 +141,7 @@
           <input type="file" id="fileImportInput" accept=".zip,.html,.css,.js" multiple style="display:none;" onchange="handleImport(event)">
           <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="openTimeMachine()"><i class="ph-bold ph-clock-counter-clockwise"></i> Local Time Machine</button>
-          <button class="dropdown-item" onclick="generateShareLink()"><i class="ph-bold ph-share-network"></i> Share Workspace</button>
+          <button class="dropdown-item" onclick="toggleOptions();openShareModal()"><i class="ph-bold ph-share-network"></i> Share Workspace</button>
           <button class="dropdown-item" onclick="installAppHint()"><i class="ph-bold ph-download-simple"></i> Install App</button>
           <button class="dropdown-item" onclick="exportSingleFile()"><i class="ph-bold ph-file-code"></i> Export as 1-File</button>
           <button class="dropdown-item" onclick="downloadZip()"><i class="ph-bold ph-file-archive"></i> Download ZIP</button>

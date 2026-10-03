@@ -1,5 +1,5 @@
 // sw.js — NitroIDE PWA service worker (network-first for pages + script.js, cache-first for vendor assets)
-const CACHE = 'nitroide-v90';
+const CACHE = 'nitroide-v91';
 
 const APP_SHELL = [
   '/',
@@ -23,7 +23,6 @@ const APP_SHELL = [
   '/vendor/monaco/vs/language/typescript/tsWorker.js',
   '/vendor/monaco/vs/language/css/cssWorker.js',
   '/vendor/monaco/vs/language/html/htmlWorker.js',
-  '/vendor/monaco/vs/language/json/jsonWorker.js',
   // Self-hosted fonts (vendor/fonts)
   '/vendor/fonts/Inter-400.woff2',
   '/vendor/fonts/Inter-500.woff2',
@@ -33,11 +32,9 @@ const APP_SHELL = [
   '/vendor/fonts/JetBrainsMono-400.woff2',
   '/vendor/fonts/JetBrainsMono-500.woff2',
   '/vendor/fonts/JetBrainsMono-700.woff2',
-  // Self-hosted Phosphor icons (vendor/icons)
-  '/vendor/icons/phosphor/regular/style.css',
+  // Self-hosted Phosphor icons (vendor/icons) — only weights actually used (bold/fill/duotone)
   '/vendor/icons/phosphor/bold/style.css',
   '/vendor/icons/phosphor/fill/style.css',
-  '/vendor/icons/phosphor/light/style.css',
   '/vendor/icons/phosphor/duotone/style.css'
 ];
 
