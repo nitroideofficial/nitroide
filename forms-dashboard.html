@@ -35,6 +35,13 @@
   .hidden { display: none !important; }
   .live { font-size: 12px; color: #4ade80; margin-left: 8px; }
   .upd { font-size: 12px; color: #71717a; margin-left: 6px; }
+  .msg.clamp { max-height: 88px; overflow: hidden; }
+  .actions { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .mini { background: transparent; border: 1px solid #26262b; color: #a1a1aa; border-radius: 999px; padding: 4px 14px; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .mini:hover { border-color: #00e5ff; color: #00e5ff; }
+  .mini.danger:hover { border-color: #f87171; color: #f87171; }
+  .toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  .toolbar input { max-width: 320px; }
   @media (max-width: 640px) { table, thead, tbody, th, td, tr { display: block; } thead { display: none; } td { border: 0; padding: 6px 0; } tr { border-bottom: 1px solid #26262b; padding: 10px 0; display: block; } }
 </style>
 </head>
@@ -62,6 +69,9 @@
           <button class="ghost" onclick="logout()">Lock</button>
         </div>
       </div>
+      <div class="toolbar">
+        <input id="searchInput" placeholder="Search name, email, message..." autocomplete="off">
+      </div>
       <div style="overflow-x:auto">
         <table>
           <thead><tr><th>When (IST)</th><th>Form</th><th>From</th><th>Heard via</th><th>Message</th></tr></thead>
@@ -82,6 +92,16 @@
   var cursor = null;
   var loggedIn = false;
   var lastUpdated = 0;
+  var pagesLoaded = 0;
+
+  function applyFilter() {
+    var q = document.getElementById("searchInput").value.trim().toLowerCase();
+    var rows = document.getElementById("subsBody").rows;
+    for (var i = 0; i < rows.length; i++) {
+      rows[i].style.display = !q || rows[i].textContent.toLowerCase().indexOf(q) !== -1 ? "" : "none";
+    }
+  }
+  document.getElementById("searchInput").addEventListener("input", applyFilter);
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -126,13 +146,55 @@
       return r.json();
     }).then(function (d) {
       renderStats(d);
+      // Re-fetch the same pagination depth the user already loaded.
+      var want = Math.max(1, pagesLoaded);
       document.getElementById("subsBody").innerHTML = "";
       cursor = null;
-      loadMore();
+      pagesLoaded = 0;
+      (function fill() { loadMore(function () { if (pagesLoaded < want) fill(); }); })();
       lastUpdated = Date.now();
       tickUpdLabel();
     }).catch(function () { /* keep old data on transient failure */ });
   };
+
+  function refreshStatsOnly() {
+    api("/api/forms/admin/stats").then(function (r) {
+      if (!r.ok) throw new Error("x");
+      return r.json();
+    }).then(function (d) {
+      if (d.success) { renderStats(d); lastUpdated = Date.now(); tickUpdLabel(); }
+    }).catch(function () {});
+  }
+
+  function delSub(key, tr) {
+    if (!confirm("Delete this submission permanently?")) return;
+    fetch("/api/forms/admin/subs?key=" + encodeURIComponent(key), {
+      method: "DELETE",
+      headers: { "Authorization": "Bearer " + token }
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.success) { tr.remove(); refreshStatsOnly(); }
+      else alert("Delete failed.");
+    }).catch(function () { alert("Delete failed."); });
+  }
+
+  // Row actions via delegation (rows are rendered dynamically).
+  document.getElementById("subsBody").addEventListener("click", function (e) {
+    var btn = e.target.closest ? e.target.closest("[data-act]") : null;
+    if (!btn) return;
+    var tr = btn.closest("tr");
+    var act = btn.getAttribute("data-act");
+    if (act === "del") {
+      delSub(tr.getAttribute("data-key"), tr);
+    } else if (act === "reply") {
+      var email = btn.getAttribute("data-email");
+      var subj = tr.getAttribute("data-subject") || "your message";
+      window.location.href = "mailto:" + email + "?subject=" + encodeURIComponent("Re: " + subj + " — NitroIDE");
+    } else if (act === "more") {
+      var msg = tr.querySelector(".msg");
+      var clamped = msg.classList.toggle("clamp");
+      btn.textContent = clamped ? "Show more" : "Show less";
+    }
+  });
 
   function boot() {
     api("/api/forms/admin/stats").then(function (r) {
@@ -147,6 +209,7 @@
       renderStats(d);
       document.getElementById("subsBody").innerHTML = "";
       cursor = null;
+      pagesLoaded = 0;
       loadMore();
       lastUpdated = Date.now();
       tickUpdLabel();
@@ -176,34 +239,51 @@
     return '<div class="stat"><div class="n">' + n + '</div><div class="l">' + l + "</div></div>";
   }
 
-  window.loadMore = function () {
+  function rowHtml(s) {
+    var from = s.form === "contact" && s.name
+      ? esc(s.name) + " &lt;" + esc(s.email) + "&gt;"
+      : "—";
+    var atts = (s.attachments || []).map(function (a) { return "📎 " + esc(a.name); }).join(" ");
+    var longMsg = s.message && s.message.length > 300;
+    var replyBtn = (s.form === "contact" && s.email)
+      ? "<button class='mini' data-act='reply' data-email='" + esc(s.email) + "'>Reply</button>"
+      : "";
+    return "<tr data-key='" + esc(s._key || "") + "' data-subject='" + esc(s.subject || "") + "'>" +
+      "<td style='white-space:nowrap'>" + esc(s.when) + "</td>" +
+      "<td><span class='pill " + (s.form === "contact" ? "contact" : "") + "'>" + esc(s.form) + "</span></td>" +
+      "<td>" + from + "</td>" +
+      "<td>" + esc(s.source || "—") + "</td>" +
+      "<td><div class='msg" + (longMsg ? " clamp" : "") + "'>" + esc(s.message) + "</div>" +
+      (longMsg ? "<div class='actions'><button class='mini' data-act='more'>Show more</button></div>" : "") +
+      (atts ? "<div class='meta'>" + atts + " <span title='Files are in the notification email'>(in email)</span></div>" : "") +
+      (s.subject ? "<div class='meta'>Subject: " + esc(s.subject) + "</div>" : "") +
+      (s.country && s.country !== "unknown" ? "<div class='meta'>" + esc(s.country) + "</div>" : "") +
+      "<div class='actions'>" + replyBtn + "<button class='mini danger' data-act='del'>Delete</button></div>" +
+      "</td></tr>";
+  }
+
+  window.loadMore = function (cb) {
     var url = "/api/forms/admin/subs?limit=50" + (cursor ? "&cursor=" + encodeURIComponent(cursor) : "");
     api(url).then(function (r) { return r.json(); }).then(function (d) {
       if (!d.success) throw new Error("load failed");
       cursor = d.cursor;
       var html = "";
-      (d.subs || []).forEach(function (s) {
-        var from = s.form === "contact" && s.name
-          ? esc(s.name) + ' &lt;' + esc(s.email) + "&gt;"
-          : "—";
-        var atts = (s.attachments || []).map(function (a) { return "📎 " + esc(a.name); }).join(" ");
-        html += "<tr>" +
-          "<td style='white-space:nowrap'>" + esc(s.when) + "</td>" +
-          "<td><span class='pill " + esc(s.form) + "'>" + esc(s.form) + "</span></td>" +
-          "<td>" + from + "</td>" +
-          "<td>" + esc(s.source || "—") + "</td>" +
-          "<td><div class='msg'>" + esc(s.message) + "</div>" +
-          (atts ? "<div class='meta'>" + atts + "</div>" : "") +
-          (s.subject ? "<div class='meta'>Subject: " + esc(s.subject) + "</div>" : "") +
-          (s.country && s.country !== "unknown" ? "<div class='meta'>" + esc(s.country) + "</div>" : "") +
-          "</td></tr>";
-      });
-      document.getElementById("subsBody").insertAdjacentHTML("beforeend", html);
+      (d.subs || []).forEach(function (s) { html += rowHtml(s); });
+      var body = document.getElementById("subsBody");
+      body.insertAdjacentHTML("beforeend", html);
+      pagesLoaded++;
+      applyFilter();
       document.getElementById("moreBtn").classList.toggle("hidden", !cursor);
-      if (!(d.subs || []).length && !document.getElementById("subsBody").children.length) {
-        document.getElementById("subsBody").innerHTML = "<tr><td colspan='5' style='color:#71717a'>No submissions yet.</td></tr>";
+      if (!(d.subs || []).length && !body.children.length) {
+        body.innerHTML = "<tr><td colspan='5' style='color:#71717a'>No submissions yet.</td></tr>";
       }
-    }).catch(function () { alert("Could not load submissions."); });
+      if (cb) cb();
+    }).catch(function () {
+      var body = document.getElementById("subsBody");
+      if (!body.children.length) {
+        body.innerHTML = "<tr><td colspan='5' style='color:#f87171'>Could not load submissions. Try Refresh.</td></tr>";
+      }
+    });
   };
 
   window.exportCsv = function () {
