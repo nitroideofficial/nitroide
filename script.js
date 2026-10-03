@@ -25,6 +25,9 @@ const AI_PROVIDERS = {
     freePick: 'gemini-2.5-flash-lite' },
   openrouter: { label: 'OpenRouter', defaultModel: 'qwen/qwen3.8-27b:free', keyUrl: 'https://openrouter.ai/keys',
     help: 'Free :free models at openrouter.ai/keys — 50 requests/day. Access to 300+ models. Prompts may train models unless you opt out in their privacy settings.',
+    freePick: null },
+  openai: { label: 'OpenAI', defaultModel: 'gpt-4o-mini', keyUrl: 'https://platform.openai.com/api-keys',
+    help: 'Paid API (separate from ChatGPT Plus/Go subscription). Cheapest coding model: gpt-4o-mini.',
     freePick: null }
 };
 function aiGetProvider(){ try { return localStorage.getItem('nitro_ai_provider') || 'groq'; } catch(e){ return 'groq'; } }
@@ -443,11 +446,13 @@ function aiDetectProvider(key){
   if (/^gsk_/.test(key)) return 'groq';
   if (/^sk-or-v1-/.test(key)) return 'openrouter';
   if (/^AIza/.test(key)) return 'gemini';
+  if (/^sk-proj-/.test(key) || /^sk-[A-Za-z0-9_\-]{20,}/.test(key)) return 'openai';
   return null;
 }
 async function aiFetchModels(provider, key){
-  if (provider === 'groq') {
-    const res = await fetch('https://api.groq.com/openai/v1/models', { headers: { 'Authorization': 'Bearer ' + key } });
+  if (provider === 'groq' || provider === 'openai') {
+    const base = provider === 'groq' ? 'https://api.groq.com/openai/v1/models' : 'https://api.openai.com/v1/models';
+    const res = await fetch(base, { headers: { 'Authorization': 'Bearer ' + key } });
     if (!res.ok) throw new Error('HTTP_' + res.status);
     const d = await res.json();
     return (d.data || []).map(function(m){ return m.id; }).filter(Boolean).sort();
@@ -477,7 +482,7 @@ function aiSetupKeyTyped(){
   if (aiChatModelTimer) clearTimeout(aiChatModelTimer);
   if (!key) { if (detEl) detEl.textContent = ''; if (selEl) selEl.innerHTML = '<option value="">Paste a key first...</option>'; return; }
   const p = aiDetectProvider(key);
-  if (!p) { if (detEl) { detEl.style.color = 'var(--warning)'; detEl.textContent = 'Could not detect provider from this key — check it was copied fully.'; } return; }
+  if (!p) { if (detEl) { detEl.style.color = 'var(--warning)'; detEl.textContent = 'Could not detect provider — key should start with gsk_ (Groq), AIza (Gemini), sk-or-v1- (OpenRouter) or sk- (OpenAI). Check it was copied fully.'; } return; }
   if (detEl) { detEl.style.color = 'var(--text-muted)'; detEl.textContent = 'Detected: ' + AI_PROVIDERS[p].label + ' — fetching your models...'; }
   if (selEl) selEl.innerHTML = '<option value="">Loading models...</option>';
   aiChatModelTimer = setTimeout(async function(){
@@ -926,7 +931,7 @@ async function aiChatWithHistory(messages, providerOverride){
     if (!t) throw new Error('EMPTY');
     return t;
   }
-  const url = p === 'groq' ? 'https://api.groq.com/openai/v1/chat/completions' : 'https://openrouter.ai/api/v1/chat/completions';
+  const url = p === 'groq' ? 'https://api.groq.com/openai/v1/chat/completions' : p === 'openai' ? 'https://api.openai.com/v1/chat/completions' : 'https://openrouter.ai/api/v1/chat/completions';
   const headers = { 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json' };
   if (p === 'openrouter') { headers['HTTP-Referer'] = 'https://nitroide.com'; headers['X-OpenRouter-Title'] = 'NitroIDE'; }
   let res;
