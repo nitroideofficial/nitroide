@@ -2325,3 +2325,8 @@ html.light-mode .ai-codeblock{background:#f6f8fa}
 .ai-chat-detected{font-size:.76rem;min-height:1.2em;margin:2px 0 4px}
 .ai-chat-help{font-size:.74rem!important;color:var(--text-muted);margin:10px 0 0!important;line-height:1.5}
 .ai-chat-help a{color:#00e5ff;text-decoration:none}
+
+/* suggestion chips */
+.ai-suggest-row{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 4px}
+.ai-suggest-row button{background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.22);color:var(--text);border-radius:20px;padding:6px 12px;font-size:.72rem;cursor:pointer;font-family:inherit;transition:.15s}
+.ai-suggest-row button:hover{background:rgba(0,229,255,.14);border-color:#00e5ff}

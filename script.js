@@ -319,12 +319,33 @@ try {
     setTimeout(function(){ aiToggleSidebar(true); }, 800);
   }
 } catch(e){}
+function aiChatSuggestions(){
+  const box = document.getElementById('aiChatMessages');
+  if (!box) return;
+  const div = document.createElement('div');
+  div.className = 'ai-suggest-row';
+  div.id = 'aiSuggestRow';
+  const items = ['Explain this file', 'Find bugs', 'Make it responsive', 'Add comments'];
+  div.innerHTML = items.map(function(s){ return '<button onclick="aiChatSuggest(\'' + s + '\')">' + s + '</button>'; }).join('');
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+function aiChatSuggest(text){
+  const r = document.getElementById('aiSuggestRow');
+  if (r && r.parentNode) r.parentNode.removeChild(r);
+  aiChatSend(text);
+}
+function aiToggleCtx(label){
+  if (aiExcludedCtx[label]) delete aiExcludedCtx[label]; else aiExcludedCtx[label] = 1;
+  aiChatRenderContext();
+}
 function aiChatEnsureBoot(){
   aiChatUpdateModelLabel();
   aiChatUpdateAutoBtn();
   if (!aiChatBooted) {
     aiChatBooted = true;
     aiChatAddMsg('assistant', "Hey! I can see your open file and console \u2014 just tell me what to fix or build, no need to paste code. What are we working on?");
+  aiChatSuggestions();
   }
 }
 var aiChatHistory = [];
@@ -473,10 +494,10 @@ function aiChatContext(){
   try {
     const f = aiCurrentFile();
     if (f && f.content.trim()) {
-      ctx.push({ label: 'Open file: ' + f.name, text: f.content.slice(0, 12000) });
+      if (!aiExcludedCtx['Open file: ' + f.name]) ctx.push({ label: 'Open file: ' + f.name, text: f.content.slice(0, 12000) });
       try {
         const sel = f.editor.getSelection && !f.editor.getSelection().isEmpty() ? f.editor.getModel().getValueInRange(f.editor.getSelection()) : '';
-        if (sel && sel.trim() && sel.trim() !== f.content.trim()) ctx.push({ label: 'Selected code (focus here)', text: sel.slice(0, 4000) });
+        if (sel && sel.trim() && sel.trim() !== f.content.trim() && !aiExcludedCtx['Selected code (focus here)']) ctx.push({ label: 'Selected code (focus here)', text: sel.slice(0, 4000) });
       } catch(e2){}
     }
   } catch(e){}
@@ -484,16 +505,22 @@ function aiChatContext(){
     const errs = document.querySelectorAll('#consoleLogs .console-entry.con-err-line');
     if (errs.length) {
       const t = errs[errs.length - 1].textContent.trim().slice(0, 800);
-      if (t) ctx.push({ label: 'Last console error', text: t });
+      if (t && !aiExcludedCtx['Last console error']) ctx.push({ label: 'Last console error', text: t });
     }
   } catch(e){}
   return ctx;
 }
+var aiExcludedCtx = {};
 function aiChatRenderContext(){
   const el = document.getElementById('aiChatContext');
   if (!el) return;
   const ctx = aiChatContext();
-  el.innerHTML = ctx.map(function(c){ return '<span class="ai-ctx-chip">' + aiEscapeHtml(c.label) + '</span>'; }).join('');
+  el.innerHTML = ctx.map(function(c){
+    const ex = aiExcludedCtx[c.label] ? ' style="opacity:.35;text-decoration:line-through;"' : '';
+    return '<span class="ai-ctx-chip"' + ex + ' title="Click to ' + (aiExcludedCtx[c.label] ? 'include' : 'exclude') + ' from next message">' +
+      '<span onclick="aiToggleCtx(\'' + aiEscapeHtml(c.label).replace(/'/g, "\\'") + '\')" style="cursor:pointer;">' + aiEscapeHtml(c.label) + '</span>' +
+      '<b onclick="aiToggleCtx(\'' + aiEscapeHtml(c.label).replace(/'/g, "\\'") + '\')" style="cursor:pointer;margin-left:4px;">\u00d7</b></span>';
+  }).join('');
 }
 function aiChatAddMsg(role, text){
   aiChatHistory.push({ role: role, content: text });
@@ -524,7 +551,7 @@ function aiLangMatchesFile(lang, fname){
   if (/\.jsx?$/.test(fname)) return ['js','javascript','jsx','ts','typescript'].indexOf(lang) >= 0;
   return true;
 }
-function aiAutoApplyEnabled(){ try { return localStorage.getItem('nitro_ai_autoapply') !== '0'; } catch(e){ return true; } }
+function aiAutoApplyEnabled(){ try { return localStorage.getItem('nitro_ai_autoapply') === '1'; } catch(e){ return false; } }
 function aiChatMd(text){
   const parts = String(text).split(/```/);
   let html = '';
@@ -550,6 +577,38 @@ function aiChatMd(text){
 }
 var aiChatCodeStore = [];
 var aiChatCodeFile = [];
+var aiCheckpoints = [];
+function aiCheckpoint(label){
+  try {
+    const f = aiCurrentFile();
+    if (!f || !f.content) return -1;
+    aiCheckpoints.push({ file: f.name, content: f.content, time: Date.now(), label: label || 'AI edit' });
+    if (aiCheckpoints.length > 10) aiCheckpoints.shift();
+    return aiCheckpoints.length - 1;
+  } catch(e){ return -1; }
+}
+function aiEditorForFile(fname){
+  try {
+    if (typeof activeFiles !== 'undefined' && activeFiles) {
+      if (typeof htmlMonaco !== 'undefined' && activeFiles.html === fname) return htmlMonaco;
+      if (typeof cssMonaco !== 'undefined' && activeFiles.css === fname) return cssMonaco;
+      if (typeof jsMonaco !== 'undefined' && activeFiles.js === fname) return jsMonaco;
+    }
+  } catch(e){}
+  return null;
+}
+function aiRestoreCheckpoint(idx){
+  const cp = aiCheckpoints[idx];
+  if (!cp) return;
+  try {
+    const ed = aiEditorForFile(cp.file) || aiActiveEditor();
+    if (!ed) throw new Error('no editor');
+    const model = ed.getModel();
+    ed.executeEdits('ai-restore', [{ range: model.getFullModelRange(), text: cp.content }]);
+    ed.focus();
+    showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> Restored " + aiEscapeHtml(cp.file) + ".");
+  } catch(e){ showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Could not restore."); }
+}
 function aiChatRegisterCode(code){
   aiChatCodeStore.push(code);
   let fname = '';
@@ -573,7 +632,8 @@ function aiChatReplaceFile(idx){
   const fname = aiChatCodeFile[idx];
   if (!code) return;
   const label = fname || 'the current file';
-  if (!confirm('Replace the entire content of ' + label + ' with this code?\nYou can undo with Ctrl+Z.')) return;
+  aiCheckpoint('manual apply');
+  if (!confirm('Replace the entire content of ' + label + ' with this code?\nYou can undo with Ctrl+Z or Restore from chat.')) return;
   try {
     let ed = null;
     if (typeof activeFiles !== 'undefined' && activeFiles) {
@@ -700,8 +760,9 @@ function aiChatMaybeAutoApply(text){
   if (big.lang && !aiLangMatchesFile(big.lang, f.name)) return;
   try {
     const model = f.editor.getModel();
+    const cpIdx = aiCheckpoint('auto-apply');
     f.editor.executeEdits('ai-chat-auto', [{ range: model.getFullModelRange(), text: big.code }]);
-    showToast("<i class='ph-bold ph-magic-wand' style='color:var(--success);margin-right:6px;'></i> AI updated " + aiEscapeHtml(f.name) + " \u2014 Ctrl+Z to undo.");
+    aiChatAddMsg('assistant', '<span class="ai-badge">\u2726 Checkpoint</span><p>Applied to <b>' + aiEscapeHtml(f.name) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>');
   } catch(e){}
 }
 function aiToggleAutoApply(){
