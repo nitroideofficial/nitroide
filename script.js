@@ -57,12 +57,12 @@ function aiActiveEditor(){
       if (ed) return ed;
     }
   } catch(e){}
+  if (typeof aiLastEditor !== 'undefined' && aiLastEditor) return aiLastEditor;
   try {
     for (const ed of [htmlMonaco, cssMonaco, jsMonaco]) {
-      if (ed && ed.getSelection && !ed.getSelection().isEmpty()) return ed;
+      if (ed && ed.getSelection && !ed.getSelection().isEmpty()) { aiLastEditor = ed; return ed; }
     }
   } catch(e){}
-  if (typeof aiLastEditor !== 'undefined' && aiLastEditor) return aiLastEditor;
   try { return (typeof jsMonaco !== 'undefined' && jsMonaco) || (typeof htmlMonaco !== 'undefined' && htmlMonaco) || null; }
   catch(e){ return null; }
 }
@@ -564,6 +564,7 @@ function aiChatMd(text){
       const idx = aiChatRegisterCode(code);
       const langLabel = aiEscapeHtml(lang || 'code');
       html += '<div class="ai-codeblock"><div class="ai-codeblock-head"><span class="lang">' + langLabel + '</span><span class="spacer"></span>' +
+        '<button onclick="aiDiffOpen(' + idx + ')" title="Review changes side-by-side">Diff</button>' +
         '<button class="apply" onclick="aiChatReplaceFile(' + idx + ')" title="Replace the open file with this code">Apply</button>' +
         '<button onclick="aiChatInsertCode(' + idx + ')" title="Insert at cursor">Insert</button>' +
         '<button onclick="aiChatCopyCode(' + idx + ')" title="Copy">Copy</button></div>' +
@@ -780,6 +781,87 @@ function aiChatUpdateAutoBtn(){
   b.style.opacity = on ? '1' : '.35';
   b.title = on ? 'Auto-apply AI code: ON' : 'Auto-apply AI code: OFF';
 }
+var aiDiffEditor = null;
+var aiDiffIdx = -1;
+function aiDiffLang(fname){
+  fname = (fname || '').toLowerCase();
+  if (/\.html?$/.test(fname)) return 'html';
+  if (/\.css$/.test(fname)) return 'css';
+  return 'javascript';
+}
+function aiDiffOpen(codeIdx){
+  const code = aiChatCodeStore[codeIdx];
+  const fname = aiChatCodeFile[codeIdx] || 'file';
+  if (!code) return;
+  aiDiffIdx = codeIdx;
+  const f = aiCurrentFile();
+  const original = (f && f.content) || '';
+  const m = document.getElementById('aiDiffModal');
+  if (m) m.classList.add('active');
+  const fl = document.getElementById('aiDiffFile');
+  if (fl) fl.textContent = fname;
+  setTimeout(function(){
+    try {
+      const el = document.getElementById('aiDiffEditor');
+      if (!el) return;
+      if (aiDiffEditor) { aiDiffEditor.dispose(); aiDiffEditor = null; }
+      const lang = aiDiffLang(fname);
+      const origModel = monaco.editor.createModel(original, lang);
+      const modModel = monaco.editor.createModel(code, lang);
+      aiDiffEditor = monaco.editor.createDiffEditor(el, {
+        theme: document.documentElement.classList.contains('light-mode') ? 'vs' : 'vs-dark',
+        renderSideBySide: window.innerWidth > 700,
+        readOnly: true,
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        minimap: { enabled: false }
+      });
+      aiDiffEditor.setModel({ original: origModel, modified: modModel });
+      // stats
+      const st = document.getElementById('aiDiffStats');
+      if (st) {
+        const a = original.split('\n').length, b = code.split('\n').length;
+        st.textContent = a + ' \u2192 ' + b + ' lines';
+      }
+    } catch(e){
+      showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Could not open diff view.");
+      aiDiffClose();
+    }
+  }, 80);
+}
+function aiDiffClose(){
+  const m = document.getElementById('aiDiffModal');
+  if (m) m.classList.remove('active');
+  try { if (aiDiffEditor) { aiDiffEditor.dispose(); aiDiffEditor = null; } } catch(e){}
+  aiDiffIdx = -1;
+}
+function aiDiffApply(){
+  const idx = aiDiffIdx;
+  if (idx < 0) return;
+  const code = aiChatCodeStore[idx];
+  const fname = aiChatCodeFile[idx] || 'file';
+  const cpIdx = aiCheckpoint('diff apply');
+  try {
+    const ed = aiEditorForFile(fname) || aiActiveEditor();
+    if (!ed) throw new Error('no editor');
+    const model = ed.getModel();
+    ed.executeEdits('ai-diff-apply', [{ range: model.getFullModelRange(), text: code }]);
+    ed.focus();
+  } catch(e){}
+  aiDiffClose();
+  aiChatAddMsg('assistant', '<span class="ai-badge">\u2726 Checkpoint</span><p>Applied to <b>' + aiEscapeHtml(fname) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>');
+}
+try {
+  document.addEventListener('click', function(e){
+    if (e.target && e.target.id === 'aiDiffModal') aiDiffClose();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') {
+      const m = document.getElementById('aiDiffModal');
+      if (m && m.classList.contains('active')) aiDiffClose();
+    }
+  });
+} catch(e){}
 function aiChatOpenWith(prompt){
   if (!aiHasKey()) { openAiSetupModal(); return; }
   aiToggleSidebar(true);
