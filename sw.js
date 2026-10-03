@@ -1,5 +1,5 @@
 // sw.js — NitroIDE PWA service worker (network-first for pages + script.js, cache-first for vendor assets)
-const CACHE = 'nitroide-v79';
+const CACHE = 'nitroide-v80';
 
 const APP_SHELL = [
   '/',
@@ -64,7 +64,9 @@ self.addEventListener('fetch', (event) => {
   // ads.txt must always be served fresh (AdSense crawler + account verification).
   // devto-latest.json too: it is the same-origin fallback for the dev.to API
   // fetch, refreshed by the publishing pipeline on every Pulse update.
-  try { var ffp = new URL(request.url).pathname; if (ffp === '/ads.txt' || ffp === '/assets/devto-latest.json') return; } catch (e) {}
+  // /api/* (forms backend + admin) must never be cached: submissions and
+  // stats have to be live on every request.
+  try { var ffp = new URL(request.url).pathname; if (ffp === '/ads.txt' || ffp === '/assets/devto-latest.json' || ffp.indexOf('/api/') === 0) return; } catch (e) {}
   // Share links (?code=, ?gist=, ...) all serve the same HTML shell — cache document
   // navigations under the bare path so unique URLs can't bloat the cache.
   var cacheKey = request;

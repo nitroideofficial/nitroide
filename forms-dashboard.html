@@ -33,6 +33,8 @@
   .msg { max-width: 420px; white-space: pre-wrap; word-break: break-word; color: #d4d4d8; }
   .meta { font-size: 12px; color: #71717a; margin-top: 6px; }
   .hidden { display: none !important; }
+  .live { font-size: 12px; color: #4ade80; margin-left: 8px; }
+  .upd { font-size: 12px; color: #71717a; margin-left: 6px; }
   @media (max-width: 640px) { table, thead, tbody, th, td, tr { display: block; } thead { display: none; } td { border: 0; padding: 6px 0; } tr { border-bottom: 1px solid #26262b; padding: 10px 0; display: block; } }
 </style>
 </head>
@@ -53,8 +55,9 @@
     <div class="stats" id="statsRow"></div>
     <div class="card">
       <div class="row" style="justify-content:space-between;margin-bottom:14px">
-        <strong>Recent submissions</strong>
+        <div class="row"><strong>Recent submissions</strong><span class="live">● Live</span><span class="upd" id="updLabel"></span></div>
         <div class="row">
+          <button class="ghost" onclick="refreshAll()">⟳ Refresh</button>
           <button class="ghost" onclick="exportCsv()">⬇ Export CSV</button>
           <button class="ghost" onclick="logout()">Lock</button>
         </div>
@@ -77,6 +80,8 @@
   "use strict";
   var token = sessionStorage.getItem("forms_admin_token") || "";
   var cursor = null;
+  var loggedIn = false;
+  var lastUpdated = 0;
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -96,6 +101,8 @@
   };
   window.logout = function () {
     token = "";
+    loggedIn = false;
+    lastUpdated = 0;
     sessionStorage.removeItem("forms_admin_token");
     document.getElementById("dash").classList.add("hidden");
     document.getElementById("loginCard").classList.remove("hidden");
@@ -105,12 +112,35 @@
     if (e.key === "Enter") login();
   });
 
+  function tickUpdLabel() {
+    var el = document.getElementById("updLabel");
+    if (!lastUpdated) { el.textContent = ""; return; }
+    var s = Math.max(0, Math.round((Date.now() - lastUpdated) / 1000));
+    el.textContent = s < 5 ? "updated just now" : "updated " + s + "s ago";
+  }
+
+  window.refreshAll = function () {
+    api("/api/forms/admin/stats").then(function (r) {
+      if (r.status === 401) { logout(); throw new Error("Session expired."); }
+      if (!r.ok) throw new Error("refresh failed");
+      return r.json();
+    }).then(function (d) {
+      renderStats(d);
+      document.getElementById("subsBody").innerHTML = "";
+      cursor = null;
+      loadMore();
+      lastUpdated = Date.now();
+      tickUpdLabel();
+    }).catch(function () { /* keep old data on transient failure */ });
+  };
+
   function boot() {
     api("/api/forms/admin/stats").then(function (r) {
       if (r.status === 401) throw new Error("Wrong token.");
       if (!r.ok) throw new Error("Archive not available yet (HTTP " + r.status + ").");
       return r.json();
     }).then(function (d) {
+      loggedIn = true;
       document.getElementById("loginCard").classList.add("hidden");
       document.getElementById("dash").classList.remove("hidden");
       document.getElementById("loginErr").classList.add("hidden");
@@ -118,12 +148,19 @@
       document.getElementById("subsBody").innerHTML = "";
       cursor = null;
       loadMore();
+      lastUpdated = Date.now();
+      tickUpdLabel();
     }).catch(function (e) {
       var el = document.getElementById("loginErr");
       el.textContent = e.message;
       el.classList.remove("hidden");
     });
   }
+
+  // Live refresh: poll every 20s while the tab is visible. (KV itself can lag
+  // writes by up to ~60s, so brand-new submissions may take a moment.)
+  setInterval(function () { if (loggedIn && !document.hidden) refreshAll(); }, 20000);
+  setInterval(function () { if (loggedIn) tickUpdLabel(); }, 5000);
 
   function renderStats(d) {
     var byForm = d.byForm || {};
