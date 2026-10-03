@@ -2383,4 +2383,5 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
 .ai-side-actions{display:flex;gap:6px;margin-left:2px}
 .ai-hbtn{display:inline-flex;align-items:center;justify-content:center;min-width:34px;min-height:34px;padding:7px;border-radius:9px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-size:.9rem;transition:background .15s,color .15s,border-color .15s}
 .ai-hbtn:hover{background:rgba(255,255,255,.12);color:var(--text);border-color:var(--text-muted)}
-.ai-hbtn.on{background:rgba(0,229,255,.15);border-color:rgba(0,229,255,.5);color:#00e5ff}
+.ai-hbtn.on{background:rgba(0,229,255,.15);border-color:rgba(0,229,255,.5);color:#00e5ff}.ai-editcard-warns{display:flex;flex-direction:column;gap:4px;padding:8px 10px 0}
+.ai-editcard-warn{font-size:.72rem;color:#ffb020;background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.25);border-radius:6px;padding:5px 8px;display:flex;align-items:center;gap:6px}

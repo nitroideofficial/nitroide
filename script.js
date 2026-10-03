@@ -664,14 +664,17 @@ function aiAutoApplyEnabled(){ try { return localStorage.getItem('nitro_ai_autoa
 function aiEditCardHtml(editIdx){
   const edits = aiEditStore[editIdx] || [];
   if (!edits.length) return '';
+  const warns = aiEditWarnStore[editIdx] || [];
   const files = {};
   edits.forEach(function(e){ files[e.file] = (files[e.file] || 0) + 1; });
   const summary = Object.keys(files).map(function(f){ return files[f] + ' \u00d7 ' + f; }).join(', ');
+  const warnHtml = warns.length ? '<div class="ai-editcard-warns">' + warns.map(function(w){ return '<div class="ai-editcard-warn"><i class="ph-bold ph-warning"></i> ' + aiEscapeHtml(w) + '</div>'; }).join('') + '</div>' : '';
   return '<div class="ai-editcard"><div class="ai-editcard-head"><i class="ph-bold ph-magic-wand" style="color:#00e5ff;"></i>' +
     '<span><b>' + edits.length + ' surgical edit' + (edits.length > 1 ? 's' : '') + '</b> <span style="opacity:.65;font-weight:400;">' + aiEscapeHtml(summary) + '</span></span>' +
     '<span class="spacer"></span>' +
     '<button onclick="aiDiffOpenEdits(' + editIdx + ')" title="Preview changes">Diff</button>' +
     '<button class="apply" onclick="aiApplyEditSet(' + editIdx + ')" title="Apply these edits">Apply</button></div>' +
+    warnHtml +
     '<div class="ai-editcard-list">' +
     edits.map(function(e, i){
       const preview = aiEscapeHtml(e.replace.split('\n').slice(0, 4).join('\n'));
@@ -685,7 +688,7 @@ function aiChatMd(text){
   const edits = aiParseEdits(text);
   let editCardHtml = '';
   if (edits.length) {
-    const editIdx = aiRegisterEdits(edits);
+    const editIdx = aiRegisterEdits(edits, aiValidateEdits(text, edits));
     editCardHtml = aiEditCardHtml(editIdx);
     text = text.replace(/<<<EDIT:[^>]+>>>\s*<<<FIND>>>[\s\S]*?<<<REPLACE>>>[\s\S]*?<<<END>>>/g, '').trim();
   }
@@ -858,6 +861,15 @@ async function aiChatSend(prefill){
       + '4. When editing code, work SURGICALLY like a senior dev: change ONLY what is needed, in the right place. NEVER rewrite the whole file. Output each change as an edit block: <<<EDIT:filename>>> then <<<FIND>>> then exact lines copied from the attached file (enough to be unique) then <<<REPLACE>>> then the new code then <<<END>>>. Use one block per change; multiple blocks allowed. FIND must match the file EXACTLY or the edit fails. '
       + '5. Only output a full triple-backtick file when creating a brand-new file from scratch. '
       + '6. COMPLETENESS CHECK: before finishing, re-read the user\'s request and verify you output edit blocks for EVERY file the task touches. If the task needs HTML+CSS+JS changes, all three files must have blocks \u2014 never silently skip a file. ' + '7. After the edit blocks, write one short line saying what changed. Keep every reply short. No markdown headings.' + 'NEVER create new files or documentation unless explicitly asked \u2014 only edit the three existing files. ';
+      + '8. EDGE CASES \u2014 handle every one: '
+      + '(a) If a file is EMPTY and the task needs content in it, output a full triple-backtick file for it (the only exception to surgical edits). '
+      + '(b) If a FIND target could appear in several places, include more surrounding lines until it is unique \u2014 never emit a FIND that matches twice. '
+      + '(c) Always close every <<<END>>>. Unclosed blocks are discarded. '
+      + '(d) Only index.html, style.css, script.js exist \u2014 never invent other filenames. '
+      + '(e) If the task is impossible with the code you see, say why in one line instead of guessing. '
+      + '(f) If file chips were removed and you cannot see the code, say so in one line \u2014 never invent code you cannot see. '
+      + '(g) Match the file\'s existing style (quotes, indentation, naming) \u2014 do not reformat untouched lines. '
+      + '(h) If your response is getting long, finish the current edit block cleanly before stopping \u2014 never cut off mid-block. ';
     const messages = [{ role: 'system', content: system }];
     const hist = aiChatHistory.slice(0, -1).slice(-8);
     for (const m of hist) messages.push({ role: m.role, content: m.content });
@@ -920,7 +932,9 @@ function aiChatMaybeAutoApply(text){
   // surgical edits auto-apply first (smarter path)
   const edits = aiParseEdits(text);
   if (edits.length) {
-    const previews = aiPreviewEdits(aiRegisterEdits(edits));
+    const warns = aiValidateEdits(text, edits);
+    const previews = aiPreviewEdits(aiRegisterEdits(edits, warns));
+    if (warns.length) return; // never auto-apply suspicious output — user reviews via card
     if (previews && previews.length && previews.every(function(p){ return p.failCount === 0; })) {
       try {
         const cpIdx = aiCheckpoint('auto-apply edits');
@@ -934,7 +948,7 @@ function aiChatMaybeAutoApply(text){
           totalOk += prev.okCount;
         });
         if (names.length) {
-          aiChatAddMsg('assistant', '<span class="ai-badge">\\u2726 Checkpoint</span><p>Applied ' + totalOk + ' surgical edit' + (totalOk > 1 ? 's' : '') + ' to <b>' + aiEscapeHtml(names.join(', ')) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>', true);
+          aiChatAddMsg('assistant', '<span class="ai-badge">\u2726 Checkpoint</span><p>Applied ' + totalOk + ' surgical edit' + (totalOk > 1 ? 's' : '') + ' to <b>' + aiEscapeHtml(names.join(', ')) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>', true);
           return;
         }
       } catch(e){}
@@ -1106,6 +1120,7 @@ try {
   });
 } catch(e){}
 var aiEditStore = [];
+var aiEditWarnStore = {};
 function aiParseEdits(text){
   const edits = [];
   const re = /<<<EDIT:([^>]+)>>>\s*<<<FIND>>>([\s\S]*?)<<<REPLACE>>>([\s\S]*?)<<<END>>>/g;
@@ -1115,9 +1130,32 @@ function aiParseEdits(text){
   }
   return edits;
 }
-function aiRegisterEdits(edits){
+function aiValidateEdits(text, edits){
+  // returns array of warning strings for malformed/conflicting AI output
+  const warns = [];
+  try {
+    const opens = (text.match(/<<<EDIT:/g) || []).length;
+    const closes = (text.match(/<<<END>>>/g) || []).length;
+    if (opens > closes) warns.push((opens - closes) + ' edit block' + (opens - closes > 1 ? 's were' : ' was') + ' left unclosed and discarded');
+    const validFiles = ['index.html', 'style.css', 'script.js'];
+    edits.forEach(function(e){
+      if (validFiles.indexOf(e.file.toLowerCase()) === -1) warns.push('unknown file "' + e.file + '" — only index.html, style.css, script.js exist');
+      if (!e.find.trim()) warns.push('empty FIND target in ' + e.file + ' — skipped');
+    });
+    // conflicting: same file, identical FIND appearing twice
+    const seen = {};
+    edits.forEach(function(e){
+      const k = e.file.toLowerCase() + '::' + e.find;
+      if (seen[k]) warns.push('duplicate edit targeting the same code in ' + e.file);
+      seen[k] = 1;
+    });
+  } catch(e){}
+  return warns;
+}
+function aiRegisterEdits(edits, warns){
   const idx = aiEditStore.length;
   aiEditStore.push(edits);
+  aiEditWarnStore[idx] = warns || [];
   return idx;
 }
 function aiCountOccurrences(haystack, needle){
