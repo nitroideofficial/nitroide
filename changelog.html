@@ -91,11 +91,30 @@
 
   <div class="timeline">
 
-    <!-- THE NEW V24.1 UPDATE -->
+    <!-- THE NEW V26 UPDATE -->
     <div class="log-entry">
       <div class="log-dot"></div>
+      <span class="log-date">October 2026</span>
+      <h2 class="log-version">v26 <span class="log-badge">The Creator Backend Update</span></h2>
+      <div class="log-content">
+        <p class="changelog-desc">NitroIDE's forms now run on a fully self-hosted backend: a Cloudflare Worker with a private submission archive, a live admin dashboard, a "how did you hear about us" survey, and file attachments on the contact page.</p>
+        <ul>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Self-hosted form backend:</strong> contact and feedback forms now run on a Cloudflare Worker with Resend delivery — no third-party form service ever sees or stores your messages.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Submission archive:</strong> every message is archived with metadata (page, country, timestamp) and aggregated into live stats.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Private admin dashboard:</strong> token-gated, unlisted dashboard with totals, source stats, submission list, CSV export, search, one-click delete and reply, and live auto-refresh.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>"How did you hear about us?" survey:</strong> optional question on the feedback modal and contact page, so word-of-mouth sources are finally visible.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag new">NEW</span> <strong>Contact attachments:</strong> attach up to 3 files (3 MB each) to contact messages — forwarded with the email and archived.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> <strong>Dashboard realtime:</strong> the service worker no longer caches API responses, and the dashboard refreshes itself every 20 seconds while open.</div></li>
+          <li><i class="ph-bold ph-check"></i> <div><span class="tag">UPDATE</span> <strong>Security hardening:</strong> branch protection on the repository (no force-pushes, no deletions) and a report-only Content Security Policy observing every page.</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- THE NEW V24.1 UPDATE -->
+    <div class="log-entry">
+      <div class="log-dot dim"></div>
       <span class="log-date">September 2026</span>
-      <h2 class="log-version">v25 <span class="log-badge">The Performance & Polish Update</span></h2>
+      <h2 class="log-version dim-text">v25 <span class="log-badge dim-badge">The Performance & Polish Update</span></h2>
       <div class="log-content">
         <p class="changelog-desc">A focused quality pass: zero layout shift, a more accessible editor, honest copy, stronger article SEO, and a PWA cache fix so returning visitors always get the latest version.</p>
         <ul>

@@ -49,13 +49,13 @@ No installs. No backend. No delays.
 
 ---
 
-## 🆕 What's New — v25 (September 2026)
+## 🆕 What's New — v26 (October 2026)
 
-* 🎯 **Zero layout shift** on the Ecosystem page (mobile CLS 0.255 → ~0)
-* ♿ **Editor accessibility** up from 78 → 95 on mobile
-* 🔄 **PWA cache fix** — returning visitors now always get the latest version
-* 📝 **Honest copy** — dead counters removed, claims softened
-* 🔍 **Article SEO** — canonical + Open Graph + `BlogPosting` schema on all articles
+* 📨 **Self-hosted form backend** — contact & feedback now run on a Cloudflare Worker; no third-party form service sees your messages
+* 📊 **Private admin dashboard** — live stats, submission archive, CSV export, search, delete & reply
+* 📎 **Contact attachments** — up to 3 files (3 MB each) with your message
+* 🗣️ **"How did you hear about us?"** — optional survey on feedback + contact, so word-of-mouth is visible
+* 🔒 **Security** — branch protection on the repo, report-only CSP observing every page
 
 Full details: https://nitroide.com/changelog.html
 
