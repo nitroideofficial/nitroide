@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 3, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7512127250025320448/"
+},
+  {
   date: "Oct 2, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
