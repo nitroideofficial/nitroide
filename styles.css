@@ -2352,3 +2352,14 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
 .ai-editcard-item .n{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:rgba(0,229,255,.15);color:#00e5ff;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700}
 .ai-editcard-item .f{flex-shrink:0;font-family:ui-monospace,monospace;color:var(--text-muted);padding-top:2px}
 .ai-editcard-item code{flex:1;font-family:ui-monospace,monospace;white-space:pre-wrap;word-break:break-word;opacity:.85;line-height:1.5}
+.ai-statuscard{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:4px 0;background:var(--card)}
+.ai-statuscard.ok{border-color:rgba(34,197,94,.3)}
+.ai-statuscard.warn{border-color:rgba(248,113,113,.35)}
+.ai-statuscard-head{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--border);font-size:.78rem}
+.ai-statuscard.ok .ai-statuscard-head i{color:var(--success)}
+.ai-statuscard.warn .ai-statuscard-head i{color:#f87171}
+.ai-statuscard-head .spacer{flex:1}
+.ai-statuscard-head a{font-size:.72rem;color:#00e5ff;text-decoration:none}
+.ai-statuscard-row{display:flex;align-items:center;gap:8px;padding:7px 12px;font-size:.75rem;border-bottom:1px solid var(--border)}
+.ai-statuscard-row:last-child{border-bottom:none}
+.ai-statuscard-row .f{font-family:ui-monospace,monospace;color:var(--text-muted)}

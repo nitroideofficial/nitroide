@@ -624,13 +624,20 @@ function aiChatRenderContext(){
       '<b onclick="aiToggleCtx(\'' + aiEscapeHtml(c.label).replace(/'/g, "\\'") + '\')" style="cursor:pointer;margin-left:4px;">\u00d7</b></span>';
   }).join('');
 }
-function aiChatAddMsg(role, text){
-  aiChatHistory.push({ role: role, content: text });
+function aiChatStripHtml(html){
+  try {
+    const d = document.createElement('div');
+    d.innerHTML = html;
+    return (d.textContent || '').trim();
+  } catch(e){ return String(html).replace(/<[^>]+>/g, ''); }
+}
+function aiChatAddMsg(role, text, isHtml){
+  aiChatHistory.push({ role: role, content: isHtml ? aiChatStripHtml(text) : text });
   const box = document.getElementById('aiChatMessages');
   if (!box) return;
   const div = document.createElement('div');
   div.className = 'ai-msg ' + role;
-div.innerHTML = role === 'user' ? aiEscapeHtml(text) : aiChatMd(text);
+  div.innerHTML = role === 'user' ? aiEscapeHtml(text) : (isHtml ? text : aiChatMd(text));
   box.appendChild(div);
   box.scrollTop = box.scrollHeight;
   return div;
@@ -914,7 +921,7 @@ function aiChatMaybeAutoApply(text){
           const model = ed.getModel();
           const cpIdx = aiCheckpoint('auto-apply edits');
           ed.executeEdits('ai-chat-auto', [{ range: model.getFullModelRange(), text: prev.modified }]);
-          aiChatAddMsg('assistant', '<span class="ai-badge">\\u2726 Checkpoint</span><p>Applied ' + prev.okCount + ' surgical edit' + (prev.okCount > 1 ? 's' : '') + ' to <b>' + aiEscapeHtml(prev.file) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>');
+          aiChatAddMsg('assistant', '<span class="ai-badge">\\u2726 Checkpoint</span><p>Applied ' + prev.okCount + ' surgical edit' + (prev.okCount > 1 ? 's' : '') + ' to <b>' + aiEscapeHtml(prev.file) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>', true);
           return;
         }
       } catch(e){}
@@ -935,7 +942,7 @@ function aiChatMaybeAutoApply(text){
     const model = f.editor.getModel();
     const cpIdx = aiCheckpoint('auto-apply');
     f.editor.executeEdits('ai-chat-auto', [{ range: model.getFullModelRange(), text: big.code }]);
-    aiChatAddMsg('assistant', '<span class="ai-badge">\u2726 Checkpoint</span><p>Applied to <b>' + aiEscapeHtml(f.name) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>');
+    aiChatAddMsg('assistant', '<span class="ai-badge">\u2726 Checkpoint</span><p>Applied to <b>' + aiEscapeHtml(f.name) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>', true);
   } catch(e){}
 }
 function aiToggleAutoApply(){
@@ -1055,7 +1062,7 @@ function aiDiffApply(){
     ed.focus();
   } catch(e){}
   aiDiffClose();
-  aiChatAddMsg('assistant', '<span class="ai-badge">\u2726 Checkpoint</span><p>Applied to <b>' + aiEscapeHtml(fname) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>');
+  aiChatAddMsg('assistant', '<span class="ai-badge">\u2726 Checkpoint</span><p>Applied to <b>' + aiEscapeHtml(fname) + '</b>.' + (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>', true);
 }
 try {
   document.addEventListener('click', function(e){
@@ -1143,21 +1150,33 @@ function aiApplyEditSet(editIdx){
   const byFile = {};
   edits.forEach(function(e){ (byFile[e.file] = byFile[e.file] || []).push(e); });
   const cpIdx = aiCheckpoint('surgical edits');
-  const report = [];
+  const rows = [];
   Object.keys(byFile).forEach(function(fname){
     try {
       const ed = aiEditorForFile(fname) || aiActiveEditor();
-      if (!ed) { report.push(fname + ': no editor'); return; }
+      if (!ed) { rows.push({ file: fname, ok: 0, total: byFile[fname].length, fail: byFile[fname].length, err: 'no editor' }); return; }
       const model = ed.getModel();
       const res = aiApplyEditsToContent(model.getValue(), byFile[fname]);
       ed.executeEdits('ai-surgical', [{ range: model.getFullModelRange(), text: res.content }]);
-      report.push(fname + ': ' + res.applied.filter(Boolean).length + '/' + byFile[fname].length + ' edits applied' +
-        (res.failedIdx.length ? ' (' + res.failedIdx.length + ' not found)' : ''));
+      const okN = res.applied.filter(Boolean).length;
+      rows.push({ file: fname, ok: okN, total: byFile[fname].length, fail: res.failedIdx.length });
       ed.focus();
-    } catch(e){ report.push(fname + ': error'); }
+    } catch(e){ rows.push({ file: fname, ok: 0, total: byFile[fname].length, fail: byFile[fname].length, err: 'error' }); }
   });
-  aiChatAddMsg('assistant', '<span class="ai-badge">\u2726 Applied</span><p>' + aiEscapeHtml(report.join('; ')) + '.' +
-    (cpIdx >= 0 ? ' <a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;" style="color:#00e5ff;">Restore previous</a>' : '') + '</p>');
+  const allOk = rows.every(function(r){ return r.fail === 0; });
+  const cardHtml = '<div class="ai-statuscard ' + (allOk ? 'ok' : 'warn') + '">'
+    + '<div class="ai-statuscard-head"><i class="ph-bold ' + (allOk ? 'ph-check-circle' : 'ph-warning-circle') + '"></i>'
+    + '<b>' + (allOk ? 'Applied' : 'Partially applied') + '</b>'
+    + (cpIdx >= 0 ? '<span class="spacer"></span><a href="#" onclick="aiRestoreCheckpoint(' + cpIdx + ');return false;">Restore previous</a>' : '')
+    + '</div>'
+    + rows.map(function(r){
+        const icon = r.fail === 0 ? '<i class="ph-bold ph-check" style="color:var(--success);"></i>' : '<i class="ph-bold ph-x" style="color:#f87171;"></i>';
+        const detail = r.err ? ' \u2014 ' + r.err : r.fail ? ' \u2014 ' + r.fail + ' target' + (r.fail > 1 ? 's' : '') + ' not found in file' : '';
+        return '<div class="ai-statuscard-row">' + icon + '<span class="f">' + aiEscapeHtml(r.file) + '</span>'
+          + '<span>' + r.ok + '/' + r.total + ' edits' + aiEscapeHtml(detail) + '</span></div>';
+      }).join('')
+    + '</div>';
+  aiChatAddMsg('assistant', cardHtml, true);
 }
 function aiChatOpenWith(prompt){
   if (!aiHasKey()) { openAiSetupModal(); return; }
