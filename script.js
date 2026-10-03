@@ -19,16 +19,23 @@ function injectShareButton(){const e=document.querySelector(".ws-header .ws-righ
 const AI_PROVIDERS = {
   groq: { label: 'Groq', defaultModel: 'openai/gpt-oss-20b', keyUrl: 'https://console.groq.com/keys',
     help: 'Free, no card. Fastest with the most generous free daily limit. Get a key at console.groq.com/keys.',
-    freePick: 'openai/gpt-oss-20b' },
+    freePick: 'openai/gpt-oss-20b',
+    baseUrl: 'https://api.groq.com/openai/v1' },
   gemini: { label: 'Google Gemini', defaultModel: 'gemini-2.5-flash-lite', keyUrl: 'https://aistudio.google.com/apikey',
     help: 'Free, no card at aistudio.google.com. Never enable billing on that project or you lose the free tier.',
     freePick: 'gemini-2.5-flash-lite' },
   openrouter: { label: 'OpenRouter', defaultModel: 'qwen/qwen3.8-27b:free', keyUrl: 'https://openrouter.ai/keys',
     help: 'Free :free models at openrouter.ai/keys — 50 requests/day. Access to 300+ models. Prompts may train models unless you opt out in their privacy settings.',
-    freePick: null },
+    freePick: null,
+    baseUrl: 'https://openrouter.ai/api/v1' },
+  sambanova: { label: 'SambaNova', defaultModel: 'Meta-Llama-3.3-70B-Instruct', keyUrl: 'https://cloud.sambanova.ai/apis',
+    help: 'Free tier, no card, no phone verification. OpenAI-compatible. Get a key at cloud.sambanova.ai/apis.',
+    freePick: 'Meta-Llama-3.3-70B-Instruct',
+    baseUrl: 'https://api.sambanova.ai/v1' },
   openai: { label: 'OpenAI', defaultModel: 'gpt-4o-mini', keyUrl: 'https://platform.openai.com/api-keys',
     help: 'Paid API (separate from ChatGPT Plus/Go subscription). Cheapest coding model: gpt-4o-mini.',
-    freePick: null }
+    freePick: null,
+    baseUrl: 'https://api.openai.com/v1' }
 };
 function aiGetProvider(){ try { return localStorage.getItem('nitro_ai_provider') || 'groq'; } catch(e){ return 'groq'; } }
 function aiGetKey(p){ p = p || aiGetProvider(); try { return localStorage.getItem('nitro_ai_key_' + p) || ''; } catch(e){ return ''; } }
@@ -451,19 +458,6 @@ function aiDetectProvider(key){
   return null;
 }
 async function aiFetchModels(provider, key){
-  if (provider === 'groq' || provider === 'openai') {
-    const base = provider === 'groq' ? 'https://api.groq.com/openai/v1/models' : 'https://api.openai.com/v1/models';
-    const res = await fetch(base, { headers: { 'Authorization': 'Bearer ' + key } });
-    if (!res.ok) throw new Error('HTTP_' + res.status);
-    const d = await res.json();
-    return (d.data || []).map(function(m){ return m.id; }).filter(Boolean).sort();
-  }
-  if (provider === 'openrouter') {
-    const res = await fetch('https://openrouter.ai/api/v1/models', { headers: { 'Authorization': 'Bearer ' + key } });
-    if (!res.ok) throw new Error('HTTP_' + res.status);
-    const d = await res.json();
-    return (d.data || []).map(function(m){ return m.id; }).filter(Boolean).sort();
-  }
   if (provider === 'gemini') {
     const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + encodeURIComponent(key));
     if (!res.ok) throw new Error('HTTP_' + res.status);
@@ -472,7 +466,12 @@ async function aiFetchModels(provider, key){
       return m.supportedGenerationMethods && m.supportedGenerationMethods.indexOf('generateContent') >= 0;
     }).map(function(m){ return String(m.name).replace(/^models\//, ''); }).sort();
   }
-  return [];
+  // OpenAI-compatible: groq, openai, openrouter, sambanova, ...
+  const baseUrl = (AI_PROVIDERS[provider] && AI_PROVIDERS[provider].baseUrl) || 'https://openrouter.ai/api/v1';
+  const res = await fetch(baseUrl + '/models', { headers: { 'Authorization': 'Bearer ' + key } });
+  if (!res.ok) throw new Error('HTTP_' + res.status);
+  const d = await res.json();
+  return (d.data || []).map(function(m){ return m.id; }).filter(Boolean).sort();
 }
 var aiChatModelTimer = null;
 function aiSetupKeyTyped(){
@@ -483,7 +482,16 @@ function aiSetupKeyTyped(){
   if (aiChatModelTimer) clearTimeout(aiChatModelTimer);
   if (!key) { if (detEl) detEl.textContent = ''; if (selEl) selEl.innerHTML = '<option value="">Paste a key first...</option>'; return; }
   const p = aiDetectProvider(key);
-  if (!p) { if (detEl) { detEl.style.color = 'var(--warning)'; detEl.textContent = 'Could not detect provider — key should start with gsk_ (Groq), AIza or AQ. (Gemini), sk-or-v1- (OpenRouter) or sk- (OpenAI). Check it was copied fully.'; } return; }
+  if (!p) {
+    if (detEl) {
+      detEl.style.color = 'var(--warning)';
+      detEl.innerHTML = 'Could not detect provider — key should start with gsk_ (Groq), AIza or AQ. (Gemini), sk-or-v1- (OpenRouter) or sk- (OpenAI). Check it was copied fully.<br><span style="font-size:.72rem;">Or pick the provider manually: </span><select id="aiSetupProviderPick" onchange="aiSetupManualProvider(this.value)" style="font-size:.72rem;margin-top:4px;">' +
+        '<option value="">Select provider...</option>' +
+        Object.keys(AI_PROVIDERS).map(function(q){ return '<option value="' + q + '">' + aiEscapeHtml(AI_PROVIDERS[q].label) + '</option>'; }).join('') +
+        '</select>';
+    }
+    return;
+  }
   if (detEl) { detEl.style.color = 'var(--text-muted)'; detEl.textContent = 'Detected: ' + AI_PROVIDERS[p].label + ' — fetching your models...'; }
   if (selEl) selEl.innerHTML = '<option value="">Loading models...</option>';
   aiChatModelTimer = setTimeout(async function(){
@@ -524,6 +532,62 @@ function aiSetupKeyTyped(){
     }
   }, 600);
 }
+function aiSetupRenderKeysList(){
+  const el = document.getElementById('aiSetupKeysList');
+  if (!el) return;
+  try {
+    el.innerHTML = Object.keys(AI_PROVIDERS).map(function(p){
+      const has = !!aiGetKey(p);
+      const model = has ? aiGetModel(p) : '';
+      const label = AI_PROVIDERS[p].label;
+      return '<div class="ai-key-row ' + (has ? 'has' : 'missing') + '">' +
+        '<span class="dot"></span>' +
+        '<span class="pname">' + aiEscapeHtml(label) + '</span>' +
+        '<span class="pmodel">' + (has ? aiEscapeHtml(model) : 'no key saved') + '</span>' +
+        (has ? '<button onclick="aiSetupRemoveProviderKey(\'' + p + '\')" title="Remove ' + aiEscapeHtml(label) + ' key"><i class="ph-bold ph-x"></i></button>' : '') +
+        '</div>';
+    }).join('');
+  } catch(e){}
+}
+function aiSetupRemoveProviderKey(p){
+  try {
+    localStorage.removeItem('nitro_ai_key_' + p);
+    localStorage.removeItem('nitro_ai_model_' + p);
+    if (aiGetProvider() === p) {
+      // fall back to first provider that still has a key
+      const next = Object.keys(AI_PROVIDERS).find(function(q){ return aiGetKey(q); });
+      if (next) localStorage.setItem('nitro_ai_provider', next);
+    }
+  } catch(e){}
+  aiSetupRenderKeysList();
+  aiChatUpdateModelLabel();
+}
+function aiSetupManualProvider(p){
+  if (!p || !AI_PROVIDERS[p]) return;
+  const keyEl = document.getElementById('aiSetupKey');
+  const detEl = document.getElementById('aiSetupDetected');
+  const selEl = document.getElementById('aiSetupModel');
+  const key = keyEl ? keyEl.value.trim() : '';
+  if (!key) return;
+  if (detEl) { detEl.style.color = 'var(--text-muted)'; detEl.textContent = 'Using: ' + AI_PROVIDERS[p].label + ' (manual) — fetching your models...'; }
+  if (selEl) selEl.innerHTML = '<option value="">Loading models...</option>';
+  // stash the manual choice so Save uses it
+  try { keyEl.dataset.manualProvider = p; } catch(e){}
+  setTimeout(async function(){
+    try {
+      const models = await aiFetchModels(p, key);
+      if (!models.length) throw new Error('EMPTY');
+      if (detEl) { detEl.style.color = 'var(--success)'; detEl.textContent = 'Using: ' + AI_PROVIDERS[p].label + ' (manual) — ' + models.length + ' models available.'; }
+      if (selEl) {
+        selEl.innerHTML = models.map(function(m){ return '<option value="' + aiEscapeHtml(m) + '">' + aiEscapeHtml(m) + '</option>'; }).join('');
+        if (selEl.selectedIndex < 0) selEl.selectedIndex = 0;
+      }
+    } catch(e){
+      if (detEl) { detEl.style.color = 'var(--error)'; detEl.textContent = aiFriendlyError(e); }
+      if (selEl) selEl.innerHTML = '<option value="' + aiEscapeHtml(AI_PROVIDERS[p].defaultModel) + '">' + aiEscapeHtml(AI_PROVIDERS[p].defaultModel) + ' (default)</option>';
+    }
+  }, 300);
+}
 function openAiSetupModal(){
   const m = document.getElementById('aiSetupModal');
   if (m) m.classList.add('active');
@@ -533,6 +597,7 @@ function openAiSetupModal(){
   if (sel) sel.innerHTML = '<option value="">Paste a key first...</option>';
   const keyEl = document.getElementById('aiSetupKey');
   if (keyEl) { keyEl.value = ''; setTimeout(function(){ keyEl.focus(); }, 150); }
+  aiSetupRenderKeysList();
 }
 try {
   document.addEventListener('click', function(e){
@@ -548,11 +613,12 @@ function aiSetupSave(){
   const selEl = document.getElementById('aiSetupModel');
   const key = keyEl ? keyEl.value.trim() : '';
   if (!key) { showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Paste your API key first."); return; }
-  const p = aiDetectProvider(key);
+  let p = aiDetectProvider(key);
+  try { if (!p && keyEl.dataset.manualProvider && AI_PROVIDERS[keyEl.dataset.manualProvider]) p = keyEl.dataset.manualProvider; } catch(e){}
   if (!p) { showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Could not detect the provider from this key."); return; }
   const model = selEl && selEl.value ? selEl.value : AI_PROVIDERS[p].defaultModel;
   aiSetAll(p, key, model);
-  if (keyEl) keyEl.value = '';
+  if (keyEl) { keyEl.value = ''; try { delete keyEl.dataset.manualProvider; } catch(e){} }
   closeAiSetupModal();
   aiChatUpdateModelLabel();
   showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> Connected to " + AI_PROVIDERS[p].label + ".");
@@ -943,7 +1009,8 @@ async function aiChatWithHistory(messages, providerOverride){
     if (!t) throw new Error('EMPTY');
     return t;
   }
-  const url = p === 'groq' ? 'https://api.groq.com/openai/v1/chat/completions' : p === 'openai' ? 'https://api.openai.com/v1/chat/completions' : 'https://openrouter.ai/api/v1/chat/completions';
+  const baseUrl = (AI_PROVIDERS[p] && AI_PROVIDERS[p].baseUrl) || 'https://openrouter.ai/api/v1';
+  const url = baseUrl + '/chat/completions';
   const headers = { 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json' };
   if (p === 'openrouter') { headers['HTTP-Referer'] = 'https://nitroide.com'; headers['X-OpenRouter-Title'] = 'NitroIDE'; }
   let res;

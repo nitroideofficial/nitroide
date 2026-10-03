@@ -2385,3 +2385,12 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
 .ai-hbtn:hover{background:rgba(255,255,255,.12);color:var(--text);border-color:var(--text-muted)}
 .ai-hbtn.on{background:rgba(0,229,255,.15);border-color:rgba(0,229,255,.5);color:#00e5ff}.ai-editcard-warns{display:flex;flex-direction:column;gap:4px;padding:8px 10px 0}
 .ai-editcard-warn{font-size:.72rem;color:#ffb020;background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.25);border-radius:6px;padding:5px 8px;display:flex;align-items:center;gap:6px}
+.ai-keys-list{display:flex;flex-direction:column;gap:4px;margin:0 0 12px}
+.ai-key-row{display:flex;align-items:center;gap:8px;font-size:.76rem;padding:6px 9px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid var(--border)}
+.ai-key-row .dot{width:8px;height:8px;border-radius:50%;flex:none}
+.ai-key-row.has .dot{background:#00e5ff;box-shadow:0 0 6px rgba(0,229,255,.7)}
+.ai-key-row.missing .dot{background:var(--text-muted);opacity:.4}
+.ai-key-row .pname{font-weight:600}
+.ai-key-row .pmodel{color:var(--text-muted);font-size:.7rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.ai-key-row button{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:.75rem;padding:2px 4px}
+.ai-key-row button:hover{color:var(--error)}
