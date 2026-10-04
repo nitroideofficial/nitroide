@@ -53,7 +53,7 @@ No installs. No backend. No delays.
 ## 🆕 What's New — v30 "The AI Update" (October 2026)
 
 * 🤖 **AI pair programmer, rebuilt** — conversational chat sidebar: smart file picker (CSS fixes go to CSS, structure to HTML, logic to JS), surgical find/replace edits with diff previews
-* 🔑 **Bring your own key** — Groq, Gemini, OpenRouter, OpenAI, and SambaNova (via proxy) with auto-detection; keys stay in your browser, never touch our servers
+* 🔑 **Bring your own key** — Groq, Gemini, OpenRouter, OpenAI with auto-detection; keys stay in your browser, never touch our servers. SambaNova works via a Cloudflare Worker proxy (SambaNova blocks browsers directly) — your key passes through the proxy but is never stored or logged
 * 🔄 **Auto provider fallback** — rate-limited? The AI silently switches to your next saved key
 * 🛡️ **Trust controls** — auto-apply off by default, checkpoint + one-click Restore before every apply, ambiguous edits refused instead of guessed
 * 🧪 **Hardened engine** — 70+ adversarial tests: ambiguous matches blocked, malicious output validated, XSS escaped
