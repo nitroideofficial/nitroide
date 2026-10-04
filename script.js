@@ -1536,7 +1536,21 @@ function aiApplyEditSet(editIdx){
           + '<span>' + r.ok + '/' + r.total + ' edits' + aiEscapeHtml(detail) + '</span></div>';
       }).join('')
     + '</div>';
-  aiChatAddMsg('assistant', cardHtml, true);
+  try{
+      // Sync vfs from editors and save immediately (don't rely on auto-run debounce)
+      if(typeof vfs!=='undefined'&&typeof activeFiles!=='undefined'){
+        if(typeof htmlMonaco!=='undefined'&&htmlMonaco)vfs[activeFiles.html]=htmlMonaco.getValue();
+        if(typeof cssMonaco!=='undefined'&&cssMonaco)vfs[activeFiles.css]=cssMonaco.getValue();
+        if(typeof jsMonaco!=='undefined'&&jsMonaco)vfs[activeFiles.js]=jsMonaco.getValue();
+      }
+      if(typeof currentProject!=='undefined'&&typeof vfs!=='undefined'){
+        currentProject.vfs=vfs;currentProject.activeFiles=activeFiles;currentProject.lastModified=Date.now();
+        var pi=projects.findIndex(function(e){return e.id===currentProjectId});
+        if(pi>-1)projects[pi]=currentProject;
+        localStorage.setItem("nitro_projects",JSON.stringify(projects));
+      }
+      if(typeof setWorkspaceStatus==='function')setWorkspaceStatus("Saved","saved");
+    }catch(e){}aiChatAddMsg('assistant', cardHtml, true);
 }
 function aiChatOpenWith(prompt){
   if (!aiHasKey()) { openAiSetupModal(); return; }
