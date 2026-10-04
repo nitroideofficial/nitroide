@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 4, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Skip the screen share — send a live coding link instead",
+  link: "https://peerlist.io/scroll/post/ACTHBAR9KBNAA8EP73EN9KEPLQKJBJ"
+},
+  {
+  date: "Oct 4, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
