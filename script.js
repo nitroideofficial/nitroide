@@ -58,9 +58,9 @@ const AI_PROVIDERS = {
     help: 'Paid API (separate from ChatGPT Plus/Go subscription). Cheapest coding model: gpt-4o-mini.',
     freePick: null,
     baseUrl: 'https://api.openai.com/v1' },
-  sambanova: { label: 'SambaNova', defaultModel: 'Meta-Llama-3.1-70B-Instruct', keyUrl: 'https://cloud.sambanova.ai/',
+  sambanova: { label: 'SambaNova', defaultModel: 'Llama-4-Maverick-17B-128E-Instruct', keyUrl: 'https://cloud.sambanova.ai/',
     help: 'Free tier with fast Llama models. Key goes via NitroIDE\'s proxy (SambaNova blocks browsers directly). We never store your key.',
-    freePick: 'Meta-Llama-3.1-70B-Instruct',
+    freePick: 'Llama-4-Maverick-17B-128E-Instruct',
     baseUrl: 'https://nitroide-sambanova.contactnitroide.workers.dev/v1',
     viaProxy: true }
 };
