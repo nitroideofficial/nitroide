@@ -2162,9 +2162,9 @@ html.light-mode .time-snapshot-meta span {
   }
 }
 
-/* CLS: reserve space for the JS-injected <nitro-header> (measured 116px desktop / 194px mobile) */
-nitro-header{display:block;min-height:116px}
-@media(max-width:768px){nitro-header{min-height:194px}}/* CLS: reserve space for the JS-injected <nitro-footer> (measured 490px desktop / ~1303px stacked) */nitro-footer{min-height:490px}@media(max-width:900px){nitro-footer{min-height:1310px}}
+/* CLS: reserve space for the JS-injected <nitro-header> */
+nitro-header{display:block;min-height:66px}
+@media(max-width:768px){nitro-header{min-height:46px}}/* CLS: reserve space for the JS-injected <nitro-footer> (measured 490px desktop / ~1303px stacked) */nitro-footer{min-height:490px}@media(max-width:900px){nitro-footer{min-height:1310px}}
 
 /* A11y: skip link + focus visibility (additive — matches .skip-link injected by script.js) */
 .skip-link{position:absolute;left:-9999px;top:0;z-index:1000;background:#09090b;color:#22d3ee;padding:10px 16px;border:2px solid #22d3ee;border-radius:0 0 8px 0;font-weight:600;text-decoration:none}
