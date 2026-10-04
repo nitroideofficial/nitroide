@@ -57,7 +57,12 @@ const AI_PROVIDERS = {
   openai: { label: 'OpenAI', defaultModel: 'gpt-4o-mini', keyUrl: 'https://platform.openai.com/api-keys',
     help: 'Paid API (separate from ChatGPT Plus/Go subscription). Cheapest coding model: gpt-4o-mini.',
     freePick: null,
-    baseUrl: 'https://api.openai.com/v1' }
+    baseUrl: 'https://api.openai.com/v1' },
+  sambanova: { label: 'SambaNova', defaultModel: 'Meta-Llama-3.1-70B-Instruct', keyUrl: 'https://cloud.sambanova.ai/',
+    help: 'Free tier with fast Llama models. Key goes via NitroIDE\'s proxy (SambaNova blocks browsers directly). We never store your key.',
+    freePick: 'Meta-Llama-3.1-70B-Instruct',
+    baseUrl: 'https://nitroide-sambanova.contactnitroide.workers.dev/v1',
+    viaProxy: true }
 };
 function aiGetProvider(){
   try {
@@ -484,7 +489,7 @@ function aiDetectProvider(key){
   if (/^sk-or-v1-/.test(key)) return 'openrouter';
   if (/^AIza/.test(key) || /^AQ\./.test(key)) return 'gemini';
   if (/^sk-proj-/.test(key) || /^sk-[A-Za-z0-9_\-]{20,}/.test(key)) return 'openai';
-  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(key)) return null; // sambanova: no browser CORS, unsupported
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(key)) return 'sambanova';
   return null;
 }
 async function aiFetchModels(provider, key){
