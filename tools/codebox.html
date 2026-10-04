@@ -92,14 +92,6 @@
             <i class="ph-bold ph-kanban"></i>
             <span class="ws-hide-mobile">Projects</span>
           </button>
-          <button class="ws-btn ws-icon-text-btn" onclick="toggleOutputTabs()" title="Toggle Tabs">
-            <i class="ph-bold ph-arrows-out-line-vertical"></i>
-            <span class="ws-hide-mobile">Tabs</span>
-          </button>
-          <button class="ws-btn ws-icon-text-btn" onclick="openTimeMachine()" title="Local Time Machine">
-            <i class="ph-bold ph-clock-counter-clockwise"></i>
-            <span class="ws-hide-mobile">History</span>
-          </button>
           <button class="ws-btn ws-icon-text-btn" onclick="aiToggleSidebar()" id="aiSidebarBtn" title="AI Chat">
             <i class="ph-bold ph-chat-teardrop-text"></i>
             <span class="ws-hide-mobile">AI</span>
@@ -120,9 +112,11 @@
         <div id="optionsMenu" class="options-dropdown">
 <button class="dropdown-item hide-on-desktop" onclick="openDashboard()"><i class="ph-bold ph-kanban"></i> Project Manager</button>
 <div class="dropdown-divider hide-on-desktop"></div>
+          <div class="dropdown-category">Command</div>
           <button class="dropdown-item" onclick="toggleOptions();toggleCmdK()"><i class="ph-bold ph-command"></i> Command Palette <span style="margin-left:auto;opacity:.5;font-size:.75rem;">Ctrl+K</span></button>
           <button class="dropdown-item" onclick="toggleOptions();openAiSetupModal()"><i class="ph-bold ph-faders"></i> AI Key & Model</button>
           <div class="dropdown-divider"></div>
+          <div class="dropdown-category">Editor</div>
           <label class="toggle-wrap" title="Slide-out code map">
             <div style="display:flex; gap:8px; align-items:center;"><i class="ph-bold ph-map-trifold"></i> Code Minimap</div> 
             <input type="checkbox" id="minimapToggle" onchange="toggleMinimap()">
@@ -131,27 +125,30 @@
             <div style="display:flex; gap:8px; align-items:center;"><i class="ph-bold ph-lightning"></i> Auto-Run</div> 
             <input type="checkbox" id="autoRunToggle" checked onchange="handleAutoRunToggle()">
           </label>
-          <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="changeFontSize(2)"><i class="ph-bold ph-plus"></i> Increase Font Size</button>
           <button class="dropdown-item" onclick="changeFontSize(-2)"><i class="ph-bold ph-minus"></i> Decrease Font Size</button>
           <button class="dropdown-item" id="wordWrapBtn" onclick="toggleWordWrap()"><i class="ph-bold ph-text-align-justify"></i> Toggle Word Wrap</button>
           <button class="dropdown-item" onclick="formatCode()"><i class="ph-bold ph-magic-wand"></i> Format Code</button>
           <div class="dropdown-divider"></div>
+          <div class="dropdown-category">View</div>
+          <button class="dropdown-item" onclick="toggleOutputTabs()"><i class="ph-bold ph-arrows-out-line-vertical"></i> Toggle Split View</button>
           <button class="dropdown-item" onclick="setDevice('desktop')"><i class="ph-bold ph-monitor"></i> Desktop View</button>
           <button class="dropdown-item" onclick="setDevice('tablet')"><i class="ph-bold ph-device-tablet"></i> Tablet View</button>
           <button class="dropdown-item" onclick="setDevice('mobile')"><i class="ph-bold ph-device-mobile"></i> Mobile View</button>
           <div class="dropdown-divider"></div>
+          <div class="dropdown-category">Project</div>
           <button class="dropdown-item" onclick="toggleCDN()"><i class="ph-bold ph-package"></i> Manage Dependencies</button>
           <button class="dropdown-item" onclick="document.getElementById('fileImportInput').click()"><i class="ph-bold ph-folder-open"></i> Import ZIP / Files</button>
           <input type="file" id="fileImportInput" accept=".zip,.html,.css,.js" multiple style="display:none;" onchange="handleImport(event)">
-          <div class="dropdown-divider"></div>
-          <button class="dropdown-item" onclick="openTimeMachine()"><i class="ph-bold ph-clock-counter-clockwise"></i> Local Time Machine</button>
+          <button class="dropdown-item" onclick="openTimeMachine()"><i class="ph-bold ph-clock-counter-clockwise"></i> History — Time Machine</button>
           <button class="dropdown-item" onclick="toggleOptions();openShareModal()"><i class="ph-bold ph-share-network"></i> Share Workspace</button>
+          <button class="dropdown-item" onclick="toggleOptions();copyEmbedCode()"><i class="ph-bold ph-code"></i> Copy Embed Code</button>
           <button class="dropdown-item" onclick="openDeployModal('github')"><i class="ph-bold ph-rocket-launch"></i> Deploy — Publish Site</button>
           <button class="dropdown-item" onclick="installAppHint()"><i class="ph-bold ph-download-simple"></i> Install App</button>
           <button class="dropdown-item" onclick="exportSingleFile()"><i class="ph-bold ph-file-code"></i> Export as 1-File</button>
           <button class="dropdown-item" onclick="downloadZip()"><i class="ph-bold ph-file-archive"></i> Download ZIP</button>
           <div class="dropdown-divider"></div>
+          <div class="dropdown-category">Appearance</div>
           <button class="dropdown-item" onclick="toggleTheme()" id="themeBtn"><i class="ph-bold ph-sun"></i> Light Mode</button>
         </div>
 
@@ -533,34 +530,7 @@ function installAppHint() {
   if(t) t.addEventListener('click', function(){ try{ localStorage.setItem('nitroide_onboarded','1'); }catch(e){} });
 })();
 
-// "Copy embed code" next to the Share button (after injectShareButton runs on DOMContentLoaded)
-document.addEventListener('DOMContentLoaded', function(){
-  if(document.getElementById('embedBtn')) return;
-  var shareBtn=document.getElementById('shareBtn');
-  if(!shareBtn) return;
-  var b=document.createElement('button');
-  b.id='embedBtn'; b.className='ws-btn ws-icon-text-btn';
-  b.title='Copy embed code'; b.setAttribute('aria-label','Copy embed code');
-  b.innerHTML='<i class="ph-bold ph-code"></i><span class="ws-hide-mobile">Embed</span>';
-  b.addEventListener('click', function(){
-    if(typeof buildShareUrl!=='function') return;
-    var url=buildShareUrl();
-    if(!url){ showToast("<i class='ph-bold ph-warning-circle' style='margin-right:6px;'></i> Compression library missing."); return; }
-    var snippet='<iframe src="'+url.replace('?code=','?embed=1&code=')+'" width="100%" height="500" frameborder="0"></iframe>';
-    function ok(){ showToast("<i class='ph-bold ph-check-circle' style='color:var(--success);margin-right:6px;'></i> Embed code copied!"); }
-    function legacy(){
-      var ta=document.createElement('textarea');
-      ta.value=snippet; ta.style.position='fixed'; ta.style.opacity='0';
-      document.body.appendChild(ta); ta.select();
-      try{ document.execCommand('copy'); ok(); }catch(e){}
-      document.body.removeChild(ta);
-    }
-    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(snippet).then(ok).catch(legacy); }
-    else{ legacy(); }
-  });
-  shareBtn.parentNode.insertBefore(b, shareBtn.nextSibling);
-  if(typeof pinWsRight==="function") pinWsRight();
-});
+// Embed button moved to Prefs menu (copyEmbedCode in script.js)
 </script>
 </body>
 </html>
