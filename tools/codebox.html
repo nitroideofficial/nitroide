@@ -477,9 +477,11 @@
 // plus an Install App menu item that guides iOS users (no beforeinstallprompt there).
 let _deferredInstallPrompt = null;
 function _placeInstallBtn() {
+  return; // install button moved to Prefs menu (Install App)
   if (document.getElementById('nitroide-install-btn')) return;
   var host = document.querySelector('.ws-right');
   if (!host) return;
+  
   var btn = document.createElement('button');
   btn.id = 'nitroide-install-btn';
   btn.className = 'ws-btn ws-icon-btn';
