@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 5, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Stop optimizing your build step — measure the feedback loop",
+  link: "https://peerlist.io/scroll/post/ACTHBAR9KQRDLPQARIP9RQ6DANOQ7J"
+},
+  {
+  date: "Oct 5, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
