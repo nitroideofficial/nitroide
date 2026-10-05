@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 5, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Stop optimizing your build step — measure the feedback loop",
+  link: "https://x.com/trynitroide/status/2107085536846618869"
+},
+  {
   date: "Oct 4, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
