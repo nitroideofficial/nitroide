@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 5, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Stop optimizing your build step — measure the feedback loop",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7512851564458360832/"
+},
+  {
+  date: "Oct 5, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
