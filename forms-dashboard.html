@@ -52,7 +52,7 @@
 
   <div class="card" id="loginCard">
     <div class="row">
-      <input type="password" id="tokenInput" placeholder="Paste ADMIN_TOKEN" style="flex:1;min-width:220px" autocomplete="off">
+      <input type="password" id="tokenInput" placeholder="Paste ADMIN_TOKEN" style="flex:1;min-width:220px" autocomplete="off" aria-label="Admin token">
       <button onclick="login()">Unlock</button>
     </div>
     <div class="err hidden" id="loginErr"></div>
@@ -70,7 +70,7 @@
         </div>
       </div>
       <div class="toolbar">
-        <input id="searchInput" placeholder="Search name, email, message..." autocomplete="off">
+        <input id="searchInput" placeholder="Search name, email, message..." autocomplete="off" aria-label="Search submissions">
       </div>
       <div style="overflow-x:auto">
         <table>
