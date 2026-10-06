@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 6, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises",
+  link: "https://nitroide.hashnode.dev/nitroide-s-ai-pair-programmer-bring-your-own-key-surgical-edits-zero-surprises"
+},
+  {
   date: "Oct 5, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
