@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 6, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "NitroIDE's AI pair programmer: it never touches what you didn't ask for",
+  link: "https://peerlist.io/scroll/post/ACTHGNQGMB7BPLKGOFKOKKLONNQP8A"
+},
+  {
+  date: "Oct 6, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
