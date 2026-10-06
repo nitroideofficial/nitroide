@@ -2391,3 +2391,256 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
 .ai-privacy-note{display:flex;gap:8px;align-items:flex-start;font-size:.74rem;color:var(--text-muted);background:color-mix(in srgb, var(--brand) 6%, transparent);border:1px solid color-mix(in srgb, var(--brand) 20%, transparent);border-radius:8px;padding:9px 11px;margin:0 0 14px;line-height:1.5}
 .ai-privacy-note i{color:var(--brand);font-size:.9rem;flex:none;margin-top:2px}
 .ai-privacy-note b{color:var(--text)}
+
+/* ===== HEADER STYLES (Phase 3: moved from NitroHeader JS template) =====
+   These were inline style="..." attributes; moved here pixel-identically. */
+nitro-header .logo>a{text-decoration:none;display:flex;align-items:center;gap:8px}
+nitro-header a.theme-toggle{text-decoration:none;display:flex;align-items:center;gap:6px;height:36px;box-sizing:border-box}
+nitro-header button.theme-toggle{height:36px;box-sizing:border-box}
+nitro-header button.theme-toggle>span.hide-in-mobile{font-size:.7rem;font-weight:700;opacity:.7}
+nitro-header a.btn-compact{border-radius:30px;padding:0 16px;height:36px;box-sizing:border-box;display:flex;align-items:center}
+nitro-header>.container{padding-top:10px;padding-bottom:0}
+/* ===== FOOTER STYLES (Phase 3: moved from NitroFooter JS template <style> block) ===== */
+
+          .footer-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+            padding-bottom: 40px;
+            margin-top: 0px;
+          }
+          
+          /* The Massive Background Watermark */
+          .footer-watermark {
+            position: absolute;
+            bottom: -5%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 15vw;
+            font-weight: 800;
+            color: var(--text);
+            opacity: 0.02;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 0;
+            letter-spacing: -0.05em;
+            user-select: none;
+          }
+          html.light-mode .footer-watermark { opacity: 0.03; color: #000; }
+
+          /* The Upper Deck */
+          .footer-upper {
+            display: flex;
+            justify-content: space-between;
+            gap: 60px;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 60px;
+          }
+          
+          .footer-brand {
+            flex: 0 0 300px;
+          }
+          .footer-hero {
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text);
+            line-height: 1.1;
+            margin-bottom: 15px;
+          }
+          .footer-hero span { color: var(--text-muted); }
+          
+          .footer-link-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            flex: 1;
+          }
+          .f-col h4 {
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+          }
+          .f-col a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            transition: color 0.2s;
+          }
+          .f-col a:hover { color: var(--text); }
+          
+          /* The Lower Deck (Strict Grid) */
+          .footer-lower {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            z-index: 1;
+          }
+          html.light-mode .footer-lower { border-top: 1px solid rgba(0,0,0,0.05); }
+
+          /* Listed-on: official directory badges */
+          .f-listed {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+            padding-bottom: 28px;
+          }
+          .f-listed-label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--text-muted);
+            font-weight: 600;
+          }
+          .f-listed-badges {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+          }
+          .off-badge { display: inline-flex; transition: transform 0.2s, opacity 0.2s; }
+          .off-badge:hover { transform: translateY(-2px); opacity: 0.92; }
+          .off-badge img { height: 40px; width: auto; display: block; border-radius: 8px; }
+          .off-badge .b-light { display: none; }
+          html.light-mode .off-badge .b-light { display: block; }
+          html.light-mode .off-badge .b-dark { display: none; }
+          @media (max-width: 640px) {
+            .f-listed { flex-direction: column; gap: 12px; padding-bottom: 22px; }
+            .f-listed-badges { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 14px; justify-items: center; align-items: center; width: 100%; max-width: 340px; }
+            .off-badge img { height: 36px; max-width: 100%; }
+          }
+
+          .f-legal {
+            text-align: left;
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+            font-weight: 500;
+          }
+          
+          /* --- THE EXPANDING DOCK LOGIC --- */
+          .f-socials {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .expand-btn {
+            display: inline-flex;
+            align-items: center;
+            height: 44px;
+            max-width: 44px; /* Starts as a perfect circle */
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: 44px;
+            overflow: hidden;
+            transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: var(--text-muted);
+            white-space: nowrap;
+          }
+          html.light-mode .expand-btn { background: rgba(0,0,0,0.02); }
+
+          .expand-btn i {
+            width: 42px;
+            height: 44px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: color 0.3s;
+          }
+
+          .expand-btn span {
+            padding-right: 18px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          }
+
+          /* Hover Expansion Physics */
+          .expand-btn:hover {
+            max-width: 160px; /* Slides open on hover */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+          }
+          .expand-btn:hover span {
+            opacity: 1;
+            transform: translateX(0);
+          }
+
+          /* Brand Colors on Hover */
+          .expand-btn.gh:hover { border-color: rgba(255,255,255,0.3); color: #fff; background: rgba(255,255,255,0.05); }
+          .expand-btn.pl:hover { border-color: rgba(0,170,69,0.3); color: #00aa45; background: rgba(0,170,69,0.05); }
+          .expand-btn.ph:hover { border-color: rgba(255,97,84,0.3); color: #ff6154; background: rgba(255,97,84,0.05); }
+          .expand-btn.hn:hover { border-color: rgba(41,98,255,0.3); color: #2962ff; background: rgba(41,98,255,0.05); }
+          .expand-btn.cm:hover { border-color: rgba(75,137,245,0.3); color: #4b89f5; background: rgba(75,137,245,0.05); }
+          .expand-btn.tw:hover { border-color: rgba(29,161,242,0.3); color: #1da1f2; background: rgba(29,161,242,0.05); }
+          .expand-btn.li:hover { border-color: rgba(10,102,194,0.3); color: #0a66c2; background: rgba(10,102,194,0.05); }
+          .expand-btn.ig:hover { border-color: rgba(225,48,108,0.3); color: #e1306c; background: rgba(225,48,108,0.05); }
+
+          .f-madein {
+            text-align: right;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 6px;
+          }
+
+          /* --- MOBILE RESPONSIVENESS --- */
+          @media (max-width: 1100px) {
+            .footer-upper { flex-direction: column; gap: 40px; }
+            .footer-brand { flex: none; max-width: 100%; }
+          }
+          @media (max-width: 768px) {
+            .footer-link-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+            .footer-lower { display: flex; flex-direction: column; gap: 25px; text-align: center; }
+            .f-legal, .f-madein { text-align: center; justify-content: center; }
+            
+            /* On mobile, permanently expand the pills into a 2-column grid */
+            .f-socials { order: -1; width: 100%; flex-wrap: wrap; gap: 10px; }
+            .expand-btn { 
+              flex: 1 1 calc(50% - 12px); 
+              max-width: none; 
+              justify-content: flex-start;
+            }
+            .expand-btn span { opacity: 1; transform: translateX(0); }
+            
+            .footer-watermark { font-size: 22vw; bottom: 5%; }
+          }
+        
+/* Footer inline styles (Phase 3: moved from NitroFooter JS template) */
+nitro-footer .footer-watermark+.container{padding-top:0;padding-bottom:0}
+nitro-footer .footer-brand>a{text-decoration:none;display:inline-block;margin-bottom:30px}
+nitro-footer img.logo-dark{height:28px}
+nitro-footer img.logo-light{height:28px;display:none}
+nitro-footer .footer-hero+p{color:var(--text-muted);font-size:.95rem;line-height:1.6;max-width:300px}
+nitro-footer .f-legal>span:first-of-type{margin:0 10px;opacity:.5}
+nitro-footer .f-legal>span:last-of-type{margin:0 5px;opacity:.5}
+nitro-footer .f-legal>a{color:inherit;text-decoration:none;transition:color .2s}
+nitro-footer .ph-lightning{color:var(--brand)}
+/* ===== MODAL STYLES (Phase 3: moved from NitroModals JS template) ===== */
+nitro-modals #feedbackWebsite{position:absolute;left:-9999px;opacity:0;height:0;width:0;border:0;padding:0}
+nitro-modals label[for=feedbackSource]{display:block;font-size:.8rem;color:var(--muted);margin:2px 0 6px}
+nitro-modals label[for=feedbackSource] span{opacity:.6}
+nitro-modals #feedbackSource{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:.9rem;margin-bottom:10px;outline:0}
+nitro-modals #feedbackBtn{width:100%}
+nitro-modals #feedbackSpinner{display:none}
