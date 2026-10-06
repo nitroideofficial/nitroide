@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 6, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7513215868043124736/"
+},
+  {
+  date: "Oct 6, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
