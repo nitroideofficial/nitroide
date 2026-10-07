@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 7, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Your IDE doesn't need an app store",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7513578340889346048/"
+},
+  {
+  date: "Oct 7, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
