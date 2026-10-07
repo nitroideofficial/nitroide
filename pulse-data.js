@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 7, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Your IDE doesn't need an app store — NitroIDE installs from a URL",
+  link: "https://peerlist.io/scroll/post/ACTHA9E8DKGEG8BDKHANBO9ENDBQRG"
+},
+  {
+  date: "Oct 7, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
