@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 7, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Your IDE doesn't need an app store. Mine installs from a URL.",
+  link: "https://nitroide.hashnode.dev/your-ide-doesn-t-need-an-app-store-mine-installs-from-a-url"
+},
+  {
+  date: "Oct 7, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
