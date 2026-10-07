@@ -37,6 +37,13 @@
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+  <style>
+    .faq-block { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; padding: 20px 22px; }
+    .faq-item h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .faq-item p { margin: 0; color: var(--text-muted, #9b9bab); font-size: .94rem; }
+    .faq-item a { color: #22d3ee; }
+  </style>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -254,6 +261,54 @@
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>
         </div>
         <a href="../tools/codebox.html" class="btn-launch primary-btn full-width">Launch Workspace</a>
+      </div>
+    </div>
+
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>Four steps to a layout that holds at every width.</p>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-card">
+          <h2>Step 1 &mdash; Write your CSS</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Author your styles and media queries in the CSS panel of the Monaco editor, with autocomplete for properties and values as you go.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 2 &mdash; Pick a viewport</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Jump between mobile, tablet, and desktop presets to see how each breakpoint behaves &mdash; no more dragging your actual browser window back and forth.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 3 &mdash; Drag to find the break</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Drag the viewport edge fluidly and watch the live width readout. You'll spot the exact pixel where a grid collapses or type starts to overflow.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 4 &mdash; Iterate without refreshing</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Tweak a media query and the emulated viewport updates instantly through hot module replacement. Fix, drag, verify &mdash; in seconds.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>Common Questions</h2>
+        <p>Straight answers about responsive testing.</p>
+      </div>
+      <div class="faq-block">
+        <div class="faq-item"><h3>Which viewports can I simulate?</h3><p>Standard mobile, tablet, and desktop presets cover the common breakpoints, and the fluid resize handle lets you test any width in between &mdash; including the awkward in-between sizes where layouts usually break.</p></div>
+        <div class="faq-item"><h3>Does the emulated preview behave like a real device?</h3><p>Your page runs in an isolated iframe, so media queries and viewport units respond exactly as they would in a real browser window &mdash; with none of the editor's own UI interfering with measurements.</p></div>
+        <div class="faq-item"><h3>Can I test Tailwind's responsive prefixes here?</h3><p>Yes. Write classes like <code>md:grid-cols-2</code> or <code>lg:px-8</code> and toggle the viewport emulator to watch each breakpoint kick in live.</p></div>
+        <div class="faq-item"><h3>Do I have to refresh after changing my CSS?</h3><p>No. Hot module replacement pushes style changes into the preview the moment you type, at whatever viewport width you're currently testing.</p></div>
+        <div class="faq-item"><h3>Is my design work private?</h3><p>Completely. Everything &mdash; your code, the preview, the viewport tests &mdash; runs locally in your browser. Nothing is uploaded or tracked.</p></div>
       </div>
     </div>
 

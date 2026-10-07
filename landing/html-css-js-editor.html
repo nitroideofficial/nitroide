@@ -38,6 +38,13 @@
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+  <style>
+    .faq-block { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; padding: 20px 22px; }
+    .faq-item h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .faq-item p { margin: 0; color: var(--text-muted, #9b9bab); font-size: .94rem; }
+    .faq-item a { color: #22d3ee; }
+  </style>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -256,6 +263,54 @@
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>
         </div>
         <a href="../tools/codebox.html" class="btn-launch primary-btn full-width">Launch Workspace</a>
+      </div>
+    </div>
+
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>From blank tab to running page in four steps.</p>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-card">
+          <h2>Step 1 &mdash; Open the workspace</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">One click and you're in &mdash; no signup, no installer. A fresh project with index.html, style.css, and script.js is already waiting for you.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 2 &mdash; Write code</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Type in the Monaco editor with Emmet abbreviations, autocomplete, and multi-cursor editing. It feels like VS Code because it runs the same engine.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 3 &mdash; Watch it update live</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Every keystroke re-renders the preview through hot module replacement &mdash; no manual refresh, no build step standing between you and the result.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 4 &mdash; Debug and ship</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Log to the integrated console, inject libraries from unpkg with a single command, then export your project as a ZIP when it's ready for the world.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>Common Questions</h2>
+        <p>Straight answers before you start typing.</p>
+      </div>
+      <div class="faq-block">
+        <div class="faq-item"><h3>Is it really free? What's the catch?</h3><p>It's free with no catch hiding underneath: no accounts, no trial timers, no locked features. Your code lives in your browser's local storage, and the project itself is open source.</p></div>
+        <div class="faq-item"><h3>Where is my code saved?</h3><p>In your browser's local storage on your own device &mdash; nothing is sent to a server. For safekeeping or moving between machines, export the project as a ZIP or push it to GitHub.</p></div>
+        <div class="faq-item"><h3>Can I use libraries like GSAP, Tailwind, or jQuery?</h3><p>Yes. Open the developer console inside the workspace and inject any library from unpkg &mdash; type <code>&gt; install gsap</code> and it's available to your page instantly, no package manager involved.</p></div>
+        <div class="faq-item"><h3>Does it work offline?</h3><p>Yes. NitroIDE is an installable PWA: load it once, and the editor, preview, and your saved projects keep working without a connection.</p></div>
+        <div class="faq-item"><h3>How is this different from CodePen?</h3><p>CodePen is built around single pens stored on their servers. NitroIDE gives you multi-file projects, a full VS Code-grade editor, local-first privacy with no account, and one-click export to a real, deployable project.</p></div>
       </div>
     </div>
 

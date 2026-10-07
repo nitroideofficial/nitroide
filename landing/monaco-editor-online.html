@@ -38,6 +38,13 @@
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+  <style>
+    .faq-block { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; padding: 20px 22px; }
+    .faq-item h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .faq-item p { margin: 0; color: var(--text-muted, #9b9bab); font-size: .94rem; }
+    .faq-item a { color: #22d3ee; }
+  </style>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -254,6 +261,54 @@
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>
         </div>
         <a href="../tools/codebox.html" class="btn-launch primary-btn full-width">Launch Workspace</a>
+      </div>
+    </div>
+
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>VS Code's engine, zero installation, four steps.</p>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-card">
+          <h2>Step 1 &mdash; Launch in your browser</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Open the workspace and Monaco is already there &mdash; no download, no setup wizard, no extensions to install before you can type.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 2 &mdash; Code with muscle memory</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Multi-cursor editing, find and replace, the F1 command palette, and the keyboard shortcuts you already know from VS Code all work here.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 3 &mdash; Let the editor help</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Emmet expands abbreviations as you type, IntelliSense suggests DOM methods and CSS properties, and auto-format keeps everything tidy.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 4 &mdash; See the result</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">The live preview renders your HTML and CSS beside the editor, with a console for JavaScript output &mdash; edit and verify without switching windows.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>Common Questions</h2>
+        <p>Straight answers about the editor.</p>
+      </div>
+      <div class="faq-block">
+        <div class="faq-item"><h3>Is this the real Monaco editor?</h3><p>Yes &mdash; the exact editor engine that powers VS Code, running in your browser tab. Same syntax highlighting, same editing model, same command palette.</p></div>
+        <div class="faq-item"><h3>Which languages does it support?</h3><p>The workspace is tuned for frontend work: HTML, CSS, JavaScript, and JSX, each with syntax highlighting, smart indentation, and language-aware autocomplete.</p></div>
+        <div class="faq-item"><h3>Does Emmet actually work here?</h3><p>Yes, Emmet comes pre-configured. Type an abbreviation like <code>div.container&gt;ul&gt;li*3</code>, hit Tab, and it expands instantly &mdash; no plugin to install.</p></div>
+        <div class="faq-item"><h3>Can I use VS Code keyboard shortcuts?</h3><p>The core ones work: multi-cursor with Alt+click, F1 for the command palette, Ctrl+F for find, and the familiar editing chords. If your fingers know VS Code, they'll feel at home.</p></div>
+        <div class="faq-item"><h3>Why use this instead of installing VS Code?</h3><p>For speed and convenience: quick edits on a Chromebook or shared machine, trying a snippet without launching a heavy app, or coding somewhere you can't install software. It complements a desktop setup rather than replacing it.</p></div>
       </div>
     </div>
 

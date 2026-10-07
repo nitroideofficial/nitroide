@@ -38,6 +38,13 @@
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+  <style>
+    .faq-block { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; padding: 20px 22px; }
+    .faq-item h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .faq-item p { margin: 0; color: var(--text-muted, #9b9bab); font-size: .94rem; }
+    .faq-item a { color: #22d3ee; }
+  </style>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -255,6 +262,54 @@
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>
         </div>
         <a href="../tools/codebox.html?env=react" class="btn-launch primary-btn full-width">Launch Workspace</a>
+      </div>
+    </div>
+
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>From idea to running component in four steps.</p>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-card">
+          <h2>Step 1 &mdash; Open the React workspace</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Launch the playground &mdash; no npm install, no create-react-app, no terminal. React 18 is preloaded and ready to render.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 2 &mdash; Write JSX</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Define components with hooks and JSX directly in the editor. Your code is transpiled in the browser in real time as you type.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 3 &mdash; Add libraries</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Need Framer Motion, a charting library, or anything else? Inject it from unpkg with one console command and import it in your component.</p>
+          </div>
+        </div>
+        <div class="bento-card">
+          <h2>Step 4 &mdash; Debug and export</h2>
+          <div class="bento-content-swap">
+            <p class="bento-text">Watch state update live with the state visualizer, then export the whole prototype as a ZIP when you're ready to move it into a real codebase.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>Common Questions</h2>
+        <p>Straight answers about the React playground.</p>
+      </div>
+      <div class="faq-block">
+        <div class="faq-item"><h3>How does JSX work with no build step?</h3><p>Your JSX is transpiled directly in the browser as you type, so components render instantly. You skip the entire toolchain &mdash; no Babel config, no bundler &mdash; which makes it ideal for rapid prototyping.</p></div>
+        <div class="faq-item"><h3>Which React version is included?</h3><p>React 18, loaded from CDN. Hooks like useState and useEffect, fragments, and modern JSX conventions all work the way you'd expect.</p></div>
+        <div class="faq-item"><h3>Can I use hooks and manage component state?</h3><p>Yes. useState, useEffect, useRef, and custom hooks all run normally, and the built-in state visualizer lets you watch values change as you interact with your UI.</p></div>
+        <div class="faq-item"><h3>Can I add third-party React libraries?</h3><p>Yes &mdash; inject any package from unpkg through the workspace console (for example, <code>&gt; install framer-motion</code>) and use it in your components right away.</p></div>
+        <div class="faq-item"><h3>What happens when my prototype outgrows the playground?</h3><p>Export it as a ZIP and continue in a full toolchain. The playground is built for speed of iteration; nothing about it locks you in.</p></div>
       </div>
     </div>
 
