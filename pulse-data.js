@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 7, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Your IDE shouldn't need an app store — mine installs from a URL, and keeps working when the Wi-Fi dies",
+  link: "https://x.com/trynitroide/status/2107811553554899212"
+},
+  {
   date: "Oct 6, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
