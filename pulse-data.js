@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 8, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7513940788498563073/"
+},
+  {
   date: "Oct 7, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
