@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 8, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design",
+  link: "https://x.com/trynitroide/status/2108174772492505512"
+},
+  {
+  date: "Oct 8, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
