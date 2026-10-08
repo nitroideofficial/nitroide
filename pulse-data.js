@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 8, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "No-server architecture: what running an IDE fully client-side forces you to design",
+  link: "https://peerlist.io/scroll/post/ACTHJKNLEB6866E691K67JG8ANG89D"
+},
+  {
+  date: "Oct 8, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
