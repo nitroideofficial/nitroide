@@ -6,6 +6,13 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design | NitroIDE</title>
+      <link>https://nitroide.com/blog/no-server-architecture.html</link>
+      <guid>https://nitroide.com/blog/no-server-architecture.html</guid>
+      <description>NitroIDE has no backend — no API, no database, no accounts. How a fully client-side architecture reshapes storage (localStorage as the database), identity (no logins), sharing (code in the URL), and trust boundaries, plus the honest exceptions.</description>
+      <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>NitroIDE&apos;s AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises | NitroIDE</title>
       <link>https://nitroide.com/blog/ai-pair-programmer-byok.html</link>
       <guid>https://nitroide.com/blog/ai-pair-programmer-byok.html</guid>

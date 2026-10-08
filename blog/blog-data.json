@@ -1,5 +1,20 @@
 [
   {
+    "SLUG": "no-server-architecture",
+    "META_TITLE": "No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design | NitroIDE",
+    "META_DESC": "NitroIDE has no backend — no API, no database, no accounts. How a fully client-side architecture reshapes storage (localStorage as the database), identity (no logins), sharing (code in the URL), and trust boundaries, plus the honest exceptions.",
+    "KEYWORDS": "no server architecture, client-side IDE, localStorage database, zero backend, browser IDE privacy, local-first architecture, no signup developer tools, NitroIDE",
+    "THEME_COLOR": "#22c55e",
+    "CATEGORY": "ARCHITECTURE",
+    "DATE": "OCTOBER 2026",
+    "H1_TITLE": "No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design",
+    "CONTENT": "<p>NitroIDE has no servers — not serverless, no backend at all. The entire IDE runs in your browser tab, and committing to that architecture forced a redesign of everything you'd normally take for granted: localStorage as the database, identity without accounts, sharing with the code in the URL, and trust boundaries drawn entirely in client-side code.</p>",
+    "CTA_TITLE": "Try NitroIDE",
+    "CTA_DESC": "Free, no signup — the whole IDE runs in your browser tab.",
+    "CTA_LINK": "../index.html",
+    "CTA_ICON": "ph-magic-wand"
+  },
+  {
     "SLUG": "ai-pair-programmer-byok",
     "META_TITLE": "NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises | NitroIDE",
     "META_DESC": "How NitroIDE's v30 AI pair programmer works: bring-your-own-key privacy (Groq, Gemini, OpenRouter, OpenAI), surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes instead of guessing.",
