@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 8, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design",
+  link: "https://nitroide.hashnode.dev/no-servers-no-accounts-what-a-fully-client-side-ide-forces-you-to-design"
+},
+  {
+  date: "Oct 8, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
