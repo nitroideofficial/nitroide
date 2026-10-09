@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 10, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The Word Wrap Saga: fix the dead button, don't delete it",
+  link: "https://peerlist.io/scroll/post/ACTHNN7RLGGLQD8OD3JAJGGN7JO7GL"
+},
+  {
   date: "Oct 9, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
