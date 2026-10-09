@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 9, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The Word Wrap Saga: Fix the Dead Button, Don't Delete It",
+  link: "https://x.com/trynitroide/status/2108535289324998742"
+},
+  {
+  date: "Oct 9, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
