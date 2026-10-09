@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 9, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The Word Wrap Saga: Fix the Dead Button, Don't Delete It",
+  link: "https://nitroide.hashnode.dev/the-word-wrap-saga-fix-the-dead-button-don-t-delete-it"
+},
+  {
+  date: "Oct 9, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
