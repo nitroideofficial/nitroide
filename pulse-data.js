@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 9, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The Word Wrap Saga: Fix the Dead Button, Don't Delete It",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7514300764962373632/"
+},
+  {
   date: "Oct 8, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
