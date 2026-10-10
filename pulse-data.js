@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 10, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Nitro.watch(): I Built a Live State Panel for My Browser IDE",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7514665649512648706/"
+},
+  {
+  date: "Oct 10, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
   color: "#00aa45",
