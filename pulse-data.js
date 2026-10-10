@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 10, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Nitro.watch(): I Built a Live State Panel for My Browser IDE",
+  link: "https://nitroide.hashnode.dev/nitro-watch-i-built-a-live-state-panel-for-my-browser-ide-and-retired-my-console-log-habit"
+},
+  {
+  date: "Oct 10, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
