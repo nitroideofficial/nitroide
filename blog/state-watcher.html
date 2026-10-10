@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nitro.watch(): I Built a Live State Panel for My Browser IDE | NitroIDE</title>
+  <meta name="title" content="Nitro.watch(): I Built a Live State Panel for My Browser IDE">
+  <meta name="description" content="One call — Nitro.watch('cart', cart) — renders a live, syntax-highlighted JSON tree in NitroIDE's State tab. The postMessage bridge, the latest-wins cache, the escape-first highlighter, and the honest limits of a 40-line debugging tool.">
+  <meta name="keywords" content="nitro.watch, live state panel, javascript debugging, browser IDE, console.log alternative, postMessage bridge, state watcher, zero dependencies, NitroIDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#22c55e">
+  <link rel="canonical" href="https://nitroide.com/blog/state-watcher.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/state-watcher.html">
+  <meta property="og:title" content="Nitro.watch(): I Built a Live State Panel for My Browser IDE">
+  <meta property="og:description" content="One call — Nitro.watch('cart', cart) — renders a live, syntax-highlighted JSON tree in NitroIDE's State tab. The postMessage bridge, the latest-wins cache, the escape-first highlighter, and the honest limits of a 40-line debugging tool.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-10-state-watcher.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Nitro.watch(): watch live state, skip the console.log archaeology">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-10-10">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/state-watcher.html">
+  <meta name="twitter:title" content="Nitro.watch(): I Built a Live State Panel for My Browser IDE">
+  <meta name="twitter:description" content="One call — Nitro.watch('cart', cart) — renders a live, syntax-highlighted JSON tree in NitroIDE's State tab. The postMessage bridge, the latest-wins cache, the escape-first highlighter, and the honest limits of a 40-line debugging tool.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-10-state-watcher.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-10-state-watcher.webp","headline":"Nitro.watch(): I Built a Live State Panel for My Browser IDE","description":"One call — Nitro.watch('cart', cart) — renders a live, syntax-highlighted JSON tree in NitroIDE's State tab. The postMessage bridge, the latest-wins cache, the escape-first highlighter, and the honest limits of a 40-line debugging tool.","author":{"@type":"Organization","name":"NitroIDE"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/state-watcher.html","datePublished":"2026-10-10","dateModified":"2026-10-10"}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #22c55e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">DEBUGGING • <time datetime="2026-10-10">October 10, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Nitro.watch(): I Built a Live State Panel for My Browser IDE</h1>
+
+    <p>You know the ritual. You scatter <code>console.log</code> through your code, reload, and then do archaeology: scroll up through the noise, squint at timestamps, try to remember which log came from which branch, and hope the interesting one didn't get buried under a loop that fired 400 times. In vanilla JS there's no Redux DevTools to lean on — just you and the dig site.</p>
+
+    <p>I build NitroIDE, a browser-based IDE where your code never leaves your machine. A few months ago I got tired enough of the archaeology to build the poor man's state panel directly into it: one call — <code>Nitro.watch('cart', cart)</code> — and the IDE renders your value as a live, syntax-highlighted JSON tree in the State tab. Every time you call <code>watch</code> with the same name, the tree updates. No config, no extension, no devtools tab-switching.</p>
+
+    <p>It turned out to be a small, opinionated piece of engineering. Here's the whole thing, including the decisions I made and the limits I kept.</p>
+
+    <h2>The API is one function</h2>
+    <p>Inside your preview code:</p>
+    <pre style="margin: 10px 0 20px; border: 1px solid var(--border); border-radius: 10px; overflow: auto; background: #0d1117; padding: 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.85rem; line-height: 1.6; color: #e4e4e7;"><code>let playerState = { health: 100, level: 5, items: ['Sword'] };
+
+// Bind it to the IDE's State tab
+Nitro.watch('Player Data', playerState);
+
+// Automatically updates the panel every second
+setInterval(() =&gt; {
+  playerState.health -= 5;
+  Nitro.watch('Player Data', playerState);
+}, 1000);</code></pre>
+    <p>That's the entire public surface. <code>window.Nitro</code> is injected into the preview iframe by the IDE itself, and <code>watch(name, data)</code> takes a human-readable label plus any value. The docs example above is a game loop — call <code>watch</code> with the same name on a timer and the State tab becomes a live HUD. No subscription API, no disposal ceremony. I wanted the debugging tool to be as zero-setup as the IDE.</p>
+
+    <h2>Underneath, it's a postMessage bridge</h2>
+    <p>NitroIDE's preview runs in a sandboxed iframe on an opaque origin (I removed <code>allow-same-origin</code> during the v25 security audit), so the parent page and the preview can only talk through <code>postMessage</code>. The state watcher rides that same channel, and the whole pipeline has exactly three moving parts:</p>
+    <ol>
+      <li><strong>The injected hook.</strong> In the preview, <code>watch(name, data)</code> does one thing: <code>window.parent.postMessage({ type: 'state-watch', name: name, data: JSON.stringify(data) }, '*')</code>. One direction, no polling, no requests.</li>
+      <li><strong>The cache.</strong> The parent keeps a <code>stateCache</code> object keyed by watch name. On each message it runs <code>stateCache[name] = JSON.parse(data)</code> and re-renders. If parsing fails (say, <code>JSON.stringify(undefined)</code> — which returns <code>undefined</code>, not a string), the catch stores the raw string instead of crashing the panel.</li>
+      <li><strong>The renderer.</strong> Each watched name gets a header row plus a <code>&lt;pre class="json-block"&gt;</code> rendered by a hand-rolled <code>syntaxHighlightJSON</code> — a single regex over the 2-space pretty-printed JSON that tokenizes keys, strings, numbers, booleans, and nulls into CSS classes. No dependency, about fifteen lines.</li>
+    </ol>
+    <p>That's it. Value in, JSON tree out. The panel re-renders on every watch call.</p>
+
+    <h2>The decisions I made — and why</h2>
+    <p><strong>Latest wins, deliberately.</strong> Watching the same name overwrites the previous snapshot. It's a state panel, not a log. No history, no diffs, no time travel. I chose to be honest about what the tool is rather than ship a fake version of what it isn't. If you want the archaeology back, <code>console.log</code> is still right there.</p>
+    <p><strong>One-way by design.</strong> The preview never asks the parent for anything, and the parent never reaches into the iframe. The channel is fire-and-forget, which means a watch call can never block your app's frame — the worst case is a dropped or delayed render.</p>
+    <p><strong>The parent never trusts the payload.</strong> The watch data crosses the exact same iframe→parent channel we hardened in v25, so it gets the same treatment. The watch <em>name</em> is HTML-escaped before it touches the DOM. The <em>data</em> is re-parsed as JSON and run through the highlighter, which escapes the text <em>first</em> and tokenizes second — markup can never sneak through the highlighting step, because by the time the regex runs, there is no markup left. A malicious preview trying to inject HTML through a watched value gets a harmless escaped string in a <code>&lt;pre&gt;</code>.</p>
+    <p><strong>Zero dependencies.</strong> The syntax highlighter is one regex. The bridge is <code>postMessage</code> plus a cache object. The whole feature is maybe forty lines. Debugging tools have to survive every project, so they can't depend on any project's stack.</p>
+
+    <h2>The honest ceiling</h2>
+    <p>Every tool should state its ceiling, so here it is:</p>
+    <ul>
+      <li><strong>Circular references throw at the <code>watch()</code> call itself.</strong> <code>JSON.stringify</code> runs in the caller, before anything is sent — so <code>Nitro.watch('x', circularObj)</code> raises in your preview code, not in the panel. Nothing arrives, nothing renders. That's the serialization tax, paid up front.</li>
+      <li><strong>Big objects cost real work.</strong> Each call is a stringify, a <code>postMessage</code>, a parse, and a full panel re-render. Don't watch a giant tree at 60fps — watch it on state transitions instead.</li>
+      <li><strong>Flat namespace.</strong> Watch names are just keys in one object. Two modules watching <code>'state'</code> will stomp each other. Name your watches like you name your variables.</li>
+    </ul>
+    <p>None of these are bugs. They're the shape of a tool that chose to be small.</p>
+
+    <h2>The lesson I keep relearning</h2>
+    <p>Debugging tools in a zero-setup IDE have to be zero-setup too. The moment a debugger needs a config file, an extension, or a devtools tab-switch, I won't reach for it when I'm actually in flow — I'll reach for <code>console.log</code> and start digging again. The state watcher exists because the friction had to be lower than the bad habit. One call, one tree, live. That was the whole spec.</p>
+
+    <h2>Try it</h2>
+    <p>NitroIDE is free, no signup, and your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-10" style="color: #22c55e; text-decoration: none;">nitroide.com</a></p>
+
+    <p>⭐ If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #22c55e; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="postmessage-sanitizer.html" style="color: #22c55e; text-decoration: none; font-weight: 500;">The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools</a></li>
+      <li><a href="no-server-architecture.html" style="color: #22c55e; text-decoration: none; font-weight: 500;">No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design</a></li>
+      <li><a href="zero-latency-local-browser-ide-architecture.html" style="color: #22c55e; text-decoration: none; font-weight: 500;">Zero-Latency Local Browser IDE Architecture</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

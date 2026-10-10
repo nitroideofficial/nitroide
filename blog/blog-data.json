@@ -1,5 +1,20 @@
 [
   {
+    "SLUG": "state-watcher",
+    "META_TITLE": "Nitro.watch(): I Built a Live State Panel for My Browser IDE | NitroIDE",
+    "META_DESC": "One call — Nitro.watch('cart', cart) — renders a live, syntax-highlighted JSON tree in NitroIDE's State tab. The postMessage bridge, the latest-wins cache, the escape-first highlighter, and the honest limits of a 40-line debugging tool.",
+    "KEYWORDS": "nitro.watch, live state panel, javascript debugging, browser IDE, console.log alternative, postMessage bridge, state watcher, zero dependencies, NitroIDE",
+    "THEME_COLOR": "#22c55e",
+    "CATEGORY": "DEBUGGING",
+    "DATE": "OCTOBER 2026",
+    "H1_TITLE": "Nitro.watch(): I Built a Live State Panel for My Browser IDE",
+    "CONTENT": "<p>Tired of console.log archaeology — scrolling through log noise to find which line fired when. NitroIDE's state watcher renders any watched value as a live, syntax-highlighted JSON tree: one call, Nitro.watch('cart', cart), and the State tab updates on every call. Underneath it's a postMessage bridge from the sandboxed preview iframe to a latest-wins cache in the parent, with an escape-first syntax highlighter — about forty lines, zero dependencies. This is the full build: the API, the bridge, the decisions, and the honest ceiling.</p>",
+    "CTA_TITLE": "Try NitroIDE",
+    "CTA_DESC": "Free, no signup — the whole IDE runs in your browser tab.",
+    "CTA_LINK": "../index.html",
+    "CTA_ICON": "ph-magic-wand"
+  },
+  {
     "SLUG": "no-server-architecture",
     "META_TITLE": "No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design | NitroIDE",
     "META_DESC": "NitroIDE has no backend — no API, no database, no accounts. How a fully client-side architecture reshapes storage (localStorage as the database), identity (no logins), sharing (code in the URL), and trust boundaries, plus the honest exceptions.",
