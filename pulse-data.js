@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 10, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Nitro.watch(): a live state panel for the browser IDE",
+  link: "https://peerlist.io/scroll/post/ACTHMQ6876PNJENK91DKD99KEE6JO7"
+},
+  {
+  date: "Oct 10, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
