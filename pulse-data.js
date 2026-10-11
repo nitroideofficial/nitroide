@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 11, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "RSS Is Not Dead: I Resurrected My Blog Feed With One Tag",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7515026901330190336/"
+},
+  {
   date: "Oct 10, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
