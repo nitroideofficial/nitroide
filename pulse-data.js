@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 11, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "RSS Is Not Dead (5-post thread): one missing <item> tag killed my whole blog feed",
+  link: "https://x.com/trynitroide/status/2109261004819640434"
+},
+  {
+  date: "Oct 11, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
