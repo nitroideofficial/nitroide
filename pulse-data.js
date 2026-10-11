@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 11, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "RSS Is Not Dead: I Resurrected My Blog Feed With One Tag",
+  link: "https://nitroide.hashnode.dev/rss-is-not-dead-i-resurrected-my-blog-feed-with-one-tag"
+},
+  {
+  date: "Oct 11, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
