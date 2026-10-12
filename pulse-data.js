@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 12, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Sitemap Automation: Honest lastmod Dates From Git History",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7515394237987753985/"
+},
+  {
+  date: "Oct 12, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
