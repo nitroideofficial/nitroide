@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 12, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Sitemap Automation: Honest lastmod Dates From Git History",
+  link: "https://nitroide.hashnode.dev/i-stopped-lying-in-my-sitemap-git-writes-the-lastmod-dates-now"
+},
+  {
   date: "Oct 11, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
