@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 12, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Sitemap automation (5-post thread): git writes my sitemap's lastmod dates",
+  link: "https://x.com/trynitroide/status/2109623494371946844"
+},
+  {
+  date: "Oct 12, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
