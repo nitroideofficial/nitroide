@@ -5,10 +5,10 @@
   
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Legal & Privacy | NitroIDE - Terms of Service</title>
   <meta name="title" content="Legal & Privacy | NitroIDE - Terms of Service">
-  <meta name="description" content="Review the Terms of Service, Privacy Policy, and MIT License for NitroIDE. Learn how we protect your data with our 100% client-side architecture.">
+  <meta name="description" content="Review the Terms of Service, Privacy Policy, and MIT License for NitroIDE. Learn how we protect your data: your code runs only in your browser.">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
@@ -77,22 +77,62 @@
 </div>
 
 <div class="legal-container">
-  <h1>Privacy & License</h1>
-  
+  <h1>Privacy &amp; License</h1>
+
   <div class="highlight-box">
-    <p><i class="ph-bold ph-shield-check" style="font-size: 1.2rem; margin-right: 5px;"></i> <strong>TL;DR:</strong> NitroIDE operates entirely within your browser. We do not have servers, we do not track your keystrokes, and we cannot see your code.</p>
+    <p><i class="ph-bold ph-shield-check" style="font-size: 1.2rem; margin-right: 5px;"></i> <strong>TL;DR:</strong> Your code runs only in your browser — NitroIDE never sees it. NitroIDE does operate a small backend, but only for contact/feedback forms, the newsletter, analytics, and ads, each disclosed below. We do not track your keystrokes and we do not sell your data.</p>
   </div>
 
-  <h2>1. Privacy Policy</h2>
-  <p>NitroIDE is designed with absolute privacy in mind. Because the execution engine is built using HTML5 <code>srcdoc</code> iframes and client-side JavaScript, your code is compiled and executed entirely on your local machine.</p>
-  <p><strong>Data Storage:</strong> Any code you write, files you create in the Virtual File System (VFS), or settings you adjust (like Theme preferences) are stored strictly within your browser's local memory or <code>localStorage</code>. This data never leaves your device.</p>
-  <p><strong>Data Deletion:</strong> Because we do not store your data on external servers, clearing your browser's cache or local storage will permanently delete any unsaved workspaces. Please utilize the Export features within the IDE to save your work to your hard drive.</p>
-  <p><strong>Analytics:</strong> We use Google Analytics 4 to measure aggregate site usage (page views and sessions) so we can improve NitroIDE. Analytics never sees your code — all code is processed entirely in your browser and nothing is sent to NitroIDE servers, because there are none. You can opt out via <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google's Analytics opt-out add-on</a>; see also <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">how Google uses data from partner sites</a>.</p>
-  <p><strong>Advertising & Cookies:</strong> We use Google AdSense to display ads that keep NitroIDE free. Google uses cookies, including the DoubleClick cookie, to serve ads based on your prior visits to this and other websites. Google's use of advertising cookies enables it and its partners to serve ads based on your visit to our site. You may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" rel="noopener">Google Ads Settings</a>. Alternatively, you can opt out of third-party vendor cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices/" rel="noopener">aboutads.info</a>. For more information on how Google uses data, see <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">Google's partner-sites policy</a>.</p>
-  <p><strong>Third-Party Integrations:</strong> If you use the CDN injector to fetch external libraries (like React or Tailwind), your browser will make standard network requests to those CDN providers (e.g., unpkg, cdnjs). Those requests are governed by the respective providers' privacy policies.</p>
+  <h2 id="privacy">1. Privacy Policy</h2>
+  <p><strong>Last updated:</strong> 13 October 2026. <strong>Controller:</strong> NitroIDE, operated by Yash Panchal. Contact: <a href="mailto:contactnitroide@gmail.com">contactnitroide@gmail.com</a>.</p>
 
-  <h2>2. Terms of Service</h2>
-  <p>NitroIDE is provided as an open-source educational and development utility. By using the platform, you agree to utilize it responsibly. The sandbox environment is designed for frontend web development (HTML, CSS, JavaScript).</p>
+  <h3>What stays on your device</h3>
+  <p>The IDE execution engine runs entirely in your browser (HTML5 <code>srcdoc</code> iframes and client-side JavaScript). The code you write, the files in the Virtual File System (VFS), and settings such as theme preferences are stored in your browser&apos;s <code>localStorage</code>. This data never leaves your device and is never sent to NitroIDE.</p>
+  <p><strong>Deleting local data:</strong> clearing your browser&apos;s cache or local storage permanently deletes unsaved workspaces. Use the Export features in the IDE to save your work to your hard drive.</p>
+
+  <h3>What leaves your device (and why)</h3>
+  <p><strong>Contact &amp; feedback forms.</strong> When you submit the contact form or the in-site feedback form, your name, email address, message, and any attachments you add are sent to a Cloudflare Worker that forwards them by email (via Resend) to the operator so your message can be answered. Your details are used only to reply to your message. Form emails are kept only as long as needed to respond and are deleted on request.</p>
+  <p><strong>Newsletter.</strong> If you subscribe, your email address is sent to Buttondown, which delivers new-article notifications. You can unsubscribe at any time from any newsletter email.</p>
+  <p><strong>AI features (bring your own key).</strong> NitroIDE has no AI backend of its own. If you use the AI pair programmer, the code you choose to send goes directly to the AI provider you selected (Groq, Gemini, OpenRouter, or OpenAI) using the API key you entered. The one exception is SambaNova, which passes through a non-storing Cloudflare Worker proxy because the provider cannot be called directly from the browser. Your API keys are stored only in your browser, never on NitroIDE servers. Your use of each provider is governed by that provider&apos;s terms and privacy policy.</p>
+  <p><strong>Share links.</strong> The Share button compresses your workspace into the link itself (<code>?code=</code>). Nothing is uploaded to NitroIDE — but anyone who receives the link can open and read the code it contains, so share links only with people you trust.</p>
+  <p><strong>CDN injector.</strong> If you use the CDN injector to fetch external libraries (like React or Tailwind), your browser makes standard network requests to those CDN providers (e.g., unpkg, cdnjs). Those requests are governed by the respective providers&apos; privacy policies.</p>
+  <p><strong>Deploy.</strong> Deploying to GitHub Pages or Netlify uses your own token and your own account; NitroIDE never sees your credentials beyond passing them to the service you chose.</p>
+
+  <h3>Analytics</h3>
+  <p>We use Google Analytics 4 to measure aggregate site usage (page views and sessions) so we can improve NitroIDE. Analytics loads <strong>only after you grant consent</strong> in the cookie banner, and you can withdraw consent at any time via the &quot;Cookie settings&quot; link in the footer. Analytics never sees your code: the page address sent to Google is reduced to the page path plus marketing (<code>utm_*</code>) parameters only — share-link contents, API keys, and everything else in the URL are stripped before any beacon is sent. GA4 event-data retention is 2 months. You can also opt out via <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google&apos;s Analytics opt-out add-on</a>; see also <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">how Google uses data from partner sites</a>.</p>
+
+  <h3>Advertising &amp; Cookies</h3>
+  <p>We use Google AdSense to display ads that keep NitroIDE free. AdSense loads <strong>only after you grant consent</strong>. Google uses cookies, including the DoubleClick cookie, to serve ads based on your prior visits to this and other websites. You may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" rel="noopener">Google Ads Settings</a>, or opt out of third-party vendor cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices/" rel="noopener">aboutads.info</a>. For more information on how Google uses data, see <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">Google&apos;s partner-sites policy</a>.</p>
+  <table>
+    <thead><tr><th>Cookie / storage</th><th>Purpose</th><th>Duration</th><th>Provider</th></tr></thead>
+    <tbody>
+      <tr><td>nitroide-consent</td><td>Remembers your cookie consent choice</td><td>Up to 12 months (localStorage)</td><td>NitroIDE (first-party)</td></tr>
+      <tr><td>_ga, _ga_&lt;id&gt;</td><td>Google Analytics: distinguish visitors, count sessions</td><td>Up to 2 years</td><td>Google</td></tr>
+      <tr><td>_gcl_au</td><td>Google Ads: measure ad conversions</td><td>Up to 90 days</td><td>Google</td></tr>
+      <tr><td>IDE preferences (theme, workspace)</td><td>Remember your editor settings and local projects</td><td>Until you clear browser storage (localStorage)</td><td>NitroIDE (first-party)</td></tr>
+    </tbody>
+  </table>
+  <p>Google may set additional cookies as described in its own policies. You can withdraw consent and clear stored choices at any time via the &quot;Cookie settings&quot; link in the footer; withdrawing consent stops future analytics/advertising loads.</p>
+
+  <h3>Sub-processors</h3>
+  <p>We rely on the following service providers, each only for the purpose listed: Google (Analytics and AdSense), Cloudflare (hosting, content delivery, and the form/AI-proxy Workers), Resend (form email delivery), and Buttondown (newsletter delivery).</p>
+
+  <h3>Your rights</h3>
+  <p>You can ask us to access, correct, or delete personal data we hold about you (such as a form message or a newsletter subscription), to receive a portable copy, or to withdraw consent. Email <a href="mailto:contactnitroide@gmail.com">contactnitroide@gmail.com</a> and we will respond to reasonable requests. Local data in your browser (code, workspaces, settings) is under your control — clearing browser storage deletes it.</p>
+  <p><strong>Do Not Sell:</strong> NitroIDE does not sell your personal information.</p>
+  <p><strong>Children:</strong> NitroIDE is not directed at children under 13, and we do not knowingly collect personal data from children. There are no accounts and no age-gated signups.</p>
+  <p><strong>Retention summary:</strong> form messages — only as long as needed to respond (deleted on request); newsletter — until you unsubscribe; analytics — GA4 event data retained 2 months; local browser data — until you clear it.</p>
+  <p><strong>Changes:</strong> if this policy changes materially, we will update the &quot;Last updated&quot; date above and note the change in the changelog.</p>
+
+  <h2 id="terms">2. Terms of Service</h2>
+  <p><strong>The service.</strong> NitroIDE is a free, open-source, browser-based IDE for frontend web development (HTML, CSS, JavaScript). It requires no account. You use it as-is, on a best-effort basis; there is no uptime guarantee.</p>
+  <p><strong>Your code is yours.</strong> Everything you write in NitroIDE belongs to you. NitroIDE claims no ownership over your code, files, or projects.</p>
+  <p><strong>Acceptable use.</strong> Use NitroIDE responsibly: do not use it to build or distribute malware, phishing pages, spam, or anything illegal; do not abuse the contact/feedback forms (including automated submissions); do not attempt to circumvent the sandbox or the service&apos;s safeguards. We may block abusive traffic to protect the service.</p>
+  <p><strong>AI features.</strong> The AI pair programmer is an optional bring-your-own-key feature. You are responsible for your API keys, for the code you choose to send to a provider, and for complying with that provider&apos;s terms. AI output may be wrong — verify it before shipping.</p>
+  <p><strong>Deploy.</strong> Deploy features connect to third-party services (GitHub, Netlify) with credentials you provide. You are responsible for those credentials and for the content you publish through them.</p>
+  <p><strong>Liability.</strong> To the maximum extent permitted by law, NitroIDE is provided &quot;as is&quot;, without warranties of any kind, and the operator is not liable for any loss arising from your use of the service — including loss of unsaved work (export regularly), or actions taken based on AI output. Because the service is free, our total liability, if any, is limited to the amount you paid for it (zero).</p>
+  <p><strong>Changes.</strong> These terms may change; the current version is always on this page. Continued use after a change means you accept the updated terms.</p>
+  <p><strong>Governing law.</strong> These terms are governed by the laws of India, where the operator is based. Questions? Email <a href="mailto:contactnitroide@gmail.com">contactnitroide@gmail.com</a>.</p>
 
   <h2>3. Open Source Acknowledgements</h2>
   <p>NitroIDE is built on the shoulders of giants. We utilize the following open-source projects to deliver a premium experience without requiring a backend:</p>
