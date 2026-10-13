@@ -1,5 +1,5 @@
 // sw.js — NitroIDE PWA service worker (network-first for pages + script.js, cache-first for vendor assets)
-const CACHE = 'nitroide-v172';
+const CACHE = 'nitroide-v173';
 
 const APP_SHELL = [
   '/',
@@ -14,15 +14,11 @@ const APP_SHELL = [
   '/logo/logo_black.png',
   // Self-hosted LZString (share-link compression, MIT)
   '/vendor/lz-string/lz-string.min.js',
-  // Self-hosted Monaco editor (vendor/monaco/vs)
-  '/vendor/monaco/vs/loader.js',
-  '/vendor/monaco/vs/editor/editor.main.js',
-  '/vendor/monaco/vs/editor/editor.main.css',
-  '/vendor/monaco/vs/editor/editor.main.nls.js',
-  '/vendor/monaco/vs/base/worker/workerMain.js',
-  '/vendor/monaco/vs/language/typescript/tsWorker.js',
-  '/vendor/monaco/vs/language/css/cssWorker.js',
-  '/vendor/monaco/vs/language/html/htmlWorker.js',
+  // NOTE (2026-10-13): Monaco (~9.9MB) is NOT precached anymore — a homepage
+  // visitor who never opens the IDE used to download all of it during SW install.
+  // Monaco is runtime-cached on first IDE use instead (see the cache-first
+  // branch in the fetch handler below: first use fetches from network, then
+  // stores the response in this same cache).
   // Self-hosted fonts (vendor/fonts)
   '/vendor/fonts/Inter-400.woff2',
   '/vendor/fonts/Inter-500.woff2',
@@ -63,7 +59,7 @@ self.addEventListener('fetch', (event) => {
   // fetch, refreshed by the publishing pipeline on every Pulse update.
   // /api/* (forms backend + admin) must never be cached: submissions and
   // stats have to be live on every request.
-  try { var ffp = new URL(request.url).pathname; if (ffp === '/ads.txt' || ffp === '/llms.txt' || ffp === '/assets/devto-latest.json' || ffp.indexOf('/api/') === 0) return; } catch (e) {}
+  try { var ffp = new URL(request.url).pathname; if (ffp === '/ads.txt' || ffp === '/llms.txt' || ffp === '/llms-full.txt' || ffp === '/pricing.md' || ffp === '/rss.xml' || ffp === '/assets/devto-latest.json' || ffp.indexOf('/api/') === 0) return; } catch (e) {}
   // Share links (?code=, ?gist=, ...) all serve the same HTML shell — cache document
   // navigations under the bare path so unique URLs can't bloat the cache.
   var cacheKey = request;
@@ -75,7 +71,8 @@ self.addEventListener('fetch', (event) => {
   } catch (e) {}
   // Network-first for pages and the main logic bundle: deploys show up on the
   // next refresh instead of hiding behind the cache. Cache is offline fallback.
-  // Heavy vendor assets (Monaco, fonts, icons) stay cache-first for fast loads.
+  // Heavy vendor assets (fonts, icons) stay cache-first for fast loads. Monaco is
+  // also cache-first here on first IDE use — it is just no longer precached.
   var networkFirst = isDocument;
   try { var pth = new URL(request.url).pathname; if (pth === '/script.js' || pth === '/styles.css') networkFirst = true; } catch (e) {}
   if (networkFirst) {
