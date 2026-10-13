@@ -4,7 +4,7 @@
   
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NitroIDE - Premium Workspace</title>
   <meta name="title" content="NitroIDE - Premium Workspace">
   <meta name="description" content="A zero-latency, client-side code editor. Write, compile, and execute HTML, CSS, and JS instantly in your browser.">
@@ -38,7 +38,6 @@
   
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
 <script src="/vendor/monaco/vs/loader.js" defer></script>
 <script src="/vendor/lz-string/lz-string.min.js" defer></script>
 
@@ -139,7 +138,7 @@
           <div class="dropdown-category">Project</div>
           <button class="dropdown-item" onclick="toggleCDN()"><i class="ph-bold ph-package"></i> Manage Dependencies</button>
           <button class="dropdown-item" onclick="document.getElementById('fileImportInput').click()"><i class="ph-bold ph-folder-open"></i> Import ZIP / Files</button>
-          <input type="file" id="fileImportInput" accept=".zip,.html,.css,.js" multiple style="display:none;" onchange="handleImport(event)">
+          <input type="file" id="fileImportInput" aria-label="Import ZIP / Files" accept=".zip,.html,.css,.js" multiple style="display:none;" onchange="handleImport(event)">
           <button class="dropdown-item" onclick="openTimeMachine()"><i class="ph-bold ph-clock-counter-clockwise"></i> History — Time Machine</button>
           <button class="dropdown-item" onclick="toggleOptions();openShareModal()"><i class="ph-bold ph-share-network"></i> Share Workspace</button>
           <button class="dropdown-item" onclick="toggleOptions();copyEmbedCode()"><i class="ph-bold ph-code"></i> Copy Embed Code</button>
@@ -156,7 +155,7 @@
 
       <div id="cdnManager" class="cdn-manager">
         <div style="display: flex; gap: 10px; max-width: 600px;">
-          <input type="text" id="cdnInput" placeholder="Paste unpkg/cdnjs link here..." style="margin:0; padding: 8px; font-size: 0.8rem; border-radius: 4px;">
+          <input type="text" id="cdnInput" aria-label="Paste unpkg/cdnjs link" placeholder="Paste unpkg/cdnjs link here..." style="margin:0; padding: 8px; font-size: 0.8rem; border-radius: 4px;">
           <button class="btn btn-compact" onclick="addCDN()">Add</button>
         </div>
         <div class="quick-add-cdns">
@@ -175,12 +174,13 @@
         <div id="fileSidebar" class="file-sidebar collapsed">
           <div class="sidebar-header">
             <span>EXPLORER</span>
-            <button class="btn btn-compact btn-outline" onclick="toggleSidebar('close')" style="border:none; padding:2px;" title="Collapse"><i class="ph-bold ph-caret-left"></i></button>
+            <button class="btn btn-compact btn-outline" onclick="toggleSidebar('close')" style="border:none; padding:2px;" title="Collapse" aria-label="Collapse"><i class="ph-bold ph-caret-left"></i></button>
           </div>
           <div class="file-list" id="vfsList"></div>
         </div>
 
-        <div class="ide-split" id="ideMainSplit" role="main">
+        <main class="ide-split" id="ideMainSplit">
+          <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">NitroIDE Codebox — browser code editor workspace</h1>
 
           <div id="mobileTabs" class="mobile-vfs-tabs hide-on-desktop"></div>
 
@@ -237,12 +237,12 @@
                    <button class="filter-btn" onclick="filterConsole('warn', this)">Warnings</button>
                    <button class="filter-btn" onclick="filterConsole('error', this)">Errors</button>
                  </div>
-                 <button class="btn btn-compact btn-outline" onclick="clearConsole(true)" style="border:none; padding: 4px;" title="Clear Console"><i class="ph-bold ph-trash"></i></button>
+                 <button class="btn btn-compact btn-outline" onclick="clearConsole(true)" style="border:none; padding: 4px;" title="Clear Console" aria-label="Clear Console"><i class="ph-bold ph-trash"></i></button>
               </div>
               <div id="consoleLogs" class="console-logs"><div class="console-entry con-log-line"><div class="console-content" style="color: var(--text-muted); font-style: italic;">// Developer Console initialized.</div></div></div>
               <div class="console-input-wrap">
                 <span class="console-prompt"><i class="ph-bold ph-caret-right"></i></span>
-                <input type="text" id="consoleInput" class="console-input" placeholder="Execute JavaScript..." onkeydown="executeConsoleCmd(event)" autocomplete="off" spellcheck="false">
+                <input type="text" id="consoleInput" class="console-input" aria-label="Execute JavaScript" placeholder="Execute JavaScript..." onkeydown="executeConsoleCmd(event)" autocomplete="off" spellcheck="false">
               </div>
             </div>
 
@@ -251,7 +251,7 @@
                   <div style="color: var(--text-muted); font-size: 0.8rem; font-style: italic;">
                       <i class="ph-bold ph-info"></i> Bind variables via: <span style="color: var(--text); font-weight: bold;">Nitro.watch('Label', yourData)</span>
                   </div>
-                  <button class="btn btn-compact btn-outline" onclick="clearState()" style="border:none; padding: 4px;" title="Clear State Cache"><i class="ph-bold ph-trash"></i></button>
+                  <button class="btn btn-compact btn-outline" onclick="clearState()" style="border:none; padding: 4px;" title="Clear State Cache" aria-label="Clear State Cache"><i class="ph-bold ph-trash"></i></button>
               </div>
               <div id="stateVisualizer" style="padding: 15px; overflow: auto; flex: 1;"></div>
             </div>
@@ -260,7 +260,7 @@
 
           </div>
           
-        </div>
+        </main>
 <div id="aiSidebarBackdrop" onclick="aiToggleSidebar(false)"></div>
           <aside id="aiSidebar" aria-label="AI Chat">
             <div id="aiSideResize" title="Drag to resize"></div>
@@ -268,9 +268,9 @@
               <div class="ai-side-header-top">
               <span class="ai-side-title"><i class="ph-bold ph-chat-teardrop-text"></i> AI Chat</span>
               <div class="ai-side-actions">
-                <button id="aiAutoApplyBtn" class="ai-hbtn" onclick="aiToggleAutoApply()" title="Auto-apply AI code: OFF (click to enable)"><i class="ph-bold ph-magic-wand"></i></button>
-                <button class="ai-hbtn" onclick="aiChatClear()" title="Clear chat"><i class="ph-bold ph-trash"></i></button>
-                <button class="ai-hbtn" onclick="aiToggleSidebar(false)" title="Close"><i class="ph-bold ph-x"></i></button>
+                <button id="aiAutoApplyBtn" class="ai-hbtn" onclick="aiToggleAutoApply()" title="Auto-apply AI code: OFF (click to enable)" aria-label="Auto-apply AI code: OFF (click to enable)"><i class="ph-bold ph-magic-wand"></i></button>
+                <button class="ai-hbtn" onclick="aiChatClear()" title="Clear chat" aria-label="Clear chat"><i class="ph-bold ph-trash"></i></button>
+                <button class="ai-hbtn" onclick="aiToggleSidebar(false)" title="Close" aria-label="Close AI sidebar"><i class="ph-bold ph-x"></i></button>
               </div>
               </div>
               <div class="ai-side-header-model"><span id="aiChatModelLabel" class="ai-chat-model-label"></span></div>
@@ -278,7 +278,7 @@
             <div id="aiChatMessages" class="ai-chat-messages"></div>
             <div id="aiChatContext" class="ai-chat-context"></div>
             <div class="ai-chat-input-wrap">
-              <textarea id="aiChatInput" rows="1" placeholder="Ask about your code..." onkeydown="aiChatKeydown(event)" oninput="aiChatAutoresize()"></textarea>
+              <textarea id="aiChatInput" rows="1" aria-label="Ask about your code" placeholder="Ask about your code..." onkeydown="aiChatKeydown(event)" oninput="aiChatAutoresize()"></textarea>
               <button class="ai-chat-send" onclick="aiChatSendOrStop()" aria-label="Send"><i class="ph-bold ph-arrow-up"></i></button>
             </div>
           </aside>
@@ -287,10 +287,10 @@
   </div>
 </div>
 
-<div class="feedback-backdrop" id="aiDiffModal">
+<div class="feedback-backdrop" id="aiDiffModal" role="dialog" aria-modal="true" aria-labelledby="aiDiffHeading" tabindex="-1">
   <div class="feedback-card" style="max-width:min(960px,94vw);width:94vw;height:min(80dvh,720px);display:flex;flex-direction:column;padding:0;overflow:hidden;">
     <div class="feedback-header" style="padding:14px 18px;margin:0;border-bottom:1px solid var(--border);">
-      <h3 style="display:flex;align-items:center;gap:8px;"><i class="ph-bold ph-files" style="color:#00e5ff;"></i> Review Changes <span id="aiDiffFile" style="font-family:ui-monospace,monospace;font-size:.78rem;color:var(--text-muted);font-weight:400;"></span></h3>
+      <h3 id="aiDiffHeading" style="display:flex;align-items:center;gap:8px;"><i class="ph-bold ph-files" style="color:#00e5ff;"></i> Review Changes <span id="aiDiffFile" style="font-family:ui-monospace,monospace;font-size:.78rem;color:var(--text-muted);font-weight:400;"></span></h3>
       <button onclick="aiDiffClose()" aria-label="Close"><i class="ph-bold ph-x"></i></button>
     </div>
     <div id="aiDiffTabs" style="display:none;gap:6px;padding:8px 18px 0;"></div>
@@ -303,13 +303,13 @@
   </div>
 </div>
 
-<div class="feedback-backdrop" id="aiSetupModal">
+<div class="feedback-backdrop" id="aiSetupModal" role="dialog" aria-modal="true" aria-labelledby="aiSetupHeading" tabindex="-1">
   <div class="feedback-card" style="max-width:420px;">
     <div class="feedback-header">
-      <h3><i class="ph-bold ph-faders"></i> AI Key & Model</h3>
+      <h3 id="aiSetupHeading"><i class="ph-bold ph-faders"></i> AI Key & Model</h3>
       <button onclick="closeAiSetupModal()" aria-label="Close"><i class="ph-bold ph-x"></i></button>
     </div>
-    <p class="feedback-desc">Bring your own key — free tiers work. Your key stays in this browser; the AI talks directly to the provider.</p>
+    <p class="feedback-desc">Bring your own key — free tiers work. Your key stays in this browser; the AI talks directly to the provider you choose (SambaNova goes through a non-storing proxy). Code goes only to the AI provider you choose, never to NitroIDE.</p>
     <ol class="ai-setup-steps">
       <li><b>Get a free key</b> — <a href="https://console.groq.com/keys" target="_blank" rel="noopener">Groq</a>, <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Gemini</a> or <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a> (no card needed).</li>
       <li><b>Paste it below</b> — the provider is detected automatically.</li>
@@ -318,14 +318,14 @@
     </ol>
     <div class="ai-privacy-note">
       <i class="ph-bold ph-shield-check"></i>
-      <span><b>Your keys never leave this browser</b> except to talk directly to the AI provider you chose. We don't store them, log them, or send them to our servers — there are no NitroIDE servers in this loop. Remove a key anytime and it's gone.<br><span style="opacity:.85;">Gemini note: Google's API authentication sends your key as part of the request URL. Depending on your browser environment, URLs may be retained in browser history or related browser records. NitroIDE does not send your key to its own servers.</span></span>
+      <span><b>Your keys never leave this browser</b> except to talk directly to the AI provider you chose (SambaNova passes through a non-storing proxy). We don't store them or log them, and code goes only to the AI provider you choose, never to NitroIDE. Remove a key anytime and it's gone.<br><span style="opacity:.85;">Gemini note: Google's API authentication sends your key as part of the request URL. Depending on your browser environment, URLs may be retained in browser history or related browser records. NitroIDE does not store your key on its own servers.</span></span>
     </div>
     <div class="feedback-body">
-      <label style="font-size:.78rem;font-weight:600;">API Key</label>
+      <label for="aiSetupKey" style="font-size:.78rem;font-weight:600;">API Key</label>
       <input id="aiSetupKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste key — provider auto-detected" oninput="aiSetupKeyTyped()" style="font-family:ui-monospace,monospace;font-size:.82rem;">
       <div id="aiSetupDetected" class="ai-chat-detected"></div>
       <div id="aiSetupKeysList" class="ai-keys-list"></div>
-      <label style="font-size:.78rem;font-weight:600;">Model</label>
+      <label for="aiSetupModel" style="font-size:.78rem;font-weight:600;">Model</label>
       <select id="aiSetupModel"><option value="">Paste a key first...</option></select>
       <p class="ai-chat-help">Free keys, no card: <a href="https://console.groq.com/keys" target="_blank" rel="noopener">Groq</a> &middot; <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Gemini</a> &middot; <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">OpenRouter</a></p>
       <div style="display:flex;gap:8px;margin-top:14px;">
@@ -340,7 +340,7 @@
   <div class="cmd-palette">
     <div class="cmd-input-wrap">
       <i class="ph-bold ph-magnifying-glass"></i>
-      <input type="text" class="cmd-input" placeholder="Search commands..." id="cmdInput" autocomplete="off">
+      <input type="text" class="cmd-input" aria-label="Search commands" placeholder="Search commands..." id="cmdInput" autocomplete="off">
     </div>
     <div class="cmd-list" id="cmdList" role="listbox" aria-label="Workspace commands">
       <a href="../docs.html" class="cmd-item" role="option"><div class="cmd-item-left"><i class="ph-bold ph-book"></i> View Documentation</div></a>
@@ -369,10 +369,10 @@
     #aiSetupModal .feedback-card { margin: 8px auto; max-width: 100% !important; }
   }
 </style>
-<div class="feedback-backdrop" id="timeMachineModal" onclick="handleTimeMachineBackdrop(event)">
+<div class="feedback-backdrop" id="timeMachineModal" role="dialog" aria-modal="true" aria-labelledby="timeMachineHeading" tabindex="-1" onclick="handleTimeMachineBackdrop(event)">
   <div class="feedback-card time-machine-card">
     <div class="feedback-header">
-      <h3><i class="ph-bold ph-clock-counter-clockwise"></i> Local Time Machine</h3>
+      <h3 id="timeMachineHeading"><i class="ph-bold ph-clock-counter-clockwise"></i> Local Time Machine</h3>
       <button onclick="closeTimeMachine()" aria-label="Close Local Time Machine"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="feedback-body time-machine-body">
@@ -384,10 +384,10 @@
     </div>
   </div>
 </div>
-<div class="feedback-backdrop" id="projectDashboard">
+<div class="feedback-backdrop" id="projectDashboard" role="dialog" aria-modal="true" aria-labelledby="projectDashboardHeading" tabindex="-1">
   <div class="feedback-card" style="max-width: 800px; width: 90%;">
     <div class="feedback-header">
-      <h3><i class="ph-bold ph-kanban"></i> Project Manager</h3>
+      <h3 id="projectDashboardHeading"><i class="ph-bold ph-kanban"></i> Project Manager</h3>
       <button onclick="closeDashboard()" aria-label="Close dashboard"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="feedback-body">
@@ -415,10 +415,10 @@
     <button id="onboardDone" style="width:100%;background:#22d3ee;border:none;border-radius:10px;padding:11px;font-size:14px;font-weight:700;color:#09090b;cursor:pointer;">Got it</button>
   </div>
 </div>
-<div class="feedback-backdrop" id="shareModal">
+<div class="feedback-backdrop" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareHeading" tabindex="-1">
   <div class="feedback-card">
     <div class="feedback-header">
-      <h3><i class="ph-bold ph-share-network"></i> Share Workspace</h3>
+      <h3 id="shareHeading"><i class="ph-bold ph-share-network"></i> Share Workspace</h3>
       <button onclick="toggleShareModal(false)" aria-label="Close share dialog"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="feedback-body">
@@ -436,10 +436,10 @@
     </div>
   </div>
 </div>
-<div class="feedback-backdrop" id="deployModal">
+<div class="feedback-backdrop" id="deployModal" role="dialog" aria-modal="true" aria-labelledby="deployHeading" tabindex="-1">
   <div class="feedback-card" style="max-width:560px;">
     <div class="feedback-header">
-      <h3><i class="ph-bold ph-rocket-launch"></i> Deploy — One-Click Publish</h3>
+      <h3 id="deployHeading"><i class="ph-bold ph-rocket-launch"></i> Deploy — One-Click Publish</h3>
       <button onclick="deployCloseModal()" aria-label="Close deploy"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="feedback-body">
@@ -449,28 +449,28 @@
       </div>
       <div id="deployTabGh">
         <p class="feedback-desc" style="font-size:.82rem;">Free hosting at <strong>username.github.io/repo</strong>. Needs a classic personal access token with the <strong>repo</strong> scope (broad — it can touch all your repos, so use a short expiry).<br><a href="https://github.com/settings/tokens/new?scopes=repo&description=NitroIDE%20deploy" target="_blank" rel="noopener" style="color:#00e5ff;">Create token &rarr;</a></p>
-        <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">GitHub Token</label>
+        <label for="ghToken" style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">GitHub Token</label>
         <input id="ghToken" type="password" autocomplete="off" spellcheck="false" placeholder="ghp_..." style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:ui-monospace,monospace;font-size:.85rem;margin-bottom:12px;">
-        <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Repo / Site Name</label>
+        <label for="ghRepo" style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Repo / Site Name</label>
         <input id="ghRepo" type="text" autocomplete="off" spellcheck="false" placeholder="my-awesome-site" style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:.9rem;margin-bottom:14px;">
         <button id="ghDeployBtn" class="btn btn-compact primary-btn" onclick="deployToGitHub()"><i class="ph-bold ph-rocket-launch"></i> Deploy to GitHub Pages</button>
       </div>
       <div id="deployTabNl" style="display:none;">
         <p class="feedback-desc" style="font-size:.82rem;">Free hosting at <strong>name.netlify.app</strong> with instant CDN. Needs a personal access token — note it has <strong>full account access</strong>, so use a short expiry and delete it after.<br><a href="https://app.netlify.com/user/applications/personal" target="_blank" rel="noopener" style="color:#00e5ff;">Create token &rarr;</a></p>
-        <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Netlify Token</label>
+        <label for="nlToken" style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Netlify Token</label>
         <input id="nlToken" type="password" autocomplete="off" spellcheck="false" placeholder="Paste token..." style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-family:ui-monospace,monospace;font-size:.85rem;margin-bottom:12px;">
-        <label style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Site Name (optional)</label>
+        <label for="nlSite" style="display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text);">Site Name (optional)</label>
         <input id="nlSite" type="text" autocomplete="off" spellcheck="false" placeholder="leave empty for a random name" style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:.9rem;margin-bottom:14px;">
         <button id="nlDeployBtn" class="btn btn-compact primary-btn" onclick="deployToNetlify()"><i class="ph-bold ph-rocket-launch"></i> Deploy to Netlify</button>
       </div>
       <div id="deployLog" style="margin-top:14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;max-height:180px;overflow-y:auto;font-family:ui-monospace,monospace;"></div>
       <div id="deployResult"></div>
-      <p class="feedback-desc" style="font-size:.78rem;margin-top:12px;opacity:.7;">Your token is used only for this deploy and cleared from the form after. It never touches NitroIDE servers — there are none.</p>
+      <p class="feedback-desc" style="font-size:.78rem;margin-top:12px;opacity:.7;">Your token goes only to GitHub/Netlify for this deploy and is cleared from the form after. It never goes to NitroIDE.</p>
     </div>
   </div>
 </div>
-<div id="toast" class="toast"></div>
-<script src="../script.js"></script>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="../script.js" defer></script>
 <script>
 // v27: mobile editor pass -----------------------------------------------
 // PWA install: header button when installable (no floating overlap on mobile),
@@ -533,6 +533,62 @@ function installAppHint() {
 })();
 
 // Embed button moved to Prefs menu (copyEmbedCode in script.js)
+
+// Dialog focus management (a11y): the six .feedback-backdrop dialogs are
+// opened/closed in script.js via classList .active, which this file must not
+// touch — so observe the class instead. On open, move focus inside (after a
+// short delay so script.js's own focus moves win); trap Tab inside; on close,
+// restore focus to the element that was focused before the dialog opened.
+// Escape-to-close is untouched: the global handler in script.js still owns it.
+(function(){
+  var DIALOG_IDS = ['aiDiffModal','aiSetupModal','timeMachineModal','projectDashboard','shareModal','deployModal'];
+  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  var lastTrigger = null;
+  var openDialog = null;
+  function focusablesIn(el){
+    return Array.prototype.filter.call(el.querySelectorAll(FOCUSABLE), function(n){
+      return n.offsetParent !== null || n === document.activeElement;
+    });
+  }
+  // Remember the trigger: capture-phase click, only when no dialog is open.
+  document.addEventListener('click', function(){
+    if (!openDialog) { try { lastTrigger = document.activeElement; } catch(e){ lastTrigger = null; } }
+  }, true);
+  function onOpen(dlg){
+    openDialog = dlg;
+    setTimeout(function(){
+      if (!dlg.classList.contains('active')) return;
+      // Respect a focus move script.js already made inside the dialog.
+      if (dlg.contains(document.activeElement)) return;
+      var items = focusablesIn(dlg);
+      if (items.length) items[0].focus();
+      else dlg.focus();
+    }, 200);
+  }
+  function onClose(dlg){
+    if (openDialog === dlg) openDialog = null;
+    if (lastTrigger && lastTrigger.focus && document.contains(lastTrigger)) {
+      try { lastTrigger.focus(); } catch(e){}
+    }
+  }
+  DIALOG_IDS.forEach(function(id){
+    var dlg = document.getElementById(id);
+    if (!dlg) return;
+    new MutationObserver(function(){
+      if (dlg.classList.contains('active')) onOpen(dlg); else onClose(dlg);
+    }).observe(dlg, { attributes: true, attributeFilter: ['class'] });
+  });
+  // Tab trap: keep Tab / Shift+Tab inside the open dialog.
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Tab' || !openDialog) return;
+    var items = focusablesIn(openDialog);
+    if (!items.length) { e.preventDefault(); openDialog.focus(); return; }
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (!openDialog.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  });
+})();
 </script>
 </body>
 </html>
