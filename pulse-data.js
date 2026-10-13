@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 13, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7515752517880832000/"
+},
+  {
+  date: "Oct 13, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
