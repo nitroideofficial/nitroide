@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 13, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "HMR Without a Bundler (5-post thread): no dev server, no bundler, just a timer and srcdoc",
+  link: "https://x.com/trynitroide/status/2109986397050335396"
+},
+  {
+  date: "Oct 13, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
