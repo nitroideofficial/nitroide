@@ -402,7 +402,17 @@
   </url>
   <url>
     <loc>https://nitroide.com/llms.txt</loc>
-    <lastmod>2026-10-03</lastmod>
+    <lastmod>2026-10-13</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nitroide.com/pricing.md</loc>
+    <lastmod>2026-10-13</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://nitroide.com/llms-full.txt</loc>
+    <lastmod>2026-10-13</lastmod>
     <priority>0.5</priority>
   </url>
 </urlset>

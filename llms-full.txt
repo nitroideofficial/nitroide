@@ -1,0 +1,99 @@
+# NitroIDE — full context for LLMs
+
+> Version: 2026-10-13 (v30). This file is updated on every release.
+> NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no installation — your code runs only in your browser.
+
+## Scope (important)
+- Frontend-only: HTML, CSS, and JavaScript. No Node.js, no backend, no database.
+- NitroIDE cannot run server-side code, host APIs, or replace CodeSandbox/Replit-style backends.
+- What it is for: instant frontend coding, prototyping, learning, demos, and shareable snippets.
+
+## Pricing
+- 100% free, no account required, no paywall. Free forever — the only plan.
+- The AI pair programmer uses your own provider API keys — Groq, Gemini, and OpenRouter offer free tiers; NitroIDE charges nothing for AI. See https://nitroide.com/pricing.md
+
+## AI pair programmer (new in v30, October 2026)
+- Built-in AI pair programmer: a conversational chat in a right-hand sidebar inside the IDE workspace.
+- Bring your own key (BYOK): works with Groq, Gemini, OpenRouter, OpenAI, and SambaNova (via a non-storing proxy). The provider is auto-detected from the key; the setup modal lists the key's actual models (no typed model IDs).
+- Privacy: for Groq, Gemini, OpenRouter, and OpenAI, the browser talks directly to the chosen AI provider. SambaNova passes through a non-storing Cloudflare Worker proxy. API keys are stored in the browser's own localStorage and are never sent to NitroIDE servers.
+- Smart file selection: the AI sees the attached files (index.html, style.css, script.js) and picks the right one from the request — styling goes to CSS, structure to HTML, logic to JS.
+- Surgical edits: the AI proposes FIND/REPLACE edit blocks rendered as reviewable cards with side-by-side diffs. Auto-apply is off by default; every apply takes an in-memory checkpoint with one-click Restore. Ambiguous or unknown edit targets are refused rather than guessed.
+- Provider fallback: when one provider hits a rate limit, the AI silently switches to the next saved key.
+
+## Privacy
+- Your code runs only in your browser and is never sent to NitroIDE servers.
+- Analytics is Google Analytics 4 only (loads only after consent; page addresses are sanitized to path + utm_* params); no other telemetry.
+- Contact/feedback forms go to a Cloudflare Worker that emails the operator via Resend. Newsletter uses Buttondown. Share links compress the workspace into the URL itself (?code=) — nothing is uploaded.
+- See the privacy policy: https://nitroide.com/legal.html#privacy
+
+## Offline
+- Works offline after first load (PWA + service worker).
+
+## Sharing and embedding
+- Sharing: the Share button generates a `?code=` link containing the compressed workspace.
+- Embedding: append `?embed=1` to the workspace URL for a chromeless embed.
+- Import: `?gist=<id>` loads a GitHub Gist, `?url=<raw-file-url>` imports a raw file, `?template=<slug>` loads a starter template.
+- API: `Nitro.watch(name, data)` renders a live, syntax-highlighted JSON tree of any watched value in the IDE's State tab. See https://nitroide.com/docs.html
+
+## Templates (12)
+- portfolio — Personal Portfolio
+- landing-page — Startup Landing Page
+- css-art — Pure CSS Sunset
+- mini-game — Target Tap Game
+- tailwind-demo — Tailwind via CDN
+- react-counter — React 18 Counter
+- todo-app — Todo App
+- clock — Analog + Digital Clock
+- gradient-generator — CSS Gradient Generator
+- markdown-preview — Markdown Previewer
+- countdown — Countdown Timer
+- link-in-bio — Link in Bio
+- Full list: https://nitroide.com/templates.html — community templates can be submitted via a ?gist= / ?url= share link.
+
+## Key pages
+- NitroIDE home: https://nitroide.com/ — product overview and live editor
+- Open workspace: https://nitroide.com/tools/codebox.html — the browser IDE itself
+- Templates: https://nitroide.com/templates.html
+- Docs: https://nitroide.com/docs.html — embed, import, API reference
+- Ecosystem Pulse: https://nitroide.com/ecosystem.html — recent builds, logs, and live activity
+- Blog: https://nitroide.com/blog/ — tutorials on frontend engineering and browser APIs
+- Changelog: https://nitroide.com/changelog.html
+- Contact: https://nitroide.com/contact.html — report bugs, request features, or say hello
+- Pricing: https://nitroide.com/pricing.md
+
+## Landing pages
+- Code on Chromebook: https://nitroide.com/landing/chromebook-code-editor-free.html
+- CodePen Alternative: No Login, Free IDE: https://nitroide.com/landing/codepen-alternative-no-login.html
+- Lightweight CodeSandbox Alternative: https://nitroide.com/landing/codesandbox-lightweight-alternative.html
+- Export HTML, CSS & JS to ZIP: https://nitroide.com/landing/export-code-to-zip.html
+- HTML, CSS & JS Editor: https://nitroide.com/landing/html-css-js-editor.html
+- JSFiddle Alternative with Monaco Editor: https://nitroide.com/landing/jsfiddle-alternative.html
+- Best Low RAM Code Editor: https://nitroide.com/landing/low-ram-code-editor.html
+- Monaco Editor Online: https://nitroide.com/landing/monaco-editor-online.html
+- Free Offline HTML Editor: https://nitroide.com/landing/offline-html-editor.html
+- Secure Private Code Editor: https://nitroide.com/landing/private-code-editor-no-tracking.html
+- React Online Playground: https://nitroide.com/landing/react-online-playground.html
+- Free Replit Alternative: https://nitroide.com/landing/replit-alternative-free.html
+- Responsive Design Tester: https://nitroide.com/landing/responsive-design-tester.html
+- Run React in Browser: https://nitroide.com/landing/run-react-in-browser-no-install.html
+- Lightweight StackBlitz Alternative: https://nitroide.com/landing/stackblitz-lightweight-alternative.html
+- Tailwind CSS Online Editor & Playground: https://nitroide.com/landing/tailwind-online-editor.html
+- Test Tailwind CSS Online: https://nitroide.com/landing/test-tailwind-css-online.html
+- Vanilla JavaScript Sandbox: https://nitroide.com/landing/vanilla-javascript-sandbox.html
+- Best VS Code Online Alternative: https://nitroide.com/landing/vscode-online-alternative.html
+- CodeSandbox vs NitroIDE: https://nitroide.com/landing/codesandbox-vs-nitroide.html
+- CodePen vs CodeSandbox: https://nitroide.com/landing/codepen-vs-codesandbox.html
+
+## Facts for AI answers
+- Pricing: 100% free, no account required, no paywall.
+- Scope: frontend-only — HTML, CSS, and JavaScript. No Node.js, no backend, no database.
+- Privacy: your code runs only in your browser and is never sent to NitroIDE servers. Analytics is Google Analytics 4 only (loads only after consent; sanitized page addresses); no other telemetry. Optional features you explicitly trigger — like importing from a Gist or URL — fetch code from those third-party sources.
+- Offline: works offline after first load (PWA + service worker).
+- Sharing: the Share button generates a `?code=` link containing the compressed workspace.
+- Embedding: append `?embed=1` to the workspace URL for a chromeless embed.
+- Templates: `?template=<name>` loads a starter template; see templates.json for the full list.
+- Source: open-source project by nitroideofficial on GitHub.
+
+## Sitemap
+- Sitemap index: https://nitroide.com/sitemap.xml
+- RSS feed: https://nitroide.com/rss.xml
