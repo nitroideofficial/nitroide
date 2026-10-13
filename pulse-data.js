@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 13, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work",
+  link: "https://nitroide.hashnode.dev/hmr-without-a-bundler-how-nitroide-s-instant-preview-updates-actually-work"
+},
+  {
   date: "Oct 12, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
