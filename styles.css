@@ -2187,7 +2187,7 @@ html.light-mode .time-snapshot-meta span {
 
 /* CLS: reserve space for the JS-injected <nitro-header> */
 nitro-header{display:block;min-height:66px}
-@media(max-width:768px){nitro-header{min-height:46px}}/* CLS: reserve space for the JS-injected <nitro-footer> (measured 490px desktop / ~1303px stacked) */nitro-footer{min-height:595px} /* re-measured 2026-10-13 via headless render: actual 592px desktop */@media(max-width:900px){nitro-footer{min-height:1555px} /* re-measured 2026-10-13 via headless render: actual 1551px mobile */}
+@media(max-width:768px){nitro-header{min-height:46px}}/* CLS: reserve space for the JS-injected <nitro-footer> (measured 490px desktop / ~1303px stacked) */nitro-footer{min-height:490px}@media(max-width:900px){nitro-footer{min-height:1310px}}
 
 /* A11y: skip link + focus visibility (additive — matches .skip-link injected by script.js) */
 .skip-link{position:absolute;left:-9999px;top:0;z-index:var(--z-nav);background:#09090b;color:var(--brand-alt);padding:10px 16px;border:2px solid var(--brand-alt);border-radius:0 0 8px 0;font-weight:600;text-decoration:none}
