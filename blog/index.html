@@ -133,7 +133,8 @@
     </div>
 
 
-    <!-- STATIC ARCHIVE LIST (progressive enhancement): all articles as plain links for crawlers + no-JS. Regenerate from blog-data.json when publishing (keep in sync with the JS grid above). -->
+    <!-- STATIC ARCHIVE LIST (noscript-only): all articles as plain links for crawlers + no-JS. JS visitors see the card grid instead (no duplicate listing). Regenerate from blog-data.json when publishing (keep in sync with the JS grid above) and keep the <noscript> wrapper. -->
+    <noscript>
     <section class="content-section" aria-label="All articles">
       <div class="section-header">
         <h2>All articles.</h2>
@@ -176,6 +177,7 @@
         <li><a href="ast-manipulation-auto-formatting-babel.html">Instant Code Formatting via Babel AST.</a></li>
       </ul>
     </section>
+    </noscript>
 
     <section class="content-section reveal-5" aria-label="Latest articles" style="margin-top: 56px;">
       <div class="section-header">
