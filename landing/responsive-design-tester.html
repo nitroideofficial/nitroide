@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
   
   
@@ -7,8 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Responsive Design Tester: Check Media Queries Online</title>
   <meta name="title" content="Responsive Design Tester: Check Media Queries Online">
-  <meta name="description" content="Instantly test mobile, tablet, and desktop CSS breakpoints with our zero-latency responsive design simulator. No deployment required.">
-  <meta name="keywords" content="test media queries online tool, frontend responsive tester, css breakpoint simulator, responsive design editor">
+  <meta name="description" content="Instantly test mobile, tablet, and desktop CSS breakpoints with our near-instant responsive design simulator. No deployment required.">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
@@ -17,14 +17,14 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nitroide.com/landing/responsive-design-tester.html">
   <meta property="og:title" content="Responsive Design Tester: Check Media Queries Online">
-  <meta property="og:description" content="Test CSS media queries and responsive breakpoints instantly inside the IDE. Toggle between mobile, tablet, and desktop views with zero latency.">
+  <meta property="og:description" content="Test CSS media queries and responsive breakpoints instantly inside the IDE. Toggle between mobile, tablet, and desktop views with near-instant.">
   <meta property="og:image" content="https://nitroide.com/og-banner.png">
   <meta property="og:site_name" content="NitroIDE">
 
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://nitroide.com/landing/responsive-design-tester.html">
   <meta property="twitter:title" content="Responsive Design Tester: Check Media Queries Online">
-  <meta property="twitter:description" content="Test CSS media queries and responsive breakpoints instantly inside the IDE. Toggle between mobile, tablet, and desktop views with zero latency.">
+  <meta property="twitter:description" content="Test CSS media queries and responsive breakpoints instantly inside the IDE. Toggle between mobile, tablet, and desktop views with near-instant.">
   <meta property="twitter:image" content="https://nitroide.com/og-banner.png">
 
   <link rel="icon" type="image/x-icon" href="https://nitroide.com/favicon.ico">
@@ -53,7 +53,7 @@
     "applicationSubCategory": "Web IDE",
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
-    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "description": "NitroIDE is a near-instant, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -80,37 +80,64 @@
       "price": "0.00",
       "priceCurrency": "USD"
     },
-    "description": "Instantly test mobile, tablet, and desktop CSS breakpoints with our zero-latency responsive design simulator."
+    "description": "Instantly test mobile, tablet, and desktop CSS breakpoints with our near-instant responsive design simulator."
   }
   </script>
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
       "@type": "Question",
-      "name": "Which device breakpoints are supported in the tester?",
+      "name": "Which viewports can I simulate?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The responsive design tester includes built-in viewports for Mobile, Tablet, and Desktop breakpoints, allowing you to test standard device widths instantly."
+        "text": "Standard mobile, tablet, and desktop presets cover the common breakpoints, and the fluid resize handle lets you test any width in between — including the awkward in-between sizes where layouts usually break."
       }
-    }, {
+    },
+    {
       "@type": "Question",
-      "name": "How do I test CSS media queries online?",
+      "name": "Does the emulated preview behave like a real device?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Write your mobile-first CSS or media queries in the NitroIDE editor, then toggle between the mobile, tablet, and desktop views. Changes are injected with zero latency so you can see your responsive layout update in real-time."
+        "text": "Your page runs in an isolated iframe, so media queries and viewport units respond exactly as they would in a real browser window — with none of the editor's own UI interfering with measurements."
       }
-    }]
-  }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I test Tailwind's responsive prefixes here?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Write classes like md:grid-cols-2 or lg:px-8 and toggle the viewport emulator to watch each breakpoint kick in live."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to refresh after changing my CSS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Hot module replacement pushes style changes into the preview the moment you type, at whatever viewport width you're currently testing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my design work private?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Completely. Everything — your code, the preview, the viewport tests — runs locally in your browser. Nothing is uploaded to NitroIDE, and there is no code telemetry — site analytics is GA4 only."
+      }
+    }
+  ]
+}
   </script>
 </head>
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
 <header>
-<nav>
+<nav aria-label="Primary">
 <nitro-header></nitro-header>
 </nav>
 </header>
@@ -125,16 +152,16 @@
     
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
-        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v30 Live</div>
-        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Zero Latency</div>
+        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v29 Live</div>
+        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Near-Instant</div>
       </div>
       
       <h1 class="reveal-2 hero-title-main">
         Test Breakpoints.<br>
         <span class="hollow-text">
-          Zero Latency.
-          <span class="glow-layer">Zero Latency.</span>
-          <span class="fill-layer">Zero Latency.</span>
+          Near-Instant.
+          <span class="glow-layer">Near-Instant.</span>
+          <span class="fill-layer">Near-Instant.</span>
         </span>
       </h1>
       
@@ -148,7 +175,7 @@
              <div class="code-keyword">function <span class="code-func">compile</span>() {</div>
              <div class="ml-1 code-text">engine.<span class="code-func">run</span>({</div>
              <div class="ml-2 code-string typewriter-line">target: "local_memory",</div>
-             <div class="ml-2 code-string">speed: "0ms"</div>
+             <div class="ml-2 code-string">speed: "near-instant"</div>
              <div class="ml-1 code-text">});</div>
              <div class="code-keyword">}</div>
            </div>
@@ -229,14 +256,14 @@
 
     <div class="pricing-section reveal-8" id="statsRow">
       <div class="section-header">
-        <h2>Enterprise Grade. Zero Cost.</h2>
+        <h2>Full Workspace. $0.</h2>
         <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-num" data-target="0" data-suffix="ms" data-start="150">--</div>
-          <div class="stat-label">Server Latency</div>
+          <div class="stat-num" data-target="0" data-suffix="" data-start="0">--</div>
+          <div class="stat-label">Server Round-Trips</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" data-target="100" data-suffix="%" data-start="0">--</div>
@@ -250,12 +277,12 @@
 
       <div class="pricing-card">
         <div class="pricing-header">
-          <h3>Community Plan</h3>
+          <h3>Free Forever — The Only Plan</h3>
           <div class="price">$0<span>/forever</span></div>
-          <p>Everything is unlocked. No credit card required.</p>
+          <p>Every built-in feature free. No card required.</p>
         </div>
         <div class="pricing-features">
-          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Local Projects, Limited Only by Browser Storage</div>
           <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
           <div><i class="ph-bold ph-check-circle"></i> Developer Command Line</div>
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>
@@ -308,7 +335,7 @@
         <div class="faq-item"><h3>Does the emulated preview behave like a real device?</h3><p>Your page runs in an isolated iframe, so media queries and viewport units respond exactly as they would in a real browser window &mdash; with none of the editor's own UI interfering with measurements.</p></div>
         <div class="faq-item"><h3>Can I test Tailwind's responsive prefixes here?</h3><p>Yes. Write classes like <code>md:grid-cols-2</code> or <code>lg:px-8</code> and toggle the viewport emulator to watch each breakpoint kick in live.</p></div>
         <div class="faq-item"><h3>Do I have to refresh after changing my CSS?</h3><p>No. Hot module replacement pushes style changes into the preview the moment you type, at whatever viewport width you're currently testing.</p></div>
-        <div class="faq-item"><h3>Is my design work private?</h3><p>Completely. Everything &mdash; your code, the preview, the viewport tests &mdash; runs locally in your browser. Nothing is uploaded or tracked.</p></div>
+        <div class="faq-item"><h3>Is my design work private?</h3><p>Completely. Everything &mdash; your code, the preview, the viewport tests &mdash; runs locally in your browser. Nothing is uploaded to NitroIDE, and there is no code telemetry — site analytics is GA4 only.</p></div>
       </div>
     </div>
 

@@ -9,7 +9,6 @@
   <title>React Online Playground | Browser IDE (No npm required)</title>
   <meta name="title" content="React Online Playground | Instant Browser IDE (Free 2026)">
   <meta name="description" content="Prototype React applications instantly with our built-in CDN injector. Zero configuration, zero servers, full client-side JSX execution in your browser.">
-  <meta name="keywords" content="react cdn playground online, inject cdn links online editor, react browser ide, react sandbox zero latency">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
@@ -54,7 +53,7 @@
     "applicationSubCategory": "Web IDE",
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
-    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "description": "NitroIDE is a near-instant, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -87,31 +86,58 @@
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
       "@type": "Question",
-      "name": "How can I test React code in the browser without npm?",
+      "name": "How does JSX work with no build step?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "You can test React code instantly using NitroIDE's built-in CDN injector. It fetches React and ReactDOM directly from unpkg, allowing you to write JSX and see live results with zero build steps or npm installations."
+        "text": "Your JSX is transpiled directly in the browser as you type, so components render instantly. You skip the entire toolchain — no Babel config, no bundler — which makes it ideal for rapid prototyping."
       }
-    }, {
+    },
+    {
       "@type": "Question",
-      "name": "Does this online React playground support Tailwind CSS?",
+      "name": "Which React version is included?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, you can inject Tailwind CSS directly into the React playground using the integrated package manager or CLI, allowing you to style your components instantly."
+        "text": "React 18, loaded from CDN. Hooks like useState and useEffect, fragments, and modern JSX conventions all work the way you'd expect."
       }
-    }]
-  }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use hooks and manage component state?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. useState, useEffect, useRef, and custom hooks all run normally, and the built-in state visualizer lets you watch values change as you interact with your UI."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I add third-party React libraries?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — inject any package from unpkg through the workspace console (for example, > install framer-motion) and use it in your components right away."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens when my prototype outgrows the playground?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Export it as a ZIP and continue in a full toolchain. The playground is built for speed of iteration; nothing about it locks you in."
+      }
+    }
+  ]
+}
   </script>
 </head>
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
 <header>
-<nav>
+<nav aria-label="Primary">
 <nitro-header></nitro-header>
 </nav>
 </header>
@@ -126,8 +152,8 @@
     
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
-        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v30 Live</div>
-        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Zero Latency</div>
+        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v29 Live</div>
+        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Near-Instant</div>
       </div>
       
       <h1 class="reveal-2 hero-title-main">
@@ -149,7 +175,7 @@
              <div class="code-keyword">function <span class="code-func">compile</span>() {</div>
              <div class="ml-1 code-text">engine.<span class="code-func">run</span>({</div>
              <div class="ml-2 code-string typewriter-line">target: "local_memory",</div>
-             <div class="ml-2 code-string">speed: "0ms"</div>
+             <div class="ml-2 code-string">speed: "near-instant"</div>
              <div class="ml-1 code-text">});</div>
              <div class="code-keyword">}</div>
            </div>
@@ -192,7 +218,7 @@
           <i class="ph-duotone ph-atom bento-icon"></i>
           <h2>Native JSX Compilation</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Our engine transpiles your JSX in real-time, directly within your browser's memory. Test state hooks, effects, and complex component trees with absolute zero latency.</p>
+            <p class="bento-text">Our engine transpiles your JSX in real-time, directly within your browser's memory. Test state hooks, effects, and complex component trees with near-instant updates.</p>
             <div class="bento-code">
               <span class="code-keyword">function</span> <span class="code-func">App</span>() {<br>
               &nbsp;&nbsp;<span class="code-keyword">const</span> [count, setCount] = React.useState(<span class="code-num">0</span>);<br>
@@ -230,14 +256,14 @@
 
     <div class="pricing-section reveal-8" id="statsRow">
       <div class="section-header">
-        <h2>Enterprise Grade. Zero Cost.</h2>
+        <h2>Full Workspace. $0.</h2>
         <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-num" data-target="0" data-suffix="ms" data-start="150">--</div>
-          <div class="stat-label">Server Latency</div>
+          <div class="stat-num" data-target="0" data-suffix="" data-start="0">--</div>
+          <div class="stat-label">Server Round-Trips</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" data-target="100" data-suffix="%" data-start="0">--</div>
@@ -251,12 +277,12 @@
 
       <div class="pricing-card">
         <div class="pricing-header">
-          <h3>Community Plan</h3>
+          <h3>Free Forever — The Only Plan</h3>
           <div class="price">$0<span>/forever</span></div>
-          <p>Everything is unlocked. No credit card required.</p>
+          <p>Every built-in feature free. No card required.</p>
         </div>
         <div class="pricing-features">
-          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Local Projects, Limited Only by Browser Storage</div>
           <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
           <div><i class="ph-bold ph-check-circle"></i> Developer Command Line</div>
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>

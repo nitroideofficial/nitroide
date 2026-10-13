@@ -9,7 +9,6 @@
   <title>Lightweight StackBlitz Alternative | NitroIDE</title>
   <meta name="title" content="Lightweight StackBlitz Alternative | NitroIDE">
   <meta name="description" content="A lightweight StackBlitz alternative for frontend work: instant load, Monaco editor, offline support — no signup and no heavy containers.">
-  <meta name="keywords" content="stackblitz alternative, lightweight stackblitz alternative, webcontainers alternative, fast online IDE, browser IDE no signup">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
@@ -63,7 +62,7 @@
     "applicationSubCategory": "Web IDE",
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
-    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "description": "NitroIDE is a near-instant, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "sameAs": [
       "https://github.com/nitroideofficial/nitroide",
@@ -84,12 +83,45 @@
     "description": "A lightweight StackBlitz alternative for frontend work: instant load, Monaco editor, offline support — no signup and no heavy containers."
   }
   </script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "When should I still use StackBlitz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When you genuinely need Node.js, npm installs, or server-side rendering in the browser. NitroIDE is a frontend workspace — it won't run a backend, and we won't pretend otherwise."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use React, Vue or Tailwind in NitroIDE?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — via the CDN injector. Type install react or install tailwind in the developer console and the library loads straight into your preview. No node_modules, no build step."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is NitroIDE faster to load?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There's no container engine to boot and no server round-trips. The editor and your code both live in the page, so the workspace is interactive the moment it renders."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
 <header>
-<nav>
+<nav aria-label="Primary">
 <nitro-header></nitro-header>
 </nav>
 </header>
@@ -105,7 +137,7 @@
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
         <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-arrows-left-right"></i> StackBlitz Alternative</div>
-        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Zero Latency</div>
+        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Near-Instant</div>
       </div>
 
       <h1 class="reveal-2 hero-title-main">
@@ -144,9 +176,12 @@
             <tr><td>Cold start</td><td>Heavier (engine boot)</td><td><span class="cmp-yes">Instant</span></td></tr>
             <tr><td>Works offline</td><td>Limited</td><td><span class="cmp-yes">Yes</span> (PWA)</td></tr>
             <tr><td>Price</td><td>Free tier + paid plans</td><td><span class="cmp-yes">Free forever</span></td></tr>
+                      <tr><td>Where code runs</td><td>WebContainers in your browser</td><td>Your browser only</td></tr>
+            <tr><td>Backend &amp; databases</td><td>Yes &mdash; Node in WebContainers</td><td>Front-end only (HTML/CSS/JS)</td></tr>
           </tbody>
         </table>
       </div>
+      <p>Prices/features verified 2026-10-13.</p>
     </div>
 
     <div class="reveal-6 content-section">
@@ -210,7 +245,7 @@
           <i class="ph-duotone ph-currency-dollar bento-icon"></i>
           <h2>Free Forever</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">No credits, no compute limits, no "free tier" that quietly expires. Client-side means no servers to pay for, so the price is $0 — permanently.</p>
+            <p class="bento-text">Your code runs only in your browser, so there is nothing to meter and nothing to pay for — the price is $0, permanently.</p>
           </div>
         </div>
       </div>
@@ -230,17 +265,17 @@
 
     <div class="pricing-section reveal-8" id="statsRow">
       <div class="section-header">
-        <h2>Switch in 30 Seconds</h2>
-        <p>No signup, no install, no credit card. Your next project is one click away.</p>
+        <h2>Switch in Under a Minute</h2>
+        <p>Open the tab and code — your next project is one click away.</p>
       </div>
       <div class="pricing-card">
         <div class="pricing-header">
-          <h3>Community Plan</h3>
+          <h3>Free Forever — The Only Plan</h3>
           <div class="price">$0<span>/forever</span></div>
-          <p>Everything is unlocked. No credit card required.</p>
+          <p>Every built-in feature free. No card required.</p>
         </div>
         <div class="pricing-features">
-          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Local Projects, Limited Only by Browser Storage</div>
           <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
           <div><i class="ph-bold ph-check-circle"></i> Offline PWA Support</div>
           <div><i class="ph-bold ph-check-circle"></i> 100% Free &amp; Open Source Codebase</div>

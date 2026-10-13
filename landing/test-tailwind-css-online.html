@@ -9,7 +9,6 @@
   <title>Test Tailwind CSS Online | Free Browser Playground</title>
   <meta name="title" content="Test Tailwind CSS Online | Free Browser Playground">
   <meta name="description" content="A fast way to test Tailwind utility classes online. No configuration files required. See your responsive designs update in real-time.">
-  <meta name="keywords" content="online IDE, browser IDE, Monaco editor online, client-side code editor, HTML CSS JS sandbox, zero latency IDE, free web IDE">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
@@ -38,6 +37,24 @@
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+
+  <style>
+    .cmp-wrap { overflow-x: auto; margin: 8px 0 0; border: 1px solid rgba(255,255,255,.09); border-radius: 18px; }
+    table.cmp { width: 100%; border-collapse: collapse; min-width: 560px; font-size: .95rem; }
+    table.cmp th, table.cmp td { text-align: left; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.07); }
+    table.cmp thead th { background: rgba(34,211,238,.07); font-weight: 700; }
+    table.cmp thead th:last-child { color: #22d3ee; }
+    table.cmp tbody tr:last-child td { border-bottom: 0; }
+    table.cmp td:first-child { color: var(--text-muted, #9b9bab); }
+    .cmp-yes { color: #28c840; font-weight: 600; }
+    .cmp-no { color: #ff5f57; font-weight: 600; }
+    .faq-block { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; padding: 20px 22px; }
+    .faq-item h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .faq-item p { margin: 0; color: var(--text-muted, #9b9bab); font-size: .94rem; }
+    .faq-item a { color: #22d3ee; }
+  </style>
+
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -47,7 +64,7 @@
     "applicationSubCategory": "Web IDE",
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
-    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "description": "NitroIDE is a near-instant, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -77,12 +94,53 @@
     "description": "A fast way to test Tailwind utility classes online. No configuration files required."
   }
   </script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need to install or configure Tailwind?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The Tailwind Play CDN is already wired into the workspace — start typing utilities immediately."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are arbitrary values supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Compilation happens in the browser via the Play CDN, so values like text-[13px] work as in a configured project."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I test responsive designs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Use Tailwind’s responsive prefixes (sm:, md:, lg:) and switch the viewport emulator between mobile, tablet, and desktop."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I take my code into a real project?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Export the workspace as a ZIP — the classes are standard utilities, so nothing needs converting."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
 <header>
-<nav>
+<nav aria-label="Primary">
 <nitro-header></nitro-header>
 </nav>
 </header>
@@ -97,8 +155,8 @@
     
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
-        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v30 Live</div>
-        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Zero Latency</div>
+        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v29 Live</div>
+        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Near-Instant</div>
       </div>
       
       <h1 class="reveal-2 hero-title-main" style="font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; margin-bottom: 20px;">
@@ -120,7 +178,7 @@
              <div class="code-keyword">function <span class="code-func">compile</span>() {</div>
              <div class="ml-1 code-text">engine.<span class="code-func">run</span>({</div>
              <div class="ml-2 code-string typewriter-line">target: "local_memory",</div>
-             <div class="ml-2 code-string">speed: "0ms"</div>
+             <div class="ml-2 code-string">speed: "near-instant"</div>
              <div class="ml-1 code-text">});</div>
              <div class="code-keyword">}</div>
            </div>
@@ -191,7 +249,7 @@
             <p class="bento-text">Tired of Electron apps consuming 4GB of RAM? NitroIDE runs exclusively within your browser's optimized V8 engine. Perfect for Chromebooks and older hardware.</p>
             <div class="bento-code">
               <span class="code-prompt">&gt;</span> Task Manager<br>
-              <span style="color: var(--success);">⚡ NitroIDE: 45MB Memory Usage</span>
+              <span style="color: var(--success);">⚡ NitroIDE: Low Memory Footprint</span>
             </div>
           </div>
         </div>
@@ -301,16 +359,29 @@
       </div>
     </div>
 
-    <div class="pricing-section reveal-8" id="statsRow">
+    
+    <div class="reveal-6 content-section">
       <div class="section-header">
-        <h2>Enterprise Grade. Zero Cost.</h2>
+        <h2>Common Questions</h2>
+        <p>Straight answers about testing Tailwind.</p>
+      </div>
+      <div class="faq-block">
+        <div class="faq-item"><h3>Do I need to install or configure Tailwind?</h3><p>No. The Tailwind Play CDN is already wired into the workspace — start typing utilities immediately.</p></div>
+        <div class="faq-item"><h3>Are arbitrary values supported?</h3><p>Yes. Compilation happens in the browser via the Play CDN, so values like text-[13px] work as in a configured project.</p></div>
+        <div class="faq-item"><h3>Can I test responsive designs?</h3><p>Yes. Use Tailwind’s responsive prefixes (sm:, md:, lg:) and switch the viewport emulator between mobile, tablet, and desktop.</p></div>
+        <div class="faq-item"><h3>Can I take my code into a real project?</h3><p>Yes. Export the workspace as a ZIP — the classes are standard utilities, so nothing needs converting.</p></div>
+      </div>
+    </div>
+<div class="pricing-section reveal-8" id="statsRow">
+      <div class="section-header">
+        <h2>Full Workspace. $0.</h2>
         <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-num" data-target="0" data-suffix="ms" data-start="150">--</div>
-          <div class="stat-label">Server Latency</div>
+          <div class="stat-num" data-target="0" data-suffix="" data-start="0">--</div>
+          <div class="stat-label">Server Round-Trips</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" data-target="100" data-suffix="%" data-start="0">--</div>
@@ -324,12 +395,12 @@
 
       <div class="pricing-card">
         <div class="pricing-header">
-          <h3>Community Plan</h3>
+          <h3>Free Forever — The Only Plan</h3>
           <div class="price">$0<span>/forever</span></div>
-          <p>Everything is unlocked. No credit card required.</p>
+          <p>Every built-in feature free. No card required.</p>
         </div>
         <div class="pricing-features">
-          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Local Projects, Limited Only by Browser Storage</div>
           <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
           <div><i class="ph-bold ph-check-circle"></i> Developer Command Line</div>
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>

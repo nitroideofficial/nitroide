@@ -8,8 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Monaco Editor Online: Free Browser VS Code Sandbox</title>
   <meta name="title" content="Monaco Editor Online: Free Browser VS Code Sandbox">
-  <meta name="description" content="Write, format, and debug code instantly in your browser using the Monaco Editor engine. Supports Emmet, syntax highlighting, and zero-latency preview.">
-  <meta name="keywords" content="monaco editor online sandbox, browser based code editor offline, vs code online, emmet html editor, javascript code formatter">
+  <meta name="description" content="Write, format, and debug code instantly in your browser using the Monaco Editor engine. Supports Emmet, syntax highlighting, and near-instant preview.">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
@@ -54,7 +53,7 @@
     "applicationSubCategory": "Web IDE",
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
-    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "description": "NitroIDE is a near-instant, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -81,37 +80,64 @@
       "price": "0.00",
       "priceCurrency": "USD"
     },
-    "description": "Experience the power of the Monaco Editor online. Write HTML, CSS, and JavaScript in a zero-latency, client-side browser sandbox."
+    "description": "Experience the power of the Monaco Editor online. Write HTML, CSS, and JavaScript in a near-instant, client-side browser sandbox."
   }
   </script>
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
       "@type": "Question",
-      "name": "Does this online Monaco editor support Emmet abbreviations?",
+      "name": "Is this the real Monaco editor?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, NitroIDE integrates the exact Monaco Editor engine used by VS Code, complete with native support for Emmet abbreviations, advanced syntax highlighting, and auto-formatting for HTML and CSS."
+        "text": "Yes — the exact editor engine that powers VS Code, running in your browser tab. Same syntax highlighting, same editing model, same command palette."
       }
-    }, {
+    },
+    {
       "@type": "Question",
-      "name": "Can I use VS Code keyboard shortcuts in this browser sandbox?",
+      "name": "Which languages does it support?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Absolutely. Because it is powered by the Monaco engine, standard VS Code shortcuts, multi-cursor editing, and the command palette are fully supported right in your browser."
+        "text": "The workspace is tuned for frontend work: HTML, CSS, JavaScript, and JSX, each with syntax highlighting, smart indentation, and language-aware autocomplete."
       }
-    }]
-  }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Emmet actually work here?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, Emmet comes pre-configured. Type an abbreviation like div.container>ul>li*3, hit Tab, and it expands instantly — no plugin to install."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use VS Code keyboard shortcuts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The core ones work: multi-cursor with Alt+click, F1 for the command palette, Ctrl+F for find, and the familiar editing chords. If your fingers know VS Code, they'll feel at home."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why use this instead of installing VS Code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For speed and convenience: quick edits on a Chromebook or shared machine, trying a snippet without launching a heavy app, or coding somewhere you can't install software. It complements a desktop setup rather than replacing it."
+      }
+    }
+  ]
+}
   </script>
 </head>
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
 <header>
-<nav>
+<nav aria-label="Primary">
 <nitro-header></nitro-header>
 </nav>
 </header>
@@ -126,8 +152,8 @@
     
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
-        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v30 Live</div>
-        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Zero Latency</div>
+        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v29 Live</div>
+        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Near-Instant</div>
       </div>
       
       <h1 class="reveal-2 hero-title-main">
@@ -149,7 +175,7 @@
              <div class="code-keyword">function <span class="code-func">compile</span>() {</div>
              <div class="ml-1 code-text">engine.<span class="code-func">run</span>({</div>
              <div class="ml-2 code-string typewriter-line">target: "local_memory",</div>
-             <div class="ml-2 code-string">speed: "0ms"</div>
+             <div class="ml-2 code-string">speed: "near-instant"</div>
              <div class="ml-1 code-text">});</div>
              <div class="code-keyword">}</div>
            </div>
@@ -229,14 +255,14 @@
 
     <div class="pricing-section reveal-8" id="statsRow">
       <div class="section-header">
-        <h2>Enterprise Grade. Zero Cost.</h2>
+        <h2>Full Workspace. $0.</h2>
         <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-num" data-target="0" data-suffix="ms" data-start="150">--</div>
-          <div class="stat-label">Server Latency</div>
+          <div class="stat-num" data-target="0" data-suffix="" data-start="0">--</div>
+          <div class="stat-label">Server Round-Trips</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" data-target="100" data-suffix="%" data-start="0">--</div>
@@ -250,12 +276,12 @@
 
       <div class="pricing-card">
         <div class="pricing-header">
-          <h3>Community Plan</h3>
+          <h3>Free Forever — The Only Plan</h3>
           <div class="price">$0<span>/forever</span></div>
-          <p>Everything is unlocked. No credit card required.</p>
+          <p>Every built-in feature free. No card required.</p>
         </div>
         <div class="pricing-features">
-          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Local Projects, Limited Only by Browser Storage</div>
           <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
           <div><i class="ph-bold ph-check-circle"></i> Developer Command Line</div>
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>

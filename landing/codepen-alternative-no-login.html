@@ -8,8 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CodePen Alternative: No Login, Free IDE (2026)</title>
   <meta name="title" content="CodePen Alternative: No Login, Free IDE (2026)">
-  <meta name="description" content="Tired of CodePen's paywalls and slow iframe reloads? NitroIDE is a free, zero-latency frontend workspace with multi-file support and no login required.">
-  <meta name="keywords" content="online IDE, browser IDE, Monaco editor online, client-side code editor, HTML CSS JS sandbox, zero latency IDE, free web IDE">
+  <meta name="description" content="Tired of CodePen's paywalls and slow iframe reloads? NitroIDE is a free, near-instant frontend workspace with multi-file support and no login required.">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
@@ -18,14 +17,14 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nitroide.com/landing/codepen-alternative-no-login.html">
   <meta property="og:title" content="CodePen Alternative: No Login, Free IDE (2026)">
-  <meta property="og:description" content="Tired of CodePen's paywalls and slow iframe reloads? NitroIDE is a free, zero-latency frontend workspace.">
+  <meta property="og:description" content="Tired of CodePen's paywalls and slow iframe reloads? NitroIDE is a free, near-instant frontend workspace.">
   <meta property="og:image" content="https://nitroide.com/og-banner.png">
   <meta property="og:site_name" content="NitroIDE">
 
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://nitroide.com/landing/codepen-alternative-no-login.html">
   <meta property="twitter:title" content="CodePen Alternative: No Login, Free IDE (2026)">
-  <meta property="twitter:description" content="Tired of CodePen's paywalls and slow iframe reloads? NitroIDE is a free, zero-latency frontend workspace.">
+  <meta property="twitter:description" content="Tired of CodePen's paywalls and slow iframe reloads? NitroIDE is a free, near-instant frontend workspace.">
   <meta property="twitter:image" content="https://nitroide.com/og-banner.png">
 
   <link rel="icon" type="image/x-icon" href="https://nitroide.com/favicon.ico">
@@ -38,6 +37,24 @@
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+
+  <style>
+    .cmp-wrap { overflow-x: auto; margin: 8px 0 0; border: 1px solid rgba(255,255,255,.09); border-radius: 18px; }
+    table.cmp { width: 100%; border-collapse: collapse; min-width: 560px; font-size: .95rem; }
+    table.cmp th, table.cmp td { text-align: left; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.07); }
+    table.cmp thead th { background: rgba(34,211,238,.07); font-weight: 700; }
+    table.cmp thead th:last-child { color: #22d3ee; }
+    table.cmp tbody tr:last-child td { border-bottom: 0; }
+    table.cmp td:first-child { color: var(--text-muted, #9b9bab); }
+    .cmp-yes { color: #28c840; font-weight: 600; }
+    .cmp-no { color: #ff5f57; font-weight: 600; }
+    .faq-block { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; padding: 20px 22px; }
+    .faq-item h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .faq-item p { margin: 0; color: var(--text-muted, #9b9bab); font-size: .94rem; }
+    .faq-item a { color: #22d3ee; }
+  </style>
+
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -47,7 +64,7 @@
     "applicationSubCategory": "Web IDE",
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
-    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "description": "NitroIDE is a near-instant, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -74,15 +91,56 @@
       "price": "0.00",
       "priceCurrency": "USD"
     },
-    "description": "A faster, free CodePen alternative featuring multi-file support, zero-latency execution, and no login walls."
+    "description": "A faster, free CodePen alternative featuring multi-file support, near-instant execution, and no login walls."
   }
+  </script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need an account to use NitroIDE?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You don’t need an account. Open the workspace and start coding — your projects auto-save to your browser’s local memory."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is NitroIDE different from CodePen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "NitroIDE gives you multi-file projects, the Monaco editor, a developer console, and one-click ZIP export — all client-side, with no login wall."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I export my CodePen-style experiments?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Export the whole workspace as a production-ready ZIP at any time, free."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does NitroIDE work offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. It is an installable PWA: load it once and keep coding without a connection."
+      }
+    }
+  ]
+}
   </script>
 </head>
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
 <header>
-<nav>
+<nav aria-label="Primary">
 <nitro-header></nitro-header>
 </nav>
 </header>
@@ -97,8 +155,8 @@
     
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
-        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v30 Live</div>
-        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Zero Latency</div>
+        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v29 Live</div>
+        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Near-Instant</div>
       </div>
       
       <h1 class="reveal-2 hero-title-main">
@@ -120,7 +178,7 @@
              <div class="code-keyword">function <span class="code-func">compile</span>() {</div>
              <div class="ml-1 code-text">engine.<span class="code-func">run</span>({</div>
              <div class="ml-2 code-string typewriter-line">target: "local_memory",</div>
-             <div class="ml-2 code-string">speed: "0ms"</div>
+             <div class="ml-2 code-string">speed: "near-instant"</div>
              <div class="ml-1 code-text">});</div>
              <div class="code-keyword">}</div>
            </div>
@@ -152,7 +210,31 @@
       </div>
     </div>
     
+    
     <div class="reveal-6 content-section">
+      <div class="section-header">
+        <h2>NitroIDE vs CodePen</h2>
+        <p>An honest side-by-side. CodePen is a great public playground &mdash; here is where the two differ, so you can pick what is right for your project.</p>
+      </div>
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <thead>
+            <tr><th></th><th>CodePen</th><th>NitroIDE</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Sign-up to save work</td><td>Required to save</td><td><span class="cmp-yes">None &mdash; just open and code</span></td></tr>
+            <tr><td>Price</td><td>See vendor pricing</td><td><span class="cmp-yes">$0</span></td></tr>
+            <tr><td>Where code runs</td><td>Cloud-hosted</td><td>Your browser only</td></tr>
+            <tr><td>Works offline</td><td><span class="cmp-no">No</span></td><td><span class="cmp-yes">Yes (PWA)</span></td></tr>
+            <tr><td>Backend &amp; databases</td><td>Front-end only</td><td>Front-end only (HTML/CSS/JS)</td></tr>
+            <tr><td>Startup time</td><td><span class="cmp-yes">Instant</span></td><td><span class="cmp-yes">Near-instant</span></td></tr>
+            <tr><td>Code privacy</td><td>Public by default on free</td><td>Stays in your browser</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Prices/features verified 2026-10-13.</p>
+    </div>
+<div class="reveal-6 content-section">
       <div class="section-header">
         <h2>Why Ditch CodePen for NitroIDE?</h2>
         <p>Frontend developers need more than a single HTML, CSS, and JS box. You need real file structures, instant CDN injection, and a developer console that actually works.</p>
@@ -174,9 +256,9 @@
         
         <div class="bento-card">
           <i class="ph-duotone ph-user-minus bento-icon"></i>
-          <h2>No Login Required</h2>
+          <h2>Start Coding Immediately</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Start coding the second the page loads. Your projects are auto-saved to your browser's local memory. No accounts, no passwords, no email spam.</p>
+            <p class="bento-text">Start coding the second the page loads. Your projects are auto-saved to your browser's local memory. Your projects auto-save to your browser’s local memory — just open the tab and code.</p>
             <div class="bento-code">
               <span class="code-prompt">&gt;</span> Checking auth state...<br>
               <span style="color: var(--success);">⚡ Bypassed. Anonymous session active.</span>
@@ -186,12 +268,12 @@
         
         <div class="bento-card">
           <i class="ph-duotone ph-lightning bento-icon"></i>
-          <h2>Zero-Latency Reloads</h2>
+          <h2>Near-Instant Reloads</h2>
           <div class="bento-content-swap">
             <p class="bento-text">Cloud editors have network lag when re-rendering iframes. Our proprietary local engine patches the DOM instantly without a full page refresh.</p>
             <div class="bento-code">
               <span class="code-prompt">&gt;</span> DOM Update Latency<br>
-              <span style="color: var(--success);">⚡ 0ms (Local Execution)</span>
+              <span style="color: var(--success);">⚡ Near-instant (local execution)</span>
             </div>
           </div>
         </div>
@@ -282,16 +364,29 @@
       </div>
     </div>
 
-    <div class="pricing-section reveal-8" id="statsRow">
+    
+    <div class="reveal-6 content-section">
       <div class="section-header">
-        <h2>Enterprise Grade. Zero Cost.</h2>
+        <h2>Common Questions</h2>
+        <p>Straight answers before you switch.</p>
+      </div>
+      <div class="faq-block">
+        <div class="faq-item"><h3>Do I need an account to use NitroIDE?</h3><p>You don’t need an account. Open the workspace and start coding — your projects auto-save to your browser’s local memory.</p></div>
+        <div class="faq-item"><h3>How is NitroIDE different from CodePen?</h3><p>NitroIDE gives you multi-file projects, the Monaco editor, a developer console, and one-click ZIP export — all client-side, with no login wall.</p></div>
+        <div class="faq-item"><h3>Can I export my CodePen-style experiments?</h3><p>Yes. Export the whole workspace as a production-ready ZIP at any time, free.</p></div>
+        <div class="faq-item"><h3>Does NitroIDE work offline?</h3><p>Yes. It is an installable PWA: load it once and keep coding without a connection.</p></div>
+      </div>
+    </div>
+<div class="pricing-section reveal-8" id="statsRow">
+      <div class="section-header">
+        <h2>Full Workspace. $0.</h2>
         <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-num" data-target="0" data-suffix="ms" data-start="150">--</div>
-          <div class="stat-label">Server Latency</div>
+          <div class="stat-num" data-target="0" data-suffix="" data-start="0">--</div>
+          <div class="stat-label">Server Round-Trips</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" data-target="100" data-suffix="%" data-start="0">--</div>
@@ -305,12 +400,12 @@
 
       <div class="pricing-card">
         <div class="pricing-header">
-          <h3>Community Plan</h3>
+          <h3>Free Forever — The Only Plan</h3>
           <div class="price">$0<span>/forever</span></div>
-          <p>Everything is unlocked. No credit card required.</p>
+          <p>Every built-in feature free. No card required.</p>
         </div>
         <div class="pricing-features">
-          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Local Projects, Limited Only by Browser Storage</div>
           <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
           <div><i class="ph-bold ph-check-circle"></i> Developer Command Line</div>
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>

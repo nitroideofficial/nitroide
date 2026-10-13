@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
   
   
@@ -7,8 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tailwind CSS Online Editor &amp; Playground | Free</title>
   <meta name="title" content="Tailwind CSS Online Editor &amp; Playground | Free">
-  <meta name="description" content="Prototype Tailwind CSS designs instantly in your browser. Our zero-latency editor features a live preview and pre-injected CDN. No setup required.">
-  <meta name="keywords" content="tailwind online editor, tailwind css playground, test tailwind in browser, tailwind sandbox zero latency">
+  <meta name="description" content="Prototype Tailwind CSS designs instantly in your browser. Our near-instant editor features a live preview and pre-injected CDN. No setup required.">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
@@ -17,14 +17,14 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nitroide.com/landing/tailwind-online-editor.html">
   <meta property="og:title" content="Tailwind CSS Online Editor &amp; Playground | Free">
-  <meta property="og:description" content="Prototype Tailwind CSS designs instantly in your browser. Our zero-latency editor features a live preview and pre-injected CDN.">
+  <meta property="og:description" content="Prototype Tailwind CSS designs instantly in your browser. Our near-instant editor features a live preview and pre-injected CDN.">
   <meta property="og:image" content="https://nitroide.com/og-banner.png">
   <meta property="og:site_name" content="NitroIDE">
 
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://nitroide.com/landing/tailwind-online-editor.html">
   <meta property="twitter:title" content="Tailwind CSS Online Editor &amp; Playground | Free">
-  <meta property="twitter:description" content="Prototype Tailwind CSS designs instantly in your browser. Our zero-latency editor features a live preview and pre-injected CDN.">
+  <meta property="twitter:description" content="Prototype Tailwind CSS designs instantly in your browser. Our near-instant editor features a live preview and pre-injected CDN.">
   <meta property="twitter:image" content="https://nitroide.com/og-banner.png">
 
   <link rel="icon" type="image/x-icon" href="https://nitroide.com/favicon.ico">
@@ -53,7 +53,7 @@
     "applicationSubCategory": "Web IDE",
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
-    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "description": "NitroIDE is a near-instant, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -80,37 +80,64 @@
       "price": "0.00",
       "priceCurrency": "USD"
     },
-    "description": "Prototype Tailwind CSS designs instantly in your browser. Our zero-latency editor features a live preview and pre-injected CDN."
+    "description": "Prototype Tailwind CSS designs instantly in your browser. Our near-instant editor features a live preview and pre-injected CDN."
   }
   </script>
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
       "@type": "Question",
-      "name": "Is this online HTML, CSS, and JS editor free to use?",
+      "name": "Do I need to install or configure Tailwind?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, NitroIDE's online frontend workspace is 100% free and open-source. There are no paywalls, accounts, or premium subscriptions required to use the live preview editor."
+        "text": "No. The Tailwind Play CDN is already wired into the workspace, so you start typing utilities immediately — no tailwind.config.js, no build step, no dependencies to manage."
       }
-    }, {
+    },
+    {
       "@type": "Question",
-      "name": "Do I need a server to run my code in this browser IDE?",
+      "name": "Are arbitrary values supported?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No, NitroIDE is a zero-latency, completely client-side code editor. Your HTML, CSS, and JavaScript execute instantly in your browser's local memory without relying on external servers, ensuring absolute privacy."
+        "text": "Yes. Because compilation happens in the browser via the Play CDN, arbitrary values like text-[13px] or grid-cols-[1fr_2fr] work exactly as they do in a configured project."
       }
-    }]
-  }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I test responsive designs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use Tailwind's responsive prefixes (sm:, md:, lg:, xl:) and switch the viewport emulator between mobile, tablet, and desktop to watch each variant apply live."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this to learn Tailwind?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It's well suited for it: instant visual feedback on every class you type makes the relationship between utilities and rendered output obvious, which is the fastest way to build intuition."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I take my code into a real project afterward?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Export the workspace as a ZIP and move the markup into any project with Tailwind set up — the classes are standard utilities, so nothing needs converting."
+      }
+    }
+  ]
+}
   </script>
 </head>
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
 <header>
-<nav>
+<nav aria-label="Primary">
 <nitro-header></nitro-header>
 </nav>
 </header>
@@ -125,8 +152,8 @@
     
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
-        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v30 Live</div>
-        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Zero Latency</div>
+        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v29 Live</div>
+        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Near-Instant</div>
       </div>
       
       <h1 class="reveal-2 hero-title-main">
@@ -148,7 +175,7 @@
              <div class="code-keyword">function <span class="code-func">compile</span>() {</div>
              <div class="ml-1 code-text">engine.<span class="code-func">run</span>({</div>
              <div class="ml-2 code-string typewriter-line">target: "local_memory",</div>
-             <div class="ml-2 code-string">speed: "0ms"</div>
+             <div class="ml-2 code-string">speed: "near-instant"</div>
              <div class="ml-1 code-text">});</div>
              <div class="code-keyword">}</div>
            </div>
@@ -228,14 +255,14 @@
 
     <div class="pricing-section reveal-8" id="statsRow">
       <div class="section-header">
-        <h2>Enterprise Grade. Zero Cost.</h2>
+        <h2>Full Workspace. $0.</h2>
         <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-num" data-target="0" data-suffix="ms" data-start="150">--</div>
-          <div class="stat-label">Server Latency</div>
+          <div class="stat-num" data-target="0" data-suffix="" data-start="0">--</div>
+          <div class="stat-label">Server Round-Trips</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" data-target="100" data-suffix="%" data-start="0">--</div>
@@ -249,12 +276,12 @@
 
       <div class="pricing-card">
         <div class="pricing-header">
-          <h3>Community Plan</h3>
+          <h3>Free Forever — The Only Plan</h3>
           <div class="price">$0<span>/forever</span></div>
-          <p>Everything is unlocked. No credit card required.</p>
+          <p>Every built-in feature free. No card required.</p>
         </div>
         <div class="pricing-features">
-          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Local Projects, Limited Only by Browser Storage</div>
           <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
           <div><i class="ph-bold ph-check-circle"></i> Developer Command Line</div>
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>

@@ -6,10 +6,9 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Secure Private Code Editor | Zero Tracking IDE</title>
-  <meta name="title" content="Secure Private Code Editor | Zero Tracking IDE">
-  <meta name="description" content="Keep your proprietary code safe. NitroIDE executes exclusively in your browser's memory. We have no databases, no telemetry, and no tracking.">
-  <meta name="keywords" content="online IDE, browser IDE, Monaco editor online, client-side code editor, HTML CSS JS sandbox, zero latency IDE, free web IDE">
+  <title>Secure Private Code Editor | No Code Telemetry</title>
+  <meta name="title" content="Secure Private Code Editor | No Code Telemetry">
+  <meta name="description" content="Keep your proprietary code safe. NitroIDE executes exclusively in your browser's memory. Your code runs only in your browser. No code telemetry — analytics is GA4 only.">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
@@ -17,15 +16,15 @@
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nitroide.com/landing/private-code-editor-no-tracking.html">
-  <meta property="og:title" content="Secure Private Code Editor | Zero Tracking IDE">
-  <meta property="og:description" content="Keep your proprietary code safe. NitroIDE executes exclusively in your browser's memory. We have no databases, no telemetry, and no tracking.">
+  <meta property="og:title" content="Secure Private Code Editor | No Code Telemetry">
+  <meta property="og:description" content="Keep your proprietary code safe. NitroIDE executes exclusively in your browser's memory. Your code runs only in your browser. No code telemetry — analytics is GA4 only.">
   <meta property="og:image" content="https://nitroide.com/og-banner.png">
   <meta property="og:site_name" content="NitroIDE">
 
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://nitroide.com/landing/private-code-editor-no-tracking.html">
-  <meta property="twitter:title" content="Secure Private Code Editor | Zero Tracking IDE">
-  <meta property="twitter:description" content="Keep your proprietary code safe. NitroIDE executes exclusively in your browser's memory. We have no databases, no telemetry, and no tracking.">
+  <meta property="twitter:title" content="Secure Private Code Editor | No Code Telemetry">
+  <meta property="twitter:description" content="Keep your proprietary code safe. NitroIDE executes exclusively in your browser's memory. Your code runs only in your browser. No code telemetry — analytics is GA4 only.">
   <meta property="twitter:image" content="https://nitroide.com/og-banner.png">
 
   <link rel="icon" type="image/x-icon" href="https://nitroide.com/favicon.ico">
@@ -38,6 +37,24 @@
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
+
+  <style>
+    .cmp-wrap { overflow-x: auto; margin: 8px 0 0; border: 1px solid rgba(255,255,255,.09); border-radius: 18px; }
+    table.cmp { width: 100%; border-collapse: collapse; min-width: 560px; font-size: .95rem; }
+    table.cmp th, table.cmp td { text-align: left; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.07); }
+    table.cmp thead th { background: rgba(34,211,238,.07); font-weight: 700; }
+    table.cmp thead th:last-child { color: #22d3ee; }
+    table.cmp tbody tr:last-child td { border-bottom: 0; }
+    table.cmp td:first-child { color: var(--text-muted, #9b9bab); }
+    .cmp-yes { color: #28c840; font-weight: 600; }
+    .cmp-no { color: #ff5f57; font-weight: 600; }
+    .faq-block { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.09); border-radius: 14px; padding: 20px 22px; }
+    .faq-item h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .faq-item p { margin: 0; color: var(--text-muted, #9b9bab); font-size: .94rem; }
+    .faq-item a { color: #22d3ee; }
+  </style>
+
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -47,7 +64,7 @@
     "applicationSubCategory": "Web IDE",
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
-    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "description": "NitroIDE is a near-instant, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -74,15 +91,56 @@
       "price": "0.00",
       "priceCurrency": "USD"
     },
-    "description": "Keep your proprietary code safe. NitroIDE executes exclusively in your browser's memory. We have no databases, no telemetry, and no tracking."
+    "description": "Keep your proprietary code safe. NitroIDE executes exclusively in your browser's memory. Your code runs only in your browser. No code telemetry — analytics is GA4 only."
   }
+  </script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does NitroIDE upload my code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Your code runs only in your browser and is never uploaded to NitroIDE. If you use the optional AI assistant, the code you send goes only to the AI provider you choose. Site analytics is GA4 only."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need an account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You don’t need an account. There are no user accounts in NitroIDE — open the tab and code."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my code tracked?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no code telemetry — analytics is GA4 only, measuring aggregate page views."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I work offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Once loaded, NitroIDE works offline as an installable PWA."
+      }
+    }
+  ]
+}
   </script>
 </head>
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
 <header>
-<nav>
+<nav aria-label="Primary">
 <nitro-header></nitro-header>
 </nav>
 </header>
@@ -97,8 +155,8 @@
     
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
-        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v30 Live</div>
-        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Zero Latency</div>
+        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v29 Live</div>
+        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Near-Instant</div>
       </div>
       
       <h1 class="reveal-2 hero-title-main" style="font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; margin-bottom: 20px;">
@@ -111,7 +169,7 @@
       </h1>
       
       <p class="reveal-3 hero-subtitle">
-        Cloud editors store your keystrokes on their servers. We process everything locally via your V8 engine. Your intellectual property never leaves your machine.
+        Cloud editors store your keystrokes on their servers. NitroIDE processes everything locally via your V8 engine: your code runs only in your browser and is never uploaded to NitroIDE. (If you use the optional AI assistant, the code you send goes only to the AI provider you choose. Site analytics is GA4 only.)
       </p>
       
       <div class="reveal-4 execution-pipeline magnetic-btn hide-in-mobile">
@@ -120,7 +178,7 @@
              <div class="code-keyword">function <span class="code-func">compile</span>() {</div>
              <div class="ml-1 code-text">engine.<span class="code-func">run</span>({</div>
              <div class="ml-2 code-string typewriter-line">target: "local_memory",</div>
-             <div class="ml-2 code-string">speed: "0ms"</div>
+             <div class="ml-2 code-string">speed: "near-instant"</div>
              <div class="ml-1 code-text">});</div>
              <div class="code-keyword">}</div>
            </div>
@@ -154,8 +212,8 @@
     
     <div class="reveal-6 content-section">
       <div class="section-header">
-        <h2>No Databases. No Telemetry.</h2>
-        <p>We physically cannot see your code. NitroIDE has no backend database and no user accounts. Every line of HTML, CSS, and JS you write stays entirely on your local hardware.</p>
+        <h2>Your Code Stays in Your Browser.</h2>
+        <p>NitroIDE has no user accounts and no code database: every line of HTML, CSS, and JS you write stays on your local hardware, and NitroIDE never sees your code. (The site itself uses GA4 analytics for aggregate page views, and the contact form runs on a small backend — see the privacy policy.)</p>
       </div>
       
       <div class="bento-grid">
@@ -191,7 +249,7 @@
             <p class="bento-text">Tired of Electron apps consuming 4GB of RAM? NitroIDE runs exclusively within your browser's optimized V8 engine. Perfect for Chromebooks and older hardware.</p>
             <div class="bento-code">
               <span class="code-prompt">&gt;</span> Task Manager<br>
-              <span style="color: var(--success);">⚡ NitroIDE: 45MB Memory Usage</span>
+              <span style="color: var(--success);">⚡ NitroIDE: Low Memory Footprint</span>
             </div>
           </div>
         </div>
@@ -283,16 +341,29 @@
       </div>
     </div>
 
-    <div class="pricing-section reveal-8" id="statsRow">
+    
+    <div class="reveal-6 content-section">
       <div class="section-header">
-        <h2>Enterprise Grade. Zero Cost.</h2>
+        <h2>Common Questions</h2>
+        <p>Straight answers about privacy.</p>
+      </div>
+      <div class="faq-block">
+        <div class="faq-item"><h3>Does NitroIDE upload my code?</h3><p>No. Your code runs only in your browser and is never uploaded to NitroIDE. If you use the optional AI assistant, the code you send goes only to the AI provider you choose. Site analytics is GA4 only.</p></div>
+        <div class="faq-item"><h3>Do I need an account?</h3><p>You don’t need an account. There are no user accounts in NitroIDE — open the tab and code.</p></div>
+        <div class="faq-item"><h3>Is my code tracked?</h3><p>There is no code telemetry — analytics is GA4 only, measuring aggregate page views.</p></div>
+        <div class="faq-item"><h3>Can I work offline?</h3><p>Yes. Once loaded, NitroIDE works offline as an installable PWA.</p></div>
+      </div>
+    </div>
+<div class="pricing-section reveal-8" id="statsRow">
+      <div class="section-header">
+        <h2>Full Workspace. $0.</h2>
         <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-num" data-target="0" data-suffix="ms" data-start="150">--</div>
-          <div class="stat-label">Server Latency</div>
+          <div class="stat-num" data-target="0" data-suffix="" data-start="0">--</div>
+          <div class="stat-label">Server Round-Trips</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" data-target="100" data-suffix="%" data-start="0">--</div>
@@ -306,12 +377,12 @@
 
       <div class="pricing-card">
         <div class="pricing-header">
-          <h3>Community Plan</h3>
+          <h3>Free Forever — The Only Plan</h3>
           <div class="price">$0<span>/forever</span></div>
-          <p>Everything is unlocked. No credit card required.</p>
+          <p>Every built-in feature free. No card required.</p>
         </div>
         <div class="pricing-features">
-          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Local Projects, Limited Only by Browser Storage</div>
           <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
           <div><i class="ph-bold ph-check-circle"></i> Developer Command Line</div>
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>

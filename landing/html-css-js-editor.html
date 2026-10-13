@@ -8,8 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HTML, CSS &amp; JS Editor | Free Live Preview Sandbox</title>
   <meta name="title" content="HTML, CSS &amp; JS Editor | Free Live Preview Sandbox">
-  <meta name="description" content="Write frontend code in a blazing-fast, Monaco-powered browser editor. See changes instantly with our zero-latency live preview. Free and client-side.">
-  <meta name="keywords" content="HTML CSS JS editor, online frontend workspace, live preview code editor, browser html editor, javascript sandbox">
+  <meta name="description" content="Write frontend code in a blazing-fast, Monaco-powered browser editor. See changes instantly with our near-instant live preview. Free and client-side.">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#0a0a0a">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1, all">
@@ -18,14 +17,14 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nitroide.com/landing/html-css-js-editor.html">
   <meta property="og:title" content="HTML, CSS &amp; JS Editor | Free Live Preview Sandbox">
-  <meta property="og:description" content="Write frontend code in a fast, Monaco-powered browser editor. See changes instantly with our zero-latency live preview. Free and client-side.">
+  <meta property="og:description" content="Write frontend code in a fast, Monaco-powered browser editor. See changes instantly with our near-instant live preview. Free and client-side.">
   <meta property="og:image" content="https://nitroide.com/og-banner.png">
   <meta property="og:site_name" content="NitroIDE">
 
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://nitroide.com/landing/html-css-js-editor.html">
   <meta property="twitter:title" content="HTML, CSS &amp; JS Editor | Free Live Preview Sandbox">
-  <meta property="twitter:description" content="Write frontend code in a fast, Monaco-powered browser editor. See changes instantly with our zero-latency live preview. Free and client-side.">
+  <meta property="twitter:description" content="Write frontend code in a fast, Monaco-powered browser editor. See changes instantly with our near-instant live preview. Free and client-side.">
   <meta property="twitter:image" content="https://nitroide.com/og-banner.png">
 
   <link rel="icon" type="image/x-icon" href="https://nitroide.com/favicon.ico">
@@ -54,7 +53,7 @@
     "applicationSubCategory": "Web IDE",
     "operatingSystem": "Web Browser",
     "url": "https://nitroide.com/",
-    "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
+    "description": "NitroIDE is a near-instant, client-side browser IDE featuring the Monaco editor, live preview, and offline support for HTML, CSS, and JavaScript.",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -81,37 +80,64 @@
       "price": "0.00",
       "priceCurrency": "USD"
     },
-    "description": "Write frontend code in a blazing-fast, Monaco-powered browser editor. See changes instantly with our zero-latency live preview."
+    "description": "Write frontend code in a blazing-fast, Monaco-powered browser editor. See changes instantly with our near-instant live preview."
   }
   </script>
 
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
       "@type": "Question",
-      "name": "Is this online HTML, CSS, and JS editor free to use?",
+      "name": "Is it really free? What's the catch?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, NitroIDE's online frontend workspace is 100% free and open-source. There are no paywalls, accounts, or premium subscriptions required to use the live preview editor."
+        "text": "It's free with no catch hiding underneath: open the tab and code, with no trial timers and every built-in feature included. Your code lives in your browser's local storage, and the project itself is open source."
       }
-    }, {
+    },
+    {
       "@type": "Question",
-      "name": "Do I need a server to run my code in this browser IDE?",
+      "name": "Where is my code saved?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No, NitroIDE is a zero-latency, completely client-side code editor. Your HTML, CSS, and JavaScript execute instantly in your browser's local memory without relying on external servers, ensuring absolute privacy."
+        "text": "In your browser's local storage on your own device — your code runs only in your browser and is never sent to NitroIDE. For safekeeping or moving between machines, export the project as a ZIP or push it to GitHub."
       }
-    }]
-  }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use libraries like GSAP, Tailwind, or jQuery?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Open the developer console inside the workspace and inject any library from unpkg — type > install gsap and it's available to your page instantly, no package manager involved."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. NitroIDE is an installable PWA: load it once, and the editor, preview, and your saved projects keep working without a connection."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is this different from CodePen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CodePen is built around single pens stored on their servers. NitroIDE gives you multi-file projects, a full VS Code-grade editor, local-first privacy with no account, and one-click export to a real, deployable project."
+      }
+    }
+  ]
+}
   </script>
 </head>
 <body>
 
 <!-- INJECTED DYNAMIC HEADER -->
 <header>
-<nav>
+<nav aria-label="Primary">
 <nitro-header></nitro-header>
 </nav>
 </header>
@@ -126,21 +152,21 @@
     
     <div class="premium-hero" id="heroSection">
       <div class="badge-row">
-        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v30 Live</div>
-        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Zero Latency</div>
+        <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-rocket-launch"></i> v29 Live</div>
+        <div class="reveal-1 badge badge-secondary"><i class="ph-bold ph-lightning"></i> Near-Instant</div>
       </div>
       
       <h1 class="reveal-2 hero-title-main">
         Frontend Mastery.<br>
         <span class="hollow-text">
-          Zero Latency.
-          <span class="glow-layer">Zero Latency.</span>
-          <span class="fill-layer">Zero Latency.</span>
+          Near-Instant.
+          <span class="glow-layer">Near-Instant.</span>
+          <span class="fill-layer">Near-Instant.</span>
         </span>
       </h1>
       
       <p class="reveal-3 hero-subtitle">
-        A fast, free HTML, CSS, & JavaScript editor in your browser. Write code, see changes instantly with hot module replacement, and export in one click. No servers required.
+        A fast, free HTML, CSS, & JavaScript editor in your browser. Write code, see changes instantly with hot module replacement, and export in one click. Your code runs only in your browser.
       </p>
 
       <div class="reveal-4 execution-pipeline magnetic-btn hide-in-mobile">
@@ -149,7 +175,7 @@
              <div class="code-keyword">function <span class="code-func">compile</span>() {</div>
              <div class="ml-1 code-text">engine.<span class="code-func">run</span>({</div>
              <div class="ml-2 code-string typewriter-line">target: "local_memory",</div>
-             <div class="ml-2 code-string">speed: "0ms"</div>
+             <div class="ml-2 code-string">speed: "near-instant"</div>
              <div class="ml-1 code-text">});</div>
              <div class="code-keyword">}</div>
            </div>
@@ -190,7 +216,7 @@
       <div class="bento-grid">
         <div class="bento-card bento-large">
           <i class="ph-duotone ph-lightning bento-icon"></i>
-          <h2>Zero-Latency Live Preview</h2>
+          <h2>Near-Instant Live Preview</h2>
           <div class="bento-content-swap">
             <p class="bento-text">Test your HTML layouts and CSS animations in real-time. Our client-side engine injects DOM updates instantly without a full page refresh.</p>
             <div class="bento-code">
@@ -231,14 +257,14 @@
 
     <div class="pricing-section reveal-8" id="statsRow">
       <div class="section-header">
-        <h2>Enterprise Grade. Zero Cost.</h2>
+        <h2>Full Workspace. $0.</h2>
         <p>Other cloud web IDEs charge you monthly just to keep your frontend projects private. We built a free, local code editor for the community.</p>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-num" data-target="0" data-suffix="ms" data-start="150">--</div>
-          <div class="stat-label">Server Latency</div>
+          <div class="stat-num" data-target="0" data-suffix="" data-start="0">--</div>
+          <div class="stat-label">Server Round-Trips</div>
         </div>
         <div class="stat-card">
           <div class="stat-num" data-target="100" data-suffix="%" data-start="0">--</div>
@@ -252,12 +278,12 @@
 
       <div class="pricing-card">
         <div class="pricing-header">
-          <h3>Community Plan</h3>
+          <h3>Free Forever — The Only Plan</h3>
           <div class="price">$0<span>/forever</span></div>
-          <p>Everything is unlocked. No credit card required.</p>
+          <p>Every built-in feature free. No card required.</p>
         </div>
         <div class="pricing-features">
-          <div><i class="ph-bold ph-check-circle"></i> Unlimited Local Projects</div>
+          <div><i class="ph-bold ph-check-circle"></i> Local Projects, Limited Only by Browser Storage</div>
           <div><i class="ph-bold ph-check-circle"></i> Complete Privacy (Client-Side Only)</div>
           <div><i class="ph-bold ph-check-circle"></i> Developer Command Line</div>
           <div><i class="ph-bold ph-check-circle"></i> 100% Free & Open Source Codebase</div>
@@ -276,7 +302,7 @@
         <div class="bento-card">
           <h2>Step 1 &mdash; Open the workspace</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">One click and you're in &mdash; no signup, no installer. A fresh project with index.html, style.css, and script.js is already waiting for you.</p>
+            <p class="bento-text">One click and you're in &mdash; the workspace opens straight into a fresh project. A fresh project with index.html, style.css, and script.js is already waiting for you.</p>
           </div>
         </div>
         <div class="bento-card">
@@ -306,8 +332,8 @@
         <p>Straight answers before you start typing.</p>
       </div>
       <div class="faq-block">
-        <div class="faq-item"><h3>Is it really free? What's the catch?</h3><p>It's free with no catch hiding underneath: no accounts, no trial timers, no locked features. Your code lives in your browser's local storage, and the project itself is open source.</p></div>
-        <div class="faq-item"><h3>Where is my code saved?</h3><p>In your browser's local storage on your own device &mdash; nothing is sent to a server. For safekeeping or moving between machines, export the project as a ZIP or push it to GitHub.</p></div>
+        <div class="faq-item"><h3>Is it really free? What's the catch?</h3><p>It's free with no catch hiding underneath: open the tab and code, with no trial timers and every built-in feature included. Your code lives in your browser's local storage, and the project itself is open source.</p></div>
+        <div class="faq-item"><h3>Where is my code saved?</h3><p>In your browser's local storage on your own device &mdash; your code runs only in your browser and is never sent to NitroIDE. For safekeeping or moving between machines, export the project as a ZIP or push it to GitHub.</p></div>
         <div class="faq-item"><h3>Can I use libraries like GSAP, Tailwind, or jQuery?</h3><p>Yes. Open the developer console inside the workspace and inject any library from unpkg &mdash; type <code>&gt; install gsap</code> and it's available to your page instantly, no package manager involved.</p></div>
         <div class="faq-item"><h3>Does it work offline?</h3><p>Yes. NitroIDE is an installable PWA: load it once, and the editor, preview, and your saved projects keep working without a connection.</p></div>
         <div class="faq-item"><h3>How is this different from CodePen?</h3><p>CodePen is built around single pens stored on their servers. NitroIDE gives you multi-file projects, a full VS Code-grade editor, local-first privacy with no account, and one-click export to a real, deployable project.</p></div>
