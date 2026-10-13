@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools | NitroIDE</title>
-  <meta name="title" content="The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools">
-  <meta name="description" content="How NitroIDE renders untrusted postMessage payloads from a preview iframe without XSS: token-based serialization, an allowlist renderer, strict field validation, and an attacker-tested Node harness. A copyable recipe.">
+  <title>postMessage Sanitizer: A Recipe for Building iframe Tools</title>
+  <meta name="title" content="postMessage Sanitizer: A Recipe for Building iframe Tools">
+  <meta name="description" content="How NitroIDE renders untrusted postMessage payloads without XSS: token-based serialization, an allowlist renderer, strict field validation, and attacker tests.">
   <meta name="keywords" content="postMessage security, iframe XSS prevention, allowlist sanitizer, token-based rendering, textContent vs innerHTML, browser IDE security, NitroIDE">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#f472b6">
@@ -13,8 +13,8 @@
   <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/postmessage-sanitizer.html">
-  <meta property="og:title" content="The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools">
-  <meta property="og:description" content="How NitroIDE renders untrusted postMessage payloads from a preview iframe without XSS: token-based serialization, an allowlist renderer, strict field validation, and an attacker-tested Node harness. A copyable recipe.">
+  <meta property="og:title" content="postMessage Sanitizer: A Recipe for Building iframe Tools">
+  <meta property="og:description" content="How NitroIDE renders untrusted postMessage payloads without XSS: token-based serialization, an allowlist renderer, strict field validation, and attacker tests.">
   <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-03-postmessage-sanitizer.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,11 +23,14 @@
   <meta property="article:published_time" content="2026-10-03">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/postmessage-sanitizer.html">
-  <meta name="twitter:title" content="The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools">
-  <meta name="twitter:description" content="How NitroIDE renders untrusted postMessage payloads from a preview iframe without XSS: token-based serialization, an allowlist renderer, strict field validation, and an attacker-tested Node harness. A copyable recipe.">
+  <meta name="twitter:title" content="postMessage Sanitizer: A Recipe for Building iframe Tools">
+  <meta name="twitter:description" content="How NitroIDE renders untrusted postMessage payloads without XSS: token-based serialization, an allowlist renderer, strict field validation, and attacker tests.">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-03-postmessage-sanitizer.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-03-postmessage-sanitizer.webp","headline":"The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools","description":"How NitroIDE renders untrusted postMessage payloads from a preview iframe without XSS: token-based serialization, an allowlist renderer, strict field validation, and an attacker-tested Node harness. A copyable recipe.","author":{"@type":"Organization","name":"NitroIDE"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/postmessage-sanitizer.html","datePublished":"2026-10-03","dateModified":"2026-10-03"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-03-postmessage-sanitizer.webp","headline":"postMessage Sanitizer: A Recipe for Building iframe Tools","description":"How NitroIDE renders untrusted postMessage payloads without XSS: token-based serialization, an allowlist renderer, strict field validation, and attacker tests.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/postmessage-sanitizer.html","datePublished":"2026-10-03","dateModified":"2026-10-03"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why can't a preview iframe be trusted?", "acceptedAnswer": {"@type": "Answer", "text": "It runs user code, so everything it sends the parent must be treated as hostile until checked — even with a valid origin, since share links can load attacker-controlled code."}}, {"@type": "Question", "name": "How do you stop a payload from becoming markup?", "acceptedAnswer": {"@type": "Answer", "text": "Serialize to typed tokens, never HTML, and render tokens against a strict allowlist with textContent, which escapes by construction."}}, {"@type": "Question", "name": "What does field validation check?", "acceptedAnswer": {"@type": "Answer", "text": "Every field's type and shape: numbers are coerced and clamped, identifiers must match a strict pattern, and message kinds must be allowlisted."}}, {"@type": "Question", "name": "How should the sanitizer be tested?", "acceptedAnswer": {"@type": "Answer", "text": "Like the attacker — throw hostile payloads at it, including messages with a valid origin carrying poisoned data."}}]}
   </script>
 
   <link rel="icon" type="image/png" href="../logo/logo_white.png">
@@ -35,7 +38,6 @@
   <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
 </head>
 <body>
 
@@ -51,7 +53,9 @@
 
     <div style="font-size: 0.85rem; color: #f472b6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">WEB SECURITY • <time datetime="2026-10-03">October 3, 2026</time></div>
 
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools</h1>
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-03">October 3, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">postMessage Sanitizer: A Recipe for Building iframe Tools</h1>
 
     <p>When I security-audited NitroIDE for the v25 release, the worst hole I found wasn't in the iframe sandbox. It was in the trust my own parent page placed in its own iframe.</p>
 
@@ -127,9 +131,19 @@
     <p>Denylist thinking fails here. You cannot enumerate every way HTML can execute JavaScript — the list of event handlers, SVG tricks, and parser quirks grows faster than your regex. Allowlists survive because they default to <em>doing nothing</em>: unknown input renders as nothing, and nothing is always safe.</p>
     <p>So if you're building iframe tools — playgrounds, embeds, previews, anything that runs someone else's code next to your UI — steal this recipe: origin check, token serialization, allowlist rendering, hostile field validation, try/catch parses, and an attack suite you run before every ship. It's about forty lines of boring code. It closes a hole that would have let a share link own my whole page.</p>
 
-    <p>NitroIDE is free, no signup, and your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-03" style="color: #f472b6; text-decoration: none;">nitroide.com</a></p>
+    <p>NitroIDE is free, no signup, and your code runs only in your browser: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-03" style="color: #f472b6; text-decoration: none;">nitroide.com</a></p>
 
     <p>⭐ If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #f472b6; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Why can't a preview iframe be trusted?</h3>
+    <p>It runs user code, so everything it sends the parent must be treated as hostile until checked — even with a valid origin, since share links can load attacker-controlled code.</p>
+    <h3>How do you stop a payload from becoming markup?</h3>
+    <p>Serialize to typed tokens, never HTML, and render tokens against a strict allowlist with <code>textContent</code>, which escapes by construction.</p>
+    <h3>What does field validation check?</h3>
+    <p>Every field's type and shape: numbers are coerced and clamped, identifiers must match a strict pattern, and message kinds must be allowlisted.</p>
+    <h3>How should the sanitizer be tested?</h3>
+    <p>Like the attacker — throw hostile payloads at it, including messages with a valid origin carrying poisoned data.</p>
 
     <!-- Newsletter signup -->
     <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
@@ -139,11 +153,12 @@
         <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
         <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
       </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
     </div>
     <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
       <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);">Related articles</h3>
       <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
-      <li><a href="0ms-preview-srcdoc-postmessage-no-bundler.html" style="color: #f472b6; text-decoration: none; font-weight: 500;">The 0ms Preview: How NitroIDE Renders Code Instantly With srcdoc + postMessage</a></li>
+      <li><a href="0ms-preview-srcdoc-postmessage-no-bundler.html" style="color: #f472b6; text-decoration: none; font-weight: 500;">How NitroIDE Renders Code Instantly: srcdoc + postMessage</a></li>
       <li><a href="zero-latency-local-browser-ide-architecture.html" style="color: #f472b6; text-decoration: none; font-weight: 500;">Zero-Latency Local Browser IDE Architecture</a></li>
       <li><a href="instant-code-sharing-zero-backend.html" style="color: #f472b6; text-decoration: none; font-weight: 500;">I Deleted My Share Backend and Replaced It With a URL</a></li>
       </ul>

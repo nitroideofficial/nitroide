@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design | NitroIDE</title>
-  <meta name="title" content="No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design">
-  <meta name="description" content="NitroIDE has no backend — no API, no database, no accounts. How a fully client-side architecture reshapes storage (localStorage as the database), identity (no logins), sharing (code in the URL), and trust boundaries, plus the honest exceptions.">
+  <title>No-Server IDE: Your Code Runs Only in Your Browser</title>
+  <meta name="title" content="No-Server IDE: Your Code Runs Only in Your Browser">
+  <meta name="description" content="NitroIDE's IDE runs fully client-side — no accounts, no backend stores your code. How that reshapes storage, identity, sharing, and trust, plus the exceptions.">
   <meta name="keywords" content="no server architecture, client-side IDE, localStorage database, zero backend, browser IDE privacy, local-first architecture, no signup developer tools, NitroIDE">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#22c55e">
@@ -13,8 +13,8 @@
   <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/no-server-architecture.html">
-  <meta property="og:title" content="No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design">
-  <meta property="og:description" content="NitroIDE has no backend — no API, no database, no accounts. How a fully client-side architecture reshapes storage (localStorage as the database), identity (no logins), sharing (code in the URL), and trust boundaries, plus the honest exceptions.">
+  <meta property="og:title" content="No-Server IDE: Your Code Runs Only in Your Browser">
+  <meta property="og:description" content="NitroIDE's IDE runs fully client-side — no accounts, no backend stores your code. How that reshapes storage, identity, sharing, and trust, plus the exceptions.">
   <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-08-no-server-architecture.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,11 +23,14 @@
   <meta property="article:published_time" content="2026-10-08">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/no-server-architecture.html">
-  <meta name="twitter:title" content="No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design">
-  <meta name="twitter:description" content="NitroIDE has no backend — no API, no database, no accounts. How a fully client-side architecture reshapes storage (localStorage as the database), identity (no logins), sharing (code in the URL), and trust boundaries, plus the honest exceptions.">
+  <meta name="twitter:title" content="No-Server IDE: Your Code Runs Only in Your Browser">
+  <meta name="twitter:description" content="NitroIDE's IDE runs fully client-side — no accounts, no backend stores your code. How that reshapes storage, identity, sharing, and trust, plus the exceptions.">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-08-no-server-architecture.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-08-no-server-architecture.webp","headline":"No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design","description":"NitroIDE has no backend — no API, no database, no accounts. How a fully client-side architecture reshapes storage (localStorage as the database), identity (no logins), sharing (code in the URL), and trust boundaries, plus the honest exceptions.","author":{"@type":"Organization","name":"NitroIDE"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/no-server-architecture.html","datePublished":"2026-10-08","dateModified":"2026-10-08"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-08-no-server-architecture.webp","headline":"No-Server IDE: Your Code Runs Only in Your Browser","description":"NitroIDE's IDE runs fully client-side — no accounts, no backend stores your code. How that reshapes storage, identity, sharing, and trust, plus the exceptions.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/no-server-architecture.html","datePublished":"2026-10-08","dateModified":"2026-10-08"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does NitroIDE really have no servers?", "acceptedAnswer": {"@type": "Answer", "text": "Your code runs only in your browser — no NitroIDE server stores it. The only server-shaped pieces are a stateless Cloudflare Worker relaying contact-form email, CDN configuration, static files, and third-party GA4 and Ko-fi embeds."}}, {"@type": "Question", "name": "Where are my projects stored?", "acceptedAnswer": {"@type": "Answer", "text": "In your browser's localStorage under versioned keys. There is no account or sync, so export to ZIP to move projects between devices."}}, {"@type": "Question", "name": "Where do my AI keys go?", "acceptedAnswer": {"@type": "Answer", "text": "They live in your browser's localStorage and go straight to the provider you choose; no NitroIDE server stores them. (SambaNova passes through a non-storing Cloudflare Worker proxy.)"}}, {"@type": "Question", "name": "Can I share a project without a backend?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — share links put the compressed project in the URL itself, so the recipient opens a running app with no signup or fetch."}}]}
   </script>
 
   <link rel="icon" type="image/png" href="../logo/logo_white.png">
@@ -35,7 +38,6 @@
   <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
 </head>
 <body>
 
@@ -51,11 +53,13 @@
 
     <div style="font-size: 0.85rem; color: #22c55e; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ARCHITECTURE • <time datetime="2026-10-08">October 8, 2026</time></div>
 
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design</h1>
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-08">October 8, 2026</time></div>
 
-    <p>NitroIDE has no servers. Not "serverless" — there is no backend at all. No API, no database, no accounts, no containers, no WebSocket tier. The entire IDE — Monaco editor, live preview, console, state watcher, project storage — runs inside your browser tab. Deployment is static files on GitHub Pages behind Cloudflare.</p>
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">No-Server IDE: Your Code Runs Only in Your Browser</h1>
 
-    <p>That started as a privacy position: "your code never leaves your machine." But the interesting part isn't the slogan. The interesting part is that the slogan is <em>structural</em>. There's no privacy policy holding the promise together — there's nowhere for your code to go. And that architecture, once you commit to it, forces you to redesign every feature you'd normally take for granted. Here's what it forced on me.</p>
+    <p>NitroIDE has no servers that store your code. Not "serverless" — there is no backend for your code at all. No API, no database, no accounts, no containers, no WebSocket tier. The entire IDE — Monaco editor, live preview, console, state watcher, project storage — runs inside your browser tab. Deployment is static files on GitHub Pages behind Cloudflare.</p>
+
+    <p>That started as a privacy position: "your code runs only in your browser." But the interesting part isn't the slogan. The interesting part is that the slogan is <em>structural</em>. There's no privacy policy holding the promise together — there's no NitroIDE server for your code to go to. And that architecture, once you commit to it, forces you to redesign every feature you'd normally take for granted. Here's what it forced on me.</p>
 
     <h2>Storage is a local database, and it has real failure modes</h2>
     <p>There's no user row in Postgres. Projects live in localStorage under a <code>nitro_projects</code> key; preferences, themes, and editor settings sit in their own keys alongside them. That means the browser's storage is the database, with all of a database's responsibilities and none of its tooling:</p>
@@ -68,7 +72,7 @@
 
     <h2>Identity without accounts</h2>
     <p>No server means no login, which means no password resets, no session management, no "forgot your email" flows. Every "who are you" problem has to be solved differently.</p>
-    <p>API keys for the AI pair programmer live in <em>your</em> localStorage, per provider — they travel straight from your browser to the provider, and no NitroIDE infrastructure ever sees them because none exists. Preferences are local. There is no profile, no avatar, no billing page. The upside is obvious: nothing to breach, nothing to maintain, no GDPR-shaped headaches around user data. The downside is equally real: lose your browser profile and your keys go with it. That's the trade, stated plainly.</p>
+    <p>API keys for the AI pair programmer live in <em>your</em> localStorage, per provider — they travel straight from your browser to the provider, and no NitroIDE server stores them. (SambaNova passes through a non-storing Cloudflare Worker proxy.) Preferences are local. There is no profile, no avatar, no billing page. The upside is obvious: nothing to breach, nothing to maintain, no GDPR-shaped headaches around user data. The downside is equally real: lose your browser profile and your keys go with it. That's the trade, stated plainly.</p>
 
     <h2>Sharing without a backend</h2>
     <p>If there's no database, where do shared projects live? In the URL. NitroIDE's share links put the code itself into the link — open it and you get a running app instantly, no signup, no fetch, no round trip. The URL is the API.</p>
@@ -107,9 +111,19 @@
     <p>The absence of infrastructure turned out to be the most opinionated design decision in the whole product. Every feature is a negotiation with what the browser alone can do — and the browser, it turns out, can do almost everything.</p>
 
     <h2>Try it</h2>
-    <p>NitroIDE is free, no signup, and your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-08" style="color: #22c55e; text-decoration: none;">nitroide.com</a></p>
+    <p>NitroIDE is free, no signup, and your code runs only in your browser: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-08" style="color: #22c55e; text-decoration: none;">nitroide.com</a></p>
 
     <p>⭐ If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #22c55e; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Does NitroIDE really have no servers?</h3>
+    <p>Your code runs only in your browser — no NitroIDE server stores it. The only server-shaped pieces are a stateless Cloudflare Worker relaying contact-form email, CDN configuration, static files, and third-party GA4 and Ko-fi embeds.</p>
+    <h3>Where are my projects stored?</h3>
+    <p>In your browser's localStorage under versioned keys. There is no account or sync, so export to ZIP to move projects between devices.</p>
+    <h3>Where do my AI keys go?</h3>
+    <p>They live in your browser's localStorage and go straight to the provider you choose; no NitroIDE server stores them. (SambaNova passes through a non-storing Cloudflare Worker proxy.)</p>
+    <h3>Can I share a project without a backend?</h3>
+    <p>Yes — share links put the compressed project in the URL itself, so the recipient opens a running app with no signup or fetch.</p>
 
     <!-- Newsletter signup -->
     <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
@@ -119,12 +133,13 @@
         <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
         <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
       </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
     </div>
     <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
       <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
       <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
       <li><a href="zero-latency-local-browser-ide-architecture.html" style="color: #22c55e; text-decoration: none; font-weight: 500;">Zero-Latency Local Browser IDE Architecture</a></li>
-      <li><a href="postmessage-sanitizer.html" style="color: #22c55e; text-decoration: none; font-weight: 500;">The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools</a></li>
+      <li><a href="postmessage-sanitizer.html" style="color: #22c55e; text-decoration: none; font-weight: 500;">postMessage Sanitizer: A Recipe for Building iframe Tools</a></li>
       <li><a href="instant-code-sharing-zero-backend.html" style="color: #22c55e; text-decoration: none; font-weight: 500;">I Deleted My Share Backend and Replaced It With a URL</a></li>
       </ul>
     </div>

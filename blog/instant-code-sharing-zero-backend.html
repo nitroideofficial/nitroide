@@ -27,7 +27,10 @@
   <meta name="twitter:description" content="NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service-worker bug it caused.">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-09-29-instant-code-sharing.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-09-29-instant-code-sharing.webp","headline":"I Deleted My Share Backend and Replaced It With a URL","description":"NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service-worker bug it caused.","author":{"@type":"Organization","name":"NitroIDE"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/instant-code-sharing-zero-backend.html","datePublished":"2026-09-29","dateModified":"2026-09-29"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-09-29-instant-code-sharing.webp","headline":"I Deleted My Share Backend and Replaced It With a URL","description":"NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service-worker bug it caused.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/instant-code-sharing-zero-backend.html","datePublished":"2026-09-29","dateModified":"2026-09-29"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do NitroIDE share links work?", "acceptedAnswer": {"@type": "Answer", "text": "The project is compressed in the browser, base64url-encoded, and put in a ?code= URL — no database, no auth, no server stores it."}}, {"@type": "Question", "name": "Is there a size limit on share links?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — URLs have practical length limits, so share links are for snippets, demos, and prototypes; big work still goes through Export-to-ZIP, and the share dialog shows the compressed size first."}}, {"@type": "Question", "name": "Are share links private?", "acceptedAnswer": {"@type": "Answer", "text": "No — anyone with the link has the code, same as a screenshot. Never put secrets, API keys, or tokens in a share link."}}, {"@type": "Question", "name": "Does NitroIDE track how often a link is opened?", "acceptedAnswer": {"@type": "Answer", "text": "No — nothing is stored or logged, so open counts aren't tracked. (Page-view analytics is GA4 only.)"}}]}
   </script>
 
   <link rel="icon" type="image/png" href="../logo/logo_white.png">
@@ -35,7 +38,6 @@
   <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
-  <link rel="stylesheet" href="/vendor/icons/phosphor/duotone/style.css" media="print" onload="this.media='all'">
 </head>
 <body>
 
@@ -51,9 +53,11 @@
 
     <div style="font-size: 0.85rem; color: #22d3ee; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NO-SERVER ARCHITECTURE • <time datetime="2026-09-29">September 29, 2026</time></div>
 
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-09-29">September 29, 2026</time></div>
+
     <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">I deleted my share backend and replaced it with a URL.</h1>
 
-    <p>Every "share" feature you've ever used is really three servers in a trench coat: a database to store the thing, an auth system to gate it, and an API to move it around. When I set out to add code sharing to NitroIDE, I had a problem: NitroIDE has no servers. The whole IDE runs in your browser — editor, live preview, console — nothing phones home. So I did the dumbest thing that could possibly work: I stuffed the entire shared project <em>into the URL itself</em>.</p>
+    <p>Every "share" feature you've ever used is really three servers in a trench coat: a database to store the thing, an auth system to gate it, and an API to move it around. When I set out to add code sharing to NitroIDE, I had a problem: NitroIDE has no servers that store your code. The whole IDE runs in your browser — editor, live preview, console — no code telemetry: analytics is GA4 only. So I did the dumbest thing that could possibly work: I stuffed the entire shared project <em>into the URL itself</em>.</p>
     <p>It worked so well I never built the backend.</p>
 
     <h2>The 30-second pitch</h2>
@@ -77,7 +81,7 @@ nitroide.com/tools/codebox.html?code=eJx…(a few thousand characters)…
     <ul>
       <li><strong>Size limits are real.</strong> URLs can't be infinite, so this is for snippets, demos, and prototypes — not your 10,000-line project. Big work still goes through Export-to-ZIP. Rather than hide this, the share dialog shows the compressed size before you copy the link, so you know when you're pushing it.</li>
       <li><strong>Share links are public by design.</strong> Anyone with the link has the code — same as a screenshot, same as a pastebin. Never put secrets, API keys, or tokens in a share link. I say this in the docs and I'll say it here: treat <code>?code=</code> links like screenshots.</li>
-      <li><strong>No analytics, no tracking.</strong> I genuinely cannot tell you how many times a link was opened, because nothing was stored and nothing was logged. For a privacy-positioned tool, that's a feature.</li>
+      <li><strong>No code telemetry.</strong> I genuinely cannot tell you how many times a link was opened, because nothing was stored and nothing was logged. (Page-view analytics is GA4 only.) For a privacy-positioned tool, that's a feature.</li>
     </ul>
 
     <h2>The bug that taught me the most</h2>
@@ -88,14 +92,24 @@ nitroide.com/tools/codebox.html?code=eJx…(a few thousand characters)…
     <p>The <code>?code=</code> pattern is really "put the state in the address bar" taken to its logical end, and it works anywhere the state is small and compressible: playgrounds, form builders, chart configurators, regex testers. The industry default — reach for a database — is often a habit, not a requirement. Ask what breaks if the data lives in the link instead: sometimes the answer is "nothing, and now you have no storage costs, no GDPR surface for that data, and instant load times."</p>
 
     <h2>Try it</h2>
-    <p>NitroIDE is free, no signup, and the share engine described above is the actual product: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-09-29">nitroide.com</a>. The code never leaves your machine — not even to share it. Questions about the architecture — there's a newsletter signup in the footer if you want these writeups in your inbox.</p>
+    <p>NitroIDE is free, no signup, and the share engine described above is the actual product: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-09-29">nitroide.com</a>. Your code is never sent to a NitroIDE server — not even to share it. Questions about the architecture — there's a newsletter signup in the footer if you want these writeups in your inbox.</p>
 
     <!-- PERFECTLY CENTERED CTA BOX -->
     <div style="background: rgba(34, 211, 238, 0.05); border: 1px solid rgba(34, 211, 238, 0.2); border-radius: 16px; padding: 40px; text-align: center; margin-top: 60px;">
       <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--text);">Share code without a server.</h3>
-      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Compress, encode, copy a link. Your code never leaves your machine.</p>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 30px;">Compress, encode, copy a link. Your code runs only in your browser.</p>
       <a href="../tools/codebox.html?env=vanilla" class="btn-launch primary-btn" style="display: inline-flex; width: auto; margin: 0 auto; text-decoration: none;">Launch the IDE <i class="ph-bold ph-terminal-window"></i></a>
     </div>
+    <h2>Frequently asked questions</h2>
+    <h3>How do NitroIDE share links work?</h3>
+    <p>The project is compressed in the browser, base64url-encoded, and put in a <code>?code=</code> URL — no database, no auth, no server stores it.</p>
+    <h3>Is there a size limit on share links?</h3>
+    <p>Yes — URLs have practical length limits, so share links are for snippets, demos, and prototypes; big work still goes through Export-to-ZIP, and the share dialog shows the compressed size first.</p>
+    <h3>Are share links private?</h3>
+    <p>No — anyone with the link has the code, same as a screenshot. Never put secrets, API keys, or tokens in a share link.</p>
+    <h3>Does NitroIDE track how often a link is opened?</h3>
+    <p>No — nothing is stored or logged, so open counts aren't tracked. (Page-view analytics is GA4 only.)</p>
+
     <!-- Newsletter signup -->
     <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
       <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
@@ -104,6 +118,7 @@ nitroide.com/tools/codebox.html?code=eJx…(a few thousand characters)…
         <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
         <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
       </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
     </div>
     <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
       <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);">Related articles</h3>
