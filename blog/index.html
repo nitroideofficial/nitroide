@@ -77,10 +77,11 @@
   </script>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 
 <!-- INJECTED DYNAMIC HEADER -->
 <header>
-<nav>
+<nav aria-label="Primary">
 <nitro-header></nitro-header>
 </nav>
 </header>
@@ -111,6 +112,7 @@
       <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
       <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
     </form>
+    <p style="margin: 12px 0 0; font-size: 12px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html">privacy policy</a>.</p>
   </div>
 
   <div class="reveal-4 content-section">
@@ -129,6 +131,51 @@
     <div class="bento-grid" id="blogGrid">
        <!-- Dynamic content will be injected here via script.js -->
     </div>
+
+
+    <!-- STATIC ARCHIVE LIST (progressive enhancement): all articles as plain links for crawlers + no-JS. Regenerate from blog-data.json when publishing (keep in sync with the JS grid above). -->
+    <section class="content-section" aria-label="All articles">
+      <div class="section-header">
+        <h2>All articles.</h2>
+        <p class="hero-subtitle" style="max-width: 640px;">Every post, newest first.</p>
+      </div>
+      <ul>
+        <li><a href="state-watcher.html">Nitro.watch(): I Built a Live State Panel for My Browser IDE</a></li>
+        <li><a href="no-server-architecture.html">No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design</a></li>
+        <li><a href="ai-pair-programmer-byok.html">NitroIDE's AI Pair Programmer: Bring Your Own Key, Surgical Edits, Zero Surprises</a></li>
+        <li><a href="postmessage-sanitizer.html">The postMessage Sanitizer: A Recipe for Anyone Building iframe Tools</a></li>
+        <li><a href="91-posts-0-followers-lessons.html">I published 91 posts with 0 followers. Here's what the numbers actually say.</a></li>
+        <li><a href="instant-code-sharing-zero-backend.html">I deleted my share backend and replaced it with a URL.</a></li>
+        <li><a href="0ms-preview-srcdoc-postmessage-no-bundler.html">The 0ms preview: srcdoc + postMessage, no bundler.</a></li>
+        <li><a href="codesandbox-stackblitz-alternative-local-webcontainers.html">Frontend code doesn't need a cloud container.</a></li>
+        <li><a href="web-workers-multithreading-browser-guide.html">True Multithreading in the Browser, Without the Pain.</a></li>
+        <li><a href="browser-storage-offline-apps-opfs-indexeddb-guide.html">Your Browser Is a Database. Use It Like One.</a></li>
+        <li><a href="browser-networking-fetch-streams-webtransport-guide.html">Everything the Browser Knows About the Network.</a></li>
+        <li><a href="modern-css-app-ui-houdini-container-queries-guide.html">CSS Grew Up. Your App UI Should Too.</a></li>
+        <li><a href="canvas-webaudio-creative-coding-guide.html">Pixels and Waveforms: Creative Coding in the Browser.</a></li>
+        <li><a href="webassembly-browser-honest-guide.html">WebAssembly, Honestly: Power, Limits, and Real Use Cases.</a></li>
+        <li><a href="browser-hardware-apis-serial-bluetooth-hid-guide.html">Talk to Real Hardware From a Web Page.</a></li>
+        <li><a href="browser-performance-scheduler-observers-memory-guide.html">Make the Browser Fast on Purpose.</a></li>
+        <li><a href="browser-security-webcrypto-sandboxing-guide.html">Encrypt, Isolate, Verify: Browser Security That Holds Up.</a></li>
+        <li><a href="prototype-react-vue-typescript-browser-cdn-guide.html">Skip npm. Prototype Frameworks at CDN Speed.</a></li>
+        <li><a href="vim-emacs-online-editor-keybindings.html">Bringing Vim &amp; Emacs Keybindings to the Web.</a></li>
+        <li><a href="migrate-local-monorepo-browser-based-ide.html">Migrating Local Monorepos to the Web.</a></li>
+        <li><a href="best-free-online-ide-students-bootcamps.html">The Best Free Online IDE for Students.</a></li>
+        <li><a href="html-css-js-online-editor-playground.html">The Most Advanced HTML/CSS/JS Editor.</a></li>
+        <li><a href="offline-first-browser-ide-pwa.html">Offline-First Development: Coding on an Airplane.</a></li>
+        <li><a href="best-code-editor-ipad-pro-m4-browser-ide.html">The Best Code Editor for the iPad Pro.</a></li>
+        <li><a href="digital-nomad-coding-offline-browser-ide.html">The Ultimate Digital Nomad Coding Setup.</a></li>
+        <li><a href="migrate-replit-to-nitroide-tutorial.html">Migrating from Replit to NitroIDE.</a></li>
+        <li><a href="best-online-ide-free-2026-comparison.html">The Best Free Online IDEs, Compared Honestly.</a></li>
+        <li><a href="opfs-vs-indexeddb-virtual-file-system.html">OPFS vs IndexedDB for File Systems.</a></li>
+        <li><a href="how-to-use-react-without-npm.html">How to Build a React App Without npm.</a></li>
+        <li><a href="tailwind-css-in-browser-no-postcss.html">Mastering Tailwind CSS in the Browser.</a></li>
+        <li><a href="zero-latency-local-browser-ide-architecture.html">How We Built a Zero-Latency IDE.</a></li>
+        <li><a href="aws-cloud9-alternative-local-compute.html">A Cloud9 Alternative for Frontend Work, With Zero Setup.</a></li>
+        <li><a href="rxjs-redux-state-visualization-ide.html">Visualizing Complex State in Real-Time.</a></li>
+        <li><a href="ast-manipulation-auto-formatting-babel.html">Instant Code Formatting via Babel AST.</a></li>
+      </ul>
+    </section>
 
     <section class="content-section reveal-5" aria-label="Latest articles" style="margin-top: 56px;">
       <div class="section-header">

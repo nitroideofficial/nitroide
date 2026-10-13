@@ -1,4 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
+<!-- VALIDATION GATE: before committing this file, run: python3 -c "import xml.dom.minidom; xml.dom.minidom.parse('rss.xml')" — it must exit 0. A missing <item> tag broke this feed 3 times. -->
 <rss version="2.0">
   <channel>
     <title>NitroIDE Blog</title>
@@ -13,6 +14,7 @@
       <pubDate>Sat, 10 Oct 2026 00:00:00 +0000</pubDate>
     </item>
 
+<item>
       <title>No Servers, No Accounts: What a Fully Client-Side IDE Forces You to Design | NitroIDE</title>
       <link>https://nitroide.com/blog/no-server-architecture.html</link>
       <guid>https://nitroide.com/blog/no-server-architecture.html</guid>
