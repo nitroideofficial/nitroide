@@ -7,6 +7,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>HMR Without a Bundler: How NitroIDE&apos;s Instant Preview Updates Actually Work | NitroIDE</title>
+      <link>https://nitroide.com/blog/hmr-without-a-bundler.html</link>
+      <guid>https://nitroide.com/blog/hmr-without-a-bundler.html</guid>
+      <description>No dev server, no WebSocket, no bundler. NitroIDE&apos;s preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.</description>
+      <pubDate>Tue, 13 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
       <title>Nitro.watch(): I Built a Live State Panel for My Browser IDE | NitroIDE</title>
       <link>https://nitroide.com/blog/state-watcher.html</link>
       <guid>https://nitroide.com/blog/state-watcher.html</guid>

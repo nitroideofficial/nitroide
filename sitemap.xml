@@ -401,6 +401,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://nitroide.com/blog/hmr-without-a-bundler.html</loc>
+    <lastmod>2026-10-13</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://nitroide.com/llms.txt</loc>
     <lastmod>2026-10-13</lastmod>
     <priority>0.5</priority>

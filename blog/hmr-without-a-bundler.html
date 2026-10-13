@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work</title>
+  <meta name="title" content="HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work">
+  <meta name="description" content="No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.">
+  <meta name="keywords" content="hmr without bundler, instant preview, srcdoc, postMessage CSS hot reload, debounce, browser IDE, NitroIDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#38bdf8">
+  <link rel="canonical" href="https://nitroide.com/blog/hmr-without-a-bundler.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/hmr-without-a-bundler.html">
+  <meta property="og:title" content="HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work">
+  <meta property="og:description" content="No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-13-hmr-without-a-bundler.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="HMR, no bundler: keystroke to fresh preview in ~200ms, no dev server">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-10-13">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/hmr-without-a-bundler.html">
+  <meta name="twitter:title" content="HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work">
+  <meta name="twitter:description" content="No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-13-hmr-without-a-bundler.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-13-hmr-without-a-bundler.webp","headline":"HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work","description":"No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/hmr-without-a-bundler.html","datePublished":"2026-10-13","dateModified":"2026-10-13"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does NitroIDE have real HMR?", "acceptedAnswer": {"@type": "Answer", "text": "For CSS, yes — the parent postMessages the fresh stylesheet and the preview swaps one style tag's text with no reload and no state loss. HTML and JS edits get a fast full reload instead, which is deliberately not called HMR."}}, {"@type": "Question", "name": "Why do HTML and JS edits reset the preview's state?", "acceptedAnswer": {"@type": "Answer", "text": "Because those edits rebuild the preview from scratch via srcdoc: the DOM is rebuilt, scripts re-run from the top, timers restart, and form state resets. That clean slate is the point — you always see a fresh run."}}, {"@type": "Question", "name": "Does NitroIDE use a dev server or bundler?", "acceptedAnswer": {"@type": "Answer", "text": "No. The build step is string concatenation of the in-memory files and the deploy step is assigning the result to the preview iframe's srcdoc attribute. There is no server, no watcher, and no config file."}}, {"@type": "Question", "name": "Why doesn't the preview flash white on every keystroke?", "acceptedAnswer": {"@type": "Answer", "text": "Rebuilds render into a hidden iframe first; after its load event plus two requestAnimationFrame ticks, the new iframe is promoted and the old one removed. A generation counter discards stale rebuilds overtaken by newer typing."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #38bdf8; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINEERING • <time datetime="2026-10-13">October 13, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-13">October 13, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work</h1>
+
+    <p>Type a character in Vite and the browser updates before your finger leaves the key. It feels like magic, but it isn't — it's a dev server, a WebSocket, a module graph, and a client runtime, all cooperating to patch the running page instead of reloading it.</p>
+
+    <p>NitroIDE does the same trick with none of that. No dev server. No WebSocket. No module graph. No bundler at all. The whole update loop is a debounced timer, a string concatenation, and an iframe attribute. Here's the entire thing — including the one place it cheats, honestly labeled.</p>
+
+    <h2>The pipeline is five steps</h2>
+    <p>I build NitroIDE, a browser-based IDE where your code never leaves your machine. The editor is Monaco, the preview is a sandboxed iframe, and every file lives in an in-memory virtual filesystem. The update loop starts the moment you type:</p>
+    <ol>
+      <li><strong>Edit event.</strong> Each Monaco editor fires <code>onDidChangeModelContent</code>, which calls <code>queueUpdate("html")</code>, <code>queueUpdate("css")</code>, or <code>queueUpdate("js")</code> depending on which pane you're in.</li>
+      <li><strong>Debounce.</strong> <code>queueUpdate</code> clears the pending timer and sets a new one: 150ms for CSS edits, 200ms for HTML and JS. A typing burst collapses into a single update. Nothing renders per keystroke.</li>
+      <li><strong>Sync.</strong> When the timer fires, <code>smartRun</code> copies the three editors' current text into the virtual filesystem and saves the project to localStorage — so the preview and the saved project can never disagree.</li>
+      <li><strong>Assemble.</strong> Three tiny functions concatenate the filesystem into one document: <code>collectHTML</code> (index.html plus any extra .html files), <code>collectCSS</code> (every .css file, each labeled with a <code>/* --- MODULE: name --- */</code> comment), <code>collectJS</code> (every .js file, same treatment). String concatenation is the entire build step.</li>
+      <li><strong>Swap.</strong> <code>forceRun</code> wraps the assembled code in a full HTML document — CDN links in the head, user CSS in a <code>&lt;style id="live-css-inject"&gt;</code> tag, user JS in a final <code>&lt;script&gt;</code> — and assigns it to the preview iframe's <code>srcdoc</code> attribute. The browser parses it and runs it. That's the whole deploy step.</li>
+    </ol>
+    <p>No server round-trip, because there is no server. No file watcher, because the files were never on disk. The "bundler" is three loops and a template literal.</p>
+
+    <h2>CSS gets true HMR. HTML and JS get a fast full reload.</h2>
+    <p>Here's the honest split, because the word HMR gets abused.</p>
+    <p>When you edit <strong>CSS</strong>, the preview does not rebuild at all. <code>queueUpdate</code> takes a shortcut: it posts <code>{ type: "update-css", css: collectCSS() }</code> to the live iframe, and the injected bridge script inside the preview replaces the <code>&lt;style id="live-css-inject"&gt;</code> tag's text with the fresh CSS. The page never reloads. Your JavaScript keeps running — timers keep ticking, form inputs keep their values, scroll position stays put, and the console panel isn't even cleared. That is real hot module replacement, implemented in about three lines.</p>
+    <p>When you edit <strong>HTML or JS</strong>, the preview rebuilds from scratch via <code>srcdoc</code>. Everything re-runs: the DOM is rebuilt, your script executes from the top, timers restart, form state resets, and the console clears first so stale logs can't masquerade as fresh ones. It's a full reload — just one that costs a string concatenation and a <code>srcdoc</code> assignment instead of a network round-trip, so it still lands in about 200ms.</p>
+    <p>I don't pretend the JS path is HMR. It isn't. But the split is the right one: CSS is the thing you tweak fifty times while staring at pixels, so CSS is the thing that gets the state-preserving path. HTML and JS edits are rarer and semantically bigger, so they get the clean-slate path.</p>
+
+    <h2>The swap is flicker-free by construction</h2>
+    <p>The naive version of the <code>srcdoc</code> rebuild has an obvious flaw: assigning <code>srcdoc</code> blanks the iframe while the new document parses, so every keystroke would flash the preview white. The fix is a double-buffered swap:</p>
+    <ul>
+      <li>The first render assigns <code>srcdoc</code> directly — there's nothing on screen to preserve.</li>
+      <li>Every rebuild after that creates a <strong>new, hidden iframe</strong> (opacity 0, no pointer events, absolutely positioned over the old one) and assigns the fresh document to <em>it</em>.</li>
+      <li>When the new iframe fires <code>load</code>, the swap waits <strong>two <code>requestAnimationFrame</code> ticks</strong> so the browser has actually painted, then removes the old iframe and promotes the new one.</li>
+      <li>A generation counter, <code>previewGen</code>, guards the race: if you typed again while a rebuild was still loading, the stale iframe is discarded instead of swapping in over a newer one.</li>
+    </ul>
+    <p>No white flash, no half-painted frames, no out-of-order previews. The user sees the preview change, never the machinery changing it.</p>
+
+    <h2>What the sandbox allows — and what it costs</h2>
+    <p>The preview iframe runs with <code>sandbox="allow-scripts allow-modals allow-popups allow-forms"</code> — notably, no <code>allow-same-origin</code>. I removed that during the v25 security audit, because same-origin preview code could read the parent's localStorage. The preview still runs your JavaScript and renders your page, but on an opaque origin, talking to the parent only through <code>postMessage</code> (console logs, errors, state-watcher updates, the CSS hot-patch).</p>
+    <p>That isolation is also why the CSS hot-patch works so cleanly: the parent can't reach into the iframe's DOM, so the update has to be a message, and a message carrying "here is the new stylesheet" is exactly the right granularity.</p>
+
+    <h2>The honest ceiling</h2>
+    <p>Every tool should state its ceiling, so here it is:</p>
+    <ul>
+      <li><strong>JS edits reset state.</strong> A <code>setInterval</code> restarts, a half-filled form empties, a game loop goes back to frame zero. If you're debugging stateful behavior, that reset is a feature — you're always looking at a clean run. If you're tweaking a pixel, edit the CSS instead and keep your state.</li>
+      <li><strong>There is no module resolution.</strong> Files are concatenated in filesystem order with comment separators. There are no bare imports, no npm packages, no <code>import</code> graphs. Third-party code arrives as CDN <code>&lt;script&gt;</code> / <code>&lt;link&gt;</code> tags, which re-execute on every full rebuild.</li>
+      <li><strong>A broken JS edit kills the run, loudly.</strong> If your script throws halfway, everything after the throw never executes — but the error surfaces in the IDE's console panel with the real line number (the injected bridge rewrites a <code>JS_OFFSET</code> so reported lines match your editor). You see the failure; you never see a silently half-rendered page pretending to work.</li>
+      <li><strong>Auto-run is a toggle, not a religion.</strong> Turn it off and the preview updates only when you hit Run. Snapshot restores skip the queue entirely so history navigation never triggers a rebuild storm.</li>
+    </ul>
+
+    <h2>Why this shape, and not a real HMR runtime?</h2>
+    <p>Because the constraints chose it. A browser IDE with no server can't run a dev server; an IDE that opens in one click can't ask you to install a watcher; an IDE whose files live in memory doesn't need one. The moment I accepted "the build step is string concatenation, the deploy step is <code>srcdoc</code>", every piece fell into place: debounce instead of a watcher, <code>postMessage</code> instead of a socket, a hidden-iframe swap instead of a virtual DOM diff.</p>
+    <p>The lesson I keep relearning: the fastest feedback loop isn't the one with the most sophisticated machinery. It's the one with the fewest moving parts between your keystroke and the pixels. Ours has five steps, zero servers, and a 200ms timer — and it has never once needed a config file.</p>
+
+    <h2>Try it</h2>
+    <p>NitroIDE is free, no signup, and your code runs only in your browser: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-13" style="color: #38bdf8; text-decoration: none;">nitroide.com</a></p>
+
+    <p>⭐ If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #38bdf8; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Does NitroIDE have real HMR?</h3>
+    <p>For CSS, yes — the parent postMessages the fresh stylesheet and the preview swaps one style tag's text with no reload and no state loss. HTML and JS edits get a fast full reload instead, which is deliberately not called HMR.</p>
+    <h3>Why do HTML and JS edits reset the preview's state?</h3>
+    <p>Because those edits rebuild the preview from scratch via srcdoc: the DOM is rebuilt, scripts re-run from the top, timers restart, and form state resets. That clean slate is the point — you always see a fresh run.</p>
+    <h3>Does NitroIDE use a dev server or bundler?</h3>
+    <p>No. The build step is string concatenation of the in-memory files and the deploy step is assigning the result to the preview iframe's srcdoc attribute. There is no server, no watcher, and no config file.</p>
+    <h3>Why doesn't the preview flash white on every keystroke?</h3>
+    <p>Rebuilds render into a hidden iframe first; after its load event plus two requestAnimationFrame ticks, the new iframe is promoted and the old one removed. A generation counter discards stale rebuilds overtaken by newer typing.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="0ms-preview-srcdoc-postmessage-no-bundler.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">How NitroIDE Renders Code Instantly: srcdoc + postMessage</a></li>
+      <li><a href="no-server-architecture.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">No-Server IDE: Your Code Runs Only in Your Browser</a></li>
+      <li><a href="state-watcher.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">Nitro.watch(): A Live State Panel for My Browser IDE</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

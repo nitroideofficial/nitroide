@@ -1,5 +1,20 @@
 [
   {
+    "SLUG": "hmr-without-a-bundler",
+    "META_TITLE": "HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work | NitroIDE",
+    "META_DESC": "No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.",
+    "KEYWORDS": "hmr without bundler, instant preview, srcdoc, postMessage CSS hot reload, debounce, browser IDE, NitroIDE",
+    "THEME_COLOR": "#38bdf8",
+    "CATEGORY": "ENGINEERING",
+    "DATE": "OCTOBER 2026",
+    "H1_TITLE": "HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work",
+    "CONTENT": "<p>Type a character in Vite and the browser updates before your finger leaves the key. It feels like magic, but it isn't — it's a dev server, a WebSocket, a module graph, and a client runtime, all cooperating to patch the running page instead of reloading it.</p><p>NitroIDE does the same trick with none of that. No dev server. No WebSocket. No module graph. No bundler at all. The whole update loop is a debounced timer, a string concatenation, and an iframe attribute.</p>",
+    "CTA_TITLE": "Try NitroIDE",
+    "CTA_DESC": "Free, no signup — the whole IDE runs in your browser tab.",
+    "CTA_LINK": "../index.html",
+    "CTA_ICON": "ph-magic-wand"
+  },
+  {
     "SLUG": "state-watcher",
     "META_TITLE": "Nitro.watch(): A Live State Panel for My Browser IDE | NitroIDE",
     "META_DESC": "One call — Nitro.watch('cart', cart) — renders a live JSON tree in NitroIDE's State tab. The postMessage bridge, escape-first highlighter, and limits.",
