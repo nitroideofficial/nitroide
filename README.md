@@ -28,7 +28,7 @@
 
 ## 🚀 What is NitroIDE?
 
-NitroIDE is a **zero-latency, browser-based IDE** that runs entirely on the client side.
+NitroIDE is a **near-instant, browser-based IDE** that runs entirely on the client side.
 
 No installs. No backend. No delays.
 
