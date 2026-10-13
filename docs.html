@@ -5,7 +5,7 @@
   
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NitroIDE Documentation: Master the Zero-Latency Browser IDE</title>
   <meta name="title" content="NitroIDE Documentation: Master the Zero-Latency Browser IDE">
   <meta name="description" content="Master NitroIDE: The complete guide to using our free, zero-latency browser IDE. Learn about the Virtual File System, Monaco Editor, and CDN injection.">
@@ -152,13 +152,34 @@
     <a href="#faq" class="nav-link">Frequently Asked Questions</a>
     <a href="#install-app" class="nav-link">Install as an App</a>
     <a href="#troubleshooting" class="nav-link">Troubleshooting</a>
+    <a href="#api-reference" class="nav-link">API Reference</a>
   </div>
 
   <div class="docs-content">
+    <nav aria-label="On this page">
+      <h2>On this page</h2>
+      <ul>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#vfs">Virtual File System</a></li>
+        <li><a href="#cli">Developer Console</a></li>
+        <li><a href="#state">State Visualizer</a></li>
+        <li><a href="#cdn">Dependency Injection (CDN)</a></li>
+        <li><a href="#layout">Device Emulation</a></li>
+        <li><a href="#shortcuts">Keyboard Shortcuts</a></li>
+        <li><a href="#export">Exporting Projects</a></li>
+        <li><a href="#embed">Embed NitroIDE</a></li>
+        <li><a href="#badge">Open in NitroIDE Badge</a></li>
+        <li><a href="#faq">Frequently Asked Questions</a></li>
+        <li><a href="#getting-started">Getting Started in 2 Minutes</a></li>
+        <li><a href="#install-app">Install as an App (PWA)</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+        <li><a href="#api-reference">API Reference</a></li>
+      </ul>
+    </nav>
     <section id="intro">
       <h1>NitroIDE Documentation</h1>
       <p>Welcome to the official guide for NitroIDE, the zero-latency, entirely client-side <strong>browser IDE</strong>. Powered by the <strong>Monaco Editor engine</strong>, NitroIDE transforms your browser into a fully functioning frontend workspace.</p>
-      <p>Because it uses your browser's native capabilities (via HTML5 <code>srcdoc</code> and local sandbox evaluation), your code never touches an external server. This guarantees 100% absolute privacy, offline code editing, and instantaneous execution speeds.</p>
+      <p>Because it uses your browser's native capabilities (via HTML5 <code>srcdoc</code> and local sandbox evaluation), your code runs only in your browser for editing and preview. This keeps your code in your browser, with offline code editing and instantaneous execution speeds.</p>
     </section>
 
     <section id="vfs">
@@ -294,7 +315,7 @@ setInterval(() => {
       <p>NitroIDE is designed to function as an offline code editor for vanilla HTML, CSS, and JavaScript. The only time an active internet connection is required is if you use the Developer Console to fetch external libraries (like React or Tailwind) via the CDN injector.</p>
 
       <h3>Where is my code stored?</h3>
-      <p>Your code never leaves your computer. All keystrokes, modules, and virtual files are stored strictly within your browser's local <code>localStorage</code> API. We employ absolutely zero telemetry or tracking.</p>
+      <p>Your code runs only in your browser. All keystrokes, modules, and virtual files are stored strictly within your browser's local <code>localStorage</code> API. There is no code telemetry — analytics is GA4 only.</p>
 
       <h3>Can I use frameworks like React, Vue, or Tailwind CSS?</h3>
       <p>Absolutely. While NitroIDE does not use a <code>package.json</code> or a traditional node server, you can instantly inject any NPM package using our integrated CDN manager. Just type <code>install react</code> or <code>install tailwind</code> in the Developer Console to pull the minified builds directly into your workspace.</p>
@@ -311,7 +332,7 @@ setInterval(() => {
       <p>New here? Here's the fastest path from zero to a running project:</p>
       <ol>
         <li><strong>Open the workspace</strong> — hit <a href="tools/codebox.html">Launch Workspace</a>. No signup, no download; the editor loads straight into a sample project.</li>
-        <li><strong>Pick a template</strong> — skip the blank page with one of ten <a href="templates.html">starter templates</a> (portfolio, todo app, games, tools). Each opens directly in the editor via <code>?template=slug</code>.</li>
+        <li><strong>Pick a template</strong> — skip the blank page with one of twelve <a href="templates.html">starter templates</a> (portfolio, todo app, games, tools). Each opens directly in the editor via <code>?template=slug</code>.</li>
         <li><strong>Learn the palette</strong> — press <span class="key">Ctrl</span> + <span class="key">K</span> to open the command palette. Every IDE action (format, export, layouts, themes) lives there, fuzzy-searchable.</li>
         <li><strong>Share or export</strong> — hit the Share button for a link, or <code>export zip</code> in the console to download your project. Done.</li>
       </ol>
@@ -352,6 +373,27 @@ setInterval(() => {
   catch (e) { return null; } // preview sandbox blocks storage
 }</code></pre>
       <p>Your projects saved in the IDE itself are unaffected — this only applies to code running inside the preview.</p>
+    </section>
+
+    <section id="api-reference">
+      <h2>API Reference</h2>
+      <p>The small public surface NitroIDE exposes to your project code and to share links. Everything here is already described elsewhere in these docs or implemented in the workspace script.</p>
+      <h3>Nitro.watch(name, data)</h3>
+      <p>Call <code>Nitro.watch()</code> inside your project&apos;s <code>script.js</code> to send a value to the IDE&apos;s State tab. <code>name</code> is the label shown in the State tab; <code>data</code> is any value that can be serialized to JSON. The IDE renders it as a live, syntax-highlighted JSON tree. Call it again with the same name to update the displayed value.</p>
+      <div class="docs-code">Nitro.watch('Player Data', playerState);</div>
+      <h3>Share and import URL parameters</h3>
+      <p>All parameters go on the workspace URL, <code>tools/codebox.html</code>. Share links are generated by the Share button; import links load outside code into the editor.</p>
+      <ul>
+        <li><code>?code=</code> &mdash; a share link. The Share button compresses your whole workspace (files plus active files) into this one parameter. Opening the link reconstructs the workspace locally in the recipient&apos;s browser; nothing is uploaded to any server by the Share button. For very large projects the URL can get long &mdash; use ZIP export instead.</li>
+        <li><code>?gist=</code> &mdash; loads a GitHub Gist by its ID, no raw URL required.</li>
+        <li><code>?url=</code> &mdash; loads any publicly accessible raw file URL (for example a <code>raw.githubusercontent.com</code> link) directly into the editor.</li>
+        <li><code>?template=</code> &mdash; loads a built-in starter template by its slug, for example <code>?template=portfolio</code>.</li>
+      </ul>
+      <h3>Embed parameters</h3>
+      <ul>
+        <li><code>?embed=1</code> &mdash; appended to a codebox share URL, loads a stripped-down, read-only viewer: the full IDE chrome (file explorer, console, and settings menus) is hidden, leaving only the editor and the live preview. Every embed carries a footer link reading &ldquo;Built with NitroIDE &mdash; open &amp; edit&rdquo;, which opens the exact workspace in the full editor.</li>
+      </ul>
+      <p>Example embed URL: <code>tools/codebox.html?embed=1&amp;code=YOUR_SHARE_CODE</code></p>
     </section>
   </div>
 </div>

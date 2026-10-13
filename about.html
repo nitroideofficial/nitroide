@@ -67,12 +67,13 @@
     <div class="badge badge-primary"><i class="ph-bold ph-code"></i> The Origin Story</div>
     <h1 id="about-title" class="about-hero-title reveal-2">Built for Speed.<br><span>Designed for Flow.</span></h1>
     <p class="about-hero-subtitle reveal-3">NitroIDE is a local-first browser workspace built to keep coding fast, private, and focused.</p>
+    <p class="about-hero-subtitle reveal-3">NitroIDE is free, with no account and no paywall — supported by donations.</p>
   </section>
 
   <section class="bento-grid about-bento-grid reveal-5" aria-label="About NitroIDE">
     
     <article class="bento-card about-founder-card">
-      <img src="https://nitroide.com/mypfp.webp" alt="Yash Panchal" class="about-founder-img" />
+      <img src="https://nitroide.com/mypfp-224.webp" alt="Yash Panchal" class="about-founder-img" width="224" height="280" />
       
       <h2 class="about-founder-name">Yash Panchal</h2>
       <p class="about-founder-title">Founder & Lead Engineer</p>
@@ -84,10 +85,11 @@
       </div>
 
       <div class="about-support-wrapper">
-        <a href="https://ko-fi.com/nitroide" target="_blank" class="btn-compact btn-outline about-support-btn">
+        <a href="https://ko-fi.com/nitroide" target="_blank" rel="noopener noreferrer" class="btn-compact btn-outline about-support-btn">
           <i class="ph-duotone ph-heart about-story-icon" style="color: #f7768e;"></i> Sponsor this Project
         </a>
       </div>
+      <p class="about-bio-p-last">Donations are voluntary and support development — see Ko-fi's terms on the Ko-fi page.</p>
     </article>
 
     <article class="bento-card about-story-card">
@@ -117,7 +119,7 @@
       <article class="bento-card about-story-card">
         <i class="ph-duotone ph-lightning bento-icon about-story-icon"></i>
         <h3 class="about-story-heading">Local-first, for real</h3>
-        <p class="about-story-text-last">The whole workspace runs in your browser's memory. Your code never leaves your machine — not for compiling, not for preview, not for AI. Your API keys go straight from your browser to the provider. There is no middleman, because there is no server to be one.</p>
+        <p class="about-story-text-last">The whole workspace runs in your browser's memory. Your code runs only in your browser for compiling and preview. For AI, code goes only to the AI provider you choose, never to NitroIDE. For Groq, Gemini, OpenRouter, and OpenAI, your key goes direct to the provider; SambaNova passes through a non-storing Cloudflare Worker proxy.</p>
       </article>
       <article class="bento-card about-story-card">
         <i class="ph-duotone ph-rocket-launch bento-icon about-story-icon"></i>
@@ -141,7 +143,7 @@
       <article class="bento-card about-story-card">
         <i class="ph-duotone ph-cpu bento-icon about-story-icon"></i>
         <h3 class="about-story-heading">An AI pair programmer</h3>
-        <p class="about-story-text-last">Bring your own key and chat with your code. Edits arrive as reviewable cards with diff previews — the AI only changes what you approve, and checkpoints save before every edit. Your key never touches our servers.</p>
+        <p class="about-story-text-last">Bring your own key and chat with your code. Edits arrive as reviewable cards with diff previews — the AI only changes what you approve, and checkpoints save before every edit. For Groq, Gemini, OpenRouter, and OpenAI, your key goes direct to the provider; SambaNova passes through a non-storing Cloudflare Worker proxy.</p>
       </article>
       <article class="bento-card about-story-card">
         <i class="ph-duotone ph-heart bento-icon about-story-icon"></i>
@@ -150,6 +152,22 @@
       </article>
     </div>
   </section>
+  <section id="author" class="content-section reveal-5" aria-label="About the author">
+    <div class="section-header">
+      <h2>About the author.</h2>
+      <p class="about-hero-subtitle">Yash Panchal is the founder and lead engineer of NitroIDE, a developer from Delhi, India. He builds NitroIDE in the open — every release, every decision, and every mistake is public on the changelog and roadmap — and writes daily engineering notes about what he learns building it.</p>
+    </div>
+  </section>
+
+  <div class="newsletter-block" style="max-width: 640px; margin: 0 auto 40px; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+    <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+    <p style="margin: 0 0 16px; font-size: 14px; opacity: 0.65;">One short email when we publish. No spam, unsubscribe anytime.</p>
+    <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+      <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+      <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+    </form>
+  </div>
+
 <!-- Phase C CTA band -->
 <section class="container">
   <div class="section-header content-section">
