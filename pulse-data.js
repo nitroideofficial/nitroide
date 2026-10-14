@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 14, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Service worker updates that don't trap users on old versions",
+  link: "https://peerlist.io/scroll/post/ACTHKKDELMAADL9JO1OKMGBDNG6Q9K"
+},
+  {
+  date: "Oct 14, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
