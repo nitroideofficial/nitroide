@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 14, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Your Service Worker Is Keeping Users on Last Week's Version — Here's the Fix",
+  link: "https://nitroide.hashnode.dev/your-service-worker-is-keeping-users-on-last-week-s-version-here-s-the-fix"
+},
+  {
   date: "Oct 13, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
