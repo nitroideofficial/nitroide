@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 14, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Service worker updates that don't trap users on old versions (5-post thread)",
+  link: "https://x.com/trynitroide/status/2110348175550955620"
+},
+  {
+  date: "Oct 14, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
