@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 15, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7516475893221969921/"
+},
+  {
   date: "Oct 14, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
