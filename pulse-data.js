@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 15, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The Cloudflare security-headers recipe for static sites",
+  link: "https://peerlist.io/scroll/post/ACTH9OB868QD6ODO9I69P9DGDMPBJB"
+},
+  {
+  date: "Oct 15, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
