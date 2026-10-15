@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 15, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE",
+  link: "https://nitroide.hashnode.dev/zero-security-headers-to-a-hardened-static-site-the-cloudflare-recipe-i-run-on-nitroide"
+},
+  {
+  date: "Oct 15, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
