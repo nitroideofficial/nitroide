@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE</title>
+  <meta name="title" content="Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE">
+  <meta name="description" content="GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plus why CSP is deliberately not shipped yet.">
+  <meta name="keywords" content="cloudflare security headers, HSTS, nosniff, COEP, COOP, referrer policy, permissions policy, static site security, NitroIDE">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#f59e0b">
+  <link rel="canonical" href="https://nitroide.com/blog/cloudflare-security-headers-recipe.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/cloudflare-security-headers-recipe.html">
+  <meta property="og:title" content="Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE">
+  <meta property="og:description" content="GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plus why CSP is deliberately not shipped yet.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-15-cloudflare-security-headers-recipe.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Security headers: the Cloudflare recipe for static sites — HSTS, nosniff, COEP, COOP">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-10-15">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/cloudflare-security-headers-recipe.html">
+  <meta name="twitter:title" content="Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE">
+  <meta name="twitter:description" content="GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plus why CSP is deliberately not shipped yet.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-15-cloudflare-security-headers-recipe.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-15-cloudflare-security-headers-recipe.webp","headline":"Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE","description":"GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plus why CSP is deliberately not shipped yet.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/cloudflare-security-headers-recipe.html","datePublished":"2026-10-15","dateModified":"2026-10-15"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why does NitroIDE have no Content-Security-Policy?", "acceptedAnswer": {"@type": "Answer", "text": "CSP is the most powerful header and the easiest to get wrong. A bad CSP breaks the product: blocked scripts, dead embeds, templates that silently stop working. A missing CSP breaks nothing. NitroIDE loads user code, templates, CDN libraries, and embeds — the policy will ship once it is tested against all of them, not to silence a scanner."}}, {"@type": "Question", "name": "Why no X-Frame-Options header?", "acceptedAnswer": {"@type": "Answer", "text": "X-Frame-Options is legacy. The modern replacement is CSP's frame-ancestors directive, which lands with the CSP work. Shipping the old header now would be theater — one more line that looks like security without the policy behind it."}}, {"@type": "Question", "name": "What does COEP require-corp break?", "acceptedAnswer": {"@type": "Answer", "text": "Any cross-origin subresource that doesn't opt in: a font, a CDN script, an analytics pixel, an embed. The fix is discipline, not a weaker header: serve everything you can same-origin, and for anything genuinely cross-origin, make sure it sends Cross-Origin-Resource-Policy or is fetched in CORS mode."}}, {"@type": "Question", "name": "Why does the HSTS header leave out preload?", "acceptedAnswer": {"@type": "Answer", "text": "Preload is a one-way door — once you're on the browser preload list, every subdomain must serve valid HTTPS forever, and removal takes months. One year + includeSubDomains is the strong posture without the irreversible commitment."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f59e0b; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINEERING • <time datetime="2026-10-15">October 15, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-15">October 15, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE</h1>
+
+    <p>GitHub Pages is a wonderful host with one sharp edge: it cannot set HTTP response headers. Not one. Your site ships with zero security headers unless you add a layer in front of it that can.</p>
+
+    <p>I build NitroIDE — a browser-based IDE where your code never leaves your machine. When I audited my own site for the v25 release, the header situation was blunt: none. No HSTS, no nosniff, no referrer policy, nothing. This post is the full recipe I run today, header by header, with the exact values, what each one stops, the price I paid for the strict ones, and the two headers I deliberately left out.</p>
+
+    <h2>Where the headers live</h2>
+    <p>Cloudflare sits in front of nitroide.com, and Cloudflare's Transform Rules → Modify Response Header is where every header below is set. One rule, applied to all responses, no code changes, no redeploy to change a value.</p>
+    <p>Two alternatives I ruled out: a <code>_headers</code> file only works if your host reads it (Cloudflare Pages does; GitHub Pages does not — my origin ignores it), and <code>&lt;meta http-equiv&gt;</code> tags in HTML only cover a couple of headers and don't apply to non-HTML responses. If your static site is behind Cloudflare, the Transform Rule is the one place that covers everything.</p>
+
+    <h2>The recipe</h2>
+
+    <p><strong>HSTS — <code>Strict-Transport-Security: max-age=31536000; includeSubDomains</code></strong></p>
+    <p>Forces the browser to use HTTPS for the next year, for this domain and every subdomain. It kills SSL-stripping and downgrade attacks — the kind where an attacker on public Wi-Fi serves your site over plain HTTP and the user never notices. One deliberate omission: no <code>preload</code>. Preload is a one-way door — once you're on the browser preload list, every subdomain must serve valid HTTPS forever, and removal takes months. One year + includeSubDomains is the strong posture without the irreversible commitment.</p>
+
+    <p><strong>MIME sniffing — <code>X-Content-Type-Options: nosniff</code></strong></p>
+    <p>Stops browsers from second-guessing your <code>Content-Type</code>. Without it, a browser can decide a file you served as <code>text/plain</code> is actually a script and execute it — the classic vector for turning an upload or a user-content endpoint into code execution. One word, no downside. There is no reason to skip this one.</p>
+
+    <p><strong>Referrer — <code>Referrer-Policy: strict-origin-when-cross-origin</code></strong></p>
+    <p>Same-origin requests send the full URL; cross-origin requests send only the origin. Your analytics and your own logs keep the detail, but when a user clicks out to another site, that site learns they came from nitroide.com — not which page, not which <code>?code=</code> share link, not which query string. Share links carry user code; leaking their full path in a referrer would be a quiet privacy hole.</p>
+
+    <p><strong>Permissions — <code>Permissions-Policy: camera=(), microphone=(), geolocation=()</code></strong></p>
+    <p>Turns off powerful browser features the site never uses. NitroIDE is a code editor — it has no reason to request your camera, microphone, or location, so the browser is told upfront that those requests are denied. This is least-privilege at the platform layer: even if a third-party script or a future feature tried, the browser says no.</p>
+
+    <p><strong>Cross-origin isolation — <code>Cross-Origin-Opener-Policy: same-origin</code> + <code>Cross-Origin-Embedder-Policy: require-corp</code></strong></p>
+    <p>This is the strict pair, and the one that costs something. Together they give the page cross-origin isolation: other origins can't hold a live reference to your window, and your page refuses to load any cross-origin subresource unless that resource explicitly opts in (via a <code>Cross-Origin-Resource-Policy</code> header or CORS). What it buys is protection against a whole class of cross-origin read attacks — the Spectre family — and a stronger guarantee that the code running in your tab is only the code you shipped.</p>
+    <p>The price is real, and I paid it. COEP <code>require-corp</code> breaks anything cross-origin that doesn't opt in: a font, a CDN script, an analytics pixel, an embed. I have personally debugged a COEP/CORP failure on this site where a legitimate resource silently failed to load and the page just looked broken, with no error pointing at the header. The fix is discipline, not a weaker header: serve everything you can same-origin, and for anything genuinely cross-origin, make sure it sends <code>Cross-Origin-Resource-Policy</code> or is fetched in CORS mode. If you set COEP and something breaks, check the resource's headers before you blame your code — that is the single most useful debugging rule in this whole post.</p>
+    <p>Cloudflare also appends <code>Report-To</code> / <code>NEL</code> (Network Error Logging) headers automatically. They're telemetry about failed requests, not a header I configured — I leave them alone.</p>
+
+    <h2>What I deliberately left out</h2>
+    <p><strong>No Content-Security-Policy — yet.</strong> This is the honest part. CSP is the most powerful header on this list and the easiest to get wrong. A bad CSP breaks your product: blocked scripts, dead embeds, templates that silently stop working. A missing CSP breaks nothing. NitroIDE loads user code, templates, CDN libraries, and embeds — I want to test a CSP against every one of those before enforcing it. It is on the list; it is not shipped on a hope.</p>
+    <p><strong>No <code>X-Frame-Options</code>.</strong> It is legacy. The modern replacement is CSP's <code>frame-ancestors</code>, which lands with the CSP work above. Shipping the old header now would be theater — one more line that looks like security without the policy behind it.</p>
+
+    <h2>Verify it yourself</h2>
+    <p>Headers are claims. Verify them the way I did, in one command:</p>
+    <pre><code>curl -sI https://nitroide.com/</code></pre>
+    <p>You should see all six headers in the response. For a second opinion, run the URL through a header scanner (OWASP's Secure Headers Project and securityheaders.com both grade the same set) — but read the findings, don't chase the letter grade. A scanner will flag the missing CSP; you now know why it's missing, and "missing on purpose, tracked" beats "added to silence the scanner, breaking the product."</p>
+
+    <h2>The copy-paste version</h2>
+    <table>
+      <thead>
+        <tr><th>Header</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Strict-Transport-Security</td><td><code>max-age=31536000; includeSubDomains</code></td></tr>
+        <tr><td>X-Content-Type-Options</td><td><code>nosniff</code></td></tr>
+        <tr><td>Referrer-Policy</td><td><code>strict-origin-when-cross-origin</code></td></tr>
+        <tr><td>Permissions-Policy</td><td><code>camera=(), microphone=(), geolocation=()</code></td></tr>
+        <tr><td>Cross-Origin-Opener-Policy</td><td><code>same-origin</code></td></tr>
+        <tr><td>Cross-Origin-Embedder-Policy</td><td><code>require-corp</code></td></tr>
+      </tbody>
+    </table>
+    <p>Six headers, one Transform Rule, zero code changes. The first four are free — no downside, no debugging, no reason not to ship them today. The last two are the ones that earn their keep: set them, then budget an hour for the cross-origin resource that will surprise you.</p>
+
+    <p>Further reading: MDN's guides on <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">HSTS</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy">Permissions-Policy</a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/crossOriginIsolated">cross-origin isolation with COOP/COEP</a>, plus the <a href="https://owasp.org/www-project-secure-headers/">OWASP Secure Headers Project</a>.</p>
+
+    <h2>Try it</h2>
+    <p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-15" style="color: #f59e0b; text-decoration: none;">nitroide.com</a></p>
+
+    <p>⭐ If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #f59e0b; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Why does NitroIDE have no Content-Security-Policy?</h3>
+    <p>CSP is the most powerful header and the easiest to get wrong. A bad CSP breaks the product: blocked scripts, dead embeds, templates that silently stop working. A missing CSP breaks nothing. NitroIDE loads user code, templates, CDN libraries, and embeds — the policy will ship once it is tested against all of them, not to silence a scanner.</p>
+    <h3>Why no X-Frame-Options header?</h3>
+    <p>X-Frame-Options is legacy. The modern replacement is CSP's frame-ancestors directive, which lands with the CSP work. Shipping the old header now would be theater — one more line that looks like security without the policy behind it.</p>
+    <h3>What does COEP require-corp break?</h3>
+    <p>Any cross-origin subresource that doesn't opt in: a font, a CDN script, an analytics pixel, an embed. The fix is discipline, not a weaker header: serve everything you can same-origin, and for anything genuinely cross-origin, make sure it sends Cross-Origin-Resource-Policy or is fetched in CORS mode.</p>
+    <h3>Why does the HSTS header leave out preload?</h3>
+    <p>Preload is a one-way door — once you're on the browser preload list, every subdomain must serve valid HTTPS forever, and removal takes months. One year + includeSubDomains is the strong posture without the irreversible commitment.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="browser-security-webcrypto-sandboxing-guide.html" style="color: #f59e0b; text-decoration: none; font-weight: 500;">Encrypt, Isolate, Verify: Browser Security That Holds Up</a></li>
+      <li><a href="no-server-architecture.html" style="color: #f59e0b; text-decoration: none; font-weight: 500;">No-Server IDE: Your Code Runs Only in Your Browser</a></li>
+      <li><a href="0ms-preview-srcdoc-postmessage-no-bundler.html" style="color: #f59e0b; text-decoration: none; font-weight: 500;">How NitroIDE Renders Code Instantly: srcdoc + postMessage</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

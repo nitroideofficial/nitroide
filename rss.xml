@@ -7,6 +7,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE | NitroIDE</title>
+      <link>https://nitroide.com/blog/cloudflare-security-headers-recipe.html</link>
+      <guid>https://nitroide.com/blog/cloudflare-security-headers-recipe.html</guid>
+      <description>GitHub Pages can&apos;t set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plus why CSP is deliberately not shipped yet.</description>
+      <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
       <title>HMR Without a Bundler: How NitroIDE&apos;s Instant Preview Updates Actually Work | NitroIDE</title>
       <link>https://nitroide.com/blog/hmr-without-a-bundler.html</link>
       <guid>https://nitroide.com/blog/hmr-without-a-bundler.html</guid>
