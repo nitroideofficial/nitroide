@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 15, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Zero security headers to a hardened static site (5-post thread)",
+  link: "https://x.com/trynitroide/status/2110709865567948817"
+},
+  {
+  date: "Oct 15, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
