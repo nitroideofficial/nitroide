@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 16, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "AdSense said 'low-value content' — here's what I actually fixed",
+  link: "https://peerlist.io/scroll/post/ACTHOK8L7NMJEDDJN1P7GJ97RGR8BP"
+},
+  {
+  date: "Oct 16, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
