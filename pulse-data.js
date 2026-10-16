@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 16, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "AdSense said 'low-value content' — here's what I actually fixed (6-post thread)",
+  link: "https://x.com/trynitroide/status/2111072542064525501"
+},
+  {
+  date: "Oct 16, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
