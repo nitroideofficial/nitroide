@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 16, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "AdSense Said Low-Value Content — What I Fixed Before Re-Review",
+  link: "https://nitroide.hashnode.dev/adsense-said-low-value-content-here-s-what-i-actually-fixed-before-asking-for-a-re-review"
+},
+  {
+  date: "Oct 16, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
