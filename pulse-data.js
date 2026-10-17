@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 17, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "12 Starters, Zero Blank Pages: A Tour of NitroIDE's Template Gallery",
+  link: "https://nitroide.hashnode.dev/12-starters-zero-blank-pages-a-tour-of-nitroide-s-template-gallery"
+},
+  {
   date: "Oct 16, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
