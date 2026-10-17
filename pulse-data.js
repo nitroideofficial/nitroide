@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 17, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "12 Starters, Zero Blank Pages: A Tour of NitroIDE's Template Gallery",
+  link: "https://x.com/trynitroide/status/2111437361452311022"
+},
+  {
+  date: "Oct 17, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
