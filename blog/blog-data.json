@@ -1,5 +1,20 @@
 [
   {
+    "SLUG": "templates-gallery-tour",
+    "META_TITLE": "12 Starters, Zero Blank Pages: A Tour of NitroIDE's Template Gallery | NitroIDE",
+    "META_DESC": "Twelve starters, zero blank pages: a tour of every NitroIDE template \u2014 portfolios, landing pages, todo app, gradient generator, React and Tailwind without a build step \u2014 with a concrete 'reach for this when\u2026' rule for each.",
+    "KEYWORDS": "NitroIDE templates, template gallery, starter templates, portfolio template, todo app template, react without npm, tailwind without build step, NitroIDE",
+    "THEME_COLOR": "#22c55e",
+    "CATEGORY": "PROTOTYPING & WORKFLOW",
+    "DATE": "OCTOBER 2026",
+    "H1_TITLE": "12 Starters, Zero Blank Pages: A Tour of NitroIDE's Template Gallery",
+    "CONTENT": "<p>The hardest part of any project is the blank page. Not the hard algorithm, not the deployment \u2014 the empty editor, blinking at you, daring you to type something.</p><p>NitroIDE's template gallery exists to kill that moment. Twelve starters, each one opening directly in the browser IDE with working code and a live preview. No signup, no download, no create-project wizard. Pick one, and you're editing within seconds.</p>",
+    "CTA_TITLE": "Try NitroIDE",
+    "CTA_DESC": "Free, no signup \u2014 the whole IDE runs in your browser tab.",
+    "CTA_LINK": "../index.html",
+    "CTA_ICON": "ph-magic-wand"
+  },
+  {
     "SLUG": "cloudflare-security-headers-recipe",
     "META_TITLE": "Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE | NitroIDE",
     "META_DESC": "GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule \u2014 HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP \u2014 plus why CSP is deliberately not shipped yet.",

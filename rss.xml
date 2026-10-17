@@ -7,6 +7,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>12 Starters, Zero Blank Pages: A Tour of NitroIDE&apos;s Template Gallery | NitroIDE</title>
+      <link>https://nitroide.com/blog/templates-gallery-tour.html</link>
+      <guid>https://nitroide.com/blog/templates-gallery-tour.html</guid>
+      <description>Twelve starters, zero blank pages: a tour of every NitroIDE template — portfolios, landing pages, todo app, gradient generator, React and Tailwind without a build step — with a concrete &apos;reach for this when…&apos; rule for each.</description>
+      <pubDate>Sat, 17 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
       <title>Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE | NitroIDE</title>
       <link>https://nitroide.com/blog/cloudflare-security-headers-recipe.html</link>
       <guid>https://nitroide.com/blog/cloudflare-security-headers-recipe.html</guid>

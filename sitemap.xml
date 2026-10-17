@@ -411,6 +411,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://nitroide.com/blog/templates-gallery-tour.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://nitroide.com/llms.txt</loc>
     <lastmod>2026-10-13</lastmod>
     <priority>0.5</priority>
