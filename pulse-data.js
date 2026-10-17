@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 17, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "12 starters, zero blank pages — a tour of NitroIDE's template gallery",
+  link: "https://peerlist.io/scroll/post/ACTHNN7K6GME98M8AFJGP7BJN8A8AL"
+},
+  {
+  date: "Oct 17, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
