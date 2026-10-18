@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 18, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "llms.txt — one file so AI assistants can explain what your site does",
+  link: "https://peerlist.io/scroll/post/ACTHKKDEDQ9J7LJ7BHJQDPBQQD77OQ"
+},
+  {
+  date: "Oct 18, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
