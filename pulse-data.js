@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 18, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "I Added One File So AI Assistants Can Actually Explain What My Site Does (6-post thread)",
+  link: "https://x.com/trynitroide/status/2111798149400691032"
+},
+  {
+  date: "Oct 18, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
