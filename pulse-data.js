@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 18, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "I Added One File So AI Assistants Can Actually Explain What My Site Does",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7517566123240951808/"
+},
+  {
+  date: "Oct 18, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
