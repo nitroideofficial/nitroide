@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 18, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "I Added One File So AI Assistants Can Actually Explain What My Site Does",
+  link: "https://nitroide.hashnode.dev/i-added-one-file-so-ai-assistants-can-actually-explain-what-my-site-does"
+},
+  {
   date: "Oct 17, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
