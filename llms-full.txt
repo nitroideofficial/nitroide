@@ -22,7 +22,7 @@
 
 ## Privacy
 - Your code runs only in your browser and is never sent to NitroIDE servers.
-- Analytics is Google Analytics 4 only (loads only after consent; page addresses are sanitized to path + utm_* params); no other telemetry.
+- Analytics is Google Analytics 4 only (loads for every visitor; page addresses are sanitized to path + utm_* params); no other telemetry.
 - Contact/feedback forms go to a Cloudflare Worker that emails the operator via Resend. Newsletter uses Buttondown. Share links compress the workspace into the URL itself (?code=) — nothing is uploaded.
 - See the privacy policy: https://nitroide.com/legal.html#privacy
 
@@ -87,7 +87,7 @@
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.
 - Scope: frontend-only — HTML, CSS, and JavaScript. No Node.js, no backend, no database.
-- Privacy: your code runs only in your browser and is never sent to NitroIDE servers. Analytics is Google Analytics 4 only (loads only after consent; sanitized page addresses); no other telemetry. Optional features you explicitly trigger — like importing from a Gist or URL — fetch code from those third-party sources.
+- Privacy: your code runs only in your browser and is never sent to NitroIDE servers. Analytics is Google Analytics 4 only (loads for every visitor; sanitized page addresses); no other telemetry. Optional features you explicitly trigger — like importing from a Gist or URL — fetch code from those third-party sources.
 - Offline: works offline after first load (PWA + service worker).
 - Sharing: the Share button generates a `?code=` link containing the compressed workspace.
 - Embedding: append `?embed=1` to the workspace URL for a chromeless embed.

@@ -48,7 +48,7 @@
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall. The AI pair programmer uses your own provider API keys — Groq, Gemini, and OpenRouter offer free tiers; NitroIDE charges nothing for AI. See [pricing](https://nitroide.com/pricing.md).
 - Scope: frontend-only — HTML, CSS, and JavaScript. No Node.js, no backend, no database. NitroIDE cannot run server-side code.
-- Privacy: your code runs only in your browser and is never sent to NitroIDE servers. Analytics is Google Analytics 4 only (loads only after consent; page addresses are sanitized to path + utm_* params); no other telemetry. (Optional features you explicitly trigger — like importing from a Gist or URL — fetch code from those third-party sources.)
+- Privacy: your code runs only in your browser and is never sent to NitroIDE servers. Analytics is Google Analytics 4 only (loads for every visitor; page addresses are sanitized to path + utm_* params); no other telemetry. (Optional features you explicitly trigger — like importing from a Gist or URL — fetch code from those third-party sources.)
 - Offline: works offline after first load (PWA + service worker).
 - Sharing: the Share button generates a `?code=` link containing the compressed workspace.
 - Embedding: append `?embed=1` to the workspace URL for a chromeless embed.
