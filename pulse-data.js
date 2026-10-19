@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 19, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "I Cut My Icon Fonts From 748KB to 26KB — Then Three Icons Silently Vanished (6-post thread)",
+  link: "https://x.com/trynitroide/status/2112159299632074759"
+},
+  {
+  date: "Oct 19, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
