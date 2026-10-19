@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 19, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "I Cut My Icon Fonts From 748KB to 26KB — Then Three Icons Silently Vanished",
+  link: "https://nitroide.hashnode.dev/i-cut-my-icon-fonts-from-748kb-to-26kb-then-three-icons-silently-vanished"
+},
+  {
   date: "Oct 18, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
