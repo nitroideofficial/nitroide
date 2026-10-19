@@ -145,7 +145,7 @@
         "name": "Does NitroIDE store my AI API key on its servers?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. Your API key is stored in your own browser's localStorage and your browser talks directly to the AI provider. NitroIDE has no AI backend or proxy, so your key never touches NitroIDE servers."
+          "text": "No. Your API key is stored in your own browser's localStorage and your browser talks directly to the AI provider (SambaNova requests pass through a non-storing proxy). NitroIDE has no AI backend, so your key never touches NitroIDE servers."
         }
       },
       {
@@ -327,7 +327,7 @@
           <i class="ph-duotone ph-lock-key bento-icon"></i>
           <h2>100% Local Execution</h2>
           <div class="bento-content-swap">
-            <p class="bento-text">Your frontend code never leaves your local machine. No telemetry, no tracking, just a secure client-side sandbox — and the AI is no different: bring your own key and it talks straight to your provider, never our servers.</p>
+            <p class="bento-text">Your frontend code never leaves your local machine. No accounts, no cloud saves, just a secure client-side sandbox — and the AI is no different: bring your own key and it talks straight to your provider (SambaNova passes through a non-storing proxy), never our servers.</p>
             <div class="bento-code">
               <span class="code-comment">// Local Execution Sandbox</span><br>
               <span class="code-keyword">const</span> frame = document.createElement(<span class="code-string">'iframe'</span>);<br>
