@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 19, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Phosphor icons 748KB → 26KB: subsetting fonts by hand",
+  link: "https://peerlist.io/scroll/post/ACTHDNDRDMBGERMQ6CA7RMK7A87J6R"
+},
+  {
+  date: "Oct 19, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
