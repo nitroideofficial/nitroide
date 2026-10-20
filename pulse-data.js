@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 20, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "A blog engine with no build step — one JSON file, a noscript list, and a gated RSS feed",
+  link: "https://peerlist.io/scroll/post/ACTHNN7KMNQQD7RMMFJROKD79OMGKP"
+},
+  {
+  date: "Oct 20, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
