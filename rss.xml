@@ -7,6 +7,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed | NitroIDE</title>
+      <link>https://nitroide.com/blog/vanilla-js-blog-engine.html</link>
+      <guid>https://nitroide.com/blog/vanilla-js-blog-engine.html</guid>
+      <description>37 posts, zero build step — how blog-data.json, a &lt;noscript&gt; archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE&apos;s blog.</description>
+      <pubDate>Tue, 20 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
       <title>12 Starters, Zero Blank Pages: A Tour of NitroIDE&apos;s Template Gallery | NitroIDE</title>
       <link>https://nitroide.com/blog/templates-gallery-tour.html</link>
       <guid>https://nitroide.com/blog/templates-gallery-tour.html</guid>
