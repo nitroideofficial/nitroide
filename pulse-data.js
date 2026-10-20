@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 20, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "A Blog Engine in Vanilla JS: 37 Posts, No CMS, No Build Step (5-post thread)",
+  link: "https://x.com/trynitroide/status/2112524033011146772"
+},
+  {
+  date: "Oct 20, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
