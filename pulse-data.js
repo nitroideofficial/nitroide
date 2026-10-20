@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 20, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "37 posts, zero build step — how five files and a checklist run NitroIDE's blog",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7518290585351294976/"
+},
+  {
+  date: "Oct 20, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
