@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 20, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed",
+  link: "https://nitroide.hashnode.dev/i-built-a-blog-engine-with-no-build-step-one-json-file-a-noscript-list-and-a-gated-rss-feed"
+},
+  {
   date: "Oct 19, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
