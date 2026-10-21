@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 21, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Your bold text might be fake — ship real font weights",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7518650158528573440/"
+},
+  {
+  date: "Oct 21, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
   color: "#7c3aed",
