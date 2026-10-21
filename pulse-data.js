@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 21, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Your Bold Text Might Be Fake — Ship Real Font Weights Instead",
+  link: "https://nitroide.hashnode.dev/your-bold-text-might-be-fake-ship-real-font-weights-instead"
+},
+  {
+  date: "Oct 21, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
