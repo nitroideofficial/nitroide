@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 21, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "I built a blog engine with no build step — one JSON file, a noscript list, and a gated RSS feed",
+  link: "https://coderlegion.com/31950/i-built-a-blog-engine-with-no-build-step-one-json-file-a-noscript-list-and-a-gated-rss-feed"
+},
+  {
   date: "Oct 20, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
