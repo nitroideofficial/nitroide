@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 21, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Real font weights, no faux bold: the bug your browser hides",
+  link: "https://peerlist.io/scroll/post/ACTHMQ6JM96L9RAKG1BQEJGQRNLO8M"
+},
+  {
+  date: "Oct 21, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
