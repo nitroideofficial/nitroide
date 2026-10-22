@@ -7,6 +7,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate | NitroIDE</title>
+      <link>https://nitroide.com/blog/localstorage-as-database.html</link>
+      <guid>https://nitroide.com/blog/localstorage-as-database.html</guid>
+      <description>NitroIDE runs with no server and no database &#8212; its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.</description>
+      <pubDate>Thu, 22 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
       <title>I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed | NitroIDE</title>
       <link>https://nitroide.com/blog/vanilla-js-blog-engine.html</link>
       <guid>https://nitroide.com/blog/vanilla-js-blog-engine.html</guid>

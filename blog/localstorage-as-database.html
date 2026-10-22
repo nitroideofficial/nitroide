@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate</title>
+  <meta name="title" content="localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate">
+  <meta name="description" content="NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.">
+  <meta name="keywords" content="localStorage database patterns, localStorage limits 5MB, IndexedDB vs localStorage, browser storage patterns, NitroIDE localStorage, localStorage QuotaExceededError">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#fbbf24">
+  <link rel="canonical" href="https://nitroide.com/blog/localstorage-as-database.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/localstorage-as-database.html">
+  <meta property="og:title" content="localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate">
+  <meta property="og:description" content="NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-22-localstorage-as-database.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="localStorage as a database — patterns, limits, and when it breaks">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-10-22">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/localstorage-as-database.html">
+  <meta name="twitter:title" content="localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate">
+  <meta name="twitter:description" content="NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-22-localstorage-as-database.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-22-localstorage-as-database.webp","headline":"localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate","description":"NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/localstorage-as-database.html","datePublished":"2026-10-22","dateModified":"2026-10-22"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much can localStorage actually hold?", "acceptedAnswer": {"@type": "Answer", "text": "About 5 MB per origin, counted roughly in UTF-16 code units. When the store is full, writes throw QuotaExceededError."}}, {"@type": "Question", "name": "Why does NitroIDE save whole documents instead of individual files?", "acceptedAnswer": {"@type": "Answer", "text": "One key per JSON document keeps reads to two parses and writes to one stringify; the cost is that every save rewrites the whole document, which is why saves are batched."}}, {"@type": "Question", "name": "What should never go in localStorage?", "acceptedAnswer": {"@type": "Answer", "text": "Tokens and secrets: any script on your origin can read the whole store."}}, {"@type": "Question", "name": "When should I switch from localStorage to IndexedDB?", "acceptedAnswer": {"@type": "Answer", "text": "When you need queries or indexes, more than a few megabytes, binary data, or safe multi-tab writes."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #fbbf24; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINEERING • <time datetime="2026-10-22">October 22, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-22">October 22, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate</h1>
+
+<p>NitroIDE has no server and no database. Your projects still survive a browser restart, a closed tab, and a Monday morning. The entire persistence layer is localStorage &mdash; one API, string keys, string values, about 5 MB per origin.</p>
+
+    <p>That sounds like a toy. It has carried a real product for months. It has also taught me exactly where it breaks, because I have hit every wall myself. Here is the honest version: the patterns that work, the limits that bite, and the line where you graduate to something bigger.</p>
+
+    <h2>Pattern 1: one key, one JSON document</h2>
+    <p>The first mistake is treating localStorage like a table and scattering dozens of keys. I do the opposite: one key holds one whole document.</p>
+    <p>NitroIDE's projects live under a single key, <code>nitro_projects</code> &mdash; a JSON array where each project carries its virtual file system (its HTML, CSS, and JS files). A second key, <code>nitro_current_project_id</code>, tracks which project is active. Loading the app is two reads and two parses. Saving is one <code>JSON.stringify</code> and one write.</p>
+    <p>The tradeoff is real and you should name it: every save rewrites the whole document. For a handful of projects with small files, that is milliseconds and nobody notices. For a megabyte of code, it is a full re-serialize on every save &mdash; which is why Pattern 4 exists.</p>
+
+    <h2>Pattern 2: namespace every key, and never trust what's inside</h2>
+    <p>Preferences live under their own namespaced keys &mdash; <code>theme</code>, <code>nitro_font</code>, <code>nitroide_wordwrap</code> &mdash; so a key never collides with another feature's data or with a library's. The <code>nitro_</code> prefix is the whole scheme, and it is enough.</p>
+    <p>More important: every read is wrapped in try/catch with a sane default. localStorage is user-editable, extensions can touch it, and a half-written value from a crashed tab is a <code>JSON.parse</code> error waiting to happen. Corrupt data must degrade to &ldquo;fresh default project&rdquo;, never to a white screen. If your app cannot boot with an empty store, your store is a single point of failure.</p>
+
+    <h2>Pattern 3: cap your history before it caps you</h2>
+    <p>Unbounded growth is how a 5 MB store dies. NitroIDE's time-machine snapshots are sliced to a fixed length before every save &mdash; old history is dropped as new history arrives, by construction, not by a cleanup job I might forget to run.</p>
+    <p>The rule generalizes: any list you append to in localStorage needs a cap at write time. Undo stacks, recent files, activity logs &mdash; if it grows without a ceiling, it will eventually throw <code>QuotaExceededError</code> at the worst possible moment, which is always mid-save.</p>
+
+    <h2>Pattern 4: don't save on every keystroke</h2>
+    <p>Saves are batched, not fired per keystroke. Typing is fast; serializing a whole project document is not free, and localStorage is synchronous &mdash; every write blocks the main thread until it finishes. A big document saved on every keypress is a typing lag bug wearing a persistence costume.</p>
+    <p>Batching plus the whole-document rewrite is the core tension of this design: simple reads, expensive writes. Keep documents small, save on pauses, and measure before you blame the editor.</p>
+
+    <h2>The limits, stated plainly</h2>
+    <p><strong>About 5 MB per origin.</strong> Browsers vary, and the count is roughly in UTF-16 code units, so non-ASCII text costs more than you think. There is no &ldquo;buy more&rdquo; button.</p>
+    <p><strong>Strings only.</strong> Everything is serialized. Dates become strings, <code>undefined</code> vanishes from JSON, and a <code>Map</code> silently becomes <code>{}</code>. If your data model needs types, your serialization layer is now part of your database.</p>
+    <p><strong>Synchronous and blocking.</strong> There is no async localStorage. A large read on startup delays first paint; a large write freezes typing. This is the limit that ends the honeymoon.</p>
+    <p><strong>No queries, no indexes, no transactions.</strong> Finding one project means parsing all of them. Two tabs writing at once can clobber each other &mdash; the <code>storage</code> event tells other tabs something changed, but it does not merge anything.</p>
+    <p><strong>Per-origin, and wiped with site data.</strong> <code>http</code> and <code>https</code> are different stores, subdomains are different stores, and &ldquo;clear site data&rdquo; deletes everything. It is a cache with delusions of permanence unless you also offer export &mdash; which is why NitroIDE exports to ZIP.</p>
+    <p><strong>Readable by any script on your origin.</strong> This is the security line. localStorage has no per-key permissions: any XSS on your page reads the whole store. Never put tokens or secrets in it. And this is exactly why NitroIDE's preview iframe runs on an opaque origin &mdash; user code in the preview cannot reach the parent's localStorage at all. The sandbox fix from the v25 audit and the storage design are the same decision: the store is only as safe as the origin around it.</p>
+
+    <h2>When to graduate</h2>
+    <p>Move on when any one of these turns true: you need queries or indexes, you store more than a few megabytes, you store binary data, or two tabs must transact without clobbering each other. IndexedDB is the usual next step &mdash; async, much larger, indexed, transactional &mdash; and it is a real database with real API surface to show for it.</p>
+    <p>My rule of thumb: localStorage is a database for documents you can hold in your head &mdash; settings, small project lists, drafts. The moment you catch yourself building an index, a migration, or a merge strategy on top of it, you have already outgrown it. Build the index in a store that has one.</p>
+    <p>Until that day, though, one key per document, namespaced keys, try/catch on every read, a cap on every list, and batched saves will carry you further than most people expect. It carried a whole IDE.</p>
+
+    <h2>Try it</h2>
+    <p>I build NitroIDE &mdash; a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-22" style="color: #fbbf24; text-decoration: none;">nitroide.com</a></p>
+
+    <p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #fbbf24; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>How much can localStorage actually hold?</h3>
+    <p>About 5 MB per origin, counted roughly in UTF-16 code units, so non-ASCII text costs more than you think. There is no way to buy more &mdash; when the store is full, writes throw <code>QuotaExceededError</code>.</p>
+    <h3>Why does NitroIDE save whole documents instead of individual files?</h3>
+    <p>One key per JSON document keeps reads to two parses and writes to one stringify. The cost is that every save rewrites the whole document, which is why saves are batched instead of fired per keystroke.</p>
+    <h3>What should never go in localStorage?</h3>
+    <p>Tokens and secrets: any script on your origin can read the whole store, so an XSS anywhere reads everything. NitroIDE's preview iframe runs on an opaque origin precisely so user code cannot reach the parent's store.</p>
+    <h3>When should I switch from localStorage to IndexedDB?</h3>
+    <p>When you need queries or indexes, more than a few megabytes, binary data, or safe multi-tab writes. If you catch yourself building an index, a migration, or a merge strategy on top of localStorage, you have already outgrown it.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="no-server-architecture.html" style="color: #fbbf24; text-decoration: none; font-weight: 500;">No-Server IDE: Your Code Runs Only in Your Browser</a></li>
+      <li><a href="browser-storage-offline-apps-opfs-indexeddb-guide.html" style="color: #fbbf24; text-decoration: none; font-weight: 500;">Your Browser Is a Database. Use It Like One.</a></li>
+      <li><a href="templates-gallery-tour.html" style="color: #fbbf24; text-decoration: none; font-weight: 500;">12 Starters, Zero Blank Pages: A Tour of NitroIDE's Template Gallery</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

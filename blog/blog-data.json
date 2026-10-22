@@ -1,5 +1,20 @@
 [
   {
+    "SLUG": "localstorage-as-database",
+    "META_TITLE": "localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate",
+    "META_DESC": "NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.",
+    "KEYWORDS": "localStorage database patterns, localStorage limits 5MB, IndexedDB vs localStorage, browser storage patterns, NitroIDE localStorage, localStorage QuotaExceededError",
+    "THEME_COLOR": "#fbbf24",
+    "CATEGORY": "ENGINEERING",
+    "DATE": "OCTOBER 2026",
+    "H1_TITLE": "localStorage Is My Database (For Now).",
+    "CONTENT": "<p>NitroIDE has no server and no database, yet your projects survive a browser restart. The whole persistence layer is localStorage: one key per JSON document, namespaced keys, try/catch on every read, history capped at write time, and batched saves — plus the honest limits: ~5 MB, synchronous, strings only.</p>",
+    "CTA_TITLE": "Build With Local Storage.",
+    "CTA_DESC": "Open NitroIDE and prototype your own offline-first app — in the browser, nothing to install.",
+    "CTA_LINK": "../index.html",
+    "CTA_ICON": "ph-database"
+  },
+  {
     "SLUG": "vanilla-js-blog-engine",
     "META_TITLE": "I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed",
     "META_DESC": "37 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.",

@@ -240,6 +240,12 @@
     "c": "Blog"
   },
   {
+    "t": "localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate",
+    "u": "/blog/localstorage-as-database.html",
+    "d": "NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.",
+    "c": "Blog"
+  },
+  {
     "t": "I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed",
     "u": "/blog/vanilla-js-blog-engine.html",
     "d": "37 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.",
