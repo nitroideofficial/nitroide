@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 22, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "localStorage Is My Database (For Now): Patterns, Limits, and When to Graduate",
+  link: "https://x.com/trynitroide/status/2113248199834308756"
+},
+  {
+  date: "Oct 22, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
