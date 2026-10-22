@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 22, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "localStorage Is My Database (For Now): Patterns, Limits, and When to Graduate",
+  link: "https://nitroide.hashnode.dev/localstorage-is-my-database-for-now-the-patterns-that-work-the-limits-that-bite-and-when-to-graduate"
+},
+  {
+  date: "Oct 22, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
