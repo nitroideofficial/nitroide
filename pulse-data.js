@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 22, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "localStorage as a database — the patterns that work, and the 5 MB wall",
+  link: "https://peerlist.io/scroll/post/ACTHGNQ9JN6JMMG7J1A8ODN8GAB8NJ"
+},
+  {
+  date: "Oct 22, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
