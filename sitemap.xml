@@ -435,4 +435,14 @@
     <lastmod>2026-10-20</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nitroide.com/blog/solidity-online-compiler-web3-ide.html</loc>
+    <lastmod>2026-10-21</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>
