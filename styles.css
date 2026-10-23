@@ -2655,8 +2655,8 @@ nitro-header>.container{padding-top:10px;padding-bottom:0}
 /* Footer inline styles (Phase 3: moved from NitroFooter JS template) */
 nitro-footer .footer-watermark+.container{padding-top:0;padding-bottom:0}
 nitro-footer .footer-brand>a{text-decoration:none;display:inline-block;margin-bottom:30px}
-nitro-footer img.logo-dark{height:28px}
-nitro-footer img.logo-light{height:28px;display:none}
+nitro-footer img.logo-dark{height:28px;width:auto}
+nitro-footer img.logo-light{height:28px;width:auto;display:none}
 nitro-footer .footer-hero+p{color:var(--text-muted);font-size:.95rem;line-height:1.6;max-width:300px}
 nitro-footer .f-legal>span:first-of-type{margin:0 10px;opacity:.5}
 nitro-footer .f-legal>span:last-of-type{margin:0 5px;opacity:.5}
