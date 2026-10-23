@@ -2257,6 +2257,13 @@ html{overflow-x:clip}
 #aiSetupModal label{display:block;font-size:.78rem;font-weight:600;margin-bottom:6px;color:var(--text)}
 #aiSetupModal input,#aiSetupModal select{width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:.88rem;margin-bottom:6px;font-family:inherit}
 #aiSetupModal input{font-family:ui-monospace,monospace;font-size:.82rem}
+/* AI Key & Model card is taller than short viewports — cap it and let the
+   card itself scroll (desktop only; mobile already scrolls via the backdrop).
+   Without this, the bottom-aligned backdrop clips the card's top off-screen
+   with no way to reach it. 60px = the backdrop's 30px top + bottom padding. */
+@media (min-width:641px){
+#aiSetupModal .feedback-card{max-height:calc(100vh - 60px);max-height:calc(100dvh - 60px);overflow-y:auto}
+}
 @keyframes aiBlink{0%,60%,100%{opacity:.25}30%{opacity:1}}
 
 /* AI sidebar — narrow right dock (desktop), slide-over (mobile) */
