@@ -2535,6 +2535,10 @@ nitro-header>.container{padding-top:10px;padding-bottom:0}
           .off-badge { display: inline-flex; transition:transform var(--dur-200), opacity var(--dur-200); }
           .off-badge:hover { transform: translateY(-2px); opacity: 0.92; }
           .off-badge img { height: 40px; width: auto; display: block; border-radius: 8px; }
+          /* directree's wordmark is extra-wide (200:33) — the row's 40px height
+             rule blows it up to 242px, dwarfing the pill badges. Pin it to its
+             designed 200px width instead; height follows proportionally. */
+          .off-badge.directree-badge img { height: auto; width: 200px; }
           .off-badge .b-light { display: none; }
           html.light-mode .off-badge .b-light { display: block; }
           html.light-mode .off-badge .b-dark { display: none; }
