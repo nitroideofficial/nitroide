@@ -1,6 +1,38 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 23, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Teach HTML with a link, not an installer",
+  link: "https://peerlist.io/scroll/post/ACTHLKLG68ODGQN791P9G7J9ENQP8K"
+},
+  {
+  date: "Oct 23, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Teaching HTML? Skip the Setup — Your Students Just Need a Link",
+  link: "https://nitroide.hashnode.dev/teaching-html-skip-the-setup-your-students-just-need-a-link"
+},
+  {
+  date: "Oct 23, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Teaching HTML? Skip the Setup — Your Students Just Need a Link",
+  link: "https://x.com/trynitroide/status/2113608836104007834"
+},
+  {
+  date: "Oct 23, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Teaching HTML? Skip the Setup — Your Students Just Need a Link",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7519374930929483777/"
+},
+  {
   date: "Oct 22, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
