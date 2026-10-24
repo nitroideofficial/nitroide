@@ -7,6 +7,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends) | NitroIDE</title>
+      <link>https://nitroide.com/blog/offline-first-github-pages.html</link>
+      <guid>https://nitroide.com/blog/offline-first-github-pages.html</guid>
+      <description>NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path &#8212; plus the honest limits.</description>
+      <pubDate>Sat, 24 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
       <title>localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate | NitroIDE</title>
       <link>https://nitroide.com/blog/localstorage-as-database.html</link>
       <guid>https://nitroide.com/blog/localstorage-as-database.html</guid>

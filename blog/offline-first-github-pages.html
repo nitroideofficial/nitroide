@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)</title>
+  <meta name="title" content="Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)">
+  <meta name="description" content="NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.">
+  <meta name="keywords" content="offline-first GitHub Pages, service worker cache strategies, network-first cache-first, PWA offline static site, service worker versioned cache, NitroIDE offline">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#38bdf8">
+  <link rel="canonical" href="https://nitroide.com/blog/offline-first-github-pages.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/offline-first-github-pages.html">
+  <meta property="og:title" content="Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)">
+  <meta property="og:description" content="NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-24-offline-first-github-pages.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Offline-first on GitHub Pages — what actually works, and where it honestly ends">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-10-24">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/offline-first-github-pages.html">
+  <meta name="twitter:title" content="Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)">
+  <meta name="twitter:description" content="NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-24-offline-first-github-pages.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-24-offline-first-github-pages.webp","headline":"Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)","description":"NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/offline-first-github-pages.html","datePublished":"2026-10-24","dateModified":"2026-10-24"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can a static site on GitHub Pages really work offline?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, after the first visit: a service worker caches the app shell and serves it when the network is gone. The first visit always needs the network — a worker cannot cache what the browser has never downloaded."}}, {"@type": "Question", "name": "Should HTML pages be cache-first or network-first?", "acceptedAnswer": {"@type": "Answer", "text": "Network-first for your own pages and scripts, so users never get silently trapped on an old version. Cache-first suits heavy vendor assets like Monaco, fonts, and icons, which change rarely and are harmless if briefly stale."}}, {"@type": "Question", "name": "What should a service worker never cache?", "acceptedAnswer": {"@type": "Answer", "text": "Anything with side effects or fresh state — API calls, form submissions, auth. A cached POST response is a bug waiting to happen, and a stale GET of current state is worse than a slow one."}}, {"@type": "Question", "name": "How do you test offline mode properly?", "acceptedAnswer": {"@type": "Answer", "text": "Use DevTools offline mode and do a normal reload, not a hard reload — a hard reload bypasses the service worker and tests nothing. Then check the app boots, the editor works, and a previously opened project loads."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #38bdf8; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINEERING • <time datetime="2026-10-24">October 24, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-24">October 24, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)</h1>
+
+    <p>NitroIDE runs on GitHub Pages. That means there is no server: no Node process, no database, no code that runs on request. Pages are static files, and GitHub serves them exactly as they are &mdash; it cannot even set custom response headers, which is why my security headers live at the Cloudflare layer instead.</p>
+
+    <p>And yet the editor works offline. Open it once with a connection, kill your wifi, reload, and you can still write code, run the preview, and keep your projects. That is not magic and it is not a contradiction. It is a service worker doing a small number of jobs, each with a deliberate strategy &mdash; plus an honest list of things it cannot do.</p>
+
+    <p>Here is the recipe, including the parts where &ldquo;offline-first&rdquo; stops being true.</p>
+
+    <h2>What &ldquo;offline&rdquo; actually means here</h2>
+    <p>First, the honest boundary: the first visit needs the network. A service worker cannot cache what the browser has never downloaded. Offline-first is a promise about the second visit onward, not the first. Anyone selling you &ldquo;works offline&rdquo; without that sentence is selling you the demo, not the product.</p>
+    <p>Once the shell is cached, the app itself &mdash; editor, preview, console, saved projects &mdash; needs no network at all. Projects live in localStorage (the subject of my Oct 22 article), the preview runs entirely client-side in a sandboxed iframe, and nothing phones home. The network is an input you may use, never a dependency the app waits on.</p>
+
+    <h2>Rule 1: precache the app shell, and only the app shell</h2>
+    <p>On install, the service worker caches the small set of files the app cannot boot without: the HTML shell, the main script, the stylesheet. Everything else is cached on first use, not up front.</p>
+    <p>Precaching the world feels thorough and is actually harmful: a huge install step that can fail halfway, stale copies of files nobody opened, and a first visit that gets slower in the name of a later visit that may never come. Cache the boot path. Let the rest earn its place.</p>
+
+    <h2>Rule 2: network-first for your own code, cache-first for vendor code</h2>
+    <p>This is the split that matters most, and it is the one I got wrong before I got it right.</p>
+    <p>Your own pages and your main script are network-first: try the network, fall back to the cache when it fails. The reason is the trap I wrote about on Oct 14 &mdash; a cache-first HTML file is how users get stuck on an old version of your app and never know it. Fresh code wins whenever the network exists; the cache is the fallback, not the authority.</p>
+    <p>Heavy vendor assets are the opposite: cache-first. Monaco, fonts, and icon files are large, change rarely, and are usually versioned by filename or path. Serving them from cache makes repeat loads fast, and a stale copy of a font is invisible in a way a stale copy of your app logic is not. Same cache, opposite strategies, decided file by file &mdash; not one global policy.</p>
+
+    <h2>Rule 3: version the cache and delete the old one</h2>
+    <p>Every service worker version gets its own cache name, and on activation the worker deletes every cache that is not the current one. No migration, no merge, no &ldquo;keep the last two just in case.&rdquo;</p>
+    <p>This is what makes Rule 2 safe to live with: when you ship, the old world is removed in one step. Users are either on the new cache or they are about to be. The failure mode to fear is not &ldquo;old cache lingers&rdquo; &mdash; it is two versions of your app sharing state, which is exactly what the clean-slate activation prevents.</p>
+
+    <h2>Rule 4: never cache the API</h2>
+    <p>NitroIDE's contact form posts to a Cloudflare Worker backend, and those <code>/api/*</code> requests bypass the cache entirely &mdash; never stored, never served stale.</p>
+    <p>This rule generalizes to anything with side effects or fresh state: form submissions, auth, anything that is not a static file. A cached POST response is a bug report waiting to happen, and a stale GET of &ldquo;current state&rdquo; is worse than a slow one. If it is not a file you shipped, do not put it in the file cache.</p>
+
+    <h2>Rule 5: cache navigations under the bare path</h2>
+    <p>NitroIDE share links look like <code>?code=...</code> &mdash; every shared snippet is a unique URL serving the same HTML shell. Cache each one separately and your cache grows with every link anyone opens, which is exactly the bloat the v25 audit fixed.</p>
+    <p>So document navigations are cached under the bare path, query string stripped. One entry serves every share link. The code itself rides in the URL, so nothing is lost &mdash; the shell is identical, and the snippet arrives with the navigation. Any app with share links, search params, or tracking params needs this rule or it will cache the same page a thousand times under a thousand names.</p>
+
+    <h2>Where it honestly ends</h2>
+    <p>Offline-first on a static host has real edges, and you should say them out loud:</p>
+    <p><strong>First load needs the network.</strong> No way around it. Your offline story starts at visit two.</p>
+    <p><strong>Anything server-shaped needs the network.</strong> Form submissions, AI calls to a provider, importing a gist &mdash; all of these fail offline, and should fail loudly rather than silently pretending.</p>
+    <p><strong>&ldquo;Clear site data&rdquo; wipes everything.</strong> The cache and localStorage go together. Offline persistence is not a backup; that is why NitroIDE exports to ZIP.</p>
+    <p><strong>HTTPS and a registered scope are required.</strong> Service workers do not run on plain HTTP, and a worker only controls pages under its scope. Both are free on GitHub Pages &mdash; but they are requirements, not defaults you can skip.</p>
+    <p><strong>Storage quotas exist.</strong> Browsers cap cache storage, and eviction under pressure is real. The shell is small by design; that is a feature, not an accident.</p>
+
+    <h2>How to test it (the part people skip)</h2>
+    <p>Put the browser in offline mode in DevTools &mdash; not airplane mode on your whole machine, which also kills the DevTools connection in confusing ways &mdash; and do a normal reload, not a hard reload. A hard reload bypasses the service worker and tests nothing. Then check three things: the app boots, the editor works, and a previously opened project loads. Then go back online and confirm the new version arrives on the next visit &mdash; that is Rule 2 doing its job.</p>
+    <p>That test is the whole pitch in one gesture: no server, no signup, no connection &mdash; and the tool still works. The static host did not make that possible. A small, opinionated cache policy did.</p>
+
+    <h2>Try it</h2>
+    <p>I build NitroIDE &mdash; a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-24" style="color: #38bdf8; text-decoration: none;">nitroide.com</a></p>
+
+    <p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #38bdf8; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Can a static site on GitHub Pages really work offline?</h3>
+    <p>Yes, after the first visit: a service worker caches the app shell and serves it when the network is gone. The first visit always needs the network &mdash; a worker cannot cache what the browser has never downloaded.</p>
+    <h3>Should HTML pages be cache-first or network-first?</h3>
+    <p>Network-first for your own pages and scripts, so users never get silently trapped on an old version. Cache-first suits heavy vendor assets like Monaco, fonts, and icons, which change rarely and are harmless if briefly stale.</p>
+    <h3>What should a service worker never cache?</h3>
+    <p>Anything with side effects or fresh state &mdash; API calls, form submissions, auth. A cached POST response is a bug waiting to happen, and a stale GET of current state is worse than a slow one.</p>
+    <h3>How do you test offline mode properly?</h3>
+    <p>Use DevTools offline mode and do a normal reload, not a hard reload &mdash; a hard reload bypasses the service worker and tests nothing. Then check the app boots, the editor works, and a previously opened project loads.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="localstorage-as-database.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate</a></li>
+      <li><a href="no-server-architecture.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">No-Server IDE: Your Code Runs Only in Your Browser</a></li>
+      <li><a href="offline-first-browser-ide-pwa.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">Offline-First Browser IDE: Building a PWA That Works Without Internet</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

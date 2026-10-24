@@ -1,5 +1,11 @@
 [
   {
+    "t": "Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)",
+    "u": "/blog/offline-first-github-pages.html",
+    "d": "NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.",
+    "c": "Blog"
+  },
+  {
     "t": "NitroIDE",
     "u": "/",
     "d": "Code at the speed of thought. NitroIDE is a free, entirely client-side web IDE featuring the Monaco editor, live preview, and secure offline support.",

@@ -431,6 +431,11 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://nitroide.com/blog/offline-first-github-pages.html</loc>
+    <lastmod>2026-10-24</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://nitroide.com/blog/localstorage-as-database.html</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.7</priority>
