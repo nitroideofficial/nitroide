@@ -1,6 +1,38 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 25, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Send clients a running prototype URL, not a demo video",
+  link: "https://peerlist.io/scroll/post/ACTHKKDEJQLJM7PAK1QEGKM7LAMR96"
+},
+  {
+  date: "Oct 25, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Stop Recording Demo Videos. Send Your Client a Link They Can Click.",
+  link: "https://nitroide.hashnode.dev/stop-recording-demo-videos-send-your-client-a-link-they-can-click"
+},
+  {
+  date: "Oct 25, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Stop Recording Demo Videos. Send Your Client a Link They Can Click.",
+  link: "https://x.com/trynitroide/status/2114604606709772444"
+},
+  {
+  date: "Oct 25, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Stop Recording Demo Videos. Send Your Client a Link They Can Click.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7520370795647377408/"
+},
+  {
   date: "Oct 23, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
