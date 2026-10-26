@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 26, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Every Account Wall You Remove Doubles Try-Outs",
+  link: "https://x.com/trynitroide/status/2114699389860028482"
+},
+  {
   date: "Oct 25, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
