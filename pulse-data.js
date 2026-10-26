@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 26, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "No signup, no walls: every account wall you remove doubles try-outs",
+  link: "https://peerlist.io/scroll/post/ACTHA9EK66QMAQ6PGHKL6MOBJDANR6"
+},
+  {
+  date: "Oct 26, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
