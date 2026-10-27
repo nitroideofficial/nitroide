@@ -18,6 +18,9 @@
   </a>
   <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Made%20with-JavaScript-yellow?style=for-the-badge"/>
+  <a href="https://nologin.tools/badge/nitroide-com" title="Verified by NoLoginTools.org">
+    <img src="https://nologin.tools/badges/flat-purple.svg" alt="NoLogin Verified"/>
+  </a>
 </p>
 
 <img src="assets/demo.gif" width="960" alt="NitroIDE demo — type HTML, CSS and JS, watch the live preview update instantly. No signup."/>
