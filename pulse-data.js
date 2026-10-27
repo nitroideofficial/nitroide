@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 27, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking",
+  link: "https://nitroide.hashnode.dev/seo-checklist-for-indie-hackers-sitemap-schema-and-llms-txt-the-three-files-that-do-the-talking"
+},
+  {
+  date: "Oct 27, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
   color: "#00aa45",
