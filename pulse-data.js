@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 27, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking",
+  link: "https://coderlegion.com/32685/seo-checklist-for-indie-hackers-sitemap-schema-and-llms-txt-the-three-files-that-the-talking"
+},
+  {
+  date: "Oct 27, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
