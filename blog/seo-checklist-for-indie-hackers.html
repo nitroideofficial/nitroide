@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking</title>
+  <meta name="title" content="SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking">
+  <meta name="description" content="Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them after shipping.">
+  <meta name="keywords" content="seo checklist indie hackers, sitemap lastmod git history, JSON-LD schema SoftwareApplication BlogPosting FAQPage, llms.txt AI readable site, indie site SEO">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#4ade80">
+  <link rel="canonical" href="https://nitroide.com/blog/seo-checklist-for-indie-hackers.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/seo-checklist-for-indie-hackers.html">
+  <meta property="og:title" content="SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking">
+  <meta property="og:description" content="Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them after shipping.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-27-seo-checklist-for-indie-hackers.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="SEO checklist for indie hackers — sitemap, schema, llms.txt">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-10-27">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/seo-checklist-for-indie-hackers.html">
+  <meta name="twitter:title" content="SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking">
+  <meta name="twitter:description" content="Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them after shipping.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-27-seo-checklist-for-indie-hackers.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-27-seo-checklist-for-indie-hackers.webp","headline":"SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking","description":"Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them after shipping.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/seo-checklist-for-indie-hackers.html","datePublished":"2026-10-27","dateModified":"2026-10-27"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What three files does an indie site need for SEO?", "acceptedAnswer": {"@type": "Answer", "text": "A sitemap that proves every page exists, JSON-LD schema that says what each page is, and a short llms.txt that maps the site for AI readers. Together they cover findability, understanding, and trust."}}, {"@type": "Question", "name": "How should sitemap lastmod dates be set?", "acceptedAnswer": {"@type": "Answer", "text": "From a real source, such as git history: the last commit that touched each page sets its lastmod. A hand-edited date that never changes teaches crawlers to ignore your dates."}}, {"@type": "Question", "name": "When should FAQPage schema be used?", "acceptedAnswer": {"@type": "Answer", "text": "Only where the page genuinely answers questions visibly. Schema that describes content the page does not show is a mismatch waiting to be flagged."}}, {"@type": "Question", "name": "Why does a stale llms.txt matter?", "acceptedAnswer": {"@type": "Answer", "text": "Unlike a broken sitemap, a stale llms.txt produces no error. It just keeps answering questions about a site that no longer exists, misleading exactly the readers it was written for."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #4ade80; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINEERING • <time datetime="2026-10-27">October 27, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-27">October 27, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking</h1>
+
+    <p>Most indie SEO advice is a list of things to write: more posts, better titles, target this keyword. That advice is not wrong, exactly. It is just the second half of the job, and it assumes the first half already happened — that search engines and AI assistants can actually find, understand, and trust your pages.</p>
+
+    <p>I run NitroIDE, a browser IDE on a static host with no server, no build step, and no plugin system. There is no SEO plugin to install. Everything machine-readable on the site is a file I wrote by hand or a script I maintain. That constraint turned out to be useful: it forced me to learn which three files actually matter, what each one is for, and how each one silently breaks.</p>
+
+    <p>Here is the checklist, in the order I would do it again.</p>
+
+    <h2>1. The sitemap: prove every page exists</h2>
+    <p>A sitemap is a list of your URLs, with a last-modified date for each, handed to search engines in a format they can crawl without guessing. It does not make a bad page rank. It makes a good page findable — especially on a site where new pages arrive one at a time and internal linking is thin.</p>
+    <p>The checklist for a sitemap:</p>
+    <ul>
+      <li><strong>Every page goes in, no exceptions.</strong> This is a rule I set for myself after redirect stubs got left out once: if a page exists and you want it found, it is in the sitemap. A sitemap that quietly omits pages is worse than no sitemap, because you stop checking.</li>
+      <li><strong>Lastmod must be real.</strong> A lastmod date that never changes teaches crawlers to ignore your dates. Mine come from git history: the last commit that touched each page sets its lastmod. That is automated, so it cannot drift from reality the way a hand-edited date can.</li>
+      <li><strong>Submit it, then check the report.</strong> A sitemap sitting in your repo root that nobody submitted is a wish, not a signal. Submit it in Search Console and read the coverage report: pages discovered, pages indexed, and — the useful part — the pages excluded and why.</li>
+      <li><strong>Regenerate it when you publish.</strong> My publishing flow refreshes the sitemap with every new blog post. A sitemap that is stale on publish day is a sitemap that tells crawlers the new page does not exist yet.</li>
+    </ul>
+    <p>The mistake that silently voids a sitemap is staleness, not syntax. Syntax errors show up loudly in the report. A sitemap that is valid but three months old just quietly stops describing your site.</p>
+
+    <h2>2. Schema: tell machines what the page IS</h2>
+    <p>If the sitemap says “these pages exist,” schema says “and here is what each one is.” JSON-LD is the format: a block of structured data in the page that names the thing — a software product, a blog post, a FAQ — in a vocabulary search engines already understand.</p>
+    <p>For an indie site, three types cover almost everything:</p>
+    <ul>
+      <li><strong>SoftwareApplication</strong> for the product itself: name, description, operating system, offers (free, in my case), and version. This is the one that lets a search result describe your tool as a tool, not as a generic webpage.</li>
+      <li><strong>BlogPosting</strong> for articles: headline, author, date published, and date modified. The date-modified field matters more than people think — it is how a corrected, updated article signals that it is current rather than old.</li>
+      <li><strong>FAQPage</strong> for pages that genuinely answer questions: a list of question-and-answer pairs, each complete in itself. Only use it where the page actually contains those answers visibly. Schema that describes content the page does not show is the fastest way to lose trust in all your schema.</li>
+    </ul>
+    <p>Three rules for schema that I wish someone had given me earlier:</p>
+    <ul>
+      <li><strong>Validate before shipping, not after indexing.</strong> A structured-data testing tool will catch a missing comma or a wrong type in seconds. Waiting for Search Console to report it costs you a crawl cycle.</li>
+      <li><strong>Match the visible page.</strong> Every fact in the schema should be findable by a human reading the page. If the schema claims a price, a rating, or a feature the page never mentions, that is not optimization — it is a mismatch waiting to be flagged.</li>
+      <li><strong>Keep it boring.</strong> Schema is not the place for creativity. Use the standard types, the standard property names, and nothing clever. The whole point is that a machine on the other end already knows what these words mean.</li>
+    </ul>
+    <p>The mistake that silently voids schema is the same as the sitemap's, in a different costume: schema that describes last month's page. When you change a price, a version, or a headline, the schema changes in the same commit, or it becomes a lie told in a format machines trust.</p>
+
+    <h2>3. llms.txt: the file for readers that are not browsers</h2>
+    <p>Sitemaps and schema are for search engines. llms.txt is for a newer reader: AI assistants that want to understand your site without crawling every page and reconstructing the picture from fragments. It is a short, plain-text file at your site root that says what the site is, what its important pages are, and where to find them.</p>
+    <p>I added one recently, and it taught me something the other two files did not: a summary file is a second source of truth. A reader on Peerlist put it better than I did — llms.txt is like a contract summary versus the document itself. Useful, but only while it matches the document. The moment the site changes and the summary does not, the summary is not just stale, it is actively misleading the exact readers you wrote it for.</p>
+    <p>So the checklist for llms.txt is short and strict:</p>
+    <ul>
+      <li><strong>Keep it short.</strong> It is a map, not a mirror. Link to the real pages; do not paste their content in.</li>
+      <li><strong>Update it with the site.</strong> When a new section ships or an old page goes away, the file changes in the same round of work. Treat it like the sitemap: maintained by the publishing flow, not by memory.</li>
+      <li><strong>Say what the site is in one paragraph.</strong> The first lines are the whole pitch to a reader that will never see your homepage design. If those lines are vague, the rest of the file does not rescue them.</li>
+    </ul>
+    <p>The mistake that silently voids llms.txt is neglect. Unlike a broken sitemap, which Search Console reports, a stale llms.txt produces no error. It just keeps answering questions about a site that no longer exists.</p>
+
+    <h2>The whole checklist, on one screen</h2>
+    <ol>
+      <li>Sitemap: every page in, lastmod from a real source, submitted, refreshed on publish.</li>
+      <li>Schema: SoftwareApplication for the product, BlogPosting for articles, FAQPage only where the page really answers questions — validated, matching the visible page, using standard types.</li>
+      <li>llms.txt: short, linked (not pasted), updated with the site, with a one-paragraph description that actually says what the site is.</li>
+      <li>After shipping, verify all three: Search Console coverage for the sitemap, a structured-data test for the schema, and a plain read of llms.txt to check it still describes the site you have.</li>
+    </ol>
+    <p>None of this replaces writing something worth finding. But it is the difference between a good page that search engines and AI assistants can describe accurately, and a good page they have to guess at. Indie hackers do not have a marketing team to do the guessing for them. These three files are the team.</p>
+
+    <h2>Try it</h2>
+    <p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-27" style="color: #4ade80; text-decoration: none;">nitroide.com</a></p>
+
+    <p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #4ade80; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>What three files does an indie site need for SEO?</h3>
+    <p>A sitemap that proves every page exists, JSON-LD schema that says what each page is, and a short llms.txt that maps the site for AI readers. Together they cover findability, understanding, and trust.</p>
+    <h3>How should sitemap lastmod dates be set?</h3>
+    <p>From a real source, such as git history: the last commit that touched each page sets its lastmod. A hand-edited date that never changes teaches crawlers to ignore your dates.</p>
+    <h3>When should FAQPage schema be used?</h3>
+    <p>Only where the page genuinely answers questions visibly. Schema that describes content the page does not show is a mismatch waiting to be flagged.</p>
+    <h3>Why does a stale llms.txt matter?</h3>
+    <p>Unlike a broken sitemap, a stale llms.txt produces no error. It just keeps answering questions about a site that no longer exists, misleading exactly the readers it was written for.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="localstorage-as-database.html" style="color: #4ade80; text-decoration: none; font-weight: 500;">localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate</a></li>
+      <li><a href="vanilla-js-blog-engine.html" style="color: #4ade80; text-decoration: none; font-weight: 500;">I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed</a></li>
+      <li><a href="cloudflare-security-headers-recipe.html" style="color: #4ade80; text-decoration: none; font-weight: 500;">Cloudflare Security Headers, the Recipe I Actually Use</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

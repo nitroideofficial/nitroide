@@ -1,5 +1,20 @@
 [
   {
+    "SLUG": "seo-checklist-for-indie-hackers",
+    "META_TITLE": "SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking",
+    "META_DESC": "Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them after shipping.",
+    "KEYWORDS": "seo checklist indie hackers, sitemap lastmod git history, JSON-LD schema SoftwareApplication BlogPosting FAQPage, llms.txt AI readable site, indie site SEO",
+    "THEME_COLOR": "#4ade80",
+    "CATEGORY": "ENGINEERING",
+    "DATE": "OCTOBER 2026",
+    "H1_TITLE": "SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking.",
+    "CONTENT": "<p>Most indie SEO advice skips the first half of the job: can machines find, understand, and trust your pages? The checklist is three files — a sitemap with every page in and real lastmod dates, JSON-LD schema for the product and articles, and a short llms.txt kept in sync with the site — plus the silent mistakes that void each one.</p>",
+    "CTA_TITLE": "Check Your Three Files.",
+    "CTA_DESC": "Open NitroIDE and check your sitemap, schema, and llms.txt — in the browser, nothing to install.",
+    "CTA_LINK": "../index.html",
+    "CTA_ICON": "ph-magnifying-glass"
+  },
+  {
     "SLUG": "offline-first-github-pages",
     "META_TITLE": "Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)",
     "META_DESC": "NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.",
