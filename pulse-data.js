@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 27, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "SEO checklist for indie hackers — sitemap, schema, llms.txt",
+  link: "https://peerlist.io/scroll/post/ACTHQ7M6GO6EEPJNEFO78JQAJBO8AL"
+},
+  {
+  date: "Oct 27, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
