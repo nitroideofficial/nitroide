@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 27, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking",
+  link: "https://x.com/trynitroide/status/2115063487244468297"
+},
+  {
   date: "Oct 26, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
