@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 27, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking",
+  link: "https://www.linkedin.com/feed/update/urn:li:share:7520889330744217601/"
+},
+  {
+  date: "Oct 27, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
   color: "#7c3aed",
