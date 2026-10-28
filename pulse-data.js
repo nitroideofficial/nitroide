@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 28, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Indie Hacking on a Day-Job Schedule: The 2-Hour Evening System",
+  link: "https://x.com/trynitroide/status/2115420898731704653"
+},
+  {
   date: "Oct 27, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
