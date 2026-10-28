@@ -2549,14 +2549,28 @@ nitro-header>.container{padding-top:10px;padding-bottom:0}
           }
 
           /* Mix 2 (homepage only): 3-col grid, hairline dividers between
-             rows, uniform 40px badge height. Scoped to .mix2 so the JS
-             footer on other pages keeps the old wrapping row untouched. */
-          .f-listed.mix2 { flex-direction: column; gap: 12px; }
-          .f-listed.mix2 .f-listed-badges { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; width: 100%; max-width: 1080px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-          .f-listed.mix2 .off-badge { display: flex; align-items: center; justify-content: center; padding: 12px 16px; min-height: 64px; }
+             rows. Scoped to .mix2 so the JS footer on other pages keeps
+             the old wrapping row untouched. Badge artwork is never altered:
+             heights below only reproduce each badge's own proportions, and
+             TinyShelf is exempt — it renders at its supplied 216x64 size. */
+          .f-listed.mix2 { flex-direction: column; gap: 16px; padding-top: 12px; }
+          .f-listed.mix2 .f-listed-label { font-size: 0.7rem; letter-spacing: 0.2em; }
+          .f-listed.mix2 .f-listed-badges { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; width: 100%; max-width: 1080px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); align-items: stretch; }
+          .f-listed.mix2 .off-badge { display: flex; align-items: center; justify-content: center; padding: 12px 16px; min-height: 64px; transition: transform var(--dur-200); }
+          .f-listed.mix2 .off-badge:hover { transform: translateY(-2px); opacity: 1; }
+          .f-listed.mix2 .off-badge:focus-visible { outline: 2px solid var(--brand-alt); outline-offset: 4px; }
           .f-listed.mix2 .off-badge:nth-child(n+4) { border-top: 1px solid var(--border); }
-          .f-listed.mix2 .off-badge img { height: 40px; width: auto; max-width: 260px; object-fit: contain; }
+          .f-listed.mix2 .off-badge img { height: 40px; width: auto; max-width: 100%; object-fit: contain; }
           .f-listed.mix2 .off-badge.directree-badge img { height: 40px; width: auto; }
+          /* TinyShelf exemption (option b): no height rule, so the badge renders
+             at its supplied 216x64 attributes. No HTML, link, or asset change —
+             the href attribute selector scopes this without touching markup.
+             If the TinyShelf href ever changes, update this selector too. */
+          .f-listed.mix2 .off-badge[href="https://www.tinyshelf.co/?ref=nitroide.com"] img { height: auto; width: auto; max-width: 100%; }
+          @media (prefers-reduced-motion: reduce) {
+            .f-listed.mix2 .off-badge { transition: none; }
+            .f-listed.mix2 .off-badge:hover { transform: none; }
+          }
           @media (max-width: 640px) {
             .f-listed.mix2 .f-listed-badges { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; max-width: 100%; }
             .f-listed.mix2 .off-badge { padding: 8px; min-height: 56px; }
