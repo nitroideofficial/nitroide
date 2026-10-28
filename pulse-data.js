@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 28, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The 2-hour evening: indie hacking on a day-job schedule",
+  link: "https://peerlist.io/scroll/post/ACTHKKDEAJOOO8PPNFOEAENAMLP79Q"
+},
+  {
+  date: "Oct 28, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
