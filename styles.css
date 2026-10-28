@@ -2548,33 +2548,158 @@ nitro-header>.container{padding-top:10px;padding-bottom:0}
             .off-badge img { height: 36px; max-width: 100%; }
           }
 
-          /* Mix 2 (homepage only): 3-col grid, hairline dividers between
-             rows. Scoped to .mix2 so the JS footer on other pages keeps
-             the old wrapping row untouched. Badge artwork is never altered:
-             heights below only reproduce each badge's own proportions, and
-             TinyShelf is exempt — it renders at its supplied 216x64 size. */
-          .f-listed.mix2 { flex-direction: column; gap: 16px; padding-top: 12px; }
-          .f-listed.mix2 .f-listed-label { font-size: 0.7rem; letter-spacing: 0.2em; }
-          .f-listed.mix2 .f-listed-badges { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; width: 100%; max-width: 1080px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); align-items: stretch; }
-          .f-listed.mix2 .off-badge { display: flex; align-items: center; justify-content: center; padding: 12px 16px; min-height: 64px; transition: transform var(--dur-200); }
-          .f-listed.mix2 .off-badge:hover { transform: translateY(-2px); opacity: 1; }
-          .f-listed.mix2 .off-badge:focus-visible { outline: 2px solid var(--brand-alt); outline-offset: 4px; }
+          /* Homepage Listed On — open field (homepage only).
+             No panel, no tiles: the nine listings sit directly on the
+             page's atmosphere — soft cyan/violet glows, hairline rules,
+             and strong editorial type do the work. Scoped to .mix2 so the
+             JS footer on other pages keeps the old wrapping row untouched.
+             ALL effects live on containers only (section glows, hairlines,
+             cell hover glows). No effect touches a badge image — no filter,
+             recolour, crop, mask, fade, or distortion. TinyShelf is exempt
+             — it renders at its supplied 216x64 size. */
+          .f-listed.mix2 {
+            position: relative;
+            isolation: isolate;
+            width: 100%;
+            max-width: 1080px;
+            margin-inline: auto;
+            padding-block: clamp(56px, 7vw, 88px);
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-areas: "head meta" "badges badges";
+            row-gap: clamp(36px, 4vw, 52px);
+            column-gap: 32px;
+            align-items: start;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+          }
+          /* Atmospheric lighting: two large soft glows behind everything.
+             z-index: -1 inside this isolated stacking context keeps them
+             behind the badges — they can never wash over artwork. */
+          .f-listed.mix2::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+              radial-gradient(ellipse 45% 55% at 8% 0%, rgba(0, 229, 255, 0.08), transparent 70%),
+              radial-gradient(ellipse 45% 55% at 96% 100%, rgba(187, 154, 247, 0.12), transparent 70%);
+          }
+          .f-listed.mix2 .f-listed-head { grid-area: head; text-align: left; max-width: 640px; }
+          .f-listed.mix2 .f-listed-eyebrow { display: block; margin-bottom: 16px; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; color: var(--brand); }
+          .f-listed.mix2 .f-listed-title { margin: 0 0 12px; font-size: clamp(1.8rem, 3.4vw, 2.4rem); font-weight: 750; line-height: 1.08; letter-spacing: -0.03em; color: var(--text); }
+          .f-listed.mix2 .f-listed-sub { max-width: 560px; margin: 0; font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); }
+          .f-listed.mix2 .f-listed-meta { grid-area: meta; align-self: start; text-align: right; }
+          .f-listed.mix2 .f-listed-count { display: block; font-size: 2.2rem; font-weight: 800; line-height: 1; letter-spacing: -0.03em; color: var(--text); }
+          .f-listed.mix2 .f-listed-meta-label { display: block; margin-top: 6px; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 0.7rem; letter-spacing: 0.22em; color: var(--text-muted); }
+          .f-listed.mix2 .f-listed-badges { grid-area: badges; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; width: 100%; align-items: stretch; justify-items: stretch; justify-content: stretch; }
+          .f-listed.mix2 .off-badge {
+            position: relative;
+            isolation: isolate;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+            padding: 28px 16px;
+            transition: transform var(--dur-180) var(--ease-out);
+          }
+          /* Hover glow lives behind the badge, never on it: a soft brand
+             halo that fades in on the cell itself. */
+          .f-listed.mix2 .off-badge::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0;
+            background: radial-gradient(ellipse 55% 70% at 50% 50%, rgba(0, 229, 255, 0.10), transparent 70%);
+            transition: opacity var(--dur-250) var(--ease-out);
+          }
           .f-listed.mix2 .off-badge:nth-child(n+4) { border-top: 1px solid var(--border); }
-          .f-listed.mix2 .off-badge img { height: 40px; width: auto; max-width: 100%; object-fit: contain; }
+          /* Hover, split deliberately. opacity: 1 stays unwrapped so it
+             beats the global .off-badge:hover fade (opacity 0.92) on every
+             device — artwork must never fade. The lift and the glow live
+             inside the fine-pointer query, so a tap on touch never leaves
+             a stuck hover lift behind; touch feedback comes from :active
+             instead. :active sits after the hover rules so pressing wins
+             over hovering while both apply. */
+          .f-listed.mix2 .off-badge:hover { opacity: 1; }
+          @media (hover: hover) and (pointer: fine) {
+            .f-listed.mix2 .off-badge:hover { transform: translateY(-2px); }
+            .f-listed.mix2 .off-badge:hover::after { opacity: 1; }
+          }
+          .f-listed.mix2 .off-badge:active { transform: translateY(0); }
+          .f-listed.mix2 .off-badge:active::after { opacity: 1; }
+          .f-listed.mix2 .off-badge:focus-visible { outline: 2px solid var(--brand-alt); outline-offset: 3px; }
+          /* No display property here on purpose: display: block would
+             outrank the global .b-light/.b-dark swap rules and show both
+             badge variants at once. Visible images are already block via
+             the global .off-badge img rule. */
+          .f-listed.mix2 .off-badge img { width: auto; height: 40px; max-width: 100%; object-fit: contain; border-radius: 0; }
           .f-listed.mix2 .off-badge.directree-badge img { height: 40px; width: auto; }
           /* TinyShelf exemption (option b): no height rule, so the badge renders
              at its supplied 216x64 attributes. No HTML, link, or asset change —
              the href attribute selector scopes this without touching markup.
              If the TinyShelf href ever changes, update this selector too. */
           .f-listed.mix2 .off-badge[href="https://www.tinyshelf.co/?ref=nitroide.com"] img { height: auto; width: auto; max-width: 100%; }
+          /* Light theme: the same open field on light ground — glows
+             softened, hairlines from the light border token, eyebrow in
+             readable blue instead of cyan. */
+          html.light-mode .f-listed.mix2::before {
+            background:
+              radial-gradient(ellipse 45% 55% at 8% 0%, rgba(75, 137, 245, 0.07), transparent 70%),
+              radial-gradient(ellipse 45% 55% at 96% 100%, rgba(187, 154, 247, 0.12), transparent 70%);
+          }
+          html.light-mode .f-listed.mix2 .f-listed-eyebrow { color: #1d4ed8; }
+          html.light-mode .f-listed.mix2 .off-badge:focus-visible { outline-color: #1d4ed8; }
+          html.light-mode .f-listed.mix2 .off-badge::after { background: radial-gradient(ellipse 55% 70% at 50% 50%, rgba(75, 137, 245, 0.12), transparent 70%); }
+          /* Scroll entrance (progressive enhancement): as the header and
+             each badge row enter the viewport, they fade in and rise
+             slightly. Each badge animates on its own view timeline, so
+             rows stagger naturally as you scroll. The @supports guard
+             means browsers without view timelines simply show the static
+             section — no harm. Entrance uses the independent `translate`
+             property so it can never override the hover `transform` lift,
+             and the no-preference guard keeps it off for reduced motion. */
+          @media (prefers-reduced-motion: no-preference) {
+            @supports (animation-timeline: view()) {
+              .f-listed.mix2 .f-listed-head,
+              .f-listed.mix2 .f-listed-meta,
+              .f-listed.mix2 .off-badge {
+                animation: listed-in 0.6s var(--ease-out) both;
+                animation-timeline: view();
+                animation-range: entry 0% entry 100%;
+              }
+            }
+          }
+          @keyframes listed-in {
+            from { opacity: 0; translate: 0 12px; }
+            to { opacity: 1; translate: 0 0; }
+          }
           @media (prefers-reduced-motion: reduce) {
             .f-listed.mix2 .off-badge { transition: none; }
+            .f-listed.mix2 .off-badge::after { transition: none; }
             .f-listed.mix2 .off-badge:hover { transform: none; }
           }
           @media (max-width: 640px) {
-            .f-listed.mix2 .f-listed-badges { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; max-width: 100%; }
-            .f-listed.mix2 .off-badge { padding: 8px; min-height: 56px; }
-            .f-listed.mix2 .off-badge img { height: auto; max-height: 32px; max-width: 100%; }
+            .f-listed.mix2 { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "meta" "badges"; row-gap: 24px; padding-block: 48px; }
+            .f-listed.mix2 .f-listed-title { font-size: 1.6rem; }
+            .f-listed.mix2 .f-listed-sub { font-size: 0.9rem; }
+            .f-listed.mix2 .f-listed-meta { text-align: left; }
+            .f-listed.mix2 .f-listed-count { display: inline; font-size: 1rem; }
+            .f-listed.mix2 .f-listed-meta-label { display: inline; margin-top: 0; margin-left: 8px; }
+            /* Mobile keeps the same 3x3 grid as desktop — no vertical
+               index list. Cells get tighter padding so badges keep as
+               much width as possible on a narrow screen; the desktop
+               hairline pattern (border on rows 2-3 only) carries over
+               unchanged. The 40px image height is restated here so no
+               global mobile rule can reopen the intrinsic-size blowup
+               (several badge files are higher-resolution than their
+               display size). */
+            .f-listed.mix2 .f-listed-badges { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .f-listed.mix2 .off-badge { padding: 20px 8px; }
+            .f-listed.mix2 .off-badge img { height: 40px; max-width: 100%; }
           }
 
           .f-legal {
