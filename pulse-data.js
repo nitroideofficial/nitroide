@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 28, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Indie Hacking on a Day-Job Schedule: The 2-Hour Evening System",
+  link: "https://nitroide.hashnode.dev/indie-hacking-on-a-day-job-schedule-the-2-hour-evening-system"
+},
+  {
+  date: "Oct 28, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
