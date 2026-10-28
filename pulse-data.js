@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 28, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Indie Hacking on a Day-Job Schedule: The 2-Hour Evening System",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7521187894984753152/"
+},
+  {
+  date: "Oct 28, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
