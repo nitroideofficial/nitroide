@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 29, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin",
+  link: "https://coderlegion.com/32967/json-ld-recipes-blogposting-faqpage-and-softwareapplication-without-a-plugin"
+},
+  {
+  date: "Oct 29, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
   color: "#00aa45",
