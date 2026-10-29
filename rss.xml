@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
-<!-- VALIDATION GATE: before committing this file, run: python3 -c "import xml.dom.minidom; xml.dom.minidom.parse('rss.xml')" — it must exit 0. A missing <item> tag broke this feed 3 times. -->
+<!-- VALIDATION GATE: before committing this file, run: python3 -c "import xml.dom.minidom; xml.dom.minidom.parse('rss.xml')" — it must exit 0. A missing <item>
+      <title>JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin | NitroIDE</title>
+      <link>https://nitroide.com/blog/json-ld-recipes-no-plugin.html</link>
+      <guid>https://nitroide.com/blog/json-ld-recipes-no-plugin.html</guid>
+      <description>Three copy-paste JSON-LD recipes for a static site &#8212; SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions &#8212; plus the mistakes that void each one and a one-minute validation routine.</description>
+      <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+
+ tag broke this feed 3 times. -->
 <rss version="2.0">
   <channel>
     <title>NitroIDE Blog</title>

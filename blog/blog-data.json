@@ -1,5 +1,20 @@
 [
   {
+    "SLUG": "json-ld-recipes-no-plugin",
+    "META_TITLE": "JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin",
+    "META_DESC": "Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.",
+    "KEYWORDS": "JSON-LD recipes, BlogPosting schema, FAQPage schema, SoftwareApplication schema, structured data static site, SEO without plugin",
+    "THEME_COLOR": "#38bdf8",
+    "CATEGORY": "ENGINEERING",
+    "DATE": "OCTOBER 2026",
+    "H1_TITLE": "JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin.",
+    "CONTENT": "<p>Three hand-written JSON-LD blocks cover a static site: SoftwareApplication for the product page, BlogPosting for every article, and FAQPage only where the page visibly answers questions — the fields that matter, the mistakes that void each one, and a one-minute validation routine that needs no plugin.</p>",
+    "CTA_TITLE": "Write Schema By Hand.",
+    "CTA_DESC": "Open NitroIDE and draft your own JSON-LD blocks in the browser — no plugin, no build step.",
+    "CTA_LINK": "../tools/codebox.html",
+    "CTA_ICON": "ph-code"
+  },
+  {
     "SLUG": "seo-checklist-for-indie-hackers",
     "META_TITLE": "SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking",
     "META_DESC": "Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them after shipping.",

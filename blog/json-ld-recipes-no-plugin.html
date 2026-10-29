@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin</title>
+  <meta name="title" content="JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin">
+  <meta name="description" content="Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.">
+  <meta name="keywords" content="JSON-LD recipes, BlogPosting schema, FAQPage schema, SoftwareApplication schema, structured data static site, SEO without plugin">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#38bdf8">
+  <link rel="canonical" href="https://nitroide.com/blog/json-ld-recipes-no-plugin.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/json-ld-recipes-no-plugin.html">
+  <meta property="og:title" content="JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin">
+  <meta property="og:description" content="Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-29-json-ld-recipes-no-plugin.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="JSON-LD recipes — BlogPosting, FAQPage, SoftwareApplication, no plugin required">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-10-29">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/json-ld-recipes-no-plugin.html">
+  <meta name="twitter:title" content="JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin">
+  <meta name="twitter:description" content="Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-29-json-ld-recipes-no-plugin.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-29-json-ld-recipes-no-plugin.webp","headline":"JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin","description":"Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/json-ld-recipes-no-plugin.html","datePublished":"2026-10-29","dateModified":"2026-10-29"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do I need a plugin to add JSON-LD schema?", "acceptedAnswer": {"@type": "Answer", "text": "No. JSON-LD is just JSON inside a script tag on the page, so on a static site you write the block by hand in the same file as the page it describes — no plugin, build step, or server required."}}, {"@type": "Question", "name": "Which JSON-LD types does a static indie site need?", "acceptedAnswer": {"@type": "Answer", "text": "Three cover almost everything: SoftwareApplication for the product page, BlogPosting for every article, and FAQPage only where the page visibly answers questions."}}, {"@type": "Question", "name": "What voids a BlogPosting block?", "acceptedAnswer": {"@type": "Answer", "text": "Copy-paste without editing. It is the easiest block to clone across articles, which makes it the easiest to ship with the previous article's headline, description, or URL still in it. Check that mainEntityOfPage equals the URL of the page you are looking at."}}, {"@type": "Question", "name": "When should FAQPage schema be used?", "acceptedAnswer": {"@type": "Answer", "text": "Only where the page visibly contains those questions and answers, mirroring them exactly. If the visible FAQ changes and the schema does not, the page and its schema disagree in a format designed to be machine-checked."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #38bdf8; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINEERING • <time datetime="2026-10-29">October 29, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-29">October 29, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin</h1>
+
+    <p>Two weeks ago I wrote the overview: a static indie site needs three machine-readable files — sitemap, schema, and llms.txt. That post told you what each one is for. This one is the part I left out on purpose: the actual code.</p>
+
+    <p>I run NitroIDE, a browser IDE on a static host with no server, no build step, and no plugin system. There is no SEO plugin to install, so every block of structured data on the site is a <code>&lt;script type="application/ld+json"&gt;</code> block I wrote by hand. Three recipes cover almost everything an indie site needs. Copy them, change the values, validate before shipping — and, crucially, keep them honest, because schema that describes content the page does not show is a mismatch waiting to be flagged.</p>
+
+    <h2>Recipe 1: SoftwareApplication — the product page</h2>
+    <p>This one lives on the homepage and answers a single question: what is this thing? For NitroIDE it names the product, its category, that it runs in a web browser, that it is free, and the features a human would actually recognise from the page. Here is the shape, trimmed to the fields that matter:</p>
+    <pre style="overflow-x: auto; padding: 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);"><code>{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "NitroIDE",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web Browser",
+  "url": "https://nitroide.com/",
+  "isAccessibleForFree": true,
+  "description": "NitroIDE is a zero-latency, client-side browser IDE featuring the Monaco editor, live preview, offline support, and a built-in AI pair-programmer for HTML, CSS, and JavaScript.",
+  "featureList": [
+    "Client-side HTML, CSS, and JavaScript editing",
+    "Instant live preview",
+    "ZIP export",
+    "Offline-ready browser workspace"
+  ],
+  "author": { "@type": "Person", "name": "Yash Panchal" }
+}</code></pre>
+    <p>Three rules I follow for this one. First, <code>operatingSystem</code> for a web tool is "Web Browser" — not Windows, not macOS, not a list of platforms the tool never shipped on. Second, every item in <code>featureList</code> must be a feature the homepage actually shows; the moment the list becomes aspirational, the schema is lying in a format machines trust. Third, one block, one product. If you are tempted to add a second SoftwareApplication block for a different page, you probably need a different type for that page, not a duplicate.</p>
+    <p>The mistake that voids this recipe is version drift. NitroIDE's real block carries a <code>softwareVersion</code> field, and it changes in the same commit as the version it describes. A SoftwareApplication block that still claims last month's version is not a small inaccuracy — it is the product's identity, wrong, in the one place a machine reads it.</p>
+
+    <h2>Recipe 2: BlogPosting — every article</h2>
+    <p>Every blog article on NitroIDE carries a compact BlogPosting block in its <code>&lt;head&gt;</code>. It is deliberately small: headline, description, author, publisher, the page URL, and two dates. Small is a feature. A BlogPosting block with twenty fields, half of them guessed, is worse than this one, because every guessed field is a future mismatch.</p>
+    <pre style="overflow-x: auto; padding: 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);"><code>{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How NitroIDE Renders Code Instantly: srcdoc + postMessage",
+  "description": "NitroIDE's preview renders with near-zero latency: one sandboxed iframe, srcdoc rendering, an anti-flicker swap, and postMessage updates. Honest tradeoffs.",
+  "author": { "@type": "Person", "name": "Yash Panchal", "url": "https://nitroide.com/about.html#author" },
+  "publisher": { "@type": "Organization", "name": "NitroIDE" },
+  "mainEntityOfPage": "https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html",
+  "datePublished": "2026-09-26",
+  "dateModified": "2026-09-26"
+}</code></pre>
+    <p>Two fields do more work than they look like they should. <code>mainEntityOfPage</code> is the canonical URL of the article itself — it is what ties this block to this page and stops a copied block from describing the wrong URL. And <code>dateModified</code> is the field that makes updates visible: when I correct or extend an article, <code>dateModified</code> moves and <code>datePublished</code> does not. An article that was fixed last week but whose schema still says it is untouched is telling machines it is older than it is.</p>
+    <p>The mistake that voids this recipe is copy-paste without editing. It is the easiest block to clone across articles, which makes it the easiest to ship with the previous article's headline, description, or URL still in it. Every new article gets a fresh block, and the check is one line: does <code>mainEntityOfPage</code> equal the URL of the page I am looking at?</p>
+
+    <h2>Recipe 3: FAQPage — only where the page really answers questions</h2>
+    <p>FAQPage is the most abused of the three, so it gets the strictest rule: only use it where the page visibly contains those questions and answers. NitroIDE articles end with a real FAQ section, and the schema mirrors it exactly — same questions, same answers, in the same words. Here is one pair from the preview-architecture article:</p>
+    <pre style="overflow-x: auto; padding: 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);"><code>{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does the preview update so fast?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "One sandboxed srcdoc iframe, incremental postMessage updates with CSS patched in place, and an anti-flicker double-buffer swap — no bundler, no server round-trip."
+      }
+    }
+  ]
+}</code></pre>
+    <p>Note what is not in the answer: no marketing, no link, no call to action. An accepted answer is an answer, and the moment it becomes a pitch, the whole block reads as markup written for the search result rather than for the reader. That is exactly the pattern that gets FAQ rich results withdrawn.</p>
+    <p>The mistake that voids this recipe is the mirror breaking. The FAQ section on the page changes — a question gets reworded, an answer gets corrected — and the schema does not. Now the page and its schema disagree, in public, in a format designed to be machine-checked. On a static site with no plugin, the fix is procedural, not technical: the visible FAQ and its JSON-LD block change in the same edit, every time, no exceptions. I keep them in the same file, in the same commit, so there is no separate step to forget.</p>
+
+    <h2>How to validate without a plugin</h2>
+    <p>No plugin means no dashboard warning you. So the validation step is manual and non-negotiable, and it takes about a minute per page:</p>
+    <ol>
+      <li>Paste the page URL into a structured-data testing tool and confirm all three types parse — no syntax errors, no wrong types, no missing required fields.</li>
+      <li>Read the parsed output against the visible page, field by field. Headline matches the headline. Description matches the page's description. FAQ answers match the visible FAQ word for word.</li>
+      <li>After any edit to a page, re-check that page's blocks. Schema is not a one-time setup; it is a second copy of facts that change, and a second copy that is not re-checked becomes a stale copy.</li>
+    </ol>
+    <p>One more practical note for static sites: JSON-LD is just JSON inside a script tag, so it breaks exactly like JSON breaks — a trailing comma, an unescaped quote in a description, a smart quote pasted from a word processor. If the testing tool reports nothing at all, the block probably failed to parse as JSON before it failed as schema. Check the JSON first.</p>
+
+    <h2>The whole recipe card</h2>
+    <ul>
+      <li><strong>SoftwareApplication</strong> on the product page: name, category, operating system, free flag, description, and a feature list the page actually shows. Update the version in the same commit as the release.</li>
+      <li><strong>BlogPosting</strong> on every article: headline, description, author, publisher, <code>mainEntityOfPage</code> set to the article's own URL, and <code>dateModified</code> that moves when the article does. Never clone a block without editing it.</li>
+      <li><strong>FAQPage</strong> only where the page visibly answers questions: mirror the visible FAQ exactly, keep answers free of pitches, and change the schema in the same edit as the FAQ itself.</li>
+      <li><strong>Validate every page</strong> with a structured-data test before shipping, and re-check after edits. JSON errors first, schema errors second.</li>
+    </ul>
+    <p>None of this needs a plugin, a build step, or a server. It needs three small blocks, kept honest, in the same files as the pages they describe. That is the whole trick — and on a static site, it is the only trick that stays true.</p>
+
+    <h2>Try it</h2>
+    <p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-29" style="color: #38bdf8; text-decoration: none;">nitroide.com</a></p>
+
+    <p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #38bdf8; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Do I need a plugin to add JSON-LD schema?</h3>
+    <p>No. JSON-LD is just JSON inside a script tag on the page, so on a static site you write the block by hand in the same file as the page it describes — no plugin, build step, or server required.</p>
+    <h3>Which JSON-LD types does a static indie site need?</h3>
+    <p>Three cover almost everything: SoftwareApplication for the product page, BlogPosting for every article, and FAQPage only where the page visibly answers questions.</p>
+    <h3>What voids a BlogPosting block?</h3>
+    <p>Copy-paste without editing. It is the easiest block to clone across articles, which makes it the easiest to ship with the previous article's headline, description, or URL still in it. Check that mainEntityOfPage equals the URL of the page you are looking at.</p>
+    <h3>When should FAQPage schema be used?</h3>
+    <p>Only where the page visibly contains those questions and answers, mirroring them exactly. If the visible FAQ changes and the schema does not, the page and its schema disagree in a format designed to be machine-checked.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="seo-checklist-for-indie-hackers.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking</a></li>
+      <li><a href="localstorage-as-database.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate</a></li>
+      <li><a href="vanilla-js-blog-engine.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

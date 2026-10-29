@@ -1,5 +1,11 @@
 [
   {
+    "t": "JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin",
+    "u": "/blog/json-ld-recipes-no-plugin.html",
+    "d": "Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.",
+    "c": "Blog"
+  },
+  {
     "t": "SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking",
     "u": "/blog/seo-checklist-for-indie-hackers.html",
     "d": "Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them after shipping.",
