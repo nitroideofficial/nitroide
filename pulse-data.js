@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 29, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin",
+  link: "https://nitroide.hashnode.dev/json-ld-recipes-blogposting-faqpage-and-softwareapplication-without-a-plugin"
+},
+  {
+  date: "Oct 29, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
