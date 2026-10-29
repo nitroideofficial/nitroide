@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 29, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin",
+  link: "https://x.com/trynitroide/status/2115785699416797483"
+},
+  {
   date: "Oct 28, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
