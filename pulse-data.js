@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 29, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7521550069704314880/"
+},
+  {
+  date: "Oct 29, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
