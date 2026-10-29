@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 29, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "JSON-LD recipes without a plugin — BlogPosting, FAQPage, SoftwareApplication",
+  link: "https://peerlist.io/nitroide/posts"
+},
+  {
+  date: "Oct 29, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
