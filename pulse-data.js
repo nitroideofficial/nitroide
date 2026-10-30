@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 30, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The 7 PM post: how a daily post ships after a full-time job",
+  link: "https://peerlist.io/scroll/post/ACTH7B86KON8O6MB6I6G87LGNQD6PN"
+},
+  {
+  date: "Oct 30, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
