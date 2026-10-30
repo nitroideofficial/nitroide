@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 30, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The 7 PM post: how a daily post ships after a full-time job",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7521925646118440960/"
+},
+  {
+  date: "Oct 30, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
