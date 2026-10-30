@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 30, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The 7 PM post: how a daily post ships after a full-time job",
+  link: "https://x.com/trynitroide/status/2116145299383365912"
+},
+  {
   date: "Oct 29, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
