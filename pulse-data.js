@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 30, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "How the 7 PM Post Actually Gets Shipped After a Full-Time Job",
+  link: "https://nitroide.hashnode.dev/how-the-7-pm-post-actually-gets-shipped-after-a-full-time-job"
+},
+  {
+  date: "Oct 30, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
