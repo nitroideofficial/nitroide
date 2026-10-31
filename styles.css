@@ -2329,7 +2329,7 @@ html.light-mode .ai-codeblock.collapsed .ai-codeblock-body::after{background:lin
 .ai-chat-send{width:34px;height:34px;flex-shrink:0;border-radius:50%;border:none;background:var(--brand);color:#00181c;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:color var(--dur-150),background-color var(--dur-150),border-color var(--dur-150),opacity var(--dur-150),transform var(--dur-150),box-shadow var(--dur-150);margin:0}
 .ai-chat-send:hover{transform:scale(1.06)}
 .ai-chat-send:disabled{opacity:.35;cursor:default;transform:none}
-.ai-chat-send.ai-stop-mode{background:var(--error);color:#fff}
+.ai-chat-send.ai-stop-mode{background:#dc2626;color:#fff}
 
 /* typing */
 .ai-typing{display:inline-flex;gap:5px;padding:8px 0;align-items:center}
@@ -2837,3 +2837,35 @@ html.light-mode :focus-visible{outline-color:#1d4ed8}
 html.light-mode .badge-primary{color:#006b8f}
 html.light-mode .badge-secondary{color:#6d28d9}
 html.light-mode{--success:#047857}
+
+/* ===== Light-mode readability fixes (2026-10-31 audit) ===== */
+/* F2/F3: light values for brand + code tokens (dark values untouched) */
+html.light-mode{--brand:#0369a1;--brand-alt:#0e7490;--code-string:#0a3069;--code-func:#8250df;--code-keyword:#cf222e;--code-comment:#6e7781}
+html.light-mode .code-str,html.light-mode .code-tag{color:#57606a}
+/* F4: command-palette items must not paint the browser default button face */
+.cmd-item{background:transparent}
+/* F5: resting colors for footer legal links (static footers) + feedback modal link */
+.f-legal>a{color:var(--text-muted)}
+.feedback-privacy a{color:var(--text-muted)}
+/* F7: darken platform brand labels in light mode (color-mix keeps hues, lifts contrast) */
+/* Articles: light-mode safety net for per-article inline accent colors.
+   Articles carry their accent as inline styles, so token swaps cannot reach them.
+   Each accent maps to a dark variant (>=4.5:1 on light backgrounds).
+   The .docs-code rule below wins for code blocks (higher specificity + later order),
+   so code text stays navy while the accent border stays untouched. */
+html.light-mode .docs-content [style*="color: #00e5ff"]{color:#0369a1!important}
+html.light-mode .docs-content [style*="color: #38bdf8"]{color:#0369a1!important}
+html.light-mode .docs-content [style*="color: #22c55e"]{color:#166534!important}
+html.light-mode .docs-content [style*="color: #f472b6"]{color:#be185d!important}
+html.light-mode .docs-content [style*="color: #22d3ee"]{color:#0e7490!important}
+html.light-mode .docs-content [style*="color: #f59e0b"]{color:#92400e!important}
+html.light-mode .docs-content [style*="color: #f43f5e"]{color:#b91c1c!important}
+html.light-mode .docs-content [style*="color: #fbbf24"]{color:#92400e!important}
+html.light-mode .docs-content [style*="color: #a78bfa"]{color:#6d28d9!important}
+html.light-mode .docs-content [style*="color: #4ade80"]{color:#166534!important}
+html.light-mode .docs-content [style*="color: #10b981"]{color:#047857!important}
+html.light-mode .docs-content [style*="color: #8b5cf6"]{color:#6d28d9!important}
+html.light-mode .docs-content [style*="color: #bb9af7"]{color:#6d28d9!important}
+html.light-mode .docs-content [style*="color: #ef4444"]{color:#b91c1c!important}
+html.light-mode .docs-content [style*="color: #3178c6"]{color:#1d4ed8!important}
+html.light-mode .docs-content div.docs-code{color:#0a3069!important}
