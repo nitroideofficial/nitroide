@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Oct 31, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "Embeds: Putting a Live NitroIDE Playground Inside Your Docs",
+  link: "https://coderlegion.com/33224/embeds-putting-a-live-nitroide-playground-inside-your-docs"
+},
+  {
   date: "Oct 30, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
