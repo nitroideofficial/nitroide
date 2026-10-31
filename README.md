@@ -53,6 +53,18 @@ No installs. No backend. No delays.
 
 ---
 
+## 🆕 What's New — v30.5 "The Reach & Reliability Update" (October 2026)
+
+* 📁 **Listed on 9 directories** — DevHunt, AlternativeTo, SaaSHub, SourceForge, directree, IndieTools, Fazier, NoLogin and TinyShelf, with a redesigned homepage badge row
+* 📣 **Daily publishing** — new articles and updates every day across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 42 articles
+* ⭐ **Trust and support** — Trustpilot profile with public reviews, Ko-fi donations live, GitHub Sponsors approved
+* 🌓 **Light-mode readability** — whole-site light values for brand and code colors, fixed contact inputs, palette, footer, modal and stop-button contrast, dark variants for all article accent colors
+* 🧹 **Deep audit pass** — 68 files: sitemap trimmed to 91 URLs, RSS fixed, icon fonts 403KB → 19KB, service worker and forms hardened
+
+Full details: https://nitroide.com/changelog.html
+
+---
+
 ## 🆕 What's New — v30 "The AI Update" (October 2026)
 
 * 🤖 **AI pair programmer, rebuilt** — conversational chat sidebar: smart file picker (CSS fixes go to CSS, structure to HTML, logic to JS), surgical find/replace edits with diff previews

@@ -1,6 +1,6 @@
 # NitroIDE — full context for LLMs
 
-> Version: 2026-10-31 (v30). This file is updated on every release.
+> Version: 2026-10-31 (v30.5). This file is updated on every release.
 > NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no installation — your code runs only in your browser.
 
 ## Scope (important)
@@ -11,6 +11,15 @@
 ## Pricing
 - 100% free, no account required, no paywall. Free forever — the only plan.
 - The AI pair programmer uses your own provider API keys — Groq, Gemini, and OpenRouter offer free tiers; NitroIDE charges nothing for AI. See https://nitroide.com/pricing.md
+
+## What's new in v30.5 (October 2026)
+- Listed on 9 software directories (DevHunt, AlternativeTo, SaaSHub, SourceForge, directree, IndieTools, Fazier, NoLogin, TinyShelf) with a redesigned homepage badge row.
+- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 42 articles.
+- Trust and support: Trustpilot profile with public reviews, Ko-fi donations live, GitHub Sponsors approved.
+- Whole-site light-mode readability: light values for brand and code colors, fixed contact inputs, palette, footer, modal and stop-button contrast, dark variants for all article accent colors.
+- Deep audit pass (68 files): sitemap trimmed to 91 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
+- Directory badges fixed after a browser-isolation header blocked cross-origin images (header now credentialless, WebContainer WASM unaffected).
+- Templates "Open in NitroIDE" buttons readable in both themes.
 
 ## AI pair programmer (new in v30, October 2026)
 - Built-in AI pair programmer: a conversational chat in a right-hand sidebar inside the IDE workspace.

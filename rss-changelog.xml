@@ -6,6 +6,13 @@
     <description>Release notes for NitroIDE — new features, performance improvements, and bug fixes.</description>
     <language>en-us</language>
     <item>
+      <title>v30.5 &#8212; The Reach &amp; Reliability Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v30.5</link>
+      <guid>https://nitroide.com/changelog.html#v30.5</guid>
+      <description>NEW Directory listings: NitroIDE is now listed on 9 software directories, with a redesigned homepage badge row. | NEW Daily publishing: new articles and updates ship every day across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 42 articles. | NEW Trust and support: Trustpilot profile claimed with public reviews, Ko-fi donations live, and GitHub Sponsors approved. | UPDATE Light-mode readability: the whole site is readable in light mode now. | UPDATE Deep audit pass: a 68-file audit and fix batch. | FIX Directory badges: badges render again after a browser-isolation header blocked cross-origin images. | FIX Templates buttons: templates "Open in NitroIDE" buttons show readable text in both themes.</description>
+      <pubDate>Sat, 31 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
       <title>v30 &#8212; The AI Update | NitroIDE Changelog</title>
       <link>https://nitroide.com/changelog.html#v30</link>
       <guid>https://nitroide.com/changelog.html#v30</guid>
