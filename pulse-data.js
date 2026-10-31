@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 31, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Embeds: Putting a Live NitroIDE Playground Inside Your Docs",
+  link: "https://x.com/trynitroide/status/2116509781972369660"
+},
+  {
+  date: "Oct 31, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
