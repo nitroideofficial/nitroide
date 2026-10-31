@@ -1,5 +1,21 @@
 [
   {
+    "SLUG": "embeds-live-playground-in-docs",
+    "META_TITLE": "Embeds: Putting a Live NitroIDE Playground Inside Your Docs",
+    "META_DESC": "One iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs — editor and preview only, with a one-click escape hatch into the full editor.",
+    "KEYWORDS": "NitroIDE embeds, iframe code playground, embed code editor in docs, live code demo tutorial, share link embed, read-only code viewer",
+    "THEME_COLOR": "#a78bfa",
+    "CATEGORY": "ENGINEERING",
+    "DATE": "OCTOBER 2026",
+    "H1_TITLE": "Embeds: Putting a Live NitroIDE Playground Inside Your Docs.",
+    "CONTENT": "<p>Every tutorial has the same weak spot: the code sample. A static block shows what the code looks like. It cannot show what the code does. NitroIDE embeds fix that: add ?embed=1 to a share URL, drop it in an iframe, and the page gets a live, read-only playground — editor and live preview side by side, with the full IDE chrome hidden.</p>",
+    "CTA_TITLE": "Embed the Playground.",
+    "CTA_DESC": "Turn a share link into a live demo inside your docs with one iframe parameter.",
+    "CTA_LINK": "../tools/codebox.html",
+    "CTA_BTN_TEXT": "Launch Workspace",
+    "CTA_ICON": "ph-globe"
+  },
+  {
     "SLUG": "json-ld-recipes-no-plugin",
     "META_TITLE": "JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication",
     "META_DESC": "Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really",

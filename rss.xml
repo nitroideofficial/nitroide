@@ -7,6 +7,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>Embeds: Putting a Live NitroIDE Playground Inside Your Docs | NitroIDE</title>
+      <link>https://nitroide.com/blog/embeds-live-playground-in-docs.html</link>
+      <guid>https://nitroide.com/blog/embeds-live-playground-in-docs.html</guid>
+      <description>One iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs &#8212; editor and preview only, with a one-click escape hatch into the full editor.</description>
+      <pubDate>Sat, 31 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
       <title>JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication | NitroIDE</title>
       <link>https://nitroide.com/blog/json-ld-recipes-no-plugin.html</link>
       <guid>https://nitroide.com/blog/json-ld-recipes-no-plugin.html</guid>

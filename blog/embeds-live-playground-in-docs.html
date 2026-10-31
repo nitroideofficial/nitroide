@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embeds: Putting a Live NitroIDE Playground Inside Your Docs</title>
+  <meta name="title" content="Embeds: Putting a Live NitroIDE Playground Inside Your Docs">
+  <meta name="description" content="One iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs — editor and preview only, with a one-click escape hatch into the full editor.">
+  <meta name="keywords" content="NitroIDE embeds, iframe code playground, embed code editor in docs, live code demo tutorial, share link embed, read-only code viewer">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#a78bfa">
+  <link rel="canonical" href="https://nitroide.com/blog/embeds-live-playground-in-docs.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/embeds-live-playground-in-docs.html">
+  <meta property="og:title" content="Embeds: Putting a Live NitroIDE Playground Inside Your Docs">
+  <meta property="og:description" content="One iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs — editor and preview only, with a one-click escape hatch into the full editor.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-31-embeds-live-playground-in-docs.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Embed the playground — one iframe turns a share link into a live demo inside your docs">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-10-31">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/embeds-live-playground-in-docs.html">
+  <meta name="twitter:title" content="Embeds: Putting a Live NitroIDE Playground Inside Your Docs">
+  <meta name="twitter:description" content="One iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs — editor and preview only, with a one-click escape hatch into the full editor.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-31-embeds-live-playground-in-docs.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-31-embeds-live-playground-in-docs.webp","headline":"Embeds: Putting a Live NitroIDE Playground Inside Your Docs","description":"One iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs — editor and preview only, with a one-click escape hatch into the full editor.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/embeds-live-playground-in-docs.html","mainEntityOfPage":"https://nitroide.com/blog/embeds-live-playground-in-docs.html","datePublished":"2026-10-31","dateModified":"2026-10-31"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do you embed a NitroIDE playground in a page?", "acceptedAnswer": {"@type": "Answer", "text": "Take any NitroIDE share URL, add ?embed=1 to it, and drop it in an iframe. It loads a stripped-down, read-only viewer with just the editor and the live preview — no file explorer, console panel, or settings menus."}}, {"@type": "Question", "name": "Why is the embed read-only?", "acceptedAnswer": {"@type": "Answer", "text": "A tutorial embed is a demonstration, not a workspace. If readers could edit in place, the next reader would see someone else's experiment instead of the tutorial. The footer link 'Built with NitroIDE — open & edit' opens the exact workspace in the full editor for anyone who wants to change it."}}, {"@type": "Question", "name": "Where should you not use a NitroIDE embed?", "acceptedAnswer": {"@type": "Answer", "text": "GitHub READMEs strip iframes from rendered Markdown, so an embed there renders as nothing — link out with the 'Open in NitroIDE' badge instead. And demos whose point is console output lose their punchline, because the embed hides the console; those belong in the full editor."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #a78bfa; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">ENGINEERING • <time datetime="2026-10-31">October 31, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-31">October 31, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Embeds: Putting a Live NitroIDE Playground Inside Your Docs</h1>
+
+    <p>Every tutorial has the same weak spot: the code sample. A static block shows what the code looks like. It cannot show what the code does. The reader has to copy it, open an editor, paste it, and run it — and every step in that chain is a step where a reader leaves.</p>
+
+    <p>A month ago I wrote about NitroIDE's share engine: the Share button compresses an entire workspace into a <code>?code=</code> URL parameter, and opening that link rebuilds the workspace locally in the reader's browser. Nothing is uploaded to a server. That post was about sending code to one person. This one is about the layer on top of it: embedding that workspace inside a page, so the reader never has to leave the tutorial at all.</p>
+
+    <h2>One parameter turns a share link into an embed</h2>
+    <p>Take any NitroIDE share URL and add <code>?embed=1</code> to it. That is the whole API:</p>
+    <pre style="overflow-x: auto; padding: 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);"><code>&lt;iframe src="https://nitroide.com/tools/codebox.html?embed=1&amp;code=YOUR_SHARE_CODE" width="100%" height="500" frameborder="0"&gt;&lt;/iframe&gt;</code></pre>
+    <p>The embed loads a stripped-down, read-only viewer. The full IDE chrome is gone — no file explorer, no console panel, no settings menus. What remains is the two things a reader actually needs: the editor and the live preview, side by side. The reader sees the code and its output in the same frame, on the same page, with nothing to install and no account to create.</p>
+    <p>Read-only is a deliberate choice, not a missing feature. A tutorial embed is not a workspace; it is a demonstration. If the reader could edit the code in place, every edit would be a fork of the author's example with no way back — and the next reader would see someone else's experiment, not the tutorial. So the embed shows, and the escape hatch handles editing: every embed carries a footer link reading "Built with NitroIDE — open &amp; edit". One click opens the exact workspace in the full editor, where the reader can change anything. Show first, edit second, and never confuse the two.</p>
+
+    <h2>Where this actually belongs</h2>
+    <p>The honest answer is: anywhere that renders an iframe and where the reader is there to learn. Blog posts, documentation pages, tutorial sites, course material — anywhere a code sample currently sits as a dead block.</p>
+    <p>It does not belong in a GitHub README. GitHub strips iframes from rendered Markdown, so an embed pasted into a README renders as nothing. That is what the "Open in NitroIDE" badge is for — a link, not a frame — and knowing which of the two a surface accepts is the difference between an embed that works and one that silently vanishes. If the page cannot render an iframe, do not force the embed in; link out instead.</p>
+    <p>The second place it belongs is less obvious: your own changelog and release notes. A new feature described in prose is a claim; the same feature embedded as a running demo is evidence. When a release note says "the preview now updates without flicker," an embedded playground running the new behaviour lets the reader verify it in ten seconds instead of trusting the sentence.</p>
+
+    <h2>The details that make an embed feel native, not bolted on</h2>
+    <p>A bare iframe works. A few attributes make it feel like part of the page:</p>
+    <ul>
+      <li><code>width="100%"</code> and a fixed height around 500px. The embed is a window into a workspace, and a window needs a predictable frame. Let it fill the content column and keep the height tall enough that the preview is readable without scrolling inside a scrolling page.</li>
+      <li><code>loading="lazy"</code> on embeds below the fold. A tutorial with five demos should not load five editors before the reader reaches the first one. Lazy loading defers each embed until it scrolls into view.</li>
+      <li>A <code>title</code> attribute on the iframe. It costs nothing and it is what a screen reader announces; "Live demo: responsive card layout" is a better experience than an unnamed frame.</li>
+      <li>One demo per concept. An embed is a heavyweight element — a whole editor and a live preview. Three embeds proving the same point are two embeds too many; one well-chosen demo per idea keeps the page fast and the argument sharp.</li>
+    </ul>
+    <p>None of these are NitroIDE features. They are the hosting page's job, and they are the difference between an embed that feels like part of the tutorial and one that feels pasted in.</p>
+
+    <h2>The limits, stated plainly</h2>
+    <p>An embed inherits every limit of the share link it is built on. The workspace travels inside the URL itself, compressed into the <code>?code=</code> parameter, so a very large project makes a very long URL. For a tutorial demo — a handful of files, a single concept — that is never a problem. For a full application, it is: use ZIP export for the project and embed a small, focused demo of the idea instead. The embed is for the example, not the app.</p>
+    <p>The second limit comes from the preview's sandbox. NitroIDE's preview runs in a sandboxed iframe with an opaque origin, which is what keeps code in a shared link from touching the reader's saved projects. The tradeoff is that <code>localStorage</code>, <code>sessionStorage</code>, and cookies are unavailable inside the preview — and in Safari, touching them throws a <code>SecurityError</code>. Demo code that reads <code>localStorage</code> unguarded will crash inside the embed while working fine in a normal tab. Wrap storage access in <code>try/catch</code> in any code you plan to embed, and the same demo runs everywhere.</p>
+    <p>The third limit is the read-only viewer itself. It hides the console, so a demo whose point is console output — logging, errors, debugging — loses its punchline inside an embed. That is a real constraint, and the honest response is to pick the right surface: embed the demos whose output is visual, and link out to the full editor for the ones whose output lives in the console.</p>
+
+    <h2>Why this matters more than a nicer code block</h2>
+    <p>Syntax highlighting made code readable. Embeds make it runnable, and that is a different category of change. A readable sample asks the reader to trust the author. A runnable sample lets the reader check the author — change a value, watch the preview move, break it, fix it. That is the feedback loop NitroIDE is built around, except now it happens inside someone else's docs, for a reader who never opened the IDE at all.</p>
+    <p>The embed is also the quietest distribution NitroIDE has. Every embed carries its own attribution in the footer, and every footer click is a reader who arrived at the full editor from inside a tutorial they were already reading — not from a post, not from an ad, from a working demo. That is the growth loop that does not look like a growth loop: make the tool useful inside other people's pages, and let the pages do the talking.</p>
+    <p>One parameter, one iframe, one running demo where a dead code block used to be. Try it with the docs example above — paste a share code into the snippet, drop it into a page, and the tutorial stops describing the code and starts running it.</p>
+
+    <h2>Try it</h2>
+    <p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-10-31" style="color: #a78bfa; text-decoration: none;">nitroide.com</a></p>
+
+    <p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #a78bfa; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>How do you embed a NitroIDE playground in a page?</h3>
+    <p>Take any NitroIDE share URL, add ?embed=1 to it, and drop it in an iframe. It loads a stripped-down, read-only viewer with just the editor and the live preview — no file explorer, console panel, or settings menus.</p>
+    <h3>Why is the embed read-only?</h3>
+    <p>A tutorial embed is a demonstration, not a workspace. If readers could edit in place, the next reader would see someone else's experiment instead of the tutorial. The footer link "Built with NitroIDE — open &amp; edit" opens the exact workspace in the full editor for anyone who wants to change it.</p>
+    <h3>Where should you not use a NitroIDE embed?</h3>
+    <p>GitHub READMEs strip iframes from rendered Markdown, so an embed there renders as nothing — link out with the "Open in NitroIDE" badge instead. And demos whose point is console output lose their punchline, because the embed hides the console; those belong in the full editor.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="json-ld-recipes-no-plugin.html" style="color: #a78bfa; text-decoration: none; font-weight: 500;">JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication</a></li>
+      <li><a href="instant-code-sharing-zero-backend.html" style="color: #a78bfa; text-decoration: none; font-weight: 500;">I Replaced My Share Backend With a URL</a></li>
+      <li><a href="seo-checklist-for-indie-hackers.html" style="color: #a78bfa; text-decoration: none; font-weight: 500;">SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

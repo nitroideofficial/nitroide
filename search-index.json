@@ -1,5 +1,11 @@
 [
   {
+    "t": "Embeds: Putting a Live NitroIDE Playground Inside Your Docs",
+    "u": "/blog/embeds-live-playground-in-docs.html",
+    "d": "One iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs — editor and preview only, with a one-click escape hatch into the full editor.",
+    "c": "Blog"
+  },
+  {
     "t": "JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication",
     "u": "/blog/json-ld-recipes-no-plugin.html",
     "d": "Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really",
