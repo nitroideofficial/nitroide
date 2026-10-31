@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE</title>
-  <meta name="title" content="Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE">
-  <meta name="description" content="GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plus why CSP is deliberately not shipped yet.">
+  <title>Hardened Static Site: The Cloudflare Headers Recipe</title>
+  <meta name="title" content="Hardened Static Site: The Cloudflare Headers Recipe">
+  <meta name="description" content="GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP —">
   <meta name="keywords" content="cloudflare security headers, HSTS, nosniff, COEP, COOP, referrer policy, permissions policy, static site security, NitroIDE">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#f59e0b">
@@ -13,8 +13,8 @@
   <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/cloudflare-security-headers-recipe.html">
-  <meta property="og:title" content="Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE">
-  <meta property="og:description" content="GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plus why CSP is deliberately not shipped yet.">
+  <meta property="og:title" content="Hardened Static Site: The Cloudflare Headers Recipe">
+  <meta property="og:description" content="GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP —">
   <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-15-cloudflare-security-headers-recipe.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,11 +23,11 @@
   <meta property="article:published_time" content="2026-10-15">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/cloudflare-security-headers-recipe.html">
-  <meta name="twitter:title" content="Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE">
-  <meta name="twitter:description" content="GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plus why CSP is deliberately not shipped yet.">
+  <meta name="twitter:title" content="Hardened Static Site: The Cloudflare Headers Recipe">
+  <meta name="twitter:description" content="GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP —">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-15-cloudflare-security-headers-recipe.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-15-cloudflare-security-headers-recipe.webp","headline":"Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE","description":"GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plus why CSP is deliberately not shipped yet.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/cloudflare-security-headers-recipe.html","datePublished":"2026-10-15","dateModified":"2026-10-15"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-15-cloudflare-security-headers-recipe.webp","headline":"Hardened Static Site: The Cloudflare Headers Recipe","description":"GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP —","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/cloudflare-security-headers-recipe.html","mainEntityOfPage":"https://nitroide.com/blog/cloudflare-security-headers-recipe.html","datePublished":"2026-10-15","dateModified":"2026-10-15"}
   </script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why does NitroIDE have no Content-Security-Policy?", "acceptedAnswer": {"@type": "Answer", "text": "CSP is the most powerful header and the easiest to get wrong. A bad CSP breaks the product: blocked scripts, dead embeds, templates that silently stop working. A missing CSP breaks nothing. NitroIDE loads user code, templates, CDN libraries, and embeds — the policy will ship once it is tested against all of them, not to silence a scanner."}}, {"@type": "Question", "name": "Why no X-Frame-Options header?", "acceptedAnswer": {"@type": "Answer", "text": "X-Frame-Options is legacy. The modern replacement is CSP's frame-ancestors directive, which lands with the CSP work. Shipping the old header now would be theater — one more line that looks like security without the policy behind it."}}, {"@type": "Question", "name": "What does COEP require-corp break?", "acceptedAnswer": {"@type": "Answer", "text": "Any cross-origin subresource that doesn't opt in: a font, a CDN script, an analytics pixel, an embed. The fix is discipline, not a weaker header: serve everything you can same-origin, and for anything genuinely cross-origin, make sure it sends Cross-Origin-Resource-Policy or is fetched in CORS mode."}}, {"@type": "Question", "name": "Why does the HSTS header leave out preload?", "acceptedAnswer": {"@type": "Answer", "text": "Preload is a one-way door — once you're on the browser preload list, every subdomain must serve valid HTTPS forever, and removal takes months. One year + includeSubDomains is the strong posture without the irreversible commitment."}}]}
@@ -55,7 +55,7 @@
 
     <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-15">October 15, 2026</time></div>
 
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE</h1>
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Hardened Static Site: The Cloudflare Headers Recipe</h1>
 
     <p>GitHub Pages is a wonderful host with one sharp edge: it cannot set HTTP response headers. Not one. Your site ships with zero security headers unless you add a layer in front of it that can.</p>
 

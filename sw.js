@@ -1,5 +1,5 @@
 // sw.js — NitroIDE PWA service worker (network-first for pages + script.js, cache-first for vendor assets)
-const CACHE = 'nitroide-v269';
+const CACHE = 'nitroide-v270';
 
 const APP_SHELL = [
   '/',
@@ -37,8 +37,15 @@ const APP_SHELL = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE)
-      .then((cache) => cache.addAll(APP_SHELL).catch((err) => console.warn('NitroIDE SW: precache partially failed, continuing anyway:', err)))
+      .then((cache) => cache.addAll(APP_SHELL))
       .then(() => self.skipWaiting())
+      .catch((err) => {
+        // Audit 2026-10-31 (#15): a failed precache must FAIL the install, not
+        // skipWaiting into a half-populated cache. The old worker keeps serving
+        // and the browser retries install on the next navigation.
+        console.error('NitroIDE SW: precache failed, install aborted:', err);
+        throw err;
+      })
   );
 });
 
@@ -59,7 +66,7 @@ self.addEventListener('fetch', (event) => {
   // fetch, refreshed by the publishing pipeline on every Pulse update.
   // /api/* (forms backend + admin) must never be cached: submissions and
   // stats have to be live on every request.
-  try { var ffp = new URL(request.url).pathname; if (ffp === '/ads.txt' || ffp === '/llms.txt' || ffp === '/llms-full.txt' || ffp === '/pricing.md' || ffp === '/rss.xml' || ffp === '/assets/devto-latest.json' || ffp.indexOf('/api/') === 0) return; } catch (e) {}
+  try { var ffp = new URL(request.url).pathname; if (ffp === '/ads.txt' || ffp === '/llms.txt' || ffp === '/llms-full.txt' || ffp === '/pricing.md' || ffp === '/rss.xml' || ffp === '/rss-changelog.xml' || ffp === '/assets/devto-latest.json' || ffp.indexOf('/api/') === 0) return; } catch (e) {}
   // Share links (?code=, ?gist=, ...) all serve the same HTML shell — cache document
   // navigations under the bare path so unique URLs can't bloat the cache.
   var cacheKey = request;
@@ -78,8 +85,12 @@ self.addEventListener('fetch', (event) => {
   if (networkFirst) {
     event.respondWith(
       fetch(request).then(function (response) {
-        var copy = response.clone();
-        caches.open(CACHE).then(function (cache) { cache.put(cacheKey, copy); });
+        // Audit 2026-10-31 (#15): never cache a failed response — a cached
+        // 404/500 would keep serving the failure after the network recovers.
+        if (response.ok) {
+          var copy = response.clone();
+          caches.open(CACHE).then(function (cache) { cache.put(cacheKey, copy); });
+        }
         return response;
       }).catch(function () { return caches.match(cacheKey); })
     );
@@ -88,8 +99,12 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(cacheKey).then((cached) =>
       cached || fetch(request).then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE).then((cache) => cache.put(cacheKey, copy));
+        // Audit 2026-10-31 (#15): same rule as the network-first branch —
+        // only cache successful responses.
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE).then((cache) => cache.put(cacheKey, copy));
+        }
         return response;
       }).catch(() => caches.match(cacheKey))
     )

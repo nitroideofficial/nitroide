@@ -20,3 +20,8 @@ Thumbs.db
 # Local-only audit artifacts (kept out of git by policy)
 AUDIT-2026-09-24.md
 lighthouse/
+
+# Build / temp artifacts
+*.log
+*.tmp
+*.bak

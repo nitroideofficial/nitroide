@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work</title>
-  <meta name="title" content="HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work">
-  <meta name="description" content="No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.">
+  <title>HMR Without a Bundler: How Instant Preview Updates Work</title>
+  <meta name="title" content="HMR Without a Bundler: How Instant Preview Updates Work">
+  <meta name="description" content="No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and">
   <meta name="keywords" content="hmr without bundler, instant preview, srcdoc, postMessage CSS hot reload, debounce, browser IDE, NitroIDE">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#38bdf8">
@@ -13,8 +13,8 @@
   <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/hmr-without-a-bundler.html">
-  <meta property="og:title" content="HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work">
-  <meta property="og:description" content="No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.">
+  <meta property="og:title" content="HMR Without a Bundler: How Instant Preview Updates Work">
+  <meta property="og:description" content="No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and">
   <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-13-hmr-without-a-bundler.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,11 +23,11 @@
   <meta property="article:published_time" content="2026-10-13">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/hmr-without-a-bundler.html">
-  <meta name="twitter:title" content="HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work">
-  <meta name="twitter:description" content="No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.">
+  <meta name="twitter:title" content="HMR Without a Bundler: How Instant Preview Updates Work">
+  <meta name="twitter:description" content="No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-13-hmr-without-a-bundler.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-13-hmr-without-a-bundler.webp","headline":"HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work","description":"No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/hmr-without-a-bundler.html","datePublished":"2026-10-13","dateModified":"2026-10-13"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-13-hmr-without-a-bundler.webp","headline":"HMR Without a Bundler: How Instant Preview Updates Work","description":"No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/hmr-without-a-bundler.html","mainEntityOfPage":"https://nitroide.com/blog/hmr-without-a-bundler.html","datePublished":"2026-10-13","dateModified":"2026-10-13"}
   </script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does NitroIDE have real HMR?", "acceptedAnswer": {"@type": "Answer", "text": "For CSS, yes — the parent postMessages the fresh stylesheet and the preview swaps one style tag's text with no reload and no state loss. HTML and JS edits get a fast full reload instead, which is deliberately not called HMR."}}, {"@type": "Question", "name": "Why do HTML and JS edits reset the preview's state?", "acceptedAnswer": {"@type": "Answer", "text": "Because those edits rebuild the preview from scratch via srcdoc: the DOM is rebuilt, scripts re-run from the top, timers restart, and form state resets. That clean slate is the point — you always see a fresh run."}}, {"@type": "Question", "name": "Does NitroIDE use a dev server or bundler?", "acceptedAnswer": {"@type": "Answer", "text": "No. The build step is string concatenation of the in-memory files and the deploy step is assigning the result to the preview iframe's srcdoc attribute. There is no server, no watcher, and no config file."}}, {"@type": "Question", "name": "Why doesn't the preview flash white on every keystroke?", "acceptedAnswer": {"@type": "Answer", "text": "Rebuilds render into a hidden iframe first; after its load event plus two requestAnimationFrame ticks, the new iframe is promoted and the old one removed. A generation counter discards stale rebuilds overtaken by newer typing."}}]}
@@ -55,7 +55,7 @@
 
     <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-13">October 13, 2026</time></div>
 
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work</h1>
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">HMR Without a Bundler: How Instant Preview Updates Work</h1>
 
     <p>Type a character in Vite and the browser updates before your finger leaves the key. It feels like magic, but it isn't — it's a dev server, a WebSocket, a module graph, and a client runtime, all cooperating to patch the running page instead of reloading it.</p>
 

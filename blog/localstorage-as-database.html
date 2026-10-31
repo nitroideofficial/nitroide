@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate</title>
-  <meta name="title" content="localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate">
-  <meta name="description" content="NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.">
+  <title>localStorage Is My Database: Patterns, Limits, Graduation</title>
+  <meta name="title" content="localStorage Is My Database: Patterns, Limits, Graduation">
+  <meta name="description" content="NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped">
   <meta name="keywords" content="localStorage database patterns, localStorage limits 5MB, IndexedDB vs localStorage, browser storage patterns, NitroIDE localStorage, localStorage QuotaExceededError">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#fbbf24">
@@ -13,8 +13,8 @@
   <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/localstorage-as-database.html">
-  <meta property="og:title" content="localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate">
-  <meta property="og:description" content="NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.">
+  <meta property="og:title" content="localStorage Is My Database: Patterns, Limits, Graduation">
+  <meta property="og:description" content="NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped">
   <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-22-localstorage-as-database.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,11 +23,11 @@
   <meta property="article:published_time" content="2026-10-22">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/localstorage-as-database.html">
-  <meta name="twitter:title" content="localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate">
-  <meta name="twitter:description" content="NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.">
+  <meta name="twitter:title" content="localStorage Is My Database: Patterns, Limits, Graduation">
+  <meta name="twitter:description" content="NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-22-localstorage-as-database.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-22-localstorage-as-database.webp","headline":"localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate","description":"NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/localstorage-as-database.html","datePublished":"2026-10-22","dateModified":"2026-10-22"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-22-localstorage-as-database.webp","headline":"localStorage Is My Database: Patterns, Limits, Graduation","description":"NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/localstorage-as-database.html","mainEntityOfPage":"https://nitroide.com/blog/localstorage-as-database.html","datePublished":"2026-10-22","dateModified":"2026-10-22"}
   </script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much can localStorage actually hold?", "acceptedAnswer": {"@type": "Answer", "text": "About 5 MB per origin, counted roughly in UTF-16 code units. When the store is full, writes throw QuotaExceededError."}}, {"@type": "Question", "name": "Why does NitroIDE save whole documents instead of individual files?", "acceptedAnswer": {"@type": "Answer", "text": "One key per JSON document keeps reads to two parses and writes to one stringify; the cost is that every save rewrites the whole document, which is why saves are batched."}}, {"@type": "Question", "name": "What should never go in localStorage?", "acceptedAnswer": {"@type": "Answer", "text": "Tokens and secrets: any script on your origin can read the whole store."}}, {"@type": "Question", "name": "When should I switch from localStorage to IndexedDB?", "acceptedAnswer": {"@type": "Answer", "text": "When you need queries or indexes, more than a few megabytes, binary data, or safe multi-tab writes."}}]}
@@ -55,7 +55,7 @@
 
     <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-22">October 22, 2026</time></div>
 
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate</h1>
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">localStorage Is My Database: Patterns, Limits, Graduation</h1>
 
 <p>NitroIDE has no server and no database. Your projects still survive a browser restart, a closed tab, and a Monday morning. The entire persistence layer is localStorage &mdash; one API, string keys, string values, about 5 MB per origin.</p>
 

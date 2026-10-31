@@ -1,20 +1,20 @@
 [
   {
-    "t": "JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin",
+    "t": "JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication",
     "u": "/blog/json-ld-recipes-no-plugin.html",
-    "d": "Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.",
+    "d": "Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really",
     "c": "Blog"
   },
   {
-    "t": "SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking",
+    "t": "SEO Checklist: Sitemap, Schema, and llms.txt | NitroIDE",
     "u": "/blog/seo-checklist-for-indie-hackers.html",
-    "d": "Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them after shipping.",
+    "d": "Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them",
     "c": "Blog"
   },
   {
-    "t": "Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)",
+    "t": "Offline-First on GitHub Pages: What Works, Where It Ends",
     "u": "/blog/offline-first-github-pages.html",
-    "d": "NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.",
+    "d": "NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own",
     "c": "Blog"
   },
   {
@@ -48,7 +48,7 @@
     "c": "Blog"
   },
   {
-    "t": "NitroIDE AI Pair Programmer: Bring Your Own Key, Surgical Edits",
+    "t": "NitroIDE AI Pair Programmer: Bring Your Own Key",
     "u": "/blog/ai-pair-programmer-byok.html",
     "d": "NitroIDE's AI pair programmer: bring-your-own-key privacy, surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes.",
     "c": "Blog"
@@ -66,9 +66,9 @@
     "c": "Blog"
   },
   {
-    "t": "Code Editor for iPad Pro: Desktop-Grade Coding on iOS",
+    "t": "Code Editor for iPad Pro: Frontend Coding on iOS",
     "u": "/blog/best-code-editor-ipad-pro-m4-browser-ide.html",
-    "d": "Unlock your M-Series iPad. Discover how NitroIDE brings full Node.js, native terminal access, and desktop-grade React development to Safari via WebAssembly.",
+    "d": "Unlock your M-Series iPad. NitroIDE brings frontend coding — HTML, CSS, JavaScript, live preview — to Safari. No install, no server, no terminal needed.",
     "c": "Blog"
   },
   {
@@ -120,9 +120,9 @@
     "c": "Blog"
   },
   {
-    "t": "Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on ",
+    "t": "Hardened Static Site: The Cloudflare Headers Recipe",
     "u": "/blog/cloudflare-security-headers-recipe.html",
-    "d": "GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plu",
+    "d": "GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP —",
     "c": "Blog"
   },
   {
@@ -138,7 +138,7 @@
     "c": "Blog"
   },
   {
-    "t": "HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work",
+    "t": "HMR Without a Bundler: How Instant Preview Updates Work",
     "u": "/blog/hmr-without-a-bundler.html",
     "d": "No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and",
     "c": "Blog"
@@ -156,9 +156,9 @@
     "c": "Blog"
   },
   {
-    "t": "I Deleted My Share Backend and Replaced It With a URL",
+    "t": "I Replaced My Share Backend With a URL | NitroIDE",
     "u": "/blog/instant-code-sharing-zero-backend.html",
-    "d": "NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service",
+    "d": "NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the",
     "c": "Blog"
   },
   {
@@ -192,7 +192,7 @@
     "c": "Blog"
   },
   {
-    "t": "Zero-Trust Storage: Encrypting OPFS with AES-GCM",
+    "t": "OPFS vs IndexedDB: Zero-Trust AES-GCM Storage",
     "u": "/blog/opfs-vs-indexeddb-virtual-file-system.html",
     "d": "IndexedDB is unencrypted. See how NitroIDE implements a Zero-Trust architecture by encrypting all OPFS file chunks using the Web Crypto API.",
     "c": "Blog"
@@ -228,9 +228,9 @@
     "c": "Blog"
   },
   {
-    "t": "12 Starters, Zero Blank Pages: A Tour of NitroIDE's Template Gallery",
+    "t": "12 Starters, Zero Blank Pages: Template Gallery Tour",
     "u": "/blog/templates-gallery-tour.html",
-    "d": "Twelve starters, zero blank pages: a tour of every NitroIDE template — portfolios, landing pages, todo app, gradient generator, React and Tailwind without a bui",
+    "d": "Twelve starters, zero blank pages: a tour of every NitroIDE template — portfolios, landing pages, todo app, gradient generator, React and Tailwind without a",
     "c": "Blog"
   },
   {
@@ -258,15 +258,15 @@
     "c": "Blog"
   },
   {
-    "t": "localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate",
+    "t": "localStorage Is My Database: Patterns, Limits, Graduation",
     "u": "/blog/localstorage-as-database.html",
-    "d": "NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.",
+    "d": "NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped",
     "c": "Blog"
   },
   {
-    "t": "I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed",
+    "t": "I Built a Blog Engine With No Build Step | NitroIDE",
     "u": "/blog/vanilla-js-blog-engine.html",
-    "d": "37 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.",
+    "d": "42 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.",
     "c": "Blog"
   },
   {
@@ -368,7 +368,7 @@
   {
     "t": "Secure Private Code Editor",
     "u": "/landing/private-code-editor-no-tracking.html",
-    "d": "Keep your proprietary code safe. NitroIDE executes exclusively in your browser's memory. Your code runs only in your browser. No code telemetry — analytics is G",
+    "d": "Keep your proprietary code safe. NitroIDE executes exclusively in your browser's memory. Your code runs only in your browser. No code telemetry — analytics is",
     "c": "Guide"
   },
   {

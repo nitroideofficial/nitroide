@@ -6,6 +6,41 @@
     <description>Release notes for NitroIDE — new features, performance improvements, and bug fixes.</description>
     <language>en-us</language>
     <item>
+      <title>v30 &#8212; The AI Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v30</link>
+      <guid>https://nitroide.com/changelog.html#v30</guid>
+      <description>NEW Smart file picker: the AI sees all three files and chooses the right one from your request. | NEW Surgical edits: changes land via find/replace blocks with a side-by-side diff preview, never full-file rewrites. | NEW Bring your own key: Groq, Gemini, OpenRouter and OpenAI with auto-detection; keys stay in your browser. | NEW Auto provider fallback: switches to your next saved key on rate limits. | UPDATE Trust controls: auto-apply off by default, every apply takes a checkpoint with one-click restore.</description>
+      <pubDate>Thu, 01 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v29 &#8212; The Performance Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v29</link>
+      <guid>https://nitroide.com/changelog.html#v29</guid>
+      <description>UPDATE 3.5MB lighter: removed 9 unused Monaco language packs, 77 unneeded editor languages, the JSON language service, and two icon font weights with zero uses. | UPDATE Leaner loading: 76 pages no longer request dead icon stylesheets; the service worker precache list trimmed to match. | FIX Dead code removed: pruned unused functions from the main script; the options-menu Share item now opens the share dialog.</description>
+      <pubDate>Thu, 01 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v28 &#8212; The Sharing &amp; Templates Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v28</link>
+      <guid>https://nitroide.com/changelog.html#v28</guid>
+      <description>NEW Browsable template gallery: search across all 12 templates and filter by Websites, Apps &amp; Tools or Experiments, with live preview thumbnails. | NEW Share dialog: workspace title, copyable link, native OS share, and one-tap X / WhatsApp / Telegram intents. | UPDATE Richer link cards: every template page unfurls with its own screenshot. | NEW Two new template pages: Countdown Timer and Link in Bio.</description>
+      <pubDate>Thu, 01 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v27 &#8212; The Mobile Editor Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v27</link>
+      <guid>https://nitroide.com/changelog.html#v27</guid>
+      <description>NEW Command Palette in the options menu: no longer Ctrl+K-only, now one tap away on touchscreens. | UPDATE PWA install flow: install prompt moved into the workspace header with an iOS Share, then Add to Home Screen guide. | FIX Palette viewport overflow: the palette now always fits, with the list scrolling internally. | FIX Options menu overflow: the Prefs dropdown now caps at viewport height and scrolls.</description>
+      <pubDate>Thu, 01 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>v26 &#8212; The Creator Backend Update | NitroIDE Changelog</title>
+      <link>https://nitroide.com/changelog.html#v26</link>
+      <guid>https://nitroide.com/changelog.html#v26</guid>
+      <description>NEW Self-hosted form backend: contact and feedback forms run on a Cloudflare Worker with Resend delivery &#8212; no third-party form service sees or stores your messages. | NEW Submission archive: every message archived with metadata and aggregated into live stats. | NEW Private admin dashboard: token-gated, unlisted, with totals, source stats, CSV export, search, delete and reply. | NEW How did you hear about us? survey on the feedback modal and contact page. | NEW Contact attachments: attach up to 3 files.</description>
+      <pubDate>Thu, 01 Oct 2026 00:00:00 +0000</pubDate>
+    </item>
+    <item>
       <title>v25 — The Performance &amp; Polish Update | NitroIDE Changelog</title>
       <link>https://nitroide.com/changelog.html#v25</link>
       <guid>https://nitroide.com/changelog.html#v25</guid>

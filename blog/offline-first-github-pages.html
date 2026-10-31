@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)</title>
-  <meta name="title" content="Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)">
-  <meta name="description" content="NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.">
+  <title>Offline-First on GitHub Pages: What Works, Where It Ends</title>
+  <meta name="title" content="Offline-First on GitHub Pages: What Works, Where It Ends">
+  <meta name="description" content="NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own">
   <meta name="keywords" content="offline-first GitHub Pages, service worker cache strategies, network-first cache-first, PWA offline static site, service worker versioned cache, NitroIDE offline">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#38bdf8">
@@ -13,8 +13,8 @@
   <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/offline-first-github-pages.html">
-  <meta property="og:title" content="Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)">
-  <meta property="og:description" content="NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.">
+  <meta property="og:title" content="Offline-First on GitHub Pages: What Works, Where It Ends">
+  <meta property="og:description" content="NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own">
   <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-24-offline-first-github-pages.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,11 +23,11 @@
   <meta property="article:published_time" content="2026-10-24">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/offline-first-github-pages.html">
-  <meta name="twitter:title" content="Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)">
-  <meta name="twitter:description" content="NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.">
+  <meta name="twitter:title" content="Offline-First on GitHub Pages: What Works, Where It Ends">
+  <meta name="twitter:description" content="NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-24-offline-first-github-pages.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-24-offline-first-github-pages.webp","headline":"Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)","description":"NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/offline-first-github-pages.html","datePublished":"2026-10-24","dateModified":"2026-10-24"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-24-offline-first-github-pages.webp","headline":"Offline-First on GitHub Pages: What Works, Where It Ends","description":"NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/offline-first-github-pages.html","mainEntityOfPage":"https://nitroide.com/blog/offline-first-github-pages.html","datePublished":"2026-10-24","dateModified":"2026-10-24"}
   </script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can a static site on GitHub Pages really work offline?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, after the first visit: a service worker caches the app shell and serves it when the network is gone. The first visit always needs the network — a worker cannot cache what the browser has never downloaded."}}, {"@type": "Question", "name": "Should HTML pages be cache-first or network-first?", "acceptedAnswer": {"@type": "Answer", "text": "Network-first for your own pages and scripts, so users never get silently trapped on an old version. Cache-first suits heavy vendor assets like Monaco, fonts, and icons, which change rarely and are harmless if briefly stale."}}, {"@type": "Question", "name": "What should a service worker never cache?", "acceptedAnswer": {"@type": "Answer", "text": "Anything with side effects or fresh state — API calls, form submissions, auth. A cached POST response is a bug waiting to happen, and a stale GET of current state is worse than a slow one."}}, {"@type": "Question", "name": "How do you test offline mode properly?", "acceptedAnswer": {"@type": "Answer", "text": "Use DevTools offline mode and do a normal reload, not a hard reload — a hard reload bypasses the service worker and tests nothing. Then check the app boots, the editor works, and a previously opened project loads."}}]}
@@ -55,7 +55,7 @@
 
     <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-24">October 24, 2026</time></div>
 
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)</h1>
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Offline-First on GitHub Pages: What Works, Where It Ends</h1>
 
     <p>NitroIDE runs on GitHub Pages. That means there is no server: no Node process, no database, no code that runs on request. Pages are static files, and GitHub serves them exactly as they are &mdash; it cannot even set custom response headers, which is why my security headers live at the Cloudflare layer instead.</p>
 

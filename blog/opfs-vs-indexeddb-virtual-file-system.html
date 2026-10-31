@@ -6,8 +6,8 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zero-Trust Storage: Encrypting OPFS with AES-GCM | NitroIDE</title>
-  <meta name="title" content="Zero-Trust Storage: Encrypting OPFS with AES-GCM | NitroIDE">
+  <title>OPFS vs IndexedDB: Zero-Trust AES-GCM Storage | NitroIDE</title>
+  <meta name="title" content="OPFS vs IndexedDB: Zero-Trust AES-GCM Storage | NitroIDE">
   <meta name="description" content="IndexedDB is unencrypted. See how NitroIDE implements a Zero-Trust architecture by encrypting all OPFS file chunks using the Web Crypto API.">
   <meta name="keywords" content="OPFS encryption, IndexedDB AES-GCM, zero trust local storage web, encrypted file system browser, secure origin private file system, browser IDE security, local storage vulnerability">
   <meta name="author" content="NitroIDE">
@@ -16,7 +16,7 @@
   <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/opfs-vs-indexeddb-virtual-file-system.html">
-  <meta property="og:title" content="Zero-Trust Storage: Encrypting OPFS with AES-GCM | NitroIDE">
+  <meta property="og:title" content="OPFS vs IndexedDB: Zero-Trust AES-GCM Storage | NitroIDE">
   <meta property="og:description" content="IndexedDB is unencrypted. See how NitroIDE implements a Zero-Trust architecture by encrypting all OPFS file chunks using the Web Crypto API.">
   <meta property="og:image" content="https://nitroide.com/og-banner.png">
   <meta property="og:image:width" content="1200">
@@ -26,11 +26,11 @@
   <meta property="article:published_time" content="2026-07-17">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/opfs-vs-indexeddb-virtual-file-system.html">
-  <meta name="twitter:title" content="Zero-Trust Storage: Encrypting OPFS with AES-GCM | NitroIDE">
+  <meta name="twitter:title" content="OPFS vs IndexedDB: Zero-Trust AES-GCM Storage | NitroIDE">
   <meta name="twitter:description" content="IndexedDB is unencrypted. See how NitroIDE implements a Zero-Trust architecture by encrypting all OPFS file chunks using the Web Crypto API.">
   <meta name="twitter:image" content="https://nitroide.com/og-banner.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/og-banner.png","headline":"Zero-Trust Storage: Encrypting OPFS with AES-GCM | NitroIDE","description":"IndexedDB is unencrypted. See how NitroIDE implements a Zero-Trust architecture by encrypting all OPFS file chunks using the Web Crypto API.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/opfs-vs-indexeddb-virtual-file-system.html","datePublished":"2026-07-17","dateModified":"2026-09-24"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/og-banner.png","headline":"OPFS vs IndexedDB: Zero-Trust AES-GCM Storage | NitroIDE","description":"IndexedDB is unencrypted. See how NitroIDE implements a Zero-Trust architecture by encrypting all OPFS file chunks using the Web Crypto API.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/opfs-vs-indexeddb-virtual-file-system.html","mainEntityOfPage":"https://nitroide.com/blog/opfs-vs-indexeddb-virtual-file-system.html","datePublished":"2026-07-17","dateModified":"2026-09-24"}
   </script>
   
   <link rel="icon" type="image/png" href="../logo/logo_white.png">
@@ -55,7 +55,7 @@
 
     <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-09-24">September 24, 2026</time></div>
     
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Zero-Trust Storage: Encrypting the OPFS.</h1>
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">OPFS vs IndexedDB: Zero-Trust AES-GCM Storage</h1>
     
     <!-- THE ARTICLE CONTENT -->
     <p>A critical vulnerability of building "Offline-First" web applications is physical access. If you store proprietary source code or environment variables in IndexedDB or the Origin Private File System (OPFS), any user with physical access to the laptop (or a rogue browser extension) can extract those plaintext files directly from the Chrome user profile directory.</p><p>NitroIDE implements a strict <strong>Zero-Trust Storage Architecture</strong>. Before a single byte of your codebase is written to the physical hard drive, it is aggressively encrypted via the Web Crypto API.</p><h2>The Streaming Encryption Pipeline</h2><p>We don't encrypt the entire database at once—that would cause massive memory spikes. Instead, we use the <code>TransformStream</code> API to pipe the file chunks through a rolling AES-GCM cipher before writing them to the OPFS <code>FileSystemSyncAccessHandle</code>.</p><div class="docs-code"><span class="code-comment">// Encrypting file chunks on the fly before saving to OPFS</span><br><span class="code-keyword">const</span> <span class="code-func">saveEncryptedFile</span> = <span class="code-keyword">async</span> (fileHandle, rawBuffer, userKey) =&gt; {<br>&nbsp;&nbsp;<span class="code-comment">// Generate a unique Initialization Vector (IV) for this file</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> iv = crypto.<span class="code-func">getRandomValues</span>(<span class="code-keyword">new</span> Uint8Array(<span class="code-num">12</span>));<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<span class="code-comment">// Encrypt the raw AST/Source Code</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> encryptedBuffer = <span class="code-keyword">await</span> crypto.subtle.<span class="code-func">encrypt</span>(<br>&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-string">'AES-GCM'</span>, <span class="code-attr">iv</span>: iv },<br>&nbsp;&nbsp;&nbsp;&nbsp;userKey,<br>&nbsp;&nbsp;&nbsp;&nbsp;rawBuffer<br>&nbsp;&nbsp;);<br><br>&nbsp;&nbsp;<span class="code-comment">// Write the IV and the CipherText to the native OPFS handle</span><br>&nbsp;&nbsp;<span class="code-keyword">const</span> accessHandle = <span class="code-keyword">await</span> fileHandle.<span class="code-func">createSyncAccessHandle</span>();<br>&nbsp;&nbsp;accessHandle.<span class="code-func">write</span>(iv);<br>&nbsp;&nbsp;accessHandle.<span class="code-func">write</span>(<span class="code-keyword">new</span> Uint8Array(encryptedBuffer));<br>&nbsp;&nbsp;accessHandle.<span class="code-func">close</span>();<br>};</div><div class="pro-tip" style="border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);"><i class="ph-fill ph-hard-drive" style="color: #f59e0b;"></i><div><p><strong>PBKDF2 Key Derivation:</strong> The <code>userKey</code> is never stored in the browser. When you boot NitroIDE, you enter a master password. We run that password through 100,000 iterations of PBKDF2 hashing to derive the AES encryption key. This ensures that even if someone steals your laptop and extracts the raw OPFS binaries, they cannot decrypt the data without your brain.</p></div></div><h2>Enterprise Compliance on the Web</h2><p>This architecture allows NitroIDE to meet strict enterprise compliance standards (like SOC2 or HIPAA) right in the browser. Because the host machine's hard drive only contains cryptographically secure blobs, developers can work on highly sensitive proprietary code on public Wi-Fi or shared machines with total confidence.</p>

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NitroIDE AI Pair Programmer: Bring Your Own Key, Surgical Edits</title>
-  <meta name="title" content="NitroIDE AI Pair Programmer: Bring Your Own Key, Surgical Edits">
+  <title>NitroIDE AI Pair Programmer: Bring Your Own Key</title>
+  <meta name="title" content="NitroIDE AI Pair Programmer: Bring Your Own Key">
   <meta name="description" content="NitroIDE's AI pair programmer: bring-your-own-key privacy, surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes.">
   <meta name="keywords" content="AI pair programmer, browser IDE with AI, BYOK AI, Groq, Gemini, OpenRouter, AI code assistant privacy, surgical code edits, NitroIDE">
   <meta name="author" content="NitroIDE">
@@ -13,7 +13,7 @@
   <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/ai-pair-programmer-byok.html">
-  <meta property="og:title" content="NitroIDE AI Pair Programmer: Bring Your Own Key, Surgical Edits">
+  <meta property="og:title" content="NitroIDE AI Pair Programmer: Bring Your Own Key">
   <meta property="og:description" content="NitroIDE's AI pair programmer: bring-your-own-key privacy, surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes.">
   <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-03-ai-pair-programmer.webp">
   <meta property="og:image:width" content="1200">
@@ -23,11 +23,11 @@
   <meta property="article:published_time" content="2026-10-06">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/ai-pair-programmer-byok.html">
-  <meta name="twitter:title" content="NitroIDE AI Pair Programmer: Bring Your Own Key, Surgical Edits">
+  <meta name="twitter:title" content="NitroIDE AI Pair Programmer: Bring Your Own Key">
   <meta name="twitter:description" content="NitroIDE's AI pair programmer: bring-your-own-key privacy, surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes.">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-03-ai-pair-programmer.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-03-ai-pair-programmer.webp","headline":"NitroIDE AI Pair Programmer: Bring Your Own Key, Surgical Edits","description":"NitroIDE's AI pair programmer: bring-your-own-key privacy, surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/ai-pair-programmer-byok.html","datePublished":"2026-10-06","dateModified":"2026-10-06"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-03-ai-pair-programmer.webp","headline":"NitroIDE AI Pair Programmer: Bring Your Own Key","description":"NitroIDE's AI pair programmer: bring-your-own-key privacy, surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/ai-pair-programmer-byok.html","mainEntityOfPage":"https://nitroide.com/blog/ai-pair-programmer-byok.html","datePublished":"2026-10-06","dateModified":"2026-10-06"}
   </script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does bring-your-own-key mean?", "acceptedAnswer": {"@type": "Answer", "text": "You paste your own API key for Groq, Gemini, OpenRouter, or OpenAI. NitroIDE stores it in your browser, and no NitroIDE server stores your code or key."}}, {"@type": "Question", "name": "Does the AI rewrite whole files?", "acceptedAnswer": {"@type": "Answer", "text": "No — it proposes surgical find/replace edits with diff previews, and you apply only what you approve."}}, {"@type": "Question", "name": "What happens if the AI is unsure about an edit?", "acceptedAnswer": {"@type": "Answer", "text": "Trust controls refuse ambiguous changes instead of guessing, and a checkpoint is saved before every apply so you can restore."}}, {"@type": "Question", "name": "Does NitroIDE use an AI backend or proxy?", "acceptedAnswer": {"@type": "Answer", "text": "For Groq, Gemini, OpenRouter, and OpenAI your key goes direct to the provider; SambaNova passes through a non-storing Cloudflare Worker proxy."}}, {"@type": "Question", "name": "Does the AI cost extra?", "acceptedAnswer": {"@type": "Answer", "text": "NitroIDE charges nothing for AI — you use your own provider key, and Groq, Gemini, and OpenRouter all have free tiers."}}]}
@@ -55,7 +55,7 @@
 
     <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-06">October 6, 2026</time></div>
 
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">NitroIDE AI Pair Programmer: Bring Your Own Key, Surgical Edits</h1>
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">NitroIDE AI Pair Programmer: Bring Your Own Key</h1>
 
     <p>The most useful bug report I got this year was one sentence long: <em>"AI always add and change things in script."</em> Not a stack trace, not a repro — just the lived experience of every developer who has watched an AI assistant confidently rewrite the wrong file, touch code it wasn't asked about, and leave no way back.</p>
 

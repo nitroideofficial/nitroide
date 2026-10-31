@@ -299,16 +299,21 @@
     }
     btn.disabled = true;
     btnText.textContent = selectedFiles.length ? 'Reading files...' : 'Sending...';
+    // Audit 2026-10-31 (#16): 30s timeout so a hung request can't leave the form stuck on "Sending...".
+    var ctrl = new AbortController();
+    var ctrlTimer = setTimeout(function () { ctrl.abort(); }, 30000);
     Promise.all(selectedFiles.map(readFileAsB64)).then(function (atts) {
       btnText.textContent = 'Sending...';
       return fetch('/api/contact', {
+        signal: ctrl.signal,
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({ form: 'contact', name: name, email: email, message: msg, subject: 'NitroIDE contact: ' + name, source: (document.getElementById('cSource')||{}).value || '', attachments: atts, website: document.getElementById('cWebsite').value })
       });
     }).then(function (r) {
-      return r.json().then(function (data) {
-        if (!r.ok || !data.success) throw new Error((data && data.error) || 'send failed');
+      if (r.status === 429) throw new Error('rate-limited');
+      return r.json().catch(function () { return null; }).then(function (data) {
+        if (!r.ok || !data || !data.success) throw new Error((data && data.error) || 'send failed');
         return data;
       });
     }).then(function () {
@@ -318,10 +323,16 @@
       selectedFiles = [];
       renderFileList();
     }).catch(function (err) {
-      var emsg = (err && err.message && err.message !== 'send failed') ? err.message : 'Something went wrong sending your message. Please email us directly at contactnitroide@gmail.com.';
+      // Audit 2026-10-31 (#16): never surface raw SyntaxError / Failed-to-fetch text.
+      var emsg;
+      if (err && err.name === 'AbortError') emsg = 'Sending timed out. Please check your connection and try again.';
+      else if (err && err.message === 'rate-limited') emsg = 'Too many messages sent too quickly. Please wait a minute and try again.';
+      else if (err && err.message && err.message !== 'send failed' && err.message.indexOf('Failed to fetch') === -1 && err.message.indexOf('NetworkError') === -1 && err.message.indexOf('Load failed') === -1) emsg = err.message;
+      else emsg = 'Something went wrong sending your message. Please email us directly at contactnitroide@gmail.com.';
       status.textContent = emsg;
       status.classList.add('err');
     }).finally(function () {
+      clearTimeout(ctrlTimer);
       btn.disabled = false;
       btnText.textContent = 'Send Message';
     });

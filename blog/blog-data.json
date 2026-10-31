@@ -1,8 +1,8 @@
 [
   {
     "SLUG": "json-ld-recipes-no-plugin",
-    "META_TITLE": "JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin",
-    "META_DESC": "Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.",
+    "META_TITLE": "JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication",
+    "META_DESC": "Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really",
     "KEYWORDS": "JSON-LD recipes, BlogPosting schema, FAQPage schema, SoftwareApplication schema, structured data static site, SEO without plugin",
     "THEME_COLOR": "#38bdf8",
     "CATEGORY": "ENGINEERING",
@@ -16,8 +16,8 @@
   },
   {
     "SLUG": "seo-checklist-for-indie-hackers",
-    "META_TITLE": "SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking",
-    "META_DESC": "Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them after shipping.",
+    "META_TITLE": "SEO Checklist: Sitemap, Schema, and llms.txt | NitroIDE",
+    "META_DESC": "Sitemap, schema, and llms.txt — the three machine-readable files an indie site actually needs, the mistakes that silently void each one, and how to verify them",
     "KEYWORDS": "seo checklist indie hackers, sitemap lastmod git history, JSON-LD schema SoftwareApplication BlogPosting FAQPage, llms.txt AI readable site, indie site SEO",
     "THEME_COLOR": "#4ade80",
     "CATEGORY": "ENGINEERING",
@@ -31,8 +31,8 @@
   },
   {
     "SLUG": "offline-first-github-pages",
-    "META_TITLE": "Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)",
-    "META_DESC": "NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own code, cache-first for vendor assets, a versioned cache, no cached API calls, and navigations cached under the bare path — plus the honest limits.",
+    "META_TITLE": "Offline-First on GitHub Pages: What Works, Where It Ends",
+    "META_DESC": "NitroIDE runs on GitHub Pages with no server, yet works offline after the first visit. The recipe: precache only the app shell, network-first for your own",
     "KEYWORDS": "offline-first GitHub Pages, service worker cache strategies, network-first cache-first, PWA offline static site, service worker versioned cache, NitroIDE offline",
     "THEME_COLOR": "#38bdf8",
     "CATEGORY": "ENGINEERING",
@@ -46,8 +46,8 @@
   },
   {
     "SLUG": "localstorage-as-database",
-    "META_TITLE": "localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate",
-    "META_DESC": "NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped history, batched saves, and the honest limits: ~5 MB, synchronous, strings only, and readable by any script on your origin.",
+    "META_TITLE": "localStorage Is My Database: Patterns, Limits, Graduation",
+    "META_DESC": "NitroIDE runs with no server and no database — its projects, preferences, and history live in localStorage. One key per JSON document, namespaced keys, capped",
     "KEYWORDS": "localStorage database patterns, localStorage limits 5MB, IndexedDB vs localStorage, browser storage patterns, NitroIDE localStorage, localStorage QuotaExceededError",
     "THEME_COLOR": "#fbbf24",
     "CATEGORY": "ENGINEERING",
@@ -61,8 +61,8 @@
   },
   {
     "SLUG": "vanilla-js-blog-engine",
-    "META_TITLE": "I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed",
-    "META_DESC": "37 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.",
+    "META_TITLE": "I Built a Blog Engine With No Build Step | NitroIDE",
+    "META_DESC": "42 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.",
     "KEYWORDS": "vanilla JS blog engine, static blog no build step, blog-data.json, hand-edited RSS feed, sitemap lastmod from git log, noscript SEO fallback, static site blog architecture",
     "THEME_COLOR": "#a78bfa",
     "CATEGORY": "ENGINEERING",
@@ -76,8 +76,8 @@
   },
   {
     "SLUG": "templates-gallery-tour",
-    "META_TITLE": "12 Starters, Zero Blank Pages: A Tour of NitroIDE's Template Gallery | NitroIDE",
-    "META_DESC": "Twelve starters, zero blank pages: a tour of every NitroIDE template — portfolios, landing pages, todo app, gradient generator, React and Tailwind without a build step — with a concrete 'reach for this when…' rule for each.",
+    "META_TITLE": "12 Starters, Zero Blank Pages: Template Gallery Tour | NitroIDE",
+    "META_DESC": "Twelve starters, zero blank pages: a tour of every NitroIDE template — portfolios, landing pages, todo app, gradient generator, React and Tailwind without a",
     "KEYWORDS": "NitroIDE templates, template gallery, starter templates, portfolio template, todo app template, react without npm, tailwind without build step, NitroIDE",
     "THEME_COLOR": "#22c55e",
     "CATEGORY": "PROTOTYPING & WORKFLOW",
@@ -91,8 +91,8 @@
   },
   {
     "SLUG": "cloudflare-security-headers-recipe",
-    "META_TITLE": "Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE | NitroIDE",
-    "META_DESC": "GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP — plus why CSP is deliberately not shipped yet.",
+    "META_TITLE": "Hardened Static Site: The Cloudflare Headers Recipe | NitroIDE",
+    "META_DESC": "GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP —",
     "KEYWORDS": "cloudflare security headers, HSTS, nosniff, COEP, COOP, referrer policy, permissions policy, static site security, NitroIDE",
     "THEME_COLOR": "#f59e0b",
     "CATEGORY": "ENGINEERING",
@@ -106,8 +106,8 @@
   },
   {
     "SLUG": "hmr-without-a-bundler",
-    "META_TITLE": "HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work | NitroIDE",
-    "META_DESC": "No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and its honest ceiling.",
+    "META_TITLE": "HMR Without a Bundler: How Instant Preview Updates Work | NitroIDE",
+    "META_DESC": "No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and",
     "KEYWORDS": "hmr without bundler, instant preview, srcdoc, postMessage CSS hot reload, debounce, browser IDE, NitroIDE",
     "THEME_COLOR": "#38bdf8",
     "CATEGORY": "ENGINEERING",
@@ -151,7 +151,7 @@
   },
   {
     "SLUG": "ai-pair-programmer-byok",
-    "META_TITLE": "NitroIDE AI Pair Programmer: Bring Your Own Key, Surgical Edits | NitroIDE",
+    "META_TITLE": "NitroIDE AI Pair Programmer: Bring Your Own Key | NitroIDE",
     "META_DESC": "NitroIDE's AI pair programmer: bring-your-own-key privacy, surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes.",
     "KEYWORDS": "AI pair programmer, browser IDE with AI, BYOK AI, Groq, Gemini, OpenRouter, AI code assistant privacy, surgical code edits, NitroIDE",
     "THEME_COLOR": "#00e5ff",
@@ -196,8 +196,8 @@
   },
   {
     "SLUG": "instant-code-sharing-zero-backend",
-    "META_TITLE": "I Deleted My Share Backend and Replaced It With a URL | NitroIDE",
-    "META_DESC": "NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the service-worker bug it caused.",
+    "META_TITLE": "I Replaced My Share Backend With a URL | NitroIDE",
+    "META_DESC": "NitroIDE's share links are compressed code stuffed into a ?code= URL — no database, no auth, no server. How the engine works, the honest limits, and the",
     "KEYWORDS": "?code= share links, URL-encoded state, client-side compression, deflate base64url, no-backend sharing, NitroIDE",
     "THEME_COLOR": "#22d3ee",
     "CATEGORY": "NO-SERVER ARCHITECTURE",
@@ -483,8 +483,8 @@
   },
   {
     "SLUG": "best-code-editor-ipad-pro-m4-browser-ide",
-    "META_TITLE": "The Best Code Editor for iPad Pro: Desktop-Grade Engineering on iOS",
-    "META_DESC": "Unlock your M-Series iPad. Discover how NitroIDE brings full Node.js, native terminal access, and desktop-grade React development to Safari via WebAssembly.",
+    "META_TITLE": "The Best Code Editor for iPad Pro: Frontend Coding on iOS",
+    "META_DESC": "Unlock your M-Series iPad. NitroIDE brings frontend coding — HTML, CSS, JavaScript, live preview — to Safari. No install, no server, no terminal needed.",
     "KEYWORDS": "best code editor for iPad Pro, run VS Code on iPad, iPadOS programming app, digital nomad coding setup, program on iPad browser, remote development iPadOS, M4 iPad programming, mobile web development USA, iOS IDE full stack",
     "THEME_COLOR": "#a855f7",
     "CATEGORY": "PROTOTYPING & WORKFLOW",
@@ -532,13 +532,13 @@
   },
   {
     "SLUG": "opfs-vs-indexeddb-virtual-file-system",
-    "META_TITLE": "OPFS vs IndexedDB: Building a Faster Virtual File System",
+    "META_TITLE": "OPFS vs IndexedDB: Zero-Trust AES-GCM Storage",
     "META_DESC": "IndexedDB is too slow for compiling code. Read our deep dive into the Origin Private File System (OPFS) and how it enables native disk I/O in the browser.",
     "KEYWORDS": "OPFS vs IndexedDB, Origin Private File System, browser file storage, web native file I/O, build virtual file system javascript, faster web storage APIs",
     "THEME_COLOR": "#3b82f6",
     "CATEGORY": "DATABASES",
     "DATE": "MAY 2026",
-    "H1_TITLE": "OPFS vs IndexedDB for File Systems.",
+    "H1_TITLE": "OPFS vs IndexedDB: Zero-Trust AES-GCM Storage",
     "CONTENT": "<p>When building a browser IDE, you need a place to store files. IndexedDB is the standard choice, but its asynchronous, object-based architecture introduces massive overhead when reading thousands of tiny <code>node_modules</code> files. NitroIDE utilizes the <strong>Origin Private File System (OPFS)</strong>, which provides highly optimized, synchronous read/write access directly to your local SSD, mimicking true OS-level disk operations.</p>"
   },
   {

@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin</title>
-  <meta name="title" content="JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin">
-  <meta name="description" content="Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.">
+  <title>JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication</title>
+  <meta name="title" content="JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication">
+  <meta name="description" content="Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really">
   <meta name="keywords" content="JSON-LD recipes, BlogPosting schema, FAQPage schema, SoftwareApplication schema, structured data static site, SEO without plugin">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#38bdf8">
@@ -13,8 +13,8 @@
   <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/json-ld-recipes-no-plugin.html">
-  <meta property="og:title" content="JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin">
-  <meta property="og:description" content="Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.">
+  <meta property="og:title" content="JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication">
+  <meta property="og:description" content="Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really">
   <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-29-json-ld-recipes-no-plugin.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,11 +23,11 @@
   <meta property="article:published_time" content="2026-10-29">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/json-ld-recipes-no-plugin.html">
-  <meta name="twitter:title" content="JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin">
-  <meta name="twitter:description" content="Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.">
+  <meta name="twitter:title" content="JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication">
+  <meta name="twitter:description" content="Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-29-json-ld-recipes-no-plugin.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-29-json-ld-recipes-no-plugin.webp","headline":"JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin","description":"Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really answers questions — plus the mistakes that void each one and a one-minute validation routine.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/json-ld-recipes-no-plugin.html","datePublished":"2026-10-29","dateModified":"2026-10-29"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-29-json-ld-recipes-no-plugin.webp","headline":"JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication","description":"Three copy-paste JSON-LD recipes for a static site — SoftwareApplication for the product, BlogPosting for every article, FAQPage only where the page really","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/json-ld-recipes-no-plugin.html","mainEntityOfPage":"https://nitroide.com/blog/json-ld-recipes-no-plugin.html","datePublished":"2026-10-29","dateModified":"2026-10-29"}
   </script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do I need a plugin to add JSON-LD schema?", "acceptedAnswer": {"@type": "Answer", "text": "No. JSON-LD is just JSON inside a script tag on the page, so on a static site you write the block by hand in the same file as the page it describes — no plugin, build step, or server required."}}, {"@type": "Question", "name": "Which JSON-LD types does a static indie site need?", "acceptedAnswer": {"@type": "Answer", "text": "Three cover almost everything: SoftwareApplication for the product page, BlogPosting for every article, and FAQPage only where the page visibly answers questions."}}, {"@type": "Question", "name": "What voids a BlogPosting block?", "acceptedAnswer": {"@type": "Answer", "text": "Copy-paste without editing. It is the easiest block to clone across articles, which makes it the easiest to ship with the previous article's headline, description, or URL still in it. Check that mainEntityOfPage equals the URL of the page you are looking at."}}, {"@type": "Question", "name": "When should FAQPage schema be used?", "acceptedAnswer": {"@type": "Answer", "text": "Only where the page visibly contains those questions and answers, mirroring them exactly. If the visible FAQ changes and the schema does not, the page and its schema disagree in a format designed to be machine-checked."}}]}
@@ -55,7 +55,7 @@
 
     <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-29">October 29, 2026</time></div>
 
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin</h1>
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication</h1>
 
     <p>Two weeks ago I wrote the overview: a static indie site needs three machine-readable files — sitemap, schema, and llms.txt. That post told you what each one is for. This one is the part I left out on purpose: the actual code.</p>
 

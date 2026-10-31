@@ -1,6 +1,6 @@
 # Landing pages — build system
 
-The 19 pages in `landing/*.html` are **generated** from two sources in this
+The 21 pages in `landing/*.html` are **generated** from two sources in this
 directory. Edit the sources, regenerate, commit. Never hand-edit the HTML
 directly — your changes will be overwritten on the next build.
 

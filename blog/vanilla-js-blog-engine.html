@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed</title>
-  <meta name="title" content="I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed">
-  <meta name="description" content="37 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.">
+  <title>I Built a Blog Engine With No Build Step | NitroIDE</title>
+  <meta name="title" content="I Built a Blog Engine With No Build Step | NitroIDE">
+  <meta name="description" content="42 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.">
   <meta name="keywords" content="vanilla JS blog engine, static blog no build step, blog-data.json, hand-edited RSS feed, sitemap lastmod from git log, noscript SEO fallback, static site blog architecture">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#a78bfa">
@@ -13,8 +13,8 @@
   <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/vanilla-js-blog-engine.html">
-  <meta property="og:title" content="I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed">
-  <meta property="og:description" content="37 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.">
+  <meta property="og:title" content="I Built a Blog Engine With No Build Step | NitroIDE">
+  <meta property="og:description" content="42 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.">
   <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-10-20-vanilla-js-blog-engine.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,11 +23,11 @@
   <meta property="article:published_time" content="2026-10-20">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/vanilla-js-blog-engine.html">
-  <meta name="twitter:title" content="I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed">
-  <meta name="twitter:description" content="37 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.">
+  <meta name="twitter:title" content="I Built a Blog Engine With No Build Step | NitroIDE">
+  <meta name="twitter:description" content="42 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-10-20-vanilla-js-blog-engine.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-20-vanilla-js-blog-engine.webp","headline":"I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed","description":"37 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE"},"mainEntityOfPage":"https://nitroide.com/blog/vanilla-js-blog-engine.html","datePublished":"2026-10-20","dateModified":"2026-10-20"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-10-20-vanilla-js-blog-engine.webp","headline":"I Built a Blog Engine With No Build Step | NitroIDE","description":"42 posts, zero build step — how blog-data.json, a <noscript> archive list, a hand-gated RSS feed, and git-derived sitemap dates run NitroIDE's blog.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/vanilla-js-blog-engine.html","mainEntityOfPage":"https://nitroide.com/blog/vanilla-js-blog-engine.html","datePublished":"2026-10-20","dateModified":"2026-10-20"}
   </script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do you run a blog with no CMS and no build step?", "acceptedAnswer": {"@type": "Answer", "text": "With five files: one JSON file (blog-data.json) as the index, one self-contained HTML page per post, a client-side-rendered index page, a hand-edited RSS file, and a sitemap. The publishing checklist replaces the build step — every post is verified against each file before it ships."}}, {"@type": "Question", "name": "How do search engines read a blog index that renders with JavaScript?", "acceptedAnswer": {"@type": "Answer", "text": "They don't have to: blog/index.html carries a <noscript> block with every article as a plain link, regenerated from blog-data.json at publish time. JS visitors see the card grid instead — the page never shows both."}}, {"@type": "Question", "name": "How do you keep a hand-edited RSS feed from breaking?", "acceptedAnswer": {"@type": "Answer", "text": "With a validation gate before every commit: the file must parse as XML, and the count of <item> opens must equal closes. The gate exists because the live feed broke three times — Sep 2026, Oct 8, and Oct 10 — a missing closing tag each time."}}, {"@type": "Question", "name": "Where do the sitemap's lastmod dates come from?", "acceptedAnswer": {"@type": "Answer", "text": "From git history: each URL's lastmod is derived from `git log -1 --format=%cs` for that file. A sitemap that claims everything changed today teaches crawlers to stop trusting it."}}]}
@@ -55,7 +55,7 @@
 
     <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-10-20">October 20, 2026</time></div>
 
-    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed</h1>
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">I Built a Blog Engine With No Build Step | NitroIDE</h1>
 
     <p>There's no CMS behind this blog. No static site generator, no build step, no database. Thirty-seven posts, and the entire "engine" is five files plus a checklist.</p>
 

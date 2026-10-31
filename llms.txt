@@ -1,6 +1,6 @@
 # NitroIDE
 
-> Version: 2026-10-13 (v30). This file is updated on every release.
+> Version: 2026-10-31 (v30). This file is updated on every release.
 
 > NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no installation — your code runs only in your browser.
 
@@ -21,6 +21,25 @@
 - [Blog](https://nitroide.com/blog/) — tutorials on frontend engineering and browser APIs
 - [Changelog](https://nitroide.com/changelog.html)
 - [Contact](https://nitroide.com/contact.html) — report bugs, request features, or say hello
+- [About](https://nitroide.com/about.html) — about NitroIDE and the story behind the engine
+- [Cheatsheet](https://nitroide.com/cheatsheet.html) — keyboard shortcuts and quick reference
+- [Roadmap](https://nitroide.com/roadmap.html) — what has shipped and what is next
+- [Showcase](https://nitroide.com/showcase.html) — sites built with NitroIDE
+
+
+## Templates
+- [Personal Portfolio](https://nitroide.com/templates/portfolio.html)
+- [Startup Landing Page](https://nitroide.com/templates/landing-page.html)
+- [Pure CSS Sunset](https://nitroide.com/templates/css-art.html)
+- [Target Tap Game](https://nitroide.com/templates/mini-game.html)
+- [Tailwind via CDN](https://nitroide.com/templates/tailwind-demo.html)
+- [React 18 Counter](https://nitroide.com/templates/react-counter.html)
+- [Todo App](https://nitroide.com/templates/todo-app.html)
+- [Analog + Digital Clock](https://nitroide.com/templates/clock.html)
+- [CSS Gradient Generator](https://nitroide.com/templates/gradient-generator.html)
+- [Markdown Previewer](https://nitroide.com/templates/markdown-preview.html)
+- [Countdown Timer](https://nitroide.com/templates/countdown.html)
+- [Link in Bio](https://nitroide.com/templates/link-in-bio.html)
 
 ## Landing pages
 - [Code on Chromebook](https://nitroide.com/landing/chromebook-code-editor-free.html)
@@ -44,6 +63,51 @@
 - [Best VS Code Online Alternative](https://nitroide.com/landing/vscode-online-alternative.html)
 - [CodeSandbox vs NitroIDE](https://nitroide.com/landing/codesandbox-vs-nitroide.html)
 - [CodePen vs CodeSandbox](https://nitroide.com/landing/codepen-vs-codesandbox.html)
+
+
+## Articles
+- [JSON-LD Recipes: BlogPosting, FAQPage, SoftwareApplication](https://nitroide.com/blog/json-ld-recipes-no-plugin.html)
+- [SEO Checklist: Sitemap, Schema, and llms.txt | NitroIDE](https://nitroide.com/blog/seo-checklist-for-indie-hackers.html)
+- [Offline-First on GitHub Pages: What Works, Where It Ends](https://nitroide.com/blog/offline-first-github-pages.html)
+- [localStorage Is My Database: Patterns, Limits, Graduation](https://nitroide.com/blog/localstorage-as-database.html)
+- [I Built a Blog Engine With No Build Step | NitroIDE](https://nitroide.com/blog/vanilla-js-blog-engine.html)
+- [12 Starters, Zero Blank Pages: Template Gallery Tour | NitroIDE](https://nitroide.com/blog/templates-gallery-tour.html)
+- [Hardened Static Site: The Cloudflare Headers Recipe | NitroIDE](https://nitroide.com/blog/cloudflare-security-headers-recipe.html)
+- [HMR Without a Bundler: How Instant Preview Updates Work | NitroIDE](https://nitroide.com/blog/hmr-without-a-bundler.html)
+- [Nitro.watch(): A Live State Panel for My Browser IDE | NitroIDE](https://nitroide.com/blog/state-watcher.html)
+- [No-Server IDE: Your Code Runs Only in Your Browser | NitroIDE](https://nitroide.com/blog/no-server-architecture.html)
+- [NitroIDE AI Pair Programmer: Bring Your Own Key | NitroIDE](https://nitroide.com/blog/ai-pair-programmer-byok.html)
+- [postMessage Sanitizer: A Recipe for Building iframe Tools | NitroIDE](https://nitroide.com/blog/postmessage-sanitizer.html)
+- [I Published 91 Posts With 0 Followers. What the Numbers Say | NitroIDE](https://nitroide.com/blog/91-posts-0-followers-lessons.html)
+- [I Replaced My Share Backend With a URL | NitroIDE](https://nitroide.com/blog/instant-code-sharing-zero-backend.html)
+- [How NitroIDE Renders Code Instantly: srcdoc + postMessage | NitroIDE](https://nitroide.com/blog/0ms-preview-srcdoc-postmessage-no-bundler.html)
+- [CodeSandbox & StackBlitz Alternative: No-Cloud Frontend IDE | NitroIDE](https://nitroide.com/blog/codesandbox-stackblitz-alternative-local-webcontainers.html)
+- [Web Workers & Multithreading in the Browser: The Practical Guide | NitroIDE](https://nitroide.com/blog/web-workers-multithreading-browser-guide.html)
+- [Browser Storage & Offline Apps: OPFS, IndexedDB and Service Workers | NitroIDE](https://nitroide.com/blog/browser-storage-offline-apps-opfs-indexeddb-guide.html)
+- [Browser Networking: Fetch, Streams, Background Fetch & WebTransport | NitroIDE](https://nitroide.com/blog/browser-networking-fetch-streams-webtransport-guide.html)
+- [Modern CSS for App UIs: Houdini, Container Queries & View Transitions | NitroIDE](https://nitroide.com/blog/modern-css-app-ui-houdini-container-queries-guide.html)
+- [Canvas & Web Audio: A Hands-On Creative Coding Guide | NitroIDE](https://nitroide.com/blog/canvas-webaudio-creative-coding-guide.html)
+- [WebAssembly in the Browser: What It Can (and Can't) Do | NitroIDE](https://nitroide.com/blog/webassembly-browser-honest-guide.html)
+- [Browser Hardware APIs: Serial, Bluetooth, HID, USB & MIDI | NitroIDE](https://nitroide.com/blog/browser-hardware-apis-serial-bluetooth-hid-guide.html)
+- [Browser Performance: Scheduler, Observers & Memory Done Right | NitroIDE](https://nitroide.com/blog/browser-performance-scheduler-observers-memory-guide.html)
+- [Browser Security: WebCrypto, Sandboxing & Zero-Trust Patterns | NitroIDE](https://nitroide.com/blog/browser-security-webcrypto-sandboxing-guide.html)
+- [Prototype React, Vue & TypeScript in the Browser — No Build Step | NitroIDE](https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide.html)
+- [Bringing Vim & Emacs to the Web: The Power User's Online Editor](https://nitroide.com/blog/vim-emacs-online-editor-keybindings.html)
+- [Migrating Your Local Monorepo to a Browser-Based Workspace | NitroIDE](https://nitroide.com/blog/migrate-local-monorepo-browser-based-ide.html)
+- [The Best Free Online IDE for Students and Bootcamps in 2026](https://nitroide.com/blog/best-free-online-ide-students-bootcamps.html)
+- [The Most Advanced HTML, CSS, & JS Online Editor in 2026](https://nitroide.com/blog/html-css-js-online-editor-playground.html)
+- [Offline-First Development: The IDE That Works on an Airplane | NitroIDE](https://nitroide.com/blog/offline-first-browser-ide-pwa.html)
+- [The Best Code Editor for iPad Pro: Desktop-Grade Engineering on iOS](https://nitroide.com/blog/best-code-editor-ipad-pro-m4-browser-ide.html)
+- [The Ultimate Digital Nomad Coding Setup: 100% Offline Browser IDE](https://nitroide.com/blog/digital-nomad-coding-offline-browser-ide.html)
+- [How to Migrate from Replit to NitroIDE in 3 Minutes](https://nitroide.com/blog/migrate-replit-to-nitroide-tutorial.html)
+- [The Best Free Online IDEs in 2026: An Honest Comparison | NitroIDE](https://nitroide.com/blog/best-online-ide-free-2026-comparison.html)
+- [OPFS vs IndexedDB: Zero-Trust AES-GCM Storage](https://nitroide.com/blog/opfs-vs-indexeddb-virtual-file-system.html)
+- [Tutorial: How to Build a React App Without npm or Build Tools](https://nitroide.com/blog/how-to-use-react-without-npm.html)
+- [Guide: Mastering Tailwind CSS in the Browser](https://nitroide.com/blog/tailwind-css-in-browser-no-postcss.html)
+- [Engineering: How We Built a Zero-Latency IDE](https://nitroide.com/blog/zero-latency-local-browser-ide-architecture.html)
+- [Coding Offline on a Chromebook: An Honest Cloud9 Alternative | NitroIDE](https://nitroide.com/blog/aws-cloud9-alternative-local-compute.html)
+- [Visualizing RxJS and Redux State in Real-Time](https://nitroide.com/blog/rxjs-redux-state-visualization-ide.html)
+- [In-Browser Code Formatting via Babel AST Manipulation](https://nitroide.com/blog/ast-manipulation-auto-formatting-babel.html)
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall. The AI pair programmer uses your own provider API keys — Groq, Gemini, and OpenRouter offer free tiers; NitroIDE charges nothing for AI. See [pricing](https://nitroide.com/pricing.md).
