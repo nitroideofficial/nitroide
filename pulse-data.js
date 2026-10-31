@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Oct 31, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Embeds: a live NitroIDE playground inside your docs",
+  link: "https://peerlist.io/scroll/post/ACTHEOG7M8DPBEPKB2R6MLDDA7M6DK"
+},
+  {
+  date: "Oct 31, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
   color: "#7c3aed",
