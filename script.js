@@ -1560,3 +1560,37 @@ function aiChatOpenWith(prompt){
   aiToggleSidebar(true);
   aiChatSend(prompt);
 }
+/* Sentry error reporting (error monitoring only): loads the Sentry loader
+   asynchronously; it sends nothing unless NitroIDE's own code throws an
+   error. sentryOnLoad strips query strings from reported URLs (share-link
+   contents must never leave the browser) and drops console breadcrumbs. */
+;(function(){
+  if (window.__nitroSentry) return;
+  window.__nitroSentry = true;
+  window.sentryOnLoad = function(){
+    try{
+      window.Sentry.init({
+        beforeSend: function(event){
+          try{
+            if (event.request) {
+              if (event.request.url) event.request.url = event.request.url.split('?')[0];
+              delete event.request.query_string;
+            }
+            if (event.breadcrumbs) {
+              event.breadcrumbs = event.breadcrumbs.filter(function(b){ return b.category !== 'console'; }).map(function(b){
+                if (b.data && typeof b.data.url === 'string') b.data.url = b.data.url.split('?')[0];
+                return b;
+              });
+            }
+          }catch (e) {}
+          return event;
+        }
+      });
+    }catch (e) {}
+  };
+  var s = document.createElement('script');
+  s.src = 'https://js.sentry-cdn.com/d137a3543f54289195f6a5f4cb3cb143.min.js';
+  s.crossOrigin = 'anonymous';
+  document.head.appendChild(s);
+})();
+
