@@ -7,6 +7,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>Privacy as a Feature: Your Code Never Leaves Your Machine | NitroIDE</title>
+      <link>https://nitroide.com/blog/privacy-as-a-feature.html</link>
+      <guid>https://nitroide.com/blog/privacy-as-a-feature.html</guid>
+      <description>NitroIDE has no server and no database: projects live in your browser's localStorage, share links rebuild workspaces locally, and a sandboxed preview keeps shared code away from saved projects.</description>
+      <pubDate>Sun, 01 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
       <title>Embeds: Putting a Live NitroIDE Playground Inside Your Docs | NitroIDE</title>
       <link>https://nitroide.com/blog/embeds-live-playground-in-docs.html</link>
       <guid>https://nitroide.com/blog/embeds-live-playground-in-docs.html</guid>

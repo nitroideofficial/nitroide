@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy as a Feature: Your Code Never Leaves Your Machine</title>
+  <meta name="title" content="Privacy as a Feature: Your Code Never Leaves Your Machine">
+  <meta name="description" content="NitroIDE has no server and no database: projects live in your browser's localStorage, share links rebuild workspaces locally, and a sandboxed preview keeps shared code away from saved projects. The honest limits included.">
+  <meta name="keywords" content="NitroIDE privacy, local-first IDE, code never leaves your machine, no server IDE, localStorage projects, share link privacy, sandboxed preview">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#34d399">
+  <link rel="canonical" href="https://nitroide.com/blog/privacy-as-a-feature.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/privacy-as-a-feature.html">
+  <meta property="og:title" content="Privacy as a Feature: Your Code Never Leaves Your Machine">
+  <meta property="og:description" content="NitroIDE has no server and no database: projects live in your browser's localStorage, share links rebuild workspaces locally, and a sandboxed preview keeps shared code away from saved projects. The honest limits included.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-11-01-privacy-as-a-feature.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Your code stays here — no server, no account, no upload">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-11-01">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/privacy-as-a-feature.html">
+  <meta name="twitter:title" content="Privacy as a Feature: Your Code Never Leaves Your Machine">
+  <meta name="twitter:description" content="NitroIDE has no server and no database: projects live in your browser's localStorage, share links rebuild workspaces locally, and a sandboxed preview keeps shared code away from saved projects. The honest limits included.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-11-01-privacy-as-a-feature.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-01-privacy-as-a-feature.webp","headline":"Privacy as a Feature: Your Code Never Leaves Your Machine","description":"NitroIDE has no server and no database: projects live in your browser's localStorage, share links rebuild workspaces locally, and a sandboxed preview keeps shared code away from saved projects. The honest limits included.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/privacy-as-a-feature.html","mainEntityOfPage":"https://nitroide.com/blog/privacy-as-a-feature.html","datePublished":"2026-11-01","dateModified":"2026-11-01"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Where does NitroIDE store my projects?", "acceptedAnswer": {"@type": "Answer", "text": "In your browser's localStorage, on the same machine you typed them on. There is no server and no database, so nothing is uploaded anywhere."}}, {"@type": "Question", "name": "Can someone else's shared code read my saved projects?", "acceptedAnswer": {"@type": "Answer", "text": "No. The preview runs in a sandboxed iframe with an opaque origin, so code in a share link or preview cannot reach the editor's localStorage or your project list."}}, {"@type": "Question", "name": "What is the catch with local-first storage?", "acceptedAnswer": {"@type": "Answer", "text": "Your projects live in one browser: no cross-device sync, and clearing site data removes them. ZIP export is the portable backup. And a share link hands your code to whoever receives it, so never put secrets in a project you plan to share."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #34d399; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NO-SERVER ARCHITECTURE • <time datetime="2026-11-01">November 1, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-11-01">November 1, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Privacy as a Feature: Your Code Never Leaves Your Machine</h1>
+
+    <p>Your code is the most personal thing you type all day. It holds half-formed ideas, client work, passwords you meant to move, and the project you have not told anyone about yet. Most online editors treat that as cargo: the moment you type, it travels to a server, gets stored in someone else's database, and is governed by someone else's retention policy and breach history.</p>
+
+    <p>NitroIDE takes a different position, and it is not a policy page. It is the architecture. There is no server to send your code to.</p>
+
+    <h2>The architecture that makes the claim true</h2>
+    <p>NitroIDE has no server and no database. That sentence does most of the work in this article, so it is worth being precise about what it means.</p>
+    <p>Your projects live in your browser, in localStorage — the same machine you typed them on, under the same origin as the editor. Close the tab, restart the browser, come back on Monday: the work is still there, because it never left. There is no account to create, no sync queue to fail, and no backend that could leak a database it does not have.</p>
+    <p>This is a tradeoff stated up front, not a footnote. Code that lives only in one browser lives only in that browser. There is no cross-device sync to fall back on, and clearing that browser's site data will take your projects with it. That is why ZIP export exists: the portable copy is yours to keep, in a file you control, rather than an account you rent. Local-first means you are the backup strategy, and the honest version of this article says so instead of pretending otherwise.</p>
+
+    <h2>What "never leaves your machine" actually means</h2>
+    <p>The claim is deliberately narrow, and the narrowness is the point. It means your project files are never uploaded to a NitroIDE server, because there is no NitroIDE server side to upload them to. Your code is read and written by JavaScript running in your own browser tab.</p>
+    <p>It does not mean your code is sealed in a vault. Anything running in your browser tab can, in principle, see what that tab can see — which is why NitroIDE's own design keeps untrusted code out of the editor's origin (more on the preview sandbox below), and why the next section matters more than this one: the moment you choose to share, the rules change, and they change because you changed them.</p>
+
+    <h2>Sharing without a server</h2>
+    <p>Sharing is where most "private" tools quietly become servers. The usual flow uploads your project, stores it, and hands back an ID. Anyone with the ID asks the server for your code.</p>
+    <p>NitroIDE's share engine skips the server entirely. The Share button compresses the whole workspace into a <code>?code=</code> URL parameter, and opening that link rebuilds the workspace locally in the reader's browser. Nothing passes through NitroIDE on the way, because there is no middle to pass through. The link itself is the transport, and the reader's browser is the destination.</p>
+    <p>That design has a consequence worth saying out loud: a share link IS you handing your code to whoever receives it — via the URL, not via a server. Anyone with the link can open it and read the project. URLs get pasted into chats, forwarded, screenshotted, and logged by proxies. So the rule is simple and non-negotiable: never put secrets, tokens, or passwords in a project you plan to share, and never share a link you would not want forwarded. The privacy guarantee covers the tool not taking your code. It cannot cover you giving it away.</p>
+    <p>The same URL-carried design sets a size limit, too. A very large project makes a very long URL, and very long URLs break in chats and address bars. For a demo or a tutorial example — a handful of files, one concept — that never matters. For a full application, export a ZIP and share a small, focused demo of the idea instead. The share link is for the example, not the app.</p>
+
+    <h2>The preview sandbox: why shared code cannot touch your projects</h2>
+    <p>The sharpest privacy question is not about NitroIDE's code. It is about other people's code. When you open a share link, you are running code someone else wrote. If that code could reach into your saved projects, the whole local-first story would collapse.</p>
+    <p>It cannot, by construction. NitroIDE's preview runs in a sandboxed iframe with an opaque origin, which is what keeps code in a shared link — or in a preview — from touching the reader's saved projects or the editor's localStorage. The preview cannot read your project list, rewrite your files, or exfiltrate your store, because from the browser's point of view it lives nowhere near them.</p>
+    <p>The tradeoff, stated in the embeds article and repeated here because it bites the same way: <code>localStorage</code>, <code>sessionStorage</code>, and cookies are unavailable inside the preview, and in Safari, touching them throws a <code>SecurityError</code>. Demo code that reads storage unguarded will crash inside the preview while working fine in a normal tab. Wrap storage access in <code>try/catch</code> in any code you plan to share, and the same demo runs everywhere. A sandbox that let shared code touch your storage would not be a sandbox.</p>
+    <p>There is a second edge to the same rule, on your side of the editor. localStorage has no per-key permissions: any script running on the editor's own origin could read the whole store. Never put tokens or secrets in a project at all — not because NitroIDE will leak them, but because a browser store is not a vault, and the safest secret is one that was never typed into the project in the first place.</p>
+
+    <h2>Why this is a feature, not a missing backend</h2>
+    <p>It is tempting to read "no server" as an unfinished product — the backend that has not been built yet. I read it the other way around. Every backend is a liability surface: an account database to breach, a retention policy to get wrong, a subpoena target, a bill that eventually needs paying by someone, usually the user. Removing the backend removes that whole class of failure at once. There is no NitroIDE database of your code to leak, to sell, or to lose, because the database was never built.</p>
+    <p>That also changes the relationship between the tool and the person using it. A cloud IDE needs your account because its business model needs your data to live on its servers. A local-first IDE does not. No signup wall stands between you and the editor, and no "free tier" clock starts ticking on your projects, because your projects were never anyone else's asset.</p>
+    <p>The honest summary is this: your code stays on your machine until you decide otherwise — by sharing a link, or by exporting a file. Those are your decisions, made in the open, with the consequences visible. Everything else is architecture, not a promise. And architecture, unlike a promise, cannot quietly change its mind in a terms-of-service update.</p>
+
+    <h2>Try it</h2>
+    <p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-11-01" style="color: #34d399; text-decoration: none;">nitroide.com</a></p>
+
+    <p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #34d399; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Where does NitroIDE store my projects?</h3>
+    <p>In your browser's localStorage, on the same machine you typed them on. There is no server and no database, so nothing is uploaded anywhere.</p>
+    <h3>Can someone else's shared code read my saved projects?</h3>
+    <p>No. The preview runs in a sandboxed iframe with an opaque origin, so code in a share link or preview cannot reach the editor's localStorage or your project list.</p>
+    <h3>What is the catch with local-first storage?</h3>
+    <p>Your projects live in one browser: no cross-device sync, and clearing site data removes them. ZIP export is the portable backup. And a share link hands your code to whoever receives it, so never put secrets in a project you plan to share.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="instant-code-sharing-zero-backend.html" style="color: #34d399; text-decoration: none; font-weight: 500;">I Replaced My Share Backend With a URL</a></li>
+      <li><a href="embeds-live-playground-in-docs.html" style="color: #34d399; text-decoration: none; font-weight: 500;">Embeds: Putting a Live NitroIDE Playground Inside Your Docs</a></li>
+      <li><a href="offline-first-github-pages.html" style="color: #34d399; text-decoration: none; font-weight: 500;">Offline-First on GitHub Pages: What Works, Where It Ends</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>
