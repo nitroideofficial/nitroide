@@ -1,6 +1,46 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 1, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "Privacy as a Feature: Your Code Never Leaves Your Machine",
+  link: "https://coderlegion.com/33308/privacy-as-a-feature-your-code-never-leaves-your-machine"
+},
+  {
+  date: "Nov 1, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Privacy as a Feature: Your Code Never Leaves Your Machine",
+  link: "https://peerlist.io/scroll/post/ACTHA9EK7QLAG8Q88FJOMP66JM6QNA"
+},
+  {
+  date: "Nov 1, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Privacy as a Feature: Your Code Never Leaves Your Machine",
+  link: "https://nitroide.hashnode.dev/privacy-as-a-feature-your-code-never-leaves-your-machine"
+},
+  {
+  date: "Nov 1, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Privacy as a Feature: Your Code Never Leaves Your Machine",
+  link: "https://x.com/trynitroide/status/2116871874085052757"
+},
+  {
+  date: "Nov 1, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Privacy as a Feature: Your Code Never Leaves Your Machine",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7522638440270835712/"
+},
+  {
   date: "Oct 31, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
