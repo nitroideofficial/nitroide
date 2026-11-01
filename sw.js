@@ -1,5 +1,5 @@
 // sw.js — NitroIDE PWA service worker (network-first for pages + script.js, cache-first for vendor assets)
-const CACHE = 'nitroide-v283';
+const CACHE = 'nitroide-v284';
 
 const APP_SHELL = [
   '/',
@@ -14,6 +14,8 @@ const APP_SHELL = [
   '/logo/logo_black.png',
   // Self-hosted LZString (share-link compression, MIT)
   '/vendor/lz-string/lz-string.min.js',
+  // Self-hosted JSZip (ZIP export/import, MIT) — was jsdelivr CDN, self-hosted 2026-11-01 so export works without a third-party host
+  '/vendor/jszip/jszip.min.js',
   // NOTE (2026-10-13): Monaco (~9.9MB) is NOT precached anymore — a homepage
   // visitor who never opens the IDE used to download all of it during SW install.
   // Monaco is runtime-cached on first IDE use instead (see the cache-first
