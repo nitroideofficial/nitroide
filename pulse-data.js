@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 2, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Console Panel Tricks: Colors, Object Expansion, and Error Linking",
+  link: "https://nitroide.hashnode.dev/console-panel-tricks-colors-object-expansion-and-error-linking"
+},
+  {
+  date: "Nov 2, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
