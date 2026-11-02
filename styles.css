@@ -2877,3 +2877,14 @@ html.light-mode .docs-content div.docs-code{color:#0a3069!important}
 #home .section-header p{max-width:720px;margin-left:auto;margin-right:auto}
 #home .section-header h2,#home .showcase-text h2{text-wrap:balance}
 @media(max-width:480px){#home .badge-row{flex-wrap:wrap}}
+/* Micro-interaction 2026-11-02: thin scroll-progress indicator.
+   Homepage only in effect (no other page has the .scroll-progress element).
+   Pure CSS scroll timeline: no JavaScript, no layout shift (fixed,
+   pointer-events none). Unsupported browsers: bar stays at scaleX(0),
+   i.e. invisible — no harm. Reduced motion: hidden entirely. */
+.scroll-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:1001;background:var(--text);transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
+@supports (animation-timeline:scroll()){
+  .scroll-progress{animation:scrollProgress linear both;animation-timeline:scroll(root)}
+}
+@keyframes scrollProgress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.scroll-progress{display:none}}
