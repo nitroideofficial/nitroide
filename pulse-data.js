@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 2, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Console Panel Tricks: Colors, Object Expansion, and Error Linking",
+  link: "https://peerlist.io/scroll/post/ACTHLKLGOENOJLBJ7HEBGJMMPOPPRJ"
+},
+  {
+  date: "Nov 2, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
