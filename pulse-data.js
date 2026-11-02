@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 2, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Console Panel Tricks: Colors, Object Expansion, and Error Linking",
+  link: "https://x.com/trynitroide/status/2117232579980267786"
+},
+  {
   date: "Nov 1, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
