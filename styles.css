@@ -2869,3 +2869,11 @@ html.light-mode .docs-content [style*="color: #bb9af7"]{color:#6d28d9!important}
 html.light-mode .docs-content [style*="color: #ef4444"]{color:#b91c1c!important}
 html.light-mode .docs-content [style*="color: #3178c6"]{color:#1d4ed8!important}
 html.light-mode .docs-content div.docs-code{color:#0a3069!important}
+/* Homepage polish 2026-11-02 (Yash-approved scope, small + scoped):
+   C1 comfortable measure for homepage section intros (desktop only
+   in effect); C2 balanced headings; C3 badge-row wrap on small
+   phones (fixes ~21px clipping, measured). Scoped to #home so no
+   other page is affected. Safe to delete as one block to revert. */
+#home .section-header p{max-width:720px;margin-left:auto;margin-right:auto}
+#home .section-header h2,#home .showcase-text h2{text-wrap:balance}
+@media(max-width:480px){#home .badge-row{flex-wrap:wrap}}
