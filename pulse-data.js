@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 3, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Export to ZIP: From Browser Session to Deployed Site",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7523362542161793024/"
+},
+  {
   date: "Nov 2, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
