@@ -66,6 +66,26 @@
   </script>
 </head>
 <body class="workspace-body workspace-booting">
+<script>
+// Old-browser gate: Monaco's editor file uses a lookbehind regex, which Safari
+// added only in 16.4. The test below uses a STRING on purpose: a regex literal
+// would break parsing on old Safari before this test could run. If unsupported,
+// cover the page with a plain-language notice instead of a silently dead editor.
+(function () {
+  var ok = true;
+  try { new RegExp('(?<=x)y'); } catch (e) { ok = false; }
+  if (ok) return;
+  var d = document.createElement('div');
+  d.setAttribute('role', 'alert');
+  d.setAttribute('style', 'position:fixed;top:0;right:0;bottom:0;left:0;z-index:100001;background:#09090b;color:#e4e4e7;display:flex;align-items:center;justify-content:center;padding:24px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;');
+  d.innerHTML = '<div style="max-width:520px;text-align:center;">' +
+    '<h1 style="font-size:1.4rem;margin:0 0 12px;">Your browser is too old for the NitroIDE editor</h1>' +
+    '<p style="margin:0 0 12px;line-height:1.5;color:#a1a1aa;">This editor needs a feature that older browsers do not support, so it cannot start here. Please update to Safari 16.4 or later, or use a recent version of Chrome, Edge, or Firefox.</p>' +
+    '<p style="margin:0;"><a href="/" style="color:#e4e4e7;">Back to the NitroIDE homepage</a></p>' +
+    '</div>';
+  document.body.appendChild(d);
+})();
+</script>
 
 <div class="bg-grid"></div>
 <div class="ambient-glow"></div>
