@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 3, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "Export to ZIP: From Browser Session to Deployed Site",
+  link: "https://coderlegion.com/33506/export-to-zip-from-browser-session-to-deployed-site"
+},
+  {
+  date: "Nov 3, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
   color: "#00aa45",
