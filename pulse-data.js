@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 3, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Export to ZIP: From Browser Session to Deployed Site",
+  link: "https://nitroide.hashnode.dev/export-to-zip-from-browser-session-to-deployed-site"
+},
+  {
+  date: "Nov 3, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
