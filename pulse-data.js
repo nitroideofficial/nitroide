@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 3, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Export to ZIP: From Browser Session to Deployed Site",
+  link: "https://peerlist.io/scroll/post/ACTHKKDER9JGKP777IDRGP9M7MNQ9G"
+},
+  {
+  date: "Nov 3, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
