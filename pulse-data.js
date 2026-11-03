@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 3, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Export to ZIP: From Browser Session to Deployed Site",
+  link: "https://x.com/trynitroide/status/2117596557780582440"
+},
+  {
+  date: "Nov 3, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
