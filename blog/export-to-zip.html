@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export to ZIP: From Browser Session to Deployed Site</title>
+  <meta name="title" content="Export to ZIP: From Browser Session to Deployed Site">
+  <meta name="description" content="NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.">
+  <meta name="keywords" content="NitroIDE export ZIP, download ZIP browser IDE, deploy static site from browser, JSZip client-side export, no build step deployment, Netlify Drop GitHub Pages">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#f59e0b">
+  <link rel="canonical" href="https://nitroide.com/blog/export-to-zip.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/export-to-zip.html">
+  <meta property="og:title" content="Export to ZIP: From Browser Session to Deployed Site">
+  <meta property="og:description" content="NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-11-03-export-to-zip.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Session to site — one click, one ZIP, yours to deploy">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-11-03">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/export-to-zip.html">
+  <meta name="twitter:title" content="Export to ZIP: From Browser Session to Deployed Site">
+  <meta name="twitter:description" content="NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-11-03-export-to-zip.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-03-export-to-zip.webp","headline":"Export to ZIP: From Browser Session to Deployed Site","description":"NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/export-to-zip.html","mainEntityOfPage":"https://nitroide.com/blog/export-to-zip.html","datePublished":"2026-11-03","dateModified":"2026-11-03"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What files does NitroIDE's Download ZIP include?", "acceptedAnswer": {"@type": "Answer", "text": "Exactly the three workspace files as they are in your session: index.html, style.css and script.js. The archive is built in your browser with JSZip — nothing is uploaded to be zipped."}}, {"@type": "Question", "name": "Will a site exported as a ZIP work without an internet connection?", "acceptedAnswer": {"@type": "Answer", "text": "Your own code will. But if your project links a third-party library from a CDN mid-session, the exported files still reference that CDN, so the deployed site needs an internet connection to fetch those links."}}, {"@type": "Question", "name": "Why did Download ZIP once stop working silently?", "acceptedAnswer": {"@type": "Answer", "text": "JSZip's UMD wrapper saw Monaco's AMD loader and registered itself as an anonymous AMD module instead of setting window.JSZip, so the download code's global was never defined. The fix loads JSZip before the Monaco loader and shields the loader while JSZip evaluates."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f59e0b; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NO-SERVER ARCHITECTURE • <time datetime="2026-11-03">November 3, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-11-03">November 3, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Export to ZIP: From Browser Session to Deployed Site</h1>
+
+    <p>There is a moment every browser-IDE demo has to survive: the user finishes something they like, and then asks, "Okay — but how do I get it out?"</p>
+
+    <p>A share link is not an answer to that question. A link is a demo. A ZIP file is a project you own: a folder you can unzip, open, edit in any editor, hand to a client, or drop onto a static host. NitroIDE's Download ZIP button is the bridge between a browser session and a deployed site, and it is worth explaining properly — including the week it silently broke, and why.</p>
+
+    <h2>What the button actually does</h2>
+    <p>NitroIDE's workspace is three files: index.html, style.css and script.js. Download ZIP takes exactly those files, exactly as they are in your session, and packs them into one archive — in your browser, with JSZip. Nothing is uploaded to be zipped. The archive is built on your machine and handed straight to your downloads folder.</p>
+    <p>That matters for two reasons. First, the export is private by the same architecture as the rest of the tool: there is no server round-trip to intercept, log, or fail. Second, the output is boring in the best way. It is a plain folder of web files. Unzip it and open index.html, and your site runs. There is no NitroIDE runtime to install, no export format to decode, no lock-in hiding inside the archive. The other direction works too: Import ZIP / Files (or dropping a ZIP onto the editor) brings a project back into the browser, so the ZIP is a round trip, not a one-way exit.</p>
+
+    <h2>From ZIP to a live URL, in three moves</h2>
+    <p>The path from session to deployed site is deliberately short:</p>
+    <ol>
+      <li>Build in the browser until the preview looks right. The preview is the site — same files, same rendering — so there is no "works in the IDE, breaks on deploy" translation step for plain HTML, CSS and JS.</li>
+      <li>Hit Download ZIP. You now own the site as a folder.</li>
+      <li>Put that folder on any static host. Drag it into Netlify Drop, push it to a GitHub Pages repo, or serve it from any static file host. There is no build step to configure, because there is nothing to build.</li>
+    </ol>
+    <p>One honest caveat belongs in step 1: if your project pulls in a CDN library mid-session (Tailwind, a font, a chart library), the exported files still reference that CDN. The ZIP is self-contained for your code, not for third-party code you linked to — the deployed site still needs an internet connection to fetch those links. That is a property of linking CDNs, not of the export, but it is the kind of thing that surprises someone at deploy time if nobody says it.</p>
+
+    <h2>The week the button silently did nothing</h2>
+    <p>This feature earned its place in this article the hard way. Recently, Download ZIP broke — and it broke quietly. Clicking it produced no file, no error, and no visible failure. Cache purges and fresh devices changed nothing, which is usually the sign that the bug is not where you are looking.</p>
+    <p>The real cause was a loader collision, not a ZIP bug. JSZip's UMD wrapper saw Monaco's AMD loader and registered itself as an anonymous AMD module instead of setting window.JSZip. The library file downloaded fine; the global the download code looked for was simply never defined. The fix was ordering plus a guard: load JSZip before the Monaco loader, and shield the loader while JSZip evaluates, so it registers the way the rest of the code expects. It shipped, was verified live, and was confirmed working the same morning — the saga is closed, and the lesson is the one this whole series keeps re-teaching: when a feature fails silently, suspect the wiring between two libraries before you suspect either library.</p>
+
+    <h2>What a ZIP is not</h2>
+    <p>A ZIP is a snapshot, and snapshots go stale. Export on Tuesday, keep editing in the browser until Friday, and the Friday work is not in the Tuesday archive — there is no live sync between a downloaded folder and your browser session, because there is no server keeping them in sync. Treat the export like a release: export when a version is done, name the file by version if it helps, and re-export when the next version is done.</p>
+    <p>That is also why the ZIP and the share link are different tools, not two names for the same thing. The share link is for showing: one URL, one running demo, rebuilt in the reader's browser. The ZIP is for owning: a folder you can deploy, archive, or hand over. Use the link when you want someone to see it now; use the ZIP when you want someone — including future you — to have it forever.</p>
+
+    <h2>Why export is a feature, not an escape hatch</h2>
+    <p>Some tools treat export as an apology: sorry you want to leave, here is your data. I see it the other way around. A tool that refuses to let your work out is a tool you should not trust with your work in the first place. The export button is what makes the no-server, no-account story honest. Your projects live in your browser, and when you want them anywhere else, one click turns them into ordinary files that any host, editor, or teammate can use — no account to close, no dashboard to beg, no format to convert.</p>
+    <p>Build it in the browser. Own it as a folder. Deploy it anywhere. That is the whole pipeline, and it fits in one click.</p>
+
+    <h2>Try it</h2>
+    <p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-11-03" style="color: #f59e0b; text-decoration: none;">nitroide.com</a></p>
+
+    <p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #f59e0b; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>What files does NitroIDE's Download ZIP include?</h3>
+    <p>Exactly the three workspace files as they are in your session: index.html, style.css and script.js. The archive is built in your browser with JSZip — nothing is uploaded to be zipped.</p>
+    <h3>Will a site exported as a ZIP work without an internet connection?</h3>
+    <p>Your own code will. But if your project links a third-party library from a CDN mid-session, the exported files still reference that CDN, so the deployed site needs an internet connection to fetch those links.</p>
+    <h3>Why did Download ZIP once stop working silently?</h3>
+    <p>JSZip's UMD wrapper saw Monaco's AMD loader and registered itself as an anonymous AMD module instead of setting window.JSZip, so the download code's global was never defined. The fix loads JSZip before the Monaco loader and shields the loader while JSZip evaluates.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="privacy-as-a-feature.html" style="color: #f59e0b; text-decoration: none; font-weight: 500;">Privacy as a Feature: Your Code Never Leaves Your Machine</a></li>
+      <li><a href="offline-first-github-pages.html" style="color: #f59e0b; text-decoration: none; font-weight: 500;">Offline-First on GitHub Pages: What Works, Where It Ends</a></li>
+      <li><a href="localstorage-as-database.html" style="color: #f59e0b; text-decoration: none; font-weight: 500;">localStorage Is My Database: Patterns, Limits, Graduation</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+<script type="text/javascript"> var infolinks_pid = 3449188; var infolinks_wsid = 0; </script> <script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>
+</body>
+</html>

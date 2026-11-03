@@ -7,6 +7,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>Export to ZIP: From Browser Session to Deployed Site | NitroIDE</title>
+      <link>https://nitroide.com/blog/export-to-zip.html</link>
+      <guid>https://nitroide.com/blog/export-to-zip.html</guid>
+      <description>NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip &#8212; no server round-trip, no build step, ready for any static host.</description>
+      <pubDate>Tue, 03 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
       <title>Privacy as a Feature: Your Code Never Leaves Your Machine | NitroIDE</title>
       <link>https://nitroide.com/blog/privacy-as-a-feature.html</link>
       <guid>https://nitroide.com/blog/privacy-as-a-feature.html</guid>

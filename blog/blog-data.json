@@ -653,5 +653,21 @@
   "CTA_LINK": "../tools/codebox.html",
   "CTA_BTN_TEXT": "Launch Workspace",
   "CTA_ICON": "ph-magic-wand"
+ },
+ {
+  "SLUG": "export-to-zip",
+  "META_TITLE": "Export to ZIP: From Browser Session to Deployed Site",
+  "META_DESC": "NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.",
+  "KEYWORDS": "NitroIDE export ZIP, download ZIP browser IDE, deploy static site from browser, JSZip client-side export, no build step deployment, Netlify Drop GitHub Pages",
+  "THEME_COLOR": "#f59e0b",
+  "CATEGORY": "NO-SERVER ARCHITECTURE",
+  "DATE": "NOVEMBER 2026",
+  "H1_TITLE": "Export to ZIP: From Browser Session to Deployed Site.",
+  "CONTENT": "<p>There is a moment every browser-IDE demo has to survive: the user finishes something they like, and then asks, \"Okay — but how do I get it out?\" A share link is a demo. A ZIP file is a project you own: a folder you can unzip, open, edit in any editor, hand to a client, or drop onto a static host.</p>",
+  "CTA_TITLE": "Session to Site.",
+  "CTA_DESC": "Open NitroIDE — no signup, no upload, no server. Build in the browser, own it as a folder, deploy it anywhere.",
+  "CTA_LINK": "../tools/codebox.html",
+  "CTA_BTN_TEXT": "Launch Workspace",
+  "CTA_ICON": "ph-globe"
  }
 ]
