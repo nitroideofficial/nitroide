@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 6, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Keyboard-first editing: the shortcuts that save the most time in a browser IDE",
+  link: "https://peerlist.io/scroll/post/ACTHA9EKKRN8OLAQR2J9ROBJDDRQ99"
+},
+  {
+  date: "Nov 6, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
