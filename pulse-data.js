@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 7, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "What did you build first in NitroIDE?",
+  link: "https://nitroide.hashnode.dev/what-did-you-build-first-in-nitroide"
+},
+  {
+  date: "Nov 7, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
