@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 5, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "What would you build if setup took zero seconds?",
+  link: "https://x.com/trynitroide/status/2118319696764432431"
+},
+  {
   date: "Nov 4, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
