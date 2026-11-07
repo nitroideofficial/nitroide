@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 4, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "One-click CDN injection: adding Tailwind mid-session",
+  link: "https://x.com/trynitroide/status/2117957401290911846"
+},
+  {
   date: "Nov 7, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
