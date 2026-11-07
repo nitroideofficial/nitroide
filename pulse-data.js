@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 6, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Keyboard-first editing: the shortcuts that save the most time in a browser IDE",
+  link: "https://nitroide.hashnode.dev/keyboard-first-editing-the-shortcuts-that-save-the-most-time-in-a-browser-ide"
+},
+  {
+  date: "Nov 6, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
