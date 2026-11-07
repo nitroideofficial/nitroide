@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 6, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Keyboard-first editing: the shortcuts that save the most time in a browser IDE",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7524448772744019968/"
+},
+  {
+  date: "Nov 6, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
