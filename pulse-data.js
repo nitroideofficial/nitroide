@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 5, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "What would you build if setup took zero seconds?",
+  link: "https://peerlist.io/scroll/post/ACTHGNQ9GPAPPONGLIMBEOBPRBGKL9"
+},
+  {
+  date: "Nov 5, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
