@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 4, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "One-click CDN injection: adding Tailwind mid-session",
+  link: "https://nitroide.hashnode.dev/one-click-cdn-injection-adding-tailwind-mid-session"
+},
+  {
+  date: "Nov 4, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
