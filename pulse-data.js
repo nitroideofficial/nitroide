@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 7, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "What did you build first in NitroIDE?",
+  link: "https://x.com/trynitroide/status/2119044320741425477"
+},
+  {
   date: "Nov 3, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
