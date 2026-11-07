@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 4, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "One-click CDN injection: adding Tailwind mid-session",
+  link: "https://peerlist.io/scroll/post/ACTHJKNDL7OMLAEDNFAAKRO6NA97KB"
+},
+  {
+  date: "Nov 4, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
