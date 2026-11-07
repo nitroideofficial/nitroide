@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 5, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "What would you build if setup took zero seconds?",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7524085869956407296/"
+},
+  {
+  date: "Nov 5, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
