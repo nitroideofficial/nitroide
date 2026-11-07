@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 5, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "What would you build if setup took zero seconds?",
+  link: "https://nitroide.hashnode.dev/what-would-you-build-if-setup-took-zero-seconds"
+},
+  {
+  date: "Nov 5, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
