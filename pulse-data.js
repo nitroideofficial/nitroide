@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 6, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Keyboard-first editing: the shortcuts that save the most time in a browser IDE",
+  link: "https://x.com/trynitroide/status/2118682368898941071"
+},
+  {
   date: "Nov 5, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
