@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 4, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "One-click CDN injection: adding Tailwind mid-session",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7523723766418493440/"
+},
+  {
+  date: "Nov 4, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
