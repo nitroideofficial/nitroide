@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 8, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7525175548969476096/"
+},
+  {
   date: "Nov 6, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
