@@ -1,5 +1,13 @@
 // sw.js — NitroIDE PWA service worker (network-first for pages + script.js, cache-first for vendor assets)
-const CACHE = 'nitroide-v309';
+const CACHE = 'nitroide-v310';
+// Vendor runtime cache: stable across app deploys. Monaco (~10MB) and other
+// /vendor/* files are fetched once and kept here. The app-shell CACHE above is
+// wiped on every deploy — Pulse bumps it ~4x/day — which used to force a full
+// Monaco re-download on the next codebox visit, and every re-download is
+// another chance for a transient failure to kill the editor (Sentry
+// JAVASCRIPT-5/-7/-8, Nov 2026). Bump VENDOR_CACHE only when a file under
+// /vendor/ actually changes.
+const VENDOR_CACHE = 'nitroide-vendor-v1';
 
 const APP_SHELL = [
   '/',
@@ -54,7 +62,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE && k !== VENDOR_CACHE).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -98,6 +106,10 @@ self.addEventListener('fetch', (event) => {
     );
     return;
   }
+  // Vendor files go to the stable VENDOR_CACHE (see above) so app deploys
+  // don't wipe them; everything else runtime-cached goes to CACHE.
+  var isVendor = false;
+  try { isVendor = new URL(request.url).pathname.indexOf('/vendor/') === 0; } catch (e) {}
   event.respondWith(
     caches.match(cacheKey).then((cached) =>
       cached || fetch(request).then((response) => {
@@ -105,7 +117,7 @@ self.addEventListener('fetch', (event) => {
         // only cache successful responses.
         if (response.ok) {
           const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put(cacheKey, copy));
+          caches.open(isVendor ? VENDOR_CACHE : CACHE).then((cache) => cache.put(cacheKey, copy));
         }
         return response;
       }).catch(() => caches.match(cacheKey))
