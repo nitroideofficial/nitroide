@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 8, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server",
+  link: "https://x.com/trynitroide/status/2119409302742163795"
+},
+  {
+  date: "Nov 8, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",

@@ -1,5 +1,5 @@
 // sw.js — NitroIDE PWA service worker (network-first for pages + script.js, cache-first for vendor assets)
-const CACHE = 'nitroide-v311';
+const CACHE = 'nitroide-v312';
 // Vendor runtime cache: stable across app deploys. Monaco (~10MB) and other
 // /vendor/* files are fetched once and kept here. The app-shell CACHE above is
 // wiped on every deploy — Pulse bumps it ~4x/day — which used to force a full
