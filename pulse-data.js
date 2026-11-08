@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 8, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server",
+  link: "https://nitroide.hashnode.dev/the-codebox-engine-how-editor-preview-and-console-stay-in-sync-without-a-server"
+},
+  {
+  date: "Nov 8, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
