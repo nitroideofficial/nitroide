@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 8, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server",
+  link: "https://peerlist.io/scroll/post/ACTHR8D7MAENPGPAO2ADKAG6NMBKN6"
+},
+  {
+  date: "Nov 8, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
