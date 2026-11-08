@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 8, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server",
+  link: "https://coderlegion.com/33983/the-codebox-engine-how-editor-preview-and-console-stay-in-sync-without-a-server"
+},
+  {
+  date: "Nov 8, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
   color: "#00aa45",
