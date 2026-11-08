@@ -544,5 +544,11 @@
   "u": "/blog/export-to-zip.html",
   "d": "NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.",
   "c": "Blog"
- }
+ },
+ {
+ "t": "The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server",
+ "u": "/blog/codebox-engine.html",
+ "d": "NitroIDE's codebox keeps three Monaco editors, a sandboxed srcdoc preview and a live console in sync entirely in the browser — no server in the loop.",
+ "c": "Blog"
+}
 ]

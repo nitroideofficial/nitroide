@@ -7,6 +7,14 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server | NitroIDE</title>
+      <link>https://nitroide.com/blog/codebox-engine.html</link>
+      <guid>https://nitroide.com/blog/codebox-engine.html</guid>
+      <description>NitroIDE&#x27;s codebox keeps three Monaco editors, a sandboxed srcdoc preview and a live console in sync entirely in the browser — no server in the loop.</description>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
       <title>Export to ZIP: From Browser Session to Deployed Site | NitroIDE</title>
       <link>https://nitroide.com/blog/export-to-zip.html</link>
       <guid>https://nitroide.com/blog/export-to-zip.html</guid>
