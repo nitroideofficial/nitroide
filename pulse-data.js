@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 9, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Split View vs Tabs: Laying Out Editor + Preview for a Real Workflow",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7525535821844791299/"
+},
+  {
   date: "Nov 8, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
