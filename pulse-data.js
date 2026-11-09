@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 9, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "Split View vs Tabs: Laying Out Editor + Preview for a Real Workflow",
+  link: "https://x.com/trynitroide/status/2119769665434189929"
+},
+  {
+  date: "Nov 9, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
