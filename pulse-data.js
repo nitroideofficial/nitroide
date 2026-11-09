@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 9, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Split View vs Tabs: Laying Out Editor + Preview for a Real Workflow",
+  link: "https://nitroide.hashnode.dev/split-view-vs-tabs-laying-out-editor-preview-for-a-real-workflow"
+},
+  {
+  date: "Nov 9, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
