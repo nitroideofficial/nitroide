@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 9, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Split View vs Tabs: Laying Out Editor + Preview for a Real Workflow",
+  link: "https://peerlist.io/scroll/post/ACTHGNQ97EA8EJK6E28E79OO6KNNG9"
+},
+  {
+  date: "Nov 9, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
