@@ -311,7 +311,7 @@
 <div class="feedback-backdrop" id="aiDiffModal" role="dialog" aria-modal="true" aria-labelledby="aiDiffHeading" tabindex="-1">
   <div class="feedback-card" style="max-width:min(960px,94vw);width:94vw;height:min(80dvh,720px);display:flex;flex-direction:column;padding:0;overflow:hidden;">
     <div class="feedback-header" style="padding:14px 18px;margin:0;border-bottom:1px solid var(--border);">
-      <h3 id="aiDiffHeading" style="display:flex;align-items:center;gap:8px;"><i class="ph-bold ph-files" style="color:#00e5ff;"></i> Review Changes <span id="aiDiffFile" style="font-family:ui-monospace,monospace;font-size:.78rem;color:var(--text-muted);font-weight:400;"></span></h3>
+      <h2 id="aiDiffHeading" style="display:flex;align-items:center;gap:8px;"><i class="ph-bold ph-files" style="color:#00e5ff;"></i> Review Changes <span id="aiDiffFile" style="font-family:ui-monospace,monospace;font-size:.78rem;color:var(--text-muted);font-weight:400;"></span></h2>
       <button onclick="aiDiffClose()" aria-label="Close"><i class="ph-bold ph-x"></i></button>
     </div>
     <div id="aiDiffTabs" style="display:none;gap:6px;padding:8px 18px 0;"></div>
@@ -327,7 +327,7 @@
 <div class="feedback-backdrop" id="aiSetupModal" role="dialog" aria-modal="true" aria-labelledby="aiSetupHeading" tabindex="-1">
   <div class="feedback-card" style="max-width:420px;">
     <div class="feedback-header">
-      <h3 id="aiSetupHeading"><i class="ph-bold ph-faders"></i> AI Key & Model</h3>
+      <h2 id="aiSetupHeading"><i class="ph-bold ph-faders"></i> AI Key & Model</h2>
       <button onclick="closeAiSetupModal()" aria-label="Close"><i class="ph-bold ph-x"></i></button>
     </div>
     <p class="feedback-desc">Bring your own key — free tiers work. Your key stays in this browser; the AI talks directly to the provider you choose (SambaNova goes through a non-storing proxy). Code goes only to the AI provider you choose, never to NitroIDE.</p>
@@ -393,7 +393,7 @@
 <div class="feedback-backdrop" id="timeMachineModal" role="dialog" aria-modal="true" aria-labelledby="timeMachineHeading" tabindex="-1" onclick="handleTimeMachineBackdrop(event)">
   <div class="feedback-card time-machine-card">
     <div class="feedback-header">
-      <h3 id="timeMachineHeading"><i class="ph-bold ph-clock-counter-clockwise"></i> Local Time Machine</h3>
+      <h2 id="timeMachineHeading"><i class="ph-bold ph-clock-counter-clockwise"></i> Local Time Machine</h2>
       <button onclick="closeTimeMachine()" aria-label="Close Local Time Machine"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="feedback-body time-machine-body">
@@ -408,7 +408,7 @@
 <div class="feedback-backdrop" id="projectDashboard" role="dialog" aria-modal="true" aria-labelledby="projectDashboardHeading" tabindex="-1">
   <div class="feedback-card" style="max-width: 800px; width: 90%;">
     <div class="feedback-header">
-      <h3 id="projectDashboardHeading"><i class="ph-bold ph-kanban"></i> Project Manager</h3>
+      <h2 id="projectDashboardHeading"><i class="ph-bold ph-kanban"></i> Project Manager</h2>
       <button onclick="closeDashboard()" aria-label="Close dashboard"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="feedback-body">
@@ -439,7 +439,7 @@
 <div class="feedback-backdrop" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareHeading" tabindex="-1">
   <div class="feedback-card">
     <div class="feedback-header">
-      <h3 id="shareHeading"><i class="ph-bold ph-share-network"></i> Share Workspace</h3>
+      <h2 id="shareHeading"><i class="ph-bold ph-share-network"></i> Share Workspace</h2>
       <button onclick="toggleShareModal(false)" aria-label="Close share dialog"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="feedback-body">
@@ -460,7 +460,7 @@
 <div class="feedback-backdrop" id="deployModal" role="dialog" aria-modal="true" aria-labelledby="deployHeading" tabindex="-1">
   <div class="feedback-card" style="max-width:560px;">
     <div class="feedback-header">
-      <h3 id="deployHeading"><i class="ph-bold ph-rocket-launch"></i> Deploy — One-Click Publish</h3>
+      <h2 id="deployHeading"><i class="ph-bold ph-rocket-launch"></i> Deploy — One-Click Publish</h2>
       <button onclick="deployCloseModal()" aria-label="Close deploy"><i class="ph-bold ph-x"></i></button>
     </div>
     <div class="feedback-body">
@@ -540,17 +540,29 @@ function installAppHint() {
 }
 
 // First-run onboarding overlay (gated on localStorage; skipped in embed mode)
+// Focus-managed like the dialogs below: focus moves inside on open and Tab
+// is trapped; Escape-to-close is owned by the global handler in script.js.
 (function(){
   var ov=document.getElementById('onboardOverlay');
   if(!ov||window.location.search.indexOf('embed=1')>=0) return;
   var seen=false;
   try{ seen=!!localStorage.getItem('nitroide_onboarded'); }catch(e){ seen=true; }
   function dismiss(){ try{ localStorage.setItem('nitroide_onboarded','1'); }catch(e){} ov.style.display='none'; }
-  if(!seen){ ov.style.display='flex'; }
   var c=document.getElementById('onboardClose'), d=document.getElementById('onboardDone'), t=document.getElementById('onboardTemplateLink');
+  if(!seen){ ov.style.display='flex'; setTimeout(function(){ if(c) c.focus(); }, 50); }
   if(c) c.addEventListener('click', dismiss);
   if(d) d.addEventListener('click', dismiss);
   if(t) t.addEventListener('click', function(){ try{ localStorage.setItem('nitroide_onboarded','1'); }catch(e){} });
+  // Tab trap while the overlay is open (DOM order: close, template link, done).
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Tab'||ov.style.display==='none') return;
+    var items=[c,t,d].filter(function(n){ return !!n; });
+    if(!items.length) return;
+    var first=items[0], last=items[items.length-1];
+    if(e.shiftKey&&document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey&&document.activeElement===last){ e.preventDefault(); first.focus(); }
+    else if(!ov.contains(document.activeElement)){ e.preventDefault(); first.focus(); }
+  });
 })();
 
 // Embed button moved to Prefs menu (copyEmbedCode in script.js)
