@@ -1802,14 +1802,6 @@ const pulseLogs = [
 },
   {
   date: "May 23, 2026",
-  platform: "LinkedIn",
-  icon: "ph-linkedin-logo",
-  color: "#0a66c2",
-  title: "When did we decide that an online IDE required cloud infrastructure?",
-  link: "https://www.linkedin.com/feed/update/urn:li:activity:7463612177162190848/"
-},
-  {
-  date: "May 23, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
