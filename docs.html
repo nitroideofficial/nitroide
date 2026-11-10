@@ -308,11 +308,14 @@ setInterval(() => {
     <section id="faq">
       <h2>Frequently Asked Questions</h2>
       
-      <h3>Is NitroIDE completely free to use?</h3>
+      <h3>Is NitroIDE completely free?</h3>
       <p>Yes. NitroIDE is a 100% free and open-source project. Because the entire IDE architecture relies on your browser's local memory to compile and execute code, there are no expensive backend cloud servers to maintain, allowing us to keep the tool free forever.</p>
 
-      <h3>Does this browser IDE require an internet connection?</h3>
+      <h3>Does NitroIDE require an internet connection?</h3>
       <p>NitroIDE is designed to function as an offline code editor for vanilla HTML, CSS, and JavaScript. The only time an active internet connection is required is if you use the Developer Console to fetch external libraries (like React or Tailwind) via the CDN injector.</p>
+
+      <h3>How do I save my code in NitroIDE?</h3>
+      <p>Code is auto-saved to your browser's local storage — press <span class="key">Ctrl</span> + <span class="key">S</span> any time to save and recompile. To save files permanently to your machine, use the 'Export as 1-File' or 'Download ZIP' commands.</p>
 
       <h3>Where is my code stored?</h3>
       <p>Your code runs only in your browser. All keystrokes, modules, and virtual files are stored strictly within your browser's local <code>localStorage</code> API. There is no code telemetry — analytics is GA4 only.</p>

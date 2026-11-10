@@ -520,6 +520,41 @@
   </div>
 </section>
 
+<style>
+  /* Homepage FAQ — page-scoped; mirrors the FAQPage JSON-LD in <head> verbatim. */
+  .home-faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
+  .home-faq-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+  .home-faq-card h3 { font-size: 1rem; margin: 0 0 8px; }
+  .home-faq-card p { margin: 0; color: var(--text-muted); font-size: .95rem; line-height: 1.6; }
+  @media (max-width: 768px) { .home-faq-grid { grid-template-columns: 1fr; } }
+</style>
+
+<section class="content-section reveal-8" aria-labelledby="home-faq-title">
+  <div class="section-header">
+    <span class="f-listed-eyebrow">// faq</span>
+    <h2 id="home-faq-title">Frequently asked questions.</h2>
+    <p class="f-listed-sub">The short answers — the same four questions search engines see in our structured data.</p>
+  </div>
+  <div class="home-faq-grid">
+    <div class="home-faq-card">
+      <h3>Does NitroIDE have AI?</h3>
+      <p>Yes. Since v30 (October 2026), NitroIDE includes a built-in AI pair-programmer: a conversational chat in a sidebar inside the IDE that can explain code, generate code, and make surgical find/replace edits with side-by-side diff previews.</p>
+    </div>
+    <div class="home-faq-card">
+      <h3>Which AI providers does NitroIDE support?</h3>
+      <p>NitroIDE uses a bring-your-own-key model supporting Groq, Gemini, OpenRouter, and OpenAI. The provider is auto-detected from your key, and the setup modal lists your key's actual models.</p>
+    </div>
+    <div class="home-faq-card">
+      <h3>Does NitroIDE store my AI API key on its servers?</h3>
+      <p>No. Your API key is stored in your own browser's localStorage and your browser talks directly to the AI provider (SambaNova requests pass through a non-storing proxy). NitroIDE has no AI backend, so your key never touches NitroIDE servers.</p>
+    </div>
+    <div class="home-faq-card">
+      <h3>Is NitroIDE free?</h3>
+      <p>Yes. NitroIDE is 100% free with no account required and no paywall. The AI pair-programmer uses your own provider API keys, many of which offer free tiers (Groq, Gemini, and OpenRouter all have free options).</p>
+    </div>
+  </div>
+</section>
+
   </main>
 </div>
 
