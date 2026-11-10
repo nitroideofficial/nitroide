@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 10, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7525900617396117504/"
+},
+  {
+  date: "Nov 10, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
   color: "#7c3aed",
