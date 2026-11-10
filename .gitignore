@@ -25,3 +25,6 @@ lighthouse/
 *.log
 *.tmp
 *.bak
+
+# Secret NitroStation test builds — never commit
+nitrostation*.html
