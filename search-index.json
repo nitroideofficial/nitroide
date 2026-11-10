@@ -2,7 +2,7 @@
  {
   "t": "Embeds: Putting a Live NitroIDE Playground Inside Your Docs",
   "u": "/blog/embeds-live-playground-in-docs.html",
-  "d": "One iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs — editor and preview only, with a one-click escape hatch into the full editor.",
+  "d": "Embeds: one iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs — editor and preview only, one-click escape hatch.",
   "c": "Blog"
  },
  {
@@ -536,13 +536,13 @@
  {
   "t": "Privacy as a Feature: Your Code Never Leaves Your Machine",
   "u": "/blog/privacy-as-a-feature.html",
-  "d": "NitroIDE has no server and no database: projects live in your browser's localStorage, share links rebuild workspaces locally, and a sandboxed preview keeps shared code away from saved projects. The honest limits included.",
+  "d": "Privacy as a feature: NitroIDE has no server and no database. Projects live in your browser's localStorage, and a sandboxed preview keeps shared code away.",
   "c": "Blog"
  },
  {
   "t": "Export to ZIP: From Browser Session to Deployed Site",
   "u": "/blog/export-to-zip.html",
-  "d": "NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.",
+  "d": "Export to ZIP: NitroIDE's Download ZIP packs your browser session into a folder of plain web files, built client-side with JSZip — no server round-trip.",
   "c": "Blog"
  },
  {
