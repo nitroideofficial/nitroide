@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 10, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In",
+  link: "https://coderlegion.com/34205/zero-backend-accounts-what-nitroide-gives-up-by-never-asking-you-to-log-in"
+},
+  {
   date: "Nov 9, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
