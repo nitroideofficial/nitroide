@@ -14,10 +14,10 @@
 
 ## What's new in v30.5 (October 2026)
 - Listed on 9 software directories (DevHunt, AlternativeTo, SaaSHub, SourceForge, directree, IndieTools, Fazier, NoLogin, TinyShelf) with a redesigned homepage badge row.
-- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 46 articles.
+- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 47 articles.
 - Trust and support: Trustpilot profile with public reviews, Ko-fi donations live, GitHub Sponsors approved.
 - Whole-site light-mode readability: light values for brand and code colors, fixed contact inputs, palette, footer, modal and stop-button contrast, dark variants for all article accent colors.
-- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 97 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
+- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 98 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
 - Directory badges fixed after a browser-isolation header blocked cross-origin images (header now credentialless, WebContainer WASM unaffected).
 - Templates "Open in NitroIDE" buttons readable in both themes.
 
@@ -145,6 +145,7 @@
 - Visualizing RxJS and Redux State in Real-Time | NitroIDE: https://nitroide.com/blog/rxjs-redux-state-visualization-ide.html
 - Real-Time Auto-Formatting via AST Manipulation | NitroIDE: https://nitroide.com/blog/ast-manipulation-auto-formatting-babel.html
 - Export to ZIP: From Browser Session to Deployed Site: https://nitroide.com/blog/export-to-zip.html
+- Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In: https://nitroide.com/blog/zero-backend-accounts.html
 
 ## Full article text
 
@@ -2931,6 +2932,66 @@ Your own code will. But if your project links a third-party library from a CDN m
 ### Why did Download ZIP once stop working silently?
 
 JSZip's UMD wrapper saw Monaco's AMD loader and registered itself as an anonymous AMD module instead of setting window.JSZip, so the download code's global was never defined. The fix loads JSZip before the Monaco loader and shields the loader while JSZip evaluates.
+
+---
+
+### Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In
+Source: https://nitroide.com/blog/zero-backend-accounts.html
+Date: November 2026
+
+Every tool you use asks you to log in before it does anything useful. Email, password, verify your inbox, pick a plan, maybe a credit card "just for verification". By the time you've done all of that, the idea you opened the tab for has already cooled off.
+
+NitroIDE never asks. There is no sign-in button, no sign-up form, no password reset page — because there is no account system at all. I didn't forget to build one. I chose not to. And like every architectural choice, it costs something real. This is the honest accounting of both sides.
+
+## What you actually get
+
+The obvious win is speed: the time from "I have an idea" to "I'm typing code" is the time it takes the page to load. There is no onboarding funnel to survive, no email to confirm, no plan to pick. Open the URL and you're in the editor.
+
+The less obvious win is privacy. With no accounts, there is no user table to breach, no password hashes to leak, no email list to sell or lose. Your projects live in your browser's localStorage — under keys like nitro_projects — and your AI provider keys, if you use the built-in pair programmer, are stored the same way, in your browser, and go only to the provider you chose. The app's own copy says it plainly: your keys never leave this browser. There is no server on my side that could even see your code if it wanted to, because there is no server on my side at all.
+
+There's a third win that took me longer to appreciate: no account means no lock-in and no "sign up to continue" dark pattern waiting for you on day thirty. The tool can't hold your work hostage behind a paywall, because it never held your work in the first place.
+
+## What it costs — the part nobody advertises
+
+No accounts means no cloud sync. Your projects live in one browser on one machine. Open NitroIDE on your laptop and your phone is a stranger to it — it has never met your projects. I know this is the first thing a new user asks for, and the honest answer is that it's not a missing feature I haven't gotten around to. It's the price of the privacy claim. The moment projects sync through my server, the code leaves your machine, and "your code never leaves your machine" stops being true.
+
+It also means no live collaboration. Two people can't edit the same project at the same time, because there is no shared server state to sync through. If you need pair programming, you share a link and take turns — the ?code= share link carries the whole workspace compressed into the URL itself, so the person who opens it gets a running copy instantly, no account needed on their side either. That's the workaround, and I'll say plainly it is not the same thing as real collaboration.
+
+And it means no safety net for forgetfulness. Clear your browser data and your projects go with it. There's no "forgot password" flow because there's no password — and there's no "restore my account" flow either. The mitigation is yours to use: export to ZIP, which bundles the whole workspace into a file you own. It's one click, and it's the honest version of a backup when there is no cloud to back up to.
+
+## What it costs me, the builder
+
+The trade-off isn't only on your side. No accounts means I can't email you when something breaks, can't tell you about a new feature, can't measure retention, can't offer a paid tier tied to an identity. Every growth loop the indie-hacking playbook assumes — onboarding emails, upgrade prompts, referral programs — needs a user record, and I chose not to have one. The newsletter exists, but it's opt-in and separate; the tool itself doesn't know who you are.
+
+That's a real business cost, and I pay it deliberately. A tool that monetizes by knowing its users is a different tool. This one monetizes, when it does, by being good enough that people choose to support it — not by being the thing that owns their work.
+
+## The deal, stated plainly
+
+So here's the deal NitroIDE makes, in one sentence: you get instant, private, offline-capable editing with nothing to sign up for, and in exchange you own your own backups and your own sync.
+
+If that deal sounds bad to you, you're not wrong — you just want a different tool, one with a cloud. If it sounds right, it's because you've felt the other side of it: the fifth "verify your email" of the day, the account you made for a tool you used once, the project locked behind a login you forgot. I built NitroIDE for the version of me that opens a tab and wants to be typing in three seconds.
+
+No account. No password. No problem — as long as you know what you're trading for it.
+
+## Try it
+
+I build NitroIDE — a browser-based IDE where your code never leaves your machine: nitroide.com
+
+⭐ If you enjoyed this, star NitroIDE on GitHub: github.com/nitroideofficial/nitroide
+
+## Frequently asked questions
+
+### Why doesn't NitroIDE have user accounts?
+
+Accounts need a server and a user database, and NitroIDE has neither by design. With no accounts there is no user table to breach, no passwords to leak, and no server that could see your code — but it also means no cloud sync and no live collaboration.
+
+### What happens to my projects if I clear my browser data?
+
+Projects live in your browser's localStorage, so clearing browser data deletes them. There is no account to restore them from. Export to ZIP bundles the whole workspace into a file you own — one click, and it's the honest version of a backup when there is no cloud to back up to.
+
+### Can I use NitroIDE on two devices?
+
+There is no cloud sync, so a project on your laptop is invisible to your phone. The workaround is the share link: the ?code= link carries the whole workspace compressed into the URL itself, so opening it on another device gives you a running copy instantly — no account needed on either side.
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.

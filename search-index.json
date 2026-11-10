@@ -546,9 +546,15 @@
   "c": "Blog"
  },
  {
- "t": "The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server",
- "u": "/blog/codebox-engine.html",
- "d": "NitroIDE's codebox keeps three Monaco editors, a sandboxed srcdoc preview and a live console in sync entirely in the browser — no server in the loop.",
- "c": "Blog"
-}
+  "t": "The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server",
+  "u": "/blog/codebox-engine.html",
+  "d": "NitroIDE's codebox keeps three Monaco editors, a sandboxed srcdoc preview and a live console in sync entirely in the browser — no server in the loop.",
+  "c": "Blog"
+ },
+ {
+  "t": "Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In",
+  "u": "/blog/zero-backend-accounts.html",
+  "d": "NitroIDE has no sign-in, no accounts, no cloud sync — by design. What that buys you in speed and privacy, and what it honestly costs in sync, collaboration and backups.",
+  "c": "Blog"
+ }
 ]
