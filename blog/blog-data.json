@@ -18,7 +18,7 @@
  {
   "SLUG": "privacy-as-a-feature",
   "META_TITLE": "Privacy as a Feature: Your Code Never Leaves Your Machine",
-  "META_DESC": "NitroIDE has no server and no database: projects live in your browser's localStorage, share links rebuild workspaces locally, and a sandboxed preview keeps shared code away from saved projects. The honest limits included.",
+  "META_DESC": "Privacy as a feature: NitroIDE has no server and no database. Projects live in your browser's localStorage, and a sandboxed preview keeps shared code away.",
   "KEYWORDS": "NitroIDE privacy, local-first IDE, code never leaves your machine, no server IDE, localStorage projects, share link privacy, sandboxed preview",
   "THEME_COLOR": "#34d399",
   "CATEGORY": "NO-SERVER ARCHITECTURE",
@@ -34,7 +34,7 @@
  {
   "SLUG": "embeds-live-playground-in-docs",
   "META_TITLE": "Embeds: Putting a Live NitroIDE Playground Inside Your Docs",
-  "META_DESC": "One iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs — editor and preview only, with a one-click escape hatch into the full editor.",
+  "META_DESC": "Embeds: one iframe parameter turns a NitroIDE share link into a live, read-only playground inside your docs — editor and preview only, one-click escape hatch.",
   "KEYWORDS": "NitroIDE embeds, iframe code playground, embed code editor in docs, live code demo tutorial, share link embed, read-only code viewer",
   "THEME_COLOR": "#a78bfa",
   "CATEGORY": "ENGINEERING",
@@ -124,7 +124,7 @@
  },
  {
   "SLUG": "templates-gallery-tour",
-  "META_TITLE": "12 Starters, Zero Blank Pages: Template Gallery Tour | NitroIDE",
+  "META_TITLE": "12 Starters, Zero Blank Pages: Template Gallery Tour",
   "META_DESC": "Twelve starters, zero blank pages: a tour of every NitroIDE template — portfolios, landing pages, todo app, gradient generator, React and Tailwind without a",
   "KEYWORDS": "NitroIDE templates, template gallery, starter templates, portfolio template, todo app template, react without npm, tailwind without build step, NitroIDE",
   "THEME_COLOR": "#22c55e",
@@ -139,7 +139,7 @@
  },
  {
   "SLUG": "cloudflare-security-headers-recipe",
-  "META_TITLE": "Hardened Static Site: The Cloudflare Headers Recipe | NitroIDE",
+  "META_TITLE": "Hardened Static Site: The Cloudflare Headers Recipe",
   "META_DESC": "GitHub Pages can't set HTTP headers, so Cloudflare does: six headers, one Transform Rule — HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP + COEP —",
   "KEYWORDS": "cloudflare security headers, HSTS, nosniff, COEP, COOP, referrer policy, permissions policy, static site security, NitroIDE",
   "THEME_COLOR": "#f59e0b",
@@ -154,7 +154,7 @@
  },
  {
   "SLUG": "hmr-without-a-bundler",
-  "META_TITLE": "HMR Without a Bundler: How Instant Preview Updates Work | NitroIDE",
+  "META_TITLE": "HMR Without a Bundler: How Instant Preview Updates Work",
   "META_DESC": "No dev server, no WebSocket, no bundler. NitroIDE's preview loop: 200ms debounce, string-concatenated build, srcdoc swap, true CSS hot-patch. The full loop and",
   "KEYWORDS": "hmr without bundler, instant preview, srcdoc, postMessage CSS hot reload, debounce, browser IDE, NitroIDE",
   "THEME_COLOR": "#38bdf8",
@@ -169,7 +169,7 @@
  },
  {
   "SLUG": "state-watcher",
-  "META_TITLE": "Nitro.watch(): A Live State Panel for My Browser IDE | NitroIDE",
+  "META_TITLE": "Nitro.watch(): A Live State Panel for My Browser IDE",
   "META_DESC": "One call — Nitro.watch('cart', cart) — renders a live JSON tree in NitroIDE's State tab. The postMessage bridge, escape-first highlighter, and limits.",
   "KEYWORDS": "nitro.watch, live state panel, javascript debugging, browser IDE, console.log alternative, postMessage bridge, state watcher, zero dependencies, NitroIDE",
   "THEME_COLOR": "#22c55e",
@@ -184,7 +184,7 @@
  },
  {
   "SLUG": "no-server-architecture",
-  "META_TITLE": "No-Server IDE: Your Code Runs Only in Your Browser | NitroIDE",
+  "META_TITLE": "No-Server IDE: Your Code Runs Only in Your Browser",
   "META_DESC": "NitroIDE's IDE runs fully client-side — no accounts, no backend stores your code. How that reshapes storage, identity, sharing, and trust, plus the exceptions.",
   "KEYWORDS": "no server architecture, client-side IDE, localStorage database, zero backend, browser IDE privacy, local-first architecture, no signup developer tools, NitroIDE",
   "THEME_COLOR": "#22c55e",
@@ -199,7 +199,7 @@
  },
  {
   "SLUG": "ai-pair-programmer-byok",
-  "META_TITLE": "NitroIDE AI Pair Programmer: Bring Your Own Key | NitroIDE",
+  "META_TITLE": "NitroIDE AI Pair Programmer: Bring Your Own Key",
   "META_DESC": "NitroIDE's AI pair programmer: bring-your-own-key privacy, surgical find/replace edits with diff previews, and trust controls that refuse ambiguous changes.",
   "KEYWORDS": "AI pair programmer, browser IDE with AI, BYOK AI, Groq, Gemini, OpenRouter, AI code assistant privacy, surgical code edits, NitroIDE",
   "THEME_COLOR": "#00e5ff",
@@ -214,7 +214,7 @@
  },
  {
   "SLUG": "postmessage-sanitizer",
-  "META_TITLE": "postMessage Sanitizer: A Recipe for Building iframe Tools | NitroIDE",
+  "META_TITLE": "postMessage Sanitizer: A Recipe for Building iframe Tools",
   "META_DESC": "How NitroIDE renders untrusted postMessage payloads without XSS: token-based serialization, an allowlist renderer, strict field validation, and attacker tests.",
   "KEYWORDS": "postMessage security, iframe XSS prevention, allowlist sanitizer, token-based rendering, textContent vs innerHTML, browser IDE security, NitroIDE",
   "THEME_COLOR": "#f472b6",
@@ -229,7 +229,7 @@
  },
  {
   "SLUG": "91-posts-0-followers-lessons",
-  "META_TITLE": "I Published 91 Posts With 0 Followers. What the Numbers Say | NitroIDE",
+  "META_TITLE": "I Published 91 Posts With 0 Followers. What the Numbers Say",
   "META_DESC": "91 posts. 0 followers. 3 connections. I audited the whole campaign — here's what won, what flopped, and the distribution lesson I'm carrying forward.",
   "KEYWORDS": "build in public, content marketing audit, indie hacker, dev.to marketing, distribution vs content, audience building, NitroIDE",
   "THEME_COLOR": "#f472b6",
@@ -259,7 +259,7 @@
  },
  {
   "SLUG": "0ms-preview-srcdoc-postmessage-no-bundler",
-  "META_TITLE": "How NitroIDE Renders Code Instantly: srcdoc + postMessage | NitroIDE",
+  "META_TITLE": "How NitroIDE Renders Code Instantly: srcdoc + postMessage",
   "META_DESC": "NitroIDE's preview renders with near-zero latency: one sandboxed iframe, srcdoc rendering, an anti-flicker swap, and postMessage updates. Honest tradeoffs.",
   "KEYWORDS": "iframe srcdoc, postMessage preview, live preview architecture, browser IDE latency, double buffering iframe, no bundler frontend, NitroIDE",
   "THEME_COLOR": "#00e5ff",
@@ -275,7 +275,7 @@
  },
  {
   "SLUG": "codesandbox-stackblitz-alternative-local-webcontainers",
-  "META_TITLE": "CodeSandbox & StackBlitz Alternative: No-Cloud Frontend IDE | NitroIDE",
+  "META_TITLE": "CodeSandbox & StackBlitz Alternative: No-Cloud Frontend IDE",
   "META_DESC": "CodeSandbox uses cloud containers; StackBlitz runs Node in your tab. NitroIDE skips both — a near-instant client-side IDE with no signup or quotas.",
   "KEYWORDS": "codesandbox alternative, stackblitz alternative, webcontainers alternative, free codesandbox alternative, browser IDE no signup, local-first web IDE",
   "THEME_COLOR": "#22d3ee",
@@ -291,8 +291,8 @@
  },
  {
   "SLUG": "web-workers-multithreading-browser-guide",
-  "META_TITLE": "Web Workers & Multithreading in the Browser: The Practical Guide | NitroIDE",
-  "META_DESC": "SharedArrayBuffer, transferable objects, OffscreenCanvas, Atomics and worker-based language servers — how to move heavy work off the main thread with real, runnable examples.",
+  "META_TITLE": "Web Workers & Multithreading: A Practical Guide | NitroIDE",
+  "META_DESC": "SharedArrayBuffer, transferables, OffscreenCanvas and Atomics — move heavy work off the main thread with real, runnable examples.",
   "KEYWORDS": "web workers tutorial, SharedArrayBuffer Atomics, transferable objects, OffscreenCanvas worker, javascript multithreading browser",
   "THEME_COLOR": "#8b5cf6",
   "CATEGORY": "ENGINEERING",
@@ -307,8 +307,8 @@
  },
  {
   "SLUG": "browser-storage-offline-apps-opfs-indexeddb-guide",
-  "META_TITLE": "Browser Storage & Offline Apps: OPFS, IndexedDB and Service Workers | NitroIDE",
-  "META_DESC": "OPFS, IndexedDB, service workers, background sync, Web Locks and client-side encryption — the full storage stack for offline-first browser apps, with runnable examples.",
+  "META_TITLE": "Browser Storage: OPFS & IndexedDB | NitroIDE",
+  "META_DESC": "OPFS, IndexedDB, service workers, background sync and Web Locks — the storage stack for offline-first browser apps, with runnable examples.",
   "KEYWORDS": "OPFS tutorial, IndexedDB vs OPFS, service worker offline, background sync api, web locks api, webcrypto AES-GCM browser",
   "THEME_COLOR": "#10b981",
   "CATEGORY": "SYSTEM ARCHITECTURE",
@@ -323,8 +323,8 @@
  },
  {
   "SLUG": "browser-networking-fetch-streams-webtransport-guide",
-  "META_TITLE": "Browser Networking: Fetch, Streams, Background Fetch & WebTransport | NitroIDE",
-  "META_DESC": "Fetch streams, Background Fetch, compression dictionaries, WebTransport over QUIC, and service-worker API mocking — the browser networking toolkit with honest limits.",
+  "META_TITLE": "Browser Networking: Fetch, Streams & WebTransport | NitroIDE",
+  "META_DESC": "Fetch streams, Background Fetch, WebTransport over QUIC, and service-worker API mocking — the browser networking toolkit, with honest limits.",
   "KEYWORDS": "fetch streaming ReadableStream, Background Fetch API, WebTransport QUIC tutorial, compression dictionary transport, service worker mock api",
   "THEME_COLOR": "#0ea5e9",
   "CATEGORY": "NETWORK ARCHITECTURE",
@@ -339,8 +339,8 @@
  },
  {
   "SLUG": "modern-css-app-ui-houdini-container-queries-guide",
-  "META_TITLE": "Modern CSS for App UIs: Houdini, Container Queries & View Transitions | NitroIDE",
-  "META_DESC": "@property, Houdini Paint API, container queries, view transitions, Typed OM, Custom Highlight API and content-visibility — modern CSS techniques for app UIs, all runnable.",
+  "META_TITLE": "Modern CSS for App UIs: Houdini, Container Queries",
+  "META_DESC": "@property, Houdini Paint API, container queries and view transitions — modern CSS techniques for app UIs, all runnable in the browser.",
   "KEYWORDS": "css @property tutorial, houdini paint api, css container queries, view transitions api, css typed OM, content-visibility performance",
   "THEME_COLOR": "#ec4899",
   "CATEGORY": "UI PERFORMANCE",
@@ -355,7 +355,7 @@
  },
  {
   "SLUG": "canvas-webaudio-creative-coding-guide",
-  "META_TITLE": "Canvas & Web Audio: A Hands-On Creative Coding Guide | NitroIDE",
+  "META_TITLE": "Canvas & Web Audio: Creative Coding Guide | NitroIDE",
   "META_DESC": "Canvas 2D, Web Audio synthesis, AudioWorklet sample-accurate timing, and UI sonification — hands-on creative coding with runnable browser examples.",
   "KEYWORDS": "canvas 2d tutorial, web audio api synthesizer, audioworklet tutorial, creative coding browser, ui sonification accessibility",
   "THEME_COLOR": "#f59e0b",
@@ -371,8 +371,8 @@
  },
  {
   "SLUG": "webassembly-browser-honest-guide",
-  "META_TITLE": "WebAssembly in the Browser: What It Can (and Can't) Do | NitroIDE",
-  "META_DESC": "What WebAssembly can and can't do in the browser: loading modules, linear memory, WasmGC, threads, SIMD, SQLite.wasm — plus honest limits on Python-in-WASM and WebGPU.",
+  "META_TITLE": "WebAssembly in the Browser: What It Can (and Can't) Do",
+  "META_DESC": "What WebAssembly can and can't do: modules, linear memory, WasmGC, threads, SIMD, SQLite.wasm — plus honest limits on Python-in-WASM and WebGPU.",
   "KEYWORDS": "webassembly tutorial honest, wasm vs python browser, sqlite wasm browser, wasm memory threads simd, wasmgc explained",
   "THEME_COLOR": "#3178c6",
   "CATEGORY": "ENGINEERING",
@@ -387,7 +387,7 @@
  },
  {
   "SLUG": "browser-hardware-apis-serial-bluetooth-hid-guide",
-  "META_TITLE": "Browser Hardware APIs: Serial, Bluetooth, HID, USB & MIDI | NitroIDE",
+  "META_TITLE": "Browser Hardware APIs: Serial, Bluetooth, HID, USB & MIDI",
   "META_DESC": "Web Serial, WebUSB, WebHID, Web Bluetooth, Web MIDI and WebNN — control real hardware from a web page, with runnable patterns and honest browser-support limits.",
   "KEYWORDS": "web serial api arduino, webusb tutorial, webhid api, web bluetooth ble browser, web midi api, webnn status",
   "THEME_COLOR": "#22c55e",
@@ -403,7 +403,7 @@
  },
  {
   "SLUG": "browser-performance-scheduler-observers-memory-guide",
-  "META_TITLE": "Browser Performance: Scheduler, Observers & Memory Done Right | NitroIDE",
+  "META_TITLE": "Browser Performance: Scheduler & Memory | NitroIDE",
   "META_DESC": "Scheduler API, PerformanceObserver, Compute Pressure, WeakRef memory management, and signals — the real browser performance toolkit, measured not guessed.",
   "KEYWORDS": "scheduler.postTask tutorial, scheduler.yield, PerformanceObserver longtask, compute pressure api, WeakRef FinalizationRegistry, signals proposal",
   "THEME_COLOR": "#f43f5e",
@@ -419,7 +419,7 @@
  },
  {
   "SLUG": "browser-security-webcrypto-sandboxing-guide",
-  "META_TITLE": "Browser Security: WebCrypto, Sandboxing & Zero-Trust Patterns | NitroIDE",
+  "META_TITLE": "Browser Security: WebCrypto & Sandboxing Patterns | NitroIDE",
   "META_DESC": "WebCrypto encryption, HKDF key derivation, sandboxed iframes, fenced frames, ShadowRealm and E2EE media — browser security patterns with honest threat models.",
   "KEYWORDS": "webcrypto AES-GCM tutorial, HKDF key derivation, sandboxed iframe plugin, fenced frames, webrtc insertable streams E2EE",
   "THEME_COLOR": "#ef4444",
@@ -435,7 +435,7 @@
  },
  {
   "SLUG": "prototype-react-vue-typescript-browser-cdn-guide",
-  "META_TITLE": "Prototype React, Vue & TypeScript in the Browser — No Build Step | NitroIDE",
+  "META_TITLE": "Prototype React, Vue & TypeScript — No Build Step | NitroIDE",
   "META_DESC": "Prototype React, Vue, and TypeScript in the browser with zero build step — import maps, esm.sh, in-browser transpile, and an honest comparison with cloud IDEs.",
   "KEYWORDS": "react without npm cdn, vue esm browser no build, typescript in browser transpile, codesandbox alternative honest, codepen alternative frontend",
   "THEME_COLOR": "#38bdf8",
@@ -451,7 +451,7 @@
  },
  {
   "SLUG": "vim-emacs-online-editor-keybindings",
-  "META_TITLE": "Bringing Vim & Emacs to the Web: The Power User's Online Editor",
+  "META_TITLE": "Vim & Emacs in the Browser: The Power User's Editor",
   "META_DESC": "Web IDEs usually break keyboard shortcuts. See how NitroIDE provides true Vim and Emacs emulation, giving power users desktop-grade keyboard control.",
   "KEYWORDS": "Vim online editor, Emacs browser IDE, neovim web alternative, VS Code keybindings online, hardware keyboard web IDE, online code editor vim mode, power user browser IDE",
   "THEME_COLOR": "#10b981",
@@ -467,7 +467,7 @@
  },
  {
   "SLUG": "migrate-local-monorepo-browser-based-ide",
-  "META_TITLE": "Migrating Your Local Monorepo to a Browser-Based Workspace | NitroIDE",
+  "META_TITLE": "Migrate Your Monorepo to a Browser Workspace | NitroIDE",
   "META_DESC": "Most web IDEs crash when loading massive codebases. Learn how NitroIDE handles 50-package Turborepos with background indexing and zero UI lag.",
   "KEYWORDS": "Monorepo browser IDE, Turborepo online editor, large codebase online IDE, enterprise web IDE, migrate to cloud IDE, import GitHub monorepo web, Lerna browser support",
   "THEME_COLOR": "#8b5cf6",
@@ -483,7 +483,7 @@
  },
  {
   "SLUG": "best-free-online-ide-students-bootcamps",
-  "META_TITLE": "The Best Free Online IDE for Students and Bootcamps in 2026",
+  "META_TITLE": "Free Online IDE for Students and Bootcamps (2026) | NitroIDE",
   "META_DESC": "Don't get trapped in premium subscriptions. Learn why NitroIDE's decentralized architecture makes it the most powerful free online IDE for students.",
   "KEYWORDS": "Best free online IDE, online code editor for students, coding bootcamp browser IDE, learn to code online free, HTML CSS JS playground free, free cloud workspace, student developer pack alternative",
   "THEME_COLOR": "#10b981",
@@ -515,7 +515,7 @@
  },
  {
   "SLUG": "offline-first-browser-ide-pwa",
-  "META_TITLE": "Offline-First Development: The IDE That Works on an Airplane | NitroIDE",
+  "META_TITLE": "Offline-First IDE: Code on an Airplane | NitroIDE",
   "META_DESC": "Cloud IDEs freeze without Wi-Fi. Learn how NitroIDE's PWA architecture and OPFS storage provide a flawless, 100% offline coding experience.",
   "KEYWORDS": "offline browser IDE, code offline online, PWA code editor, coding on an airplane, OPFS file system, zero internet cloud IDE, local first web app, CodeSandbox offline",
   "THEME_COLOR": "#10b981",
@@ -531,7 +531,7 @@
  },
  {
   "SLUG": "best-code-editor-ipad-pro-m4-browser-ide",
-  "META_TITLE": "The Best Code Editor for iPad Pro: Frontend Coding on iOS",
+  "META_TITLE": "Code Editor for iPad Pro: Frontend Coding on iOS",
   "META_DESC": "Unlock your M-Series iPad. NitroIDE brings frontend coding — HTML, CSS, JavaScript, live preview — to Safari. No install, no server, no terminal needed.",
   "KEYWORDS": "best code editor for iPad Pro, run VS Code on iPad, iPadOS programming app, digital nomad coding setup, program on iPad browser, remote development iPadOS, M4 iPad programming, mobile web development USA, iOS IDE full stack",
   "THEME_COLOR": "#a855f7",
@@ -542,7 +542,7 @@
  },
  {
   "SLUG": "digital-nomad-coding-offline-browser-ide",
-  "META_TITLE": "The Ultimate Digital Nomad Coding Setup: 100% Offline Browser IDE",
+  "META_TITLE": "Digital Nomad Coding Setup: 100% Offline Browser IDE",
   "META_DESC": "Don't let spotty Wi-Fi ruin your productivity. Learn how NitroIDE allows digital nomads to write, compile, and test full-stack apps completely offline.",
   "KEYWORDS": "digital nomad coding setup, offline browser IDE, code offline from anywhere, remote work travel developer, best IDE for slow internet, coding on an airplane, PWA code editor, travel software engineer tools",
   "THEME_COLOR": "#14b8a6",
@@ -553,8 +553,8 @@
  },
  {
   "SLUG": "migrate-replit-to-nitroide-tutorial",
-  "META_TITLE": "How to Migrate from Replit to NitroIDE in 3 Minutes",
-  "META_DESC": "Tired of Replit's pricing and latency? Follow our step-by-step guide to migrating your projects to NitroIDE for a faster, free, and offline-capable experience.",
+  "META_TITLE": "Move a Project from Replit to NitroIDE (Manual Guide)",
+  "META_DESC": "No automatic Replit importer here — this guide doesn't pretend otherwise. Manual steps to move an HTML/CSS/JS project from Replit to NitroIDE in five minutes.",
   "KEYWORDS": "migrate from Replit, Replit alternative free, import Replit project, Replit to NitroIDE, export Replit to GitHub, free online IDE for Replit users, Replit pricing alternative",
   "THEME_COLOR": "#f43f5e",
   "CATEGORY": "PROTOTYPING & WORKFLOW",
@@ -564,8 +564,8 @@
  },
  {
   "SLUG": "best-online-ide-free-2026-comparison",
-  "META_TITLE": "The Best Free Online IDEs in 2026: An Honest Comparison | NitroIDE",
-  "META_DESC": "The best free online IDEs of 2026, compared honestly: Replit, CodeSandbox, StackBlitz, GitHub Codespaces, CodePen, and NitroIDE — with our bias disclosed and our losses admitted.",
+  "META_TITLE": "Free Online IDEs in 2026: An Honest Comparison | NitroIDE",
+  "META_DESC": "Free online IDEs of 2026, compared honestly: Replit, CodeSandbox, StackBlitz, Codespaces, CodePen, and NitroIDE — bias disclosed, losses admitted.",
   "KEYWORDS": "best free online ide 2026, replit vs codesandbox vs stackblitz, free browser ide comparison honest",
   "THEME_COLOR": "#10b981",
   "CATEGORY": "PROTOTYPING & WORKFLOW",
@@ -580,8 +580,8 @@
  },
  {
   "SLUG": "opfs-vs-indexeddb-virtual-file-system",
-  "META_TITLE": "OPFS vs IndexedDB: Zero-Trust AES-GCM Storage",
-  "META_DESC": "IndexedDB is too slow for compiling code. Read our deep dive into the Origin Private File System (OPFS) and how it enables native disk I/O in the browser.",
+  "META_TITLE": "OPFS vs IndexedDB: Zero-Trust AES-GCM Storage | NitroIDE",
+  "META_DESC": "IndexedDB is unencrypted. See how NitroIDE implements a Zero-Trust architecture by encrypting all OPFS file chunks using the Web Crypto API.",
   "KEYWORDS": "OPFS vs IndexedDB, Origin Private File System, browser file storage, web native file I/O, build virtual file system javascript, faster web storage APIs",
   "THEME_COLOR": "#3b82f6",
   "CATEGORY": "DATABASES",
@@ -591,8 +591,8 @@
  },
  {
   "SLUG": "how-to-use-react-without-npm",
-  "META_TITLE": "Tutorial: How to Build a React App Without npm or Build Tools",
-  "META_DESC": "Tired of Webpack and Vite? Learn how to prototype React applications directly in your browser using unpkg CDN injection and zero build steps.",
+  "META_TITLE": "Build React Apps Without npm | Browser AST Transpilation",
+  "META_DESC": "Bypass the Node.js event loop. Learn how to leverage client-side AST transpilation to execute raw React JSX directly in the V8 engine using NitroIDE.",
   "KEYWORDS": "React without npm, use React via CDN, React browser prototyping, unpkg react tutorial, zero build step frontend, vanilla javascript react",
   "THEME_COLOR": "#00e5ff",
   "CATEGORY": "TUTORIAL",
@@ -602,8 +602,8 @@
  },
  {
   "SLUG": "tailwind-css-in-browser-no-postcss",
-  "META_TITLE": "Guide: Mastering Tailwind CSS in the Browser",
-  "META_DESC": "Stop fighting with PostCSS. Here is how to test and perfect Tailwind utility classes with hot-module replacement directly in a browser environment.",
+  "META_TITLE": "JIT Tailwind CSS Compilation in the Browser | NitroIDE",
+  "META_DESC": "Discover how to inject Tailwind CSS utility classes directly into the browser's CSSOM without PostCSS or configuration files.",
   "KEYWORDS": "Tailwind CSS browser, run tailwind without postcss, tailwind CDN tutorial, utility classes web editor, frontend design playground, tailwind config online",
   "THEME_COLOR": "#38bdf8",
   "CATEGORY": "TUTORIAL",
@@ -613,8 +613,8 @@
  },
  {
   "SLUG": "zero-latency-local-browser-ide-architecture",
-  "META_TITLE": "Engineering: How We Built a Zero-Latency IDE",
-  "META_DESC": "A deep dive into our architecture: how we utilized HTML5 srcdoc and IndexedDB to bypass cloud servers entirely and create a zero-latency editor.",
+  "META_TITLE": "Zero-Latency Browser IDE Architecture | NitroIDE",
+  "META_DESC": "Discover how NitroIDE utilizes HTML5 srcdoc, IndexedDB blobs, and Monaco Web Workers to build an offline-capable, zero-latency IDE.",
   "KEYWORDS": "zero latency IDE, browser IDE architecture, HTML5 srcdoc iframe, client side IDE, bypass cloud VMs, performance engineering web app",
   "THEME_COLOR": "#bb9af7",
   "CATEGORY": "ENGINEERING",
@@ -624,8 +624,8 @@
  },
  {
   "SLUG": "aws-cloud9-alternative-local-compute",
-  "META_TITLE": "Coding Offline on a Chromebook: An Honest Cloud9 Alternative | NitroIDE",
-  "META_DESC": "An honest Cloud9 alternative for frontend work: where a client-side browser IDE genuinely replaces EC2-backed development (Chromebooks, offline) and where it can't (backends, terminals).",
+  "META_TITLE": "An Honest Cloud9 Alternative for Offline Coding | NitroIDE",
+  "META_DESC": "An honest Cloud9 alternative for frontend work: where a browser IDE replaces EC2-backed dev (Chromebooks, offline) and where it can't (backends, terminals).",
   "KEYWORDS": "aws cloud9 alternative, cloud9 alternative chromebook, offline browser ide frontend, cloud9 vs local ide honest",
   "THEME_COLOR": "#f59e0b",
   "CATEGORY": "CLOUD VS LOCAL",
@@ -640,7 +640,7 @@
  },
  {
   "SLUG": "rxjs-redux-state-visualization-ide",
-  "META_TITLE": "Visualizing RxJS and Redux State in Real-Time",
+  "META_TITLE": "Visualizing RxJS and Redux State in Real-Time | NitroIDE",
   "META_DESC": "Stop console.logging your application state. Learn how NitroIDE integrates deeply with native browser dev tools to visualize complex state streams.",
   "KEYWORDS": "RxJS visualizer online, Redux state debugging web, browser IDE dev tools, frontend state management online, debug react state",
   "THEME_COLOR": "#8b5cf6",
@@ -656,8 +656,8 @@
  },
  {
   "SLUG": "ast-manipulation-auto-formatting-babel",
-  "META_TITLE": "In-Browser Code Formatting via Babel AST Manipulation",
-  "META_DESC": "Prettier is too heavy for the web. Learn how NitroIDE provides instant code formatting by compiling Babel into WebAssembly.",
+  "META_TITLE": "Real-Time Auto-Formatting via AST Manipulation | NitroIDE",
+  "META_DESC": "Stop using regex formatters. Discover how NitroIDE uses Babel to parse, manipulate, and reconstruct Abstract Syntax Trees for flawless code formatting.",
   "KEYWORDS": "Babel AST formatting web, Prettier alternative browser, fast code formatting javascript, WASM code parser, native editor features",
   "THEME_COLOR": "#f43f5e",
   "CATEGORY": "PROTOTYPING & WORKFLOW",
@@ -673,7 +673,7 @@
  {
   "SLUG": "export-to-zip",
   "META_TITLE": "Export to ZIP: From Browser Session to Deployed Site",
-  "META_DESC": "NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.",
+  "META_DESC": "Export to ZIP: NitroIDE's Download ZIP packs your browser session into a folder of plain web files, built client-side with JSZip — no server round-trip.",
   "KEYWORDS": "NitroIDE export ZIP, download ZIP browser IDE, deploy static site from browser, JSZip client-side export, no build step deployment, Netlify Drop GitHub Pages",
   "THEME_COLOR": "#f59e0b",
   "CATEGORY": "NO-SERVER ARCHITECTURE",

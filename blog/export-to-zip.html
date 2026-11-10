@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Export to ZIP: From Browser Session to Deployed Site</title>
   <meta name="title" content="Export to ZIP: From Browser Session to Deployed Site">
-  <meta name="description" content="NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.">
+  <meta name="description" content="Export to ZIP: NitroIDE's Download ZIP packs your browser session into a folder of plain web files, built client-side with JSZip — no server round-trip.">
   <meta name="keywords" content="NitroIDE export ZIP, download ZIP browser IDE, deploy static site from browser, JSZip client-side export, no build step deployment, Netlify Drop GitHub Pages">
   <meta name="author" content="NitroIDE">
   <meta name="theme-color" content="#f59e0b">
@@ -14,7 +14,7 @@
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://nitroide.com/blog/export-to-zip.html">
   <meta property="og:title" content="Export to ZIP: From Browser Session to Deployed Site">
-  <meta property="og:description" content="NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.">
+  <meta property="og:description" content="Export to ZIP: NitroIDE's Download ZIP packs your browser session into a folder of plain web files, built client-side with JSZip — no server round-trip.">
   <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-11-03-export-to-zip.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -24,10 +24,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://nitroide.com/blog/export-to-zip.html">
   <meta name="twitter:title" content="Export to ZIP: From Browser Session to Deployed Site">
-  <meta name="twitter:description" content="NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.">
+  <meta name="twitter:description" content="Export to ZIP: NitroIDE's Download ZIP packs your browser session into a folder of plain web files, built client-side with JSZip — no server round-trip.">
   <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-11-03-export-to-zip.webp">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-03-export-to-zip.webp","headline":"Export to ZIP: From Browser Session to Deployed Site","description":"NitroIDE's Download ZIP packs your browser session into a portable folder of plain web files, built client-side with JSZip — no server round-trip, no build step, ready for any static host.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/export-to-zip.html","mainEntityOfPage":"https://nitroide.com/blog/export-to-zip.html","datePublished":"2026-11-03","dateModified":"2026-11-03"}
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-03-export-to-zip.webp","headline":"Export to ZIP: From Browser Session to Deployed Site","description":"Export to ZIP: NitroIDE's Download ZIP packs your browser session into a folder of plain web files, built client-side with JSZip — no server round-trip.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/export-to-zip.html","mainEntityOfPage":"https://nitroide.com/blog/export-to-zip.html","datePublished":"2026-11-03","dateModified":"2026-11-03"}
   </script>
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What files does NitroIDE's Download ZIP include?", "acceptedAnswer": {"@type": "Answer", "text": "Exactly the three workspace files as they are in your session: index.html, style.css and script.js. The archive is built in your browser with JSZip — nothing is uploaded to be zipped."}}, {"@type": "Question", "name": "Will a site exported as a ZIP work without an internet connection?", "acceptedAnswer": {"@type": "Answer", "text": "Your own code will. But if your project links a third-party library from a CDN mid-session, the exported files still reference that CDN, so the deployed site needs an internet connection to fetch those links."}}, {"@type": "Question", "name": "Why did Download ZIP once stop working silently?", "acceptedAnswer": {"@type": "Answer", "text": "JSZip's UMD wrapper saw Monaco's AMD loader and registered itself as an anonymous AMD module instead of setting window.JSZip, so the download code's global was never defined. The fix loads JSZip before the Monaco loader and shields the loader while JSZip evaluates."}}]}

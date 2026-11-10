@@ -98,7 +98,7 @@
       <div class="reveal-1 badge badge-primary"><i class="ph-bold ph-book-open"></i> NitroIDE Engineering</div>
     </div>
     <h1 class="reveal-2 hero-title-main">
-      The NitroIDE <span class="hollow-text">Blog.<span class="glow-layer">Blog.</span><span class="fill-layer">Blog.</span></span>
+      The NitroIDE <span class="hollow-text">Blog.<span class="glow-layer" aria-hidden="true">Blog.</span><span class="fill-layer" aria-hidden="true">Blog.</span></span>
     </h1>
     <p class="reveal-3 hero-subtitle">
       Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.
@@ -120,7 +120,7 @@
     <div class="blog-controls">
       <div class="blog-search-wrapper">
         <i class="ph-bold ph-magnifying-glass"></i>
-        <input type="text" id="articleSearch" class="blog-search-input" placeholder="Search by title, technology, or keyword...">
+        <input type="text" id="articleSearch" class="blog-search-input" placeholder="Search by title, technology, or keyword..." aria-label="Search articles">
       </div>
       <div class="blog-count-badge" id="articleCount">
         Loading...
@@ -141,13 +141,18 @@
         <p class="hero-subtitle" style="max-width: 640px;">Every post, newest first.</p>
       </div>
       <ul>
-        <li><a href="offline-first-github-pages.html">Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends)</a></li>
-        <li><a href="localstorage-as-database.html">localStorage Is My Database (For Now): The Patterns That Work, the Limits That Bite, and When to Graduate</a></li>
-        <li><a href="vanilla-js-blog-engine.html">I Built a Blog Engine With No Build Step: One JSON File, a noscript List, and a Gated RSS Feed</a></li>
+        <li><a href="codebox-engine.html">The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server.</a></li>
+        <li><a href="privacy-as-a-feature.html">Privacy as a Feature: Your Code Never Leaves Your Machine.</a></li>
+        <li><a href="embeds-live-playground-in-docs.html">Embeds: Putting a Live NitroIDE Playground Inside Your Docs.</a></li>
+        <li><a href="json-ld-recipes-no-plugin.html">JSON-LD Recipes: BlogPosting, FAQPage, and SoftwareApplication Without a Plugin.</a></li>
+        <li><a href="seo-checklist-for-indie-hackers.html">SEO Checklist for Indie Hackers: Sitemap, Schema, and llms.txt — the Three Files That Do the Talking.</a></li>
+        <li><a href="offline-first-github-pages.html">Offline-First on GitHub Pages: What Actually Works (and Where It Honestly Ends).</a></li>
+        <li><a href="localstorage-as-database.html">localStorage Is My Database (For Now).</a></li>
+        <li><a href="vanilla-js-blog-engine.html">I Built a Blog Engine With No Build Step.</a></li>
         <li><a href="templates-gallery-tour.html">12 Starters, Zero Blank Pages: A Tour of NitroIDE's Template Gallery</a></li>
         <li><a href="cloudflare-security-headers-recipe.html">Zero Security Headers to a Hardened Static Site: The Cloudflare Recipe I Run on NitroIDE</a></li>
         <li><a href="hmr-without-a-bundler.html">HMR Without a Bundler: How NitroIDE's Instant Preview Updates Actually Work</a></li>
-<li><a href="state-watcher.html">Nitro.watch(): A Live State Panel for My Browser IDE</a></li>
+        <li><a href="state-watcher.html">Nitro.watch(): A Live State Panel for My Browser IDE</a></li>
         <li><a href="no-server-architecture.html">No-Server IDE: Your Code Runs Only in Your Browser</a></li>
         <li><a href="ai-pair-programmer-byok.html">NitroIDE AI Pair Programmer: Bring Your Own Key, Surgical Edits</a></li>
         <li><a href="postmessage-sanitizer.html">postMessage Sanitizer: A Recipe for Building iframe Tools</a></li>
@@ -174,13 +179,14 @@
         <li><a href="digital-nomad-coding-offline-browser-ide.html">The Ultimate Digital Nomad Coding Setup.</a></li>
         <li><a href="migrate-replit-to-nitroide-tutorial.html">Migrating from Replit to NitroIDE.</a></li>
         <li><a href="best-online-ide-free-2026-comparison.html">The Best Free Online IDEs, Compared Honestly.</a></li>
-        <li><a href="opfs-vs-indexeddb-virtual-file-system.html">OPFS vs IndexedDB for File Systems.</a></li>
+        <li><a href="opfs-vs-indexeddb-virtual-file-system.html">OPFS vs IndexedDB: Zero-Trust AES-GCM Storage</a></li>
         <li><a href="how-to-use-react-without-npm.html">How to Build a React App Without npm.</a></li>
         <li><a href="tailwind-css-in-browser-no-postcss.html">Mastering Tailwind CSS in the Browser.</a></li>
         <li><a href="zero-latency-local-browser-ide-architecture.html">How We Built a Zero-Latency IDE.</a></li>
         <li><a href="aws-cloud9-alternative-local-compute.html">A Cloud9 Alternative for Frontend Work, With Zero Setup.</a></li>
         <li><a href="rxjs-redux-state-visualization-ide.html">Visualizing Complex State in Real-Time.</a></li>
         <li><a href="ast-manipulation-auto-formatting-babel.html">Instant Code Formatting via Babel AST.</a></li>
+        <li><a href="export-to-zip.html">Export to ZIP: From Browser Session to Deployed Site.</a></li>
       </ul>
     </section>
     </noscript>
