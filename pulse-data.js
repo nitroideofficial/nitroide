@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 11, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "A Teacher's Zero-Setup Lesson: One Link, Thirty Students, No Accounts",
+  link: "https://nitroide.hashnode.dev/a-teacher-s-zero-setup-lesson-one-link-thirty-students-no-accounts"
+},
+  {
+  date: "Nov 11, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
