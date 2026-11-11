@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 11, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "A teacher's zero-setup lesson: one link, thirty students, no accounts",
+  link: "https://peerlist.io/scroll/post/ACTHKKDE7RJALDAMR1LNRKMJBKMQL7"
+},
+  {
+  date: "Nov 11, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
