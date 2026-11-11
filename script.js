@@ -81,6 +81,10 @@ const AI_PROVIDERS = {
     help: 'Paid API (separate from ChatGPT Plus/Go subscription). Cheapest coding model: gpt-4o-mini.',
     freePick: null,
     baseUrl: 'https://api.openai.com/v1' },
+  demonroute: { label: 'Demon Route', defaultModel: 'Qwen/Qwen3-Coder-30B-A3B-Instruct', keyUrl: 'https://demonroute.com',
+    help: 'Prepaid open-weight models, including uncensored coding fine-tunes. Hard stop at $0, no IP logs. Get a key (sk-dr-...) at demonroute.com.',
+    freePick: null,
+    baseUrl: 'https://api.demonroute.com/v1' },
   sambanova: { label: 'SambaNova', defaultModel: 'Meta-Llama-3.3-70B-Instruct', keyUrl: 'https://cloud.sambanova.ai/',
     help: 'Free tier with fast Llama models. Key goes via NitroIDE\'s proxy (SambaNova blocks browsers directly). We never store your key.',
     freePick: 'Meta-Llama-3.3-70B-Instruct',
@@ -510,6 +514,7 @@ function aiDetectProvider(key){
   key = (key || '').trim();
   if (/^gsk_/.test(key)) return 'groq';
   if (/^sk-or-v1-/.test(key)) return 'openrouter';
+  if (/^sk-dr-/.test(key)) return 'demonroute';
   if (/^AIza/.test(key) || /^AQ\./.test(key)) return 'gemini';
   if (/^sk-proj-/.test(key) || /^sk-[A-Za-z0-9_\-]{20,}/.test(key)) return 'openai';
   if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(key)) return 'sambanova';
@@ -543,7 +548,7 @@ function aiSetupKeyTyped(){
   if (!p) {
     if (detEl) {
       detEl.style.color = 'var(--warning)';
-      detEl.innerHTML = 'Could not detect provider — key should start with gsk_ (Groq), AIza or AQ. (Gemini), sk-or-v1- (OpenRouter) or sk- (OpenAI). Check it was copied fully.<br><span style="font-size:.72rem;">Or pick the provider manually: </span><select id="aiSetupProviderPick" onchange="aiSetupManualProvider(this.value)" style="font-size:.72rem;margin-top:4px;">' +
+      detEl.innerHTML = 'Could not detect provider — key should start with gsk_ (Groq), AIza or AQ. (Gemini), sk-or-v1- (OpenRouter), sk-dr- (Demon Route) or sk- (OpenAI). Check it was copied fully.<br><span style="font-size:.72rem;">Or pick the provider manually: </span><select id="aiSetupProviderPick" onchange="aiSetupManualProvider(this.value)" style="font-size:.72rem;margin-top:4px;">' +
         '<option value="">Select provider...</option>' +
         Object.keys(AI_PROVIDERS).map(function(q){ return '<option value="' + q + '">' + escTxt(AI_PROVIDERS[q].label) + '</option>'; }).join('') +
         '</select>';
