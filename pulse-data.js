@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 11, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "A teacher's zero-setup lesson: one link, thirty students, no accounts",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7526260091772350465/"
+},
+  {
+  date: "Nov 11, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
