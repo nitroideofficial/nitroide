@@ -1,11 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!-- VALIDATION GATE: before committing this file, run ~/workspace/nitroide-publishing/bin/validate-rss.sh (it must exit 0). A missing <item>
-      <title>Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In | NitroIDE</title>
-      <link>https://nitroide.com/blog/zero-backend-accounts.html</link>
-      <guid>https://nitroide.com/blog/zero-backend-accounts.html</guid>
-      <description>NitroIDE has no sign-in, no accounts, no cloud sync — by design. What that buys you in speed and privacy, and what it honestly costs in sync, collaboration and backups.</description>
-      <pubDate>Tue, 10 Nov 2026 00:00:00 +0000</pubDate>
-    </item>
 
 <item> tag broke this feed 3 times. -->
 <rss version="2.0">
@@ -14,6 +8,30 @@
     <link>https://nitroide.com/blog/</link>
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
+<item>
+      <title>How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects | NitroIDE</title>
+      <link>https://nitroide.com/blog/preview-sandbox-shared-links.html</link>
+      <guid>https://nitroide.com/blog/preview-sandbox-shared-links.html</guid>
+      <description>NitroIDE share links run arbitrary code on click — so the preview iframe runs on an opaque origin with no allow-same-origin. How srcdoc + postMessage keep editor, preview and console in sync without ever sharing origin privileges.</description>
+      <pubDate>Thu, 12 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
+      <title>Solidity Online Compiler: The Honest Answer | NitroIDE</title>
+      <link>https://nitroide.com/blog/solidity-online-compiler-web3-ide.html</link>
+      <guid>https://nitroide.com/blog/solidity-online-compiler-web3-ide.html</guid>
+      <description>NitroIDE doesn't compile Solidity — no .sol files, no EVM, no compiler. Compile in Remix, build the dApp frontend in NitroIDE. The honest setup, end to end.</description>
+      <pubDate>Thu, 12 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+
+<item>
+      <title>Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In | NitroIDE</title>
+      <link>https://nitroide.com/blog/zero-backend-accounts.html</link>
+      <guid>https://nitroide.com/blog/zero-backend-accounts.html</guid>
+      <description>NitroIDE has no sign-in, no accounts, no cloud sync — by design. What that buys you in speed and privacy, and what it honestly costs in sync, collaboration and backups.</description>
+      <pubDate>Tue, 10 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+
 <item>
       <title>The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server | NitroIDE</title>
       <link>https://nitroide.com/blog/codebox-engine.html</link>

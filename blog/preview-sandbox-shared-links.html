@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects</title>
+  <meta name="title" content="How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects">
+  <meta name="description" content="NitroIDE share links run arbitrary code on click — so the preview iframe runs on an opaque origin with no allow-same-origin. How srcdoc + postMessage keep editor, preview and console in sync without ever sharing origin privileges.">
+  <meta name="keywords" content="preview sandbox, iframe sandbox, allow-same-origin, opaque origin, NitroIDE share links, code sharing security, localStorage security, srcdoc postMessage">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#f97316">
+  <link rel="canonical" href="https://nitroide.com/blog/preview-sandbox-shared-links.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/preview-sandbox-shared-links.html">
+  <meta property="og:title" content="How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects">
+  <meta property="og:description" content="NitroIDE share links run arbitrary code on click — so the preview iframe runs on an opaque origin with no allow-same-origin. How srcdoc + postMessage keep editor, preview and console in sync without ever sharing origin privileges.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-11-12-preview-sandbox-shared-links.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Preview Sandbox — Sandboxed by Design">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-11-12">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/preview-sandbox-shared-links.html">
+  <meta name="twitter:title" content="How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects">
+  <meta name="twitter:description" content="NitroIDE share links run arbitrary code on click — so the preview iframe runs on an opaque origin with no allow-same-origin. How srcdoc + postMessage keep editor, preview and console in sync without ever sharing origin privileges.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-11-12-preview-sandbox-shared-links.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-12-preview-sandbox-shared-links.webp","headline":"How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects","description":"NitroIDE share links run arbitrary code on click — so the preview iframe runs on an opaque origin with no allow-same-origin. How srcdoc + postMessage keep editor, preview and console in sync without ever sharing origin privileges.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/preview-sandbox-shared-links.html","mainEntityOfPage":"https://nitroide.com/blog/preview-sandbox-shared-links.html","datePublished":"2026-11-12","dateModified":"2026-11-12"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can a NitroIDE share link read my saved projects?", "acceptedAnswer": {"@type": "Answer", "text": "No. The live preview runs in an iframe sandboxed without allow-same-origin, so the browser gives it an opaque origin. Code inside it cannot reach the parent page's DOM, localStorage, cookies or IndexedDB — your saved projects under nitro_projects are invisible to it."}}, {"@type": "Question", "name": "Does the sandbox block everything a malicious share link could do?", "acceptedAnswer": {"@type": "Answer", "text": "No. Sandboxed preview code can still make network requests, so it could exfiltrate anything you type into the preview itself, and it can render a fake login form inside the preview pane. The sandbox protects your saved data, not your judgment — don't paste secrets into a stranger's demo."}}, {"@type": "Question", "name": "Why does code using localStorage break inside the preview?", "acceptedAnswer": {"@type": "Answer", "text": "An opaque origin has no storage to touch, so localStorage access inside the preview throws — in Safari, notably. That is the intended tradeoff: the same wall that keeps a stranger's link away from your saved projects also means demo code that persists state won't work inside the preview pane."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #f97316; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NO-SERVER ARCHITECTURE • <time datetime="2026-11-12">November 12, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-11-12">November 12, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects</h1>
+
+    <p>NitroIDE's best feature is also its scariest one, and I mean that as a compliment to the feature.</p>
+    <p>Send someone a link — <code>nitroide.com/tools/codebox.html?code=...</code> — and they get a running app instantly. No signup, no install, no "clone this repo first". The whole workspace is compressed into the URL itself, so the person who opens it is looking at live, editable code in about a second.</p>
+    <p>Now think about what that link actually is. It is a URL, from anyone, that runs arbitrary JavaScript in your browser the moment you open it. That is the deal. If you build a tool that runs strangers' code on click, the security of that tool isn't a feature you add later. It is the tool.</p>
+    <p>So here is the honest version of how NitroIDE keeps a shared link from ever touching your saved projects — including the parts the sandbox does not protect you from.</p>
+
+    <h2>What's actually at stake</h2>
+    <p>Your saved projects live in your browser's localStorage, under keys like <code>nitro_projects</code>. That's the whole database: no server, no account, no cloud copy. Which means a malicious share link doesn't need to hack a server to steal your work. It just needs to run JavaScript that can reach your localStorage.</p>
+    <p>In a browser, what decides whether code can reach another page's storage is the origin — the combination of protocol, host, and port. JavaScript running on <code>nitroide.com</code> can read <code>nitroide.com</code>'s localStorage. JavaScript running anywhere else cannot. The preview pane runs your code. So the entire security question reduces to one thing: which origin does the preview run on?</p>
+    <p>If the answer were "nitroide.com", a malicious link could read every project you've ever saved. The v25 audit found exactly that hole: the preview iframe's sandbox included <code>allow-same-origin</code>, which gave stranger code our origin privileges. That was the first critical finding, and the fix was removing one attribute value.</p>
+
+    <h2>The one line that does the work</h2>
+    <p>Today the preview iframe is this, verified in the repo:</p>
+    <pre style="overflow-x: auto; padding: 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);"><code>&lt;iframe id="liveIframe" title="Live preview"
+  sandbox="allow-scripts allow-modals allow-popups allow-forms"&gt;&lt;/iframe&gt;</code></pre>
+    <p>Read that list slowly, because the important part is what's missing from it. <code>allow-scripts</code> lets the preview run JavaScript at all — without it there is no live preview. <code>allow-modals</code> lets your code call <code>alert()</code> and <code>confirm()</code>. <code>allow-popups</code> lets links open in a new tab. <code>allow-forms</code> lets forms submit. And <code>allow-same-origin</code> is nowhere in the list. I grepped the whole codebase to be sure: zero occurrences.</p>
+    <p>Without <code>allow-same-origin</code>, the browser gives the iframe an opaque origin — a unique, throwaway origin that matches nothing, not even itself on reload. Code inside it cannot touch the parent page's DOM. It cannot read <code>nitroide.com</code>'s localStorage, cookies, or IndexedDB. It cannot even tell what origin it is running under. Your saved projects are in a different universe as far as it is concerned, and no amount of clever JavaScript inside the preview changes that, because the boundary is enforced by the browser, not by my code.</p>
+
+    <h2>How the preview still works without origin privileges</h2>
+    <p>A sandbox that strict raises an obvious question: if the preview can't talk to the parent page, how do the editor, preview, and console stay in sync?</p>
+    <p>The answer is that they don't share memory — they pass messages. The parent feeds the preview its content by setting the iframe's <code>srcdoc</code> property, which is allowed even on an opaque origin. Then the two sides communicate through <code>postMessage</code>: the parent sends <code>update-css</code> and <code>eval</code> messages down, the preview sends console logs and error reports back up. That is the whole bridge. It is narrow on purpose — a handful of typed messages, not a shared object graph.</p>
+    <p>And the distrust runs both ways. The parent doesn't blindly trust what comes back from the preview either. Messages arriving from the iframe go through a strict sanitizer that allowlists only the exact HTML the console legitimately produces, with everything else escaped and every field validated. The v25 audit found the parent rendering those messages into <code>innerHTML</code> unescaped — a crafted link could have gotten code executed in the parent page itself. That's fixed, and it's the same principle: the preview is untrusted code, so even its console output is treated as hostile input until proven otherwise.</p>
+
+    <h2>What the sandbox does not protect you from</h2>
+    <p>I want to be straight about the limits, because a sandbox that sounds absolute is a lie.</p>
+    <p>The preview can still make network requests. Sandboxed code with <code>allow-scripts</code> can <code>fetch()</code> an external URL, which means a malicious link could exfiltrate anything you type into the preview itself — that's why you shouldn't paste secrets into a demo someone sent you. It can also render a fake login form inside the preview pane, pixel-perfect, because phishing doesn't need origin privileges. And <code>allow-popups</code> means it can open new tabs. The sandbox protects your saved data, not your judgment.</p>
+    <p>So the practical rule is boring and unchanged: treat a share link from a stranger the same way you'd treat any link from a stranger. The sandbox is the reason clicking one is safe for your projects. It is not a reason to type your password into it.</p>
+
+    <h2>The tradeoff, stated plainly</h2>
+    <p>There is one real cost. Code inside the preview that touches <code>localStorage</code> will throw — in Safari, notably — because an opaque origin has no storage to touch. A demo that saves a high score or persists a theme will break inside the preview. That's the correct posture, and it's the same one CodePen and CodeSandbox take: I'd rather break a convenience than leave a theft vector open. Your own code, running in your own editor session outside the preview, is unaffected — this only applies to the sandboxed pane.</p>
+    <p>The feature you're proudest of is the one you should attack first. Share links are NitroIDE's flagship, so they got the hardest look, and the answer turned out to be one missing attribute value and a browser-enforced wall behind it. Your projects stay yours — not because I promise it, but because the preview literally cannot see them.</p>
+
+    <h2>Try it</h2>
+    <p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-11-12" style="color: #f97316; text-decoration: none;">nitroide.com</a></p>
+
+    <p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #f97316; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Can a NitroIDE share link read my saved projects?</h3>
+    <p>No. The preview iframe runs on an opaque origin — its sandbox deliberately omits <code>allow-same-origin</code> — so code inside it cannot reach the parent page's DOM, localStorage, cookies, or IndexedDB. Your saved projects are invisible to it.</p>
+    <h3>Does the sandbox block everything a malicious share link could do?</h3>
+    <p>No. Sandboxed preview code can still make network requests, so it could exfiltrate anything you type into the preview itself, and it can render a fake login form inside the preview pane. The sandbox protects your saved data, not your judgment — don't paste secrets into a stranger's demo.</p>
+    <h3>Why does code using localStorage break inside the preview?</h3>
+    <p>An opaque origin has no storage to touch, so <code>localStorage</code> access inside the preview throws — in Safari, notably. That's the intended tradeoff: the same wall that keeps a stranger's link away from your saved projects also means demo code that persists state won't work inside the preview pane.</p>
+
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="privacy-as-a-feature.html" style="color: #f97316; text-decoration: none; font-weight: 500;">Privacy as a Feature: Your Code Never Leaves Your Machine</a></li>
+      <li><a href="codebox-engine.html" style="color: #f97316; text-decoration: none; font-weight: 500;">The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server</a></li>
+      <li><a href="no-server-architecture.html" style="color: #f97316; text-decoration: none; font-weight: 500;">No-Server IDE: Your Code Runs Only in Your Browser</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

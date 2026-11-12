@@ -14,10 +14,10 @@
 
 ## What's new in v30.5 (October 2026)
 - Listed on 9 software directories (DevHunt, AlternativeTo, SaaSHub, SourceForge, directree, IndieTools, Fazier, NoLogin, TinyShelf) with a redesigned homepage badge row.
-- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 48 articles.
+- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 49 articles.
 - Trust and support: Trustpilot profile with public reviews, Ko-fi donations live, GitHub Sponsors approved.
 - Whole-site light-mode readability: light values for brand and code colors, fixed contact inputs, palette, footer, modal and stop-button contrast, dark variants for all article accent colors.
-- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 98 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
+- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 99 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
 - Directory badges fixed after a browser-isolation header blocked cross-origin images (header now credentialless, WebContainer WASM unaffected).
 - Templates "Open in NitroIDE" buttons readable in both themes.
 
@@ -147,6 +147,7 @@
 - Export to ZIP: From Browser Session to Deployed Site: https://nitroide.com/blog/export-to-zip.html
 - Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In: https://nitroide.com/blog/zero-backend-accounts.html
 - Solidity Online Compiler: The Honest Answer: https://nitroide.com/blog/solidity-online-compiler-web3-ide.html
+- How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects: https://nitroide.com/blog/preview-sandbox-shared-links.html
 
 ## Full article text
 
@@ -3080,6 +3081,80 @@ No — the file creator rejects anything that isn't .html, .css or .js. If you p
 ### What's the fastest way to compile Solidity in a browser?
 
 Remix IDE at remix.ethereum.org. New file, paste the contract, open the Solidity Compiler tab, pick 0.8.x, hit Compile — then Deploy & Run on the Remix VM to test it before spending real gas.
+
+---
+
+### How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects
+Source: https://nitroide.com/blog/preview-sandbox-shared-links.html
+Date: November 2026
+
+NitroIDE's best feature is also its scariest one, and I mean that as a compliment to the feature.
+
+Send someone a link — nitroide.com/tools/codebox.html?code=... — and they get a running app instantly. No signup, no install, no "clone this repo first". The whole workspace is compressed into the URL itself, so the person who opens it is looking at live, editable code in about a second.
+
+Now think about what that link actually is. It is a URL, from anyone, that runs arbitrary JavaScript in your browser the moment you open it. That is the deal. If you build a tool that runs strangers' code on click, the security of that tool isn't a feature you add later. It is the tool.
+
+So here is the honest version of how NitroIDE keeps a shared link from ever touching your saved projects — including the parts the sandbox does not protect you from.
+
+## What's actually at stake
+
+Your saved projects live in your browser's localStorage, under keys like nitro_projects. That's the whole database: no server, no account, no cloud copy. Which means a malicious share link doesn't need to hack a server to steal your work. It just needs to run JavaScript that can reach your localStorage.
+
+In a browser, what decides whether code can reach another page's storage is the origin — the combination of protocol, host, and port. JavaScript running on nitroide.com can read nitroide.com's localStorage. JavaScript running anywhere else cannot. The preview pane runs your code. So the entire security question reduces to one thing: which origin does the preview run on?
+
+If the answer were "nitroide.com", a malicious link could read every project you've ever saved. The v25 audit found exactly that hole: the preview iframe's sandbox included allow-same-origin, which gave stranger code our origin privileges. That was the first critical finding, and the fix was removing one attribute value.
+
+## The one line that does the work
+
+Today the preview iframe is this, verified in the repo:
+
+<iframe id="liveIframe" title="Live preview"
+ sandbox="allow-scripts allow-modals allow-popups allow-forms"></iframe>
+ Read that list slowly, because the important part is what's missing from it. allow-scripts lets the preview run JavaScript at all — without it there is no live preview. allow-modals lets your code call alert() and confirm(). allow-popups lets links open in a new tab. allow-forms lets forms submit. And allow-same-origin is nowhere in the list. I grepped the whole codebase to be sure: zero occurrences.
+
+Without allow-same-origin, the browser gives the iframe an opaque origin — a unique, throwaway origin that matches nothing, not even itself on reload. Code inside it cannot touch the parent page's DOM. It cannot read nitroide.com's localStorage, cookies, or IndexedDB. It cannot even tell what origin it is running under. Your saved projects are in a different universe as far as it is concerned, and no amount of clever JavaScript inside the preview changes that, because the boundary is enforced by the browser, not by my code.
+
+## How the preview still works without origin privileges
+
+A sandbox that strict raises an obvious question: if the preview can't talk to the parent page, how do the editor, preview, and console stay in sync?
+
+The answer is that they don't share memory — they pass messages. The parent feeds the preview its content by setting the iframe's srcdoc property, which is allowed even on an opaque origin. Then the two sides communicate through postMessage: the parent sends update-css and eval messages down, the preview sends console logs and error reports back up. That is the whole bridge. It is narrow on purpose — a handful of typed messages, not a shared object graph.
+
+And the distrust runs both ways. The parent doesn't blindly trust what comes back from the preview either. Messages arriving from the iframe go through a strict sanitizer that allowlists only the exact HTML the console legitimately produces, with everything else escaped and every field validated. The v25 audit found the parent rendering those messages into innerHTML unescaped — a crafted link could have gotten code executed in the parent page itself. That's fixed, and it's the same principle: the preview is untrusted code, so even its console output is treated as hostile input until proven otherwise.
+
+## What the sandbox does not protect you from
+
+I want to be straight about the limits, because a sandbox that sounds absolute is a lie.
+
+The preview can still make network requests. Sandboxed code with allow-scripts can fetch() an external URL, which means a malicious link could exfiltrate anything you type into the preview itself — that's why you shouldn't paste secrets into a demo someone sent you. It can also render a fake login form inside the preview pane, pixel-perfect, because phishing doesn't need origin privileges. And allow-popups means it can open new tabs. The sandbox protects your saved data, not your judgment.
+
+So the practical rule is boring and unchanged: treat a share link from a stranger the same way you'd treat any link from a stranger. The sandbox is the reason clicking one is safe for your projects. It is not a reason to type your password into it.
+
+## The tradeoff, stated plainly
+
+There is one real cost. Code inside the preview that touches localStorage will throw — in Safari, notably — because an opaque origin has no storage to touch. A demo that saves a high score or persists a theme will break inside the preview. That's the correct posture, and it's the same one CodePen and CodeSandbox take: I'd rather break a convenience than leave a theft vector open. Your own code, running in your own editor session outside the preview, is unaffected — this only applies to the sandboxed pane.
+
+The feature you're proudest of is the one you should attack first. Share links are NitroIDE's flagship, so they got the hardest look, and the answer turned out to be one missing attribute value and a browser-enforced wall behind it. Your projects stay yours — not because I promise it, but because the preview literally cannot see them.
+
+## Try it
+
+I build NitroIDE — a browser-based IDE where your code never leaves your machine: nitroide.com
+
+⭐ If you enjoyed this, star NitroIDE on GitHub: github.com/nitroideofficial/nitroide
+
+## Frequently asked questions
+
+### Can a NitroIDE share link read my saved projects?
+
+No. The preview iframe runs on an opaque origin — its sandbox deliberately omits allow-same-origin — so code inside it cannot reach the parent page's DOM, localStorage, cookies, or IndexedDB. Your saved projects are invisible to it.
+
+### Does the sandbox block everything a malicious share link could do?
+
+No. Sandboxed preview code can still make network requests, so it could exfiltrate anything you type into the preview itself, and it can render a fake login form inside the preview pane. The sandbox protects your saved data, not your judgment — don't paste secrets into a stranger's demo.
+
+### Why does code using localStorage break inside the preview?
+
+An opaque origin has no storage to touch, so localStorage access inside the preview throws — in Safari, notably. That's the intended tradeoff: the same wall that keeps a stranger's link away from your saved projects also means demo code that persists state won't work inside the preview pane.
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.

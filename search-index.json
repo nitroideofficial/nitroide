@@ -556,5 +556,11 @@
   "u": "/blog/zero-backend-accounts.html",
   "d": "NitroIDE has no sign-in, no accounts, no cloud sync — by design. What that buys you in speed and privacy, and what it honestly costs in sync, collaboration and backups.",
   "c": "Blog"
+ },
+ {
+  "t": "How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects",
+  "u": "/blog/preview-sandbox-shared-links.html",
+  "d": "NitroIDE share links run arbitrary code on click — so the preview iframe runs on an opaque origin with no allow-same-origin. How srcdoc + postMessage keep editor, preview and console in sync.",
+  "c": "Blog"
  }
 ]

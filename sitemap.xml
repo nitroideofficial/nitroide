@@ -481,6 +481,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://nitroide.com/blog/preview-sandbox-shared-links.html</loc>
+    <lastmod>2026-11-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://nitroide.com/blog/solidity-online-compiler-web3-ide.html</loc>
     <lastmod>2026-11-10</lastmod>
     <priority>0.7</priority>
