@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 12, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects",
+  link: "https://x.com/trynitroide/status/2120859283621642634"
+},
+  {
+  date: "Nov 12, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
