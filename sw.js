@@ -1,5 +1,5 @@
 // sw.js — NitroIDE PWA service worker (network-first for pages + script.js, cache-first for vendor assets)
-const CACHE = 'nitroide-v330';
+const CACHE = 'nitroide-v331';
 // Vendor runtime cache: stable across app deploys. Monaco (~10MB) and other
 // /vendor/* files are fetched once and kept here. The app-shell CACHE above is
 // wiped on every deploy — Pulse bumps it ~4x/day — which used to force a full
@@ -69,13 +69,21 @@ self.addEventListener('activate', (event) => {
 
 
 // Retry a vendor fetch once after ~400 ms: a single transient network blip
-// (Sentry JAVASCRIPT-5/-8, Nov 2026) should not kill the editor. Only
-// helps SW-controlled loads (returning visitors); a first-visit load is
-// not intercepted by the SW at all, so it cannot benefit from this retry.
+// (Sentry JAVASCRIPT-5/-8, Nov 2026) should not kill the editor. Retries
+// both fetch() rejections (network-level) and HTTP error responses
+// (status >= 500 or 404) for /vendor/ files — fetch() resolves for HTTP
+// errors, so the old .catch-only retry never fired for them. Only helps
+// SW-controlled loads (returning visitors); a first-visit load is not
+// intercepted by the SW at all, so it cannot benefit from this retry.
 function fetchWithVendorRetry(request, isVendor) {
-  return fetch(request).catch(function (err) {
+  function delay(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
+  function once() { return fetch(request); }
+  return once().then(function (response) {
+    if (isVendor && !response.ok && (response.status >= 500 || response.status === 404)) return delay(400).then(once);
+    return response;
+  }, function (err) {
     if (!isVendor) throw err;
-    return new Promise(function (resolve) { setTimeout(resolve, 400); }).then(function () { return fetch(request); });
+    return delay(400).then(once);
   });
 }
 
