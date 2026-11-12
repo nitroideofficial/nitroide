@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 12, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects",
+  link: "https://nitroide.hashnode.dev/how-the-preview-sandbox-protects-your-saved-projects"
+},
+  {
+  date: "Nov 12, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
   color: "#7c3aed",
