@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 12, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects",
+  link: "https://peerlist.io/scroll/post/ACTH6A7O9JQK7KAJ8196J6R69EB7DM"
+},
+  {
+  date: "Nov 12, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
