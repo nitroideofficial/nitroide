@@ -1,14 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redirecting… | NitroIDE</title>
-<meta http-equiv="refresh" content="0; url=https://nitroide.com/blog/">
-<link rel="canonical" href="https://nitroide.com/blog/">
-<script>location.replace("https://nitroide.com/blog/");</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solidity Online Compiler: The Honest Answer</title>
+  <meta name="title" content="Solidity Online Compiler: The Honest Answer">
+  <meta name="description" content="NitroIDE doesn't compile Solidity — no .sol files, no EVM, no compiler. Compile in Remix, build the dApp frontend in NitroIDE. The honest setup, end to end.">
+  <meta name="keywords" content="Solidity online compiler, compile Solidity online, Remix IDE Solidity compiler, Solidity browser compiler, Web3 dApp frontend, ethers.js contract frontend, smart contract compile deploy">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#6366f1">
+  <link rel="canonical" href="https://nitroide.com/blog/solidity-online-compiler-web3-ide.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/solidity-online-compiler-web3-ide.html">
+  <meta property="og:title" content="Solidity Online Compiler: The Honest Answer">
+  <meta property="og:description" content="NitroIDE doesn't compile Solidity — no .sol files, no EVM, no compiler. Compile in Remix, build the dApp frontend in NitroIDE. The honest setup, end to end.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-11-12-solidity-online-compiler.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Solidity Online Compiler — The Honest Answer">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-11-12">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/solidity-online-compiler-web3-ide.html">
+  <meta name="twitter:title" content="Solidity Online Compiler: The Honest Answer">
+  <meta name="twitter:description" content="NitroIDE doesn't compile Solidity — no .sol files, no EVM, no compiler. Compile in Remix, build the dApp frontend in NitroIDE. The honest setup, end to end.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-11-12-solidity-online-compiler.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-12-solidity-online-compiler.webp","headline":"Solidity Online Compiler: The Honest Answer","description":"NitroIDE doesn't compile Solidity — no .sol files, no EVM, no compiler. Compile in Remix, build the dApp frontend in NitroIDE. The honest setup, end to end.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/solidity-online-compiler-web3-ide.html","mainEntityOfPage":"https://nitroide.com/blog/solidity-online-compiler-web3-ide.html","datePublished":"2026-11-12","dateModified":"2026-11-12"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does NitroIDE compile Solidity?", "acceptedAnswer": {"@type": "Answer", "text": "No. It has no Solidity compiler, no EVM, and it can't open .sol files — the editor takes .html, .css and .js only. Compile in Remix, or locally with Hardhat or Foundry."}}, {"@type": "Question", "name": "Can I open a .sol file in NitroIDE?", "acceptedAnswer": {"@type": "Answer", "text": "No — the file creator rejects anything that isn't .html, .css or .js. If you paste Solidity into the JavaScript pane it gets treated as JavaScript and breaks. That's expected, not a bug."}}, {"@type": "Question", "name": "What's the fastest way to compile Solidity in a browser?", "acceptedAnswer": {"@type": "Answer", "text": "Remix IDE at remix.ethereum.org. New file, paste the contract, open the Solidity Compiler tab, pick 0.8.x, hit Compile — then Deploy & Run on the Remix VM to test it before spending real gas."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
 </head>
 <body>
-<p>This page has moved. Redirecting to the <a href="https://nitroide.com/blog/">NitroIDE blog</a>…</p>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #6366f1; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">COMPARISONS • <time datetime="2026-11-12">November 12, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-11-12">November 12, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">Solidity Online Compiler: What Compiles Your Contract, Honestly.</h1>
+
+<p>If you searched for a Solidity online compiler and landed here, here is the honest answer in one line: NitroIDE does not compile Solidity. It can't open a <code>.sol</code> file, it has no compiler, no EVM, and no deploy button. If compiling is what you came for, you are thirty seconds from the tool that does it — and it isn't this one. This page exists to tell you which tool that is, and to say plainly what NitroIDE is actually good for once your contract exists.</p>
+
+    <h2>Why the old page at this URL is gone</h2>
+    <p>This URL used to host a page called "The Ultimate Solidity Online Compiler", which described NitroIDE as a faster Remix IDE alternative with local EVM execution and instant smart contract deployment. None of that was true. NitroIDE never compiled a line of Solidity, never ran an EVM, and never deployed a contract. The page was making a promise the tool couldn't keep, so in September I deleted it and put a redirect in its place. This article replaces it — same URL, honest version. If a tool's marketing page is the first lie a new user meets, everything after it is suspect. I'd rather lose the ranking than keep the claim.</p>
+
+    <h2>Compile it in Remix, in five minutes</h2>
+    <p>Remix IDE is the browser tool for this job, and it's free. Open <a href="https://remix.ethereum.org/" target="_blank" rel="noopener">remix.ethereum.org</a>, create a new file called <code>Storage.sol</code>, and paste this in:</p>
+    <pre style="overflow-x: auto; padding: 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);"><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Storage {
+    uint256 private value;
+
+    event ValueChanged(uint256 newValue);
+
+    function set(uint256 newValue) public {
+        value = newValue;
+        emit ValueChanged(newValue);
+    }
+
+    function get() public view returns (uint256) {
+        return value;
+    }
+}</code></pre>
+    <p>Then open the Solidity Compiler tab on the left, pick a 0.8.x compiler, and hit Compile. That's it — your contract is compiled. Go to Deploy &amp; Run, leave the environment on Remix VM, and deploy it there to test it before you spend real gas anywhere. The whole loop — write, compile, deploy, call a function, watch it change — happens in one tab, with nothing to install and no account to create. That is what an online Solidity compiler actually looks like, and Remix is the honest answer to the search that brought you here.</p>
+    <p>If you outgrow the browser, the local tools are Hardhat and Foundry. Hardhat is the Node.js route: a full development environment with tests, scripts and a local network, installed with npm. Foundry is the newer, faster one: a Rust-based toolchain built around <code>forge</code>, with tests written in Solidity itself. Both are real engineering tools with real setup costs. Remix is where you start; Hardhat or Foundry is where you land when a project gets serious.</p>
+
+    <h2>Where NitroIDE actually fits: the frontend</h2>
+    <p>Once your contract is deployed, the thing most Solidity developers still need is a page that talks to it — a button that reads a value, a form that writes one. That page is plain HTML and JavaScript, and that is exactly what NitroIDE is built for. You write the page, preview it live, share it as a link, or export the whole thing as a ZIP. The contract stays where it belongs — compiled in Remix — and the frontend lives here.</p>
+    <p>The pattern is short. Load ethers.js v6 from a CDN, connect to the wallet, and call the contract:</p>
+    <pre style="overflow-x: auto; padding: 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);"><code>&lt;script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  async function readValue() {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const contract = new ethers.Contract(
+      "0xYourDeployedAddress",
+      ["function get() view returns (uint256)"],
+      provider
+    );
+    const value = await contract.get();
+    document.body.textContent = "Stored value: " + value;
+  }
+  readValue();
+&lt;/script&gt;</code></pre>
+    <p>A few honest notes on that sketch. <code>window.ethereum</code> means MetaMask, or any injected wallet — reading is free, writing needs a signed transaction and gas. The ABI — the list of functions in the square brackets — comes from Remix: after compiling, it's in the compilation artifacts. And one caveat about the preview: NitroIDE's live preview runs in a sandboxed iframe, and wallets don't inject into sandboxed iframes. So build the page here, then open the exported or shared page in a normal tab to connect your wallet. The editor is where the page gets written; the wallet lives in the browser around it.</p>
+
+    <h2>What not to do</h2>
+    <p>Don't paste Solidity into NitroIDE's JavaScript pane and expect it to run. The editor takes <code>.html</code>, <code>.css</code> and <code>.js</code> files only, so your contract gets treated as JavaScript — and Solidity is not JavaScript. The preview will try to run it as JavaScript, it will break, and that breakage is the tool working as designed, not a bug. If you want a scratchpad for contract code, any text editor will hold it. What NitroIDE gives you is the page around the contract, not the contract itself.</p>
+
+    <h2>The honest comparison</h2>
+    <div style="overflow-x: auto; margin: 24px 0; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+    <table style="width: 100%; min-width: 620px; border-collapse: collapse; font-size: 0.92rem;">
+      <thead>
+        <tr style="background: rgba(99,102,241,0.08);">
+          <th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);"></th><th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">Remix IDE</th><th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">Hardhat</th><th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">Foundry</th><th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">NitroIDE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Compiles Solidity</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, in the browser</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, locally</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, locally</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td></tr>
+        <tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Deploys to a chain</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, Remix VM + injected wallet</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, scripts + local network</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, forge script</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td></tr>
+        <tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Needs installing</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes — Node.js + npm</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes — install forge</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td></tr>
+        <tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Needs an account</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td></tr>
+        <tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Best for</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Compiling and testing a contract fast</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Serious local development and tests</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Fast local testing, Solidity-native tests</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">The dApp frontend that talks to your contract</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>The pattern to take from that table is a pipeline, not a rivalry: Remix compiles it, Hardhat or Foundry grows it, NitroIDE builds the page people actually use. No one tool in that row does the whole job, and the honest article is the one that says so instead of pretending its own tool is the whole pipeline.</p>
+
+    <h2>Try it</h2>
+    <p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=solidity-2026-11-12" style="color: #6366f1; text-decoration: none;">nitroide.com</a></p>
+
+    <p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #6366f1; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+    <h2>Frequently asked questions</h2>
+    <h3>Does NitroIDE compile Solidity?</h3>
+    <p>No. It has no Solidity compiler, no EVM, and it can't open <code>.sol</code> files — the editor takes <code>.html</code>, <code>.css</code> and <code>.js</code> only. Compile in Remix, or locally with Hardhat or Foundry.</p>
+    <h3>Can I open a .sol file in NitroIDE?</h3>
+    <p>No — the file creator rejects anything that isn't <code>.html</code>, <code>.css</code> or <code>.js</code>. If you paste Solidity into the JavaScript pane it gets treated as JavaScript and breaks. That's expected, not a bug.</p>
+    <h3>What's the fastest way to compile Solidity in a browser?</h3>
+    <p>Remix IDE at remix.ethereum.org. New file, paste the contract, open the Solidity Compiler tab, pick 0.8.x, hit Compile — then Deploy &amp; Run on the Remix VM to test it before spending real gas.</p>
+
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="privacy-as-a-feature.html" style="color: #6366f1; text-decoration: none; font-weight: 500;">Privacy as a Feature: Your Code Never Leaves Your Machine</a></li>
+      <li><a href="export-to-zip.html" style="color: #6366f1; text-decoration: none; font-weight: 500;">Export to ZIP: From Browser Session to Deployed Site</a></li>
+      <li><a href="no-server-architecture.html" style="color: #6366f1; text-decoration: none; font-weight: 500;">No-Server IDE: Your Code Runs Only in Your Browser</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
 </body>
 </html>
