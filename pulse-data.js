@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 13, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The Smallest Useful IDE: Which Features Earn Their Place",
+  link: "https://peerlist.io/scroll/post/ACTHP6LMNONGE6KP6IQNDMP8QM7EE6"
+},
+  {
+  date: "Nov 13, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
