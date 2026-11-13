@@ -1,14 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redirecting… | NitroIDE</title>
-<meta http-equiv="refresh" content="0; url=https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide.html">
-<link rel="canonical" href="https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide.html">
-<script>location.replace("https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide.html");</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypeScript Online Compiler: The Honest Answer</title>
+  <meta name="title" content="TypeScript Online Compiler: The Honest Answer">
+  <meta name="description" content="NitroIDE doesn't compile TypeScript — no tsc, no emit, no .ts files. It type-checks your code. Compile in the TS Playground or StackBlitz. The honest setup.">
+  <meta name="keywords" content="TypeScript online compiler, compile TypeScript online, TS Playground, ts online compiler, typescript compiler online, online typescript compiler, Monaco TypeScript IntelliSense">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#3178c6">
+  <link rel="canonical" href="https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html">
+  <meta property="og:title" content="TypeScript Online Compiler: The Honest Answer">
+  <meta property="og:description" content="NitroIDE doesn't compile TypeScript — no tsc, no emit, no .ts files. It type-checks your code. Compile in the TS Playground or StackBlitz. The honest setup.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-11-13-typescript-online-compiler.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TypeScript Online Compiler — The Honest Answer">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-11-13">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html">
+  <meta name="twitter:title" content="TypeScript Online Compiler: The Honest Answer">
+  <meta name="twitter:description" content="NitroIDE doesn't compile TypeScript — no tsc, no emit, no .ts files. It type-checks your code. Compile in the TS Playground or StackBlitz. The honest setup.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-11-13-typescript-online-compiler.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-13-typescript-online-compiler.webp","headline":"TypeScript Online Compiler: The Honest Answer","description":"NitroIDE doesn't compile TypeScript — no tsc, no emit, no .ts files. It type-checks your code. Compile in the TS Playground or StackBlitz. The honest setup.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html","mainEntityOfPage":"https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html","datePublished":"2026-11-13","dateModified":"2026-11-13"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does NitroIDE compile TypeScript?", "acceptedAnswer": {"@type": "Answer", "text": "No. It has no TypeScript compiler \u2014 the editor's TypeScript service is configured with noEmit: true, so it type-checks your code and never emits JavaScript. Compile in the TS Playground, in StackBlitz, or locally with tsc."}}, {"@type": "Question", "name": "Can I open a .ts file in NitroIDE?", "acceptedAnswer": {"@type": "Answer", "text": "No \u2014 the file creator accepts .html, .css and .js only, and rejects anything else. If you paste TypeScript into the JavaScript pane, the type annotations are syntax errors to the JavaScript parser and the preview breaks. That's expected, not a bug."}}, {"@type": "Question", "name": "What's the fastest way to compile TypeScript in a browser?", "acceptedAnswer": {"@type": "Answer", "text": "The official TS Playground at typescriptlang.org/play. Paste your code, it compiles to JavaScript in the panel, and you can run it right there \u2014 single file, free, no account. For a multi-file project, use StackBlitz."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
 </head>
 <body>
-<p>This page has moved. Redirecting to <a href="https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide.html">Prototyping React, Vue &amp; TypeScript in the browser</a>…</p>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #3178c6; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">COMPARISONS • <time datetime="2026-11-13">November 13, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-11-13">November 13, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">TypeScript Online Compiler: What Compiles It, Honestly.</h1>
+
+<p>If you searched for a TypeScript online compiler and landed here, here is the honest answer in one line: NitroIDE does not compile TypeScript. It has no <code>tsc</code>, no emit step, and it can't open a <code>.ts</code> file. If compiling is what you came for, you are thirty seconds from the tool that does it — and it isn't this one. This page exists to tell you which tool that is, and to say plainly what NitroIDE is actually good for once your code exists.</p>
+
+<h2>Why the old page at this URL is gone</h2>
+<p>This URL used to host a page called "The Ultimate TypeScript Online Compiler", which described NitroIDE as a full-stack TypeScript browser IDE with NPM imports and native Language Servers. The second half of that sentence is the sneaky part, because it is almost true: NitroIDE's editor really does load a TypeScript language service. What the page didn't say is that the service is configured with <code>noEmit: true</code>. It reads your code, checks it, and underlines your mistakes — and then it deliberately produces nothing. Type-checking is not compiling, and a page that blurs the two is selling you a compiler that doesn't exist. The page was deleted, a redirect took its place, and this article replaces it — same URL, honest version. If a tool's marketing page is the first lie a new user meets, everything after it is suspect. I'd rather lose the ranking than keep the claim.</p>
+
+<h2>What NitroIDE actually does with TypeScript</h2>
+<p>Here is the true part, stated plainly. The JavaScript pane in NitroIDE is powered by Monaco's TypeScript language service — the same engine that powers VS Code. That buys you three real things while you type: red squiggles under type errors the moment you make them, autocomplete that knows the shapes of the values you're working with, and hover tooltips that show you a function's signature. Write a function, call it with the wrong type, and the editor flags it before you ever run anything:</p>
+<pre style="overflow-x: auto; padding: 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);"><code>function greet(name: string): string {
+  return `Hello, ${name}!`;
+}
+
+greet(42); // red squiggle: Argument of type 'number' is not
+           // assignable to parameter of type 'string'.</code></pre>
+<p>That squiggle is the whole story. The editor understands TypeScript well enough to catch that mistake — and then it stops. There is no step that turns your TypeScript into JavaScript, because the compiler options say <code>noEmit: true</code> and there is no transpile step anywhere in the code. The preview runs plain JavaScript, in a sandboxed iframe, from the <code>script.js</code> file. So NitroIDE is a sharp place to write JavaScript with TypeScript-grade tooling — and it is not, in any sense, a TypeScript compiler.</p>
+
+<h2>Compile it for real: the TS Playground, in two minutes</h2>
+<p>The official TS Playground is the browser tool for this job, and it's free. Open <a href="https://www.typescriptlang.org/play" target="_blank" rel="noopener">typescriptlang.org/play</a>, paste your code, and watch the JavaScript it compiles to appear in the panel beside it. Take the example above — the Playground turns it into:</p>
+<pre style="overflow-x: auto; padding: 16px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);"><code>function greet(name) {
+  return `Hello, ${name}!`;
+}</code></pre>
+<p>The types are gone — that's what compiling does — and you can run the result right there. One file, nothing to install, no account. That is what an online TypeScript compiler actually looks like, and the Playground is the honest answer to the search that brought you here.</p>
+<p>If one file isn't enough, the next step up is StackBlitz. It runs a real Node.js environment in your browser tab — WebContainers, no server on the other end — so you get a full project with multiple files, <code>npm install</code>, and <code>tsc</code> running for real. And if you outgrow the browser entirely, the local tool is the compiler itself: <code>npm install -g typescript</code>, then <code>tsc file.ts</code>, and you have JavaScript on disk. Playground is where you start; StackBlitz is where a project lives; local <code>tsc</code> is where it lands when it gets serious.</p>
+
+<h2>Where NitroIDE actually fits</h2>
+<p>Two places, both honest. First, the JavaScript around your TypeScript. Once the Playground or <code>tsc</code> has given you JavaScript, the page that uses it — the demo, the prototype, the thing you actually show someone — is plain HTML and JavaScript, and that is exactly what NitroIDE is built for. You write the page, preview it live, share it as a link, or export the whole thing as a ZIP. The TypeScript gets compiled where compilers live; the page lives here.</p>
+<p>Second, the type-checking itself. If you're sketching a utility function and want to know whether the types hold up, the editor's TypeScript service will tell you in real time — no compile step needed to catch the mistake. And if you want to prototype with TypeScript-flavoured frontend code without a build step at all, the pattern is in the guide this URL used to redirect to: <a href="https://nitroide.com/blog/prototype-react-vue-typescript-browser-cdn-guide.html">Prototype React, Vue &amp; TypeScript — No Build Step</a>. Import maps and esm.sh serve packages as native ES modules, and TypeScript gets transpiled in the browser by CDN-loaded tooling — not by NitroIDE, but in the page NitroIDE helps you build. That distinction matters, and the guide states it plainly.</p>
+
+<h2>What not to do</h2>
+<p>Don't paste TypeScript into NitroIDE's JavaScript pane and expect it to run. The file creator takes <code>.html</code>, <code>.css</code> and <code>.js</code> files only — anything else is rejected with "Only .js, .css, and .html files supported." And the code itself won't survive the trip either: a type annotation like <code>const x: number = 1</code> is a syntax error to the JavaScript parser, so the preview breaks. That breakage is the tool working as designed, not a bug. If you want a scratchpad for TypeScript, the Playground holds it. What NitroIDE gives you is the checked JavaScript and the page around it, not the compilation.</p>
+
+<h2>The honest comparison</h2>
+<div style="overflow-x: auto; margin: 24px 0; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+<table style="width: 100%; min-width: 620px; border-collapse: collapse; font-size: 0.92rem;">
+<thead>
+<tr style="background: rgba(49,120,198,0.08);">
+<th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);"></th><th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">TS Playground</th><th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">StackBlitz</th><th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">Local tsc</th><th style="text-align: left; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.1);">NitroIDE</th>
+</tr>
+</thead>
+<tbody>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Compiles TypeScript</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, in the browser</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, real Node in the browser</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, on your machine</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No — type-checks only (noEmit)</td></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Runs the result</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, in the Playground</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, full dev server</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes, with Node</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Runs JavaScript only</td></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Multi-file projects</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No — single file</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes — HTML, CSS, JS files</td></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Needs installing</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Yes — Node.js + npm</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Needs an account</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No for basic use</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">No</td></tr>
+<tr><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); font-weight: 600;">Best for</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Compiling a snippet fast</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">A real project, no setup</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Serious local development</td><td style="padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06);">Type-checked JavaScript and the page around it</td></tr>
+</tbody>
+</table>
+</div>
+<p>The pattern to take from that table is a pipeline, not a rivalry: the Playground compiles the snippet, StackBlitz grows it into a project, local <code>tsc</code> runs it for real — and NitroIDE builds the page people actually use, with TypeScript-grade checking on the JavaScript inside it. No one tool in that row does the whole job, and the honest article is the one that says so instead of pretending its own tool is the whole pipeline.</p>
+
+<h2>Try it</h2>
+<p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=typescript-2026-11-13" style="color: #3178c6; text-decoration: none;">nitroide.com</a></p>
+
+<p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #3178c6; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+<h2>Frequently asked questions</h2>
+<h3>Does NitroIDE compile TypeScript?</h3>
+<p>No. It has no TypeScript compiler — the editor's TypeScript service is configured with <code>noEmit: true</code>, so it type-checks your code and never emits JavaScript. Compile in the TS Playground, in StackBlitz, or locally with <code>tsc</code>.</p>
+<h3>Can I open a .ts file in NitroIDE?</h3>
+<p>No — the file creator accepts <code>.html</code>, <code>.css</code> and <code>.js</code> only, and rejects anything else. If you paste TypeScript into the JavaScript pane, the type annotations are syntax errors to the JavaScript parser and the preview breaks. That's expected, not a bug.</p>
+<h3>What's the fastest way to compile TypeScript in a browser?</h3>
+<p>The official TS Playground at typescriptlang.org/play. Paste your code, it compiles to JavaScript in the panel, and you can run it right there — single file, free, no account. For a multi-file project, use StackBlitz.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="prototype-react-vue-typescript-browser-cdn-guide.html" style="color: #3178c6; text-decoration: none; font-weight: 500;">Prototype React, Vue &amp; TypeScript — No Build Step</a></li>
+      <li><a href="privacy-as-a-feature.html" style="color: #3178c6; text-decoration: none; font-weight: 500;">Privacy as a Feature: Your Code Never Leaves Your Machine</a></li>
+      <li><a href="codebox-engine.html" style="color: #3178c6; text-decoration: none; font-weight: 500;">The Codebox Engine: How Editor, Preview and Console Stay in Sync Without a Server</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
 </body>
 </html>

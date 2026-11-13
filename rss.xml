@@ -9,6 +9,13 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>TypeScript Online Compiler: The Honest Answer | NitroIDE</title>
+      <link>https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html</link>
+      <guid>https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html</guid>
+      <description>NitroIDE doesn't compile TypeScript — no tsc, no emit, no .ts files. It type-checks your code. Compile in the TS Playground or StackBlitz. The honest setup.</description>
+      <pubDate>Fri, 13 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects | NitroIDE</title>
       <link>https://nitroide.com/blog/preview-sandbox-shared-links.html</link>
       <guid>https://nitroide.com/blog/preview-sandbox-shared-links.html</guid>

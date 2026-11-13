@@ -562,5 +562,11 @@
   "u": "/blog/preview-sandbox-shared-links.html",
   "d": "NitroIDE share links run arbitrary code on click — so the preview iframe runs on an opaque origin with no allow-same-origin. How srcdoc + postMessage keep editor, preview and console in sync.",
   "c": "Blog"
+ },
+ {
+  "t": "TypeScript Online Compiler: What Compiles It, Honestly.",
+  "u": "/blog/typescript-online-compiler-multi-file-ide.html",
+  "d": "NitroIDE doesn't compile TypeScript — no tsc, no emit, no .ts files. It type-checks your code. Compile in the TS Playground or StackBlitz. The honest setup.",
+  "c": "Blog"
  }
 ]
