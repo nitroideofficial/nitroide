@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 13, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The Smallest Useful IDE: Which Features Earn Their Place",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7526985215089725441/"
+},
+  {
+  date: "Nov 13, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
