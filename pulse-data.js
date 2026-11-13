@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 13, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The Smallest Useful IDE: Which Features Earn Their Place",
+  link: "https://x.com/trynitroide/status/2121218946028474763"
+},
+  {
   date: "Nov 12, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
