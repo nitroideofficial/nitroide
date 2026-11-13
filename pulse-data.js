@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 13, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The Smallest Useful IDE: Which Features Earn Their Place",
+  link: "https://nitroide.hashnode.dev/the-smallest-useful-ide-which-features-earn-their-place"
+},
+  {
+  date: "Nov 13, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
