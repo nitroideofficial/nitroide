@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 14, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The 3-Pane Layout: Why Editor, Preview and Console Share One Screen",
+  link: "https://nitroide.hashnode.dev/the-3-pane-layout-why-editor-preview-and-console-share-one-screen"
+},
+  {
+  date: "Nov 14, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
