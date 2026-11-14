@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 14, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The 3-Pane Layout: Why Editor, Preview and Console Share One Screen",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7527347852621271040/"
+},
+  {
+  date: "Nov 14, 2026",
   platform: "X",
   icon: "ph-twitter-logo",
   color: "#1da1f2",
