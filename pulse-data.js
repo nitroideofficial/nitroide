@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 14, 2026",
+  platform: "X",
+  icon: "ph-twitter-logo",
+  color: "#1da1f2",
+  title: "The 3-Pane Layout: Why Editor, Preview and Console Share One Screen",
+  link: "https://x.com/trynitroide/status/2121581090133663936"
+},
+  {
   date: "Nov 13, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
