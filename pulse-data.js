@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 14, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The 3-Pane Layout: Why Editor, Preview and Console Share One Screen",
+  link: "https://peerlist.io/scroll/post/ACTHNN7K977JGDLP92JMNARO8OGQ9E"
+},
+  {
+  date: "Nov 14, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
