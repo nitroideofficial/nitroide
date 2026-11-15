@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 15, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "What's the one feature you wish every online editor had?",
+  link: "https://peerlist.io/scroll/post/ACTHKKDEO6KEMDRQ7CDEJRMOLKABGQ"
+},
+  {
+  date: "Nov 15, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
