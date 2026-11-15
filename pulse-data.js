@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 15, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "What's the one feature you wish every online editor had?",
+  link: "https://nitroide.hashnode.dev/what-s-the-one-feature-you-wish-every-online-editor-had"
+},
+  {
+  date: "Nov 15, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
