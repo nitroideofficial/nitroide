@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 16, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Dark mode is a feature. Light mode is a promise.",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7528071825302441984/"
+},
+  {
   date: "Nov 15, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
