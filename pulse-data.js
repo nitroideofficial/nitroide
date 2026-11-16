@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 16, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Dark mode is a feature. Light mode is a promise.",
+  link: "https://nitroide.hashnode.dev/dark-mode-is-a-feature-light-mode-is-a-promise"
+},
+  {
+  date: "Nov 16, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
