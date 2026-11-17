@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 17, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7528442109717262336/"
+},
+  {
+  date: "Nov 17, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
