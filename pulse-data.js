@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 17, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End",
+  link: "https://nitroide.hashnode.dev/measuring-the-feedback-loop-keystroke-to-pixels-timed-end-to-end"
+},
+  {
+  date: "Nov 17, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
   color: "#7c3aed",
