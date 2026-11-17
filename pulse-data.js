@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 17, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End",
+  link: "https://coderlegion.com/35039/measuring-the-feedback-loop-keystroke-to-pixels-timed-end-to-end"
+},
+  {
   date: "Nov 16, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
