@@ -1,6 +1,6 @@
 # NitroIDE — full context for LLMs
 
-> Version: 2026-11-13 (v30.5). This file is updated on every release.
+> Version: 2026-11-17 (v30.5). This file is updated on every release.
 > NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no installation — your code runs only in your browser.
 
 ## Scope (important)
@@ -14,10 +14,10 @@
 
 ## What's new in v30.5 (October 2026)
 - Listed on 9 software directories (DevHunt, AlternativeTo, SaaSHub, SourceForge, directree, IndieTools, Fazier, NoLogin, TinyShelf) with a redesigned homepage badge row.
-- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 50 articles.
+- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 51 articles.
 - Trust and support: Trustpilot profile with public reviews, Ko-fi donations live, GitHub Sponsors approved.
 - Whole-site light-mode readability: light values for brand and code colors, fixed contact inputs, palette, footer, modal and stop-button contrast, dark variants for all article accent colors.
-- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 99 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
+- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 100 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
 - Directory badges fixed after a browser-isolation header blocked cross-origin images (header now credentialless, WebContainer WASM unaffected).
 - Templates "Open in NitroIDE" buttons readable in both themes.
 
@@ -149,6 +149,7 @@
 - Solidity Online Compiler: The Honest Answer: https://nitroide.com/blog/solidity-online-compiler-web3-ide.html
 - How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects: https://nitroide.com/blog/preview-sandbox-shared-links.html
 - TypeScript Online Compiler: The Honest Answer: https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html
+- Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End: https://nitroide.com/blog/measuring-feedback-loop.html
 
 ## Full article text
 
@@ -3225,6 +3226,66 @@ No — the file creator accepts .html, .css and .js only, and rejects anything e
 ### What's the fastest way to compile TypeScript in a browser?
 
 The official TS Playground at typescriptlang.org/play. Paste your code, it compiles to JavaScript in the panel, and you can run it right there — single file, free, no account. For a multi-file project, use StackBlitz.
+
+---
+
+### Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End
+Source: https://nitroide.com/blog/measuring-feedback-loop.html
+Date: November 2026
+
+Every browser IDE claims its preview is "instant". I got tired of saying it about NitroIDE without a number, so I timed it — real keystrokes into the real editor, end to end, five trials per path. Here are the numbers, medians first:
+
+The interesting part isn't the totals. It's where the time goes.
+
+## How I measured it
+
+A harness typed real characters into the real Monaco editors in a local copy of the codebox, and timed each path to the preview's own signal: the preview-painted message the preview posts back on a double requestAnimationFrame after the new frame loads. Five trials per path, medians reported, headless Chromium 157 on a 4-core VM, default workspace, no CDN links.
+
+Small doc, so treat the rebuild numbers as best-case. The debounce numbers are constants from the code — those hold everywhere.
+
+## The numbers, decomposed
+
+A CSS edit takes 150ms, and the debounce is 150ms. That means the work itself costs about zero: one update-css postMessage rewrites the live <style> tag inside the running preview. No reload, no new iframe, no lost JS state. The proof is in what didn't happen: across ten CSS trials, the preview reported zero repaints.
+
+An HTML edit takes 550ms, and the debounce is 500ms. The rest — a full rebuild from srcdoc, new iframe, fresh JS context, re-run your script, wait for paint — is only 50 to 70ms. The Run button proves it: click to painted, with no debounce in the way, is 61ms.
+
+So the loop is debounce-bound, not render-bound. The preview itself is fast. The wait you feel is a pause the code inserts on purpose.
+
+## Why 500ms and not 50
+
+Because a rebuild on every keystroke would thrash. Each rebuild is a new iframe and a fresh JS context. Typing "hello" would be five rebuilds, five script re-runs, five paints — most of them thrown away before you ever saw them. The debounce trades half a second of latency for zero wasted work. CSS gets the shorter 150ms pause because applying a style edit in place is nearly free, so there is almost nothing to protect against.
+
+One honest footnote: the first keystroke after load is slower — 700 to 960ms in my runs. That's cold iframe warm-up, not a steady-state cost. It only happens once per session.
+
+## The flicker fix, verified in passing
+
+The rebuild swaps the new frame in only after it has actually painted — the double-requestAnimationFrame signal, with a 1,500ms fallback. That fallback never fired in any trial. It exists for the slow case; on a small doc the paint signal always wins first.
+
+## What this doesn't prove
+
+A heavy page costs more. Big JS, CDN scripts, a large DOM — all of that lands in the 50–70ms rebuild step, which grows with your document. The debounce doesn't grow: 150 and 500ms are constants, whatever you type. So if your loop feels slow, look at your document weight first, not the editor.
+
+And "instant" deserves its honest version: 550ms for HTML, 150ms for CSS on a small doc — and about 90% of the HTML number is a deliberate pause. If I ever lower the debounce, I'll say so with new numbers, not adjectives.
+
+## Try it
+
+I build NitroIDE — a browser-based IDE where your code never leaves your machine: nitroide.com
+
+⭐ If you enjoyed this, star NitroIDE on GitHub: github.com/nitroideofficial/nitroide
+
+## Frequently asked questions
+
+### How fast is NitroIDE's live preview?
+
+Measured with real keystrokes into the real editor, medians of five trials on a small document: a CSS edit applies in 150ms, an HTML edit paints in 550ms, and a manual Run click paints in 61ms.
+
+### Why does an HTML edit take 550ms if the rebuild is only 50-70ms?
+
+Because of the 500ms debounce. Each HTML rebuild is a new iframe and a fresh JavaScript context, so rebuilding on every keystroke would thrash — typing "hello" would be five rebuilds, five script re-runs, five paints, most of them thrown away. The debounce trades half a second of latency for zero wasted work.
+
+### Does a bigger page slow the preview down?
+
+Yes, in the rebuild step: big JavaScript, CDN scripts and a large DOM all land in the 50-70ms rebuild, which grows with your document. The 150ms and 500ms debounces are constants from the code and hold everywhere, whatever you type.
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.

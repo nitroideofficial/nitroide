@@ -9,6 +9,13 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End | NitroIDE</title>
+      <link>https://nitroide.com/blog/measuring-feedback-loop.html</link>
+      <guid>https://nitroide.com/blog/measuring-feedback-loop.html</guid>
+      <description>NitroIDE's live preview, timed with real keystrokes: CSS edits apply in 150ms, HTML edits paint in 550ms, a manual Run in 61ms. The loop is debounce-bound, not render-bound — the 500ms pause is a design choice.</description>
+      <pubDate>Tue, 17 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>TypeScript Online Compiler: The Honest Answer | NitroIDE</title>
       <link>https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html</link>
       <guid>https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html</guid>

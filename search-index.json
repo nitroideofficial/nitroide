@@ -568,5 +568,11 @@
   "u": "/blog/typescript-online-compiler-multi-file-ide.html",
   "d": "NitroIDE doesn't compile TypeScript — no tsc, no emit, no .ts files. It type-checks your code. Compile in the TS Playground or StackBlitz. The honest setup.",
   "c": "Blog"
+ },
+ {
+  "t": "Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End.",
+  "u": "/blog/measuring-feedback-loop.html",
+  "d": "NitroIDE's live preview, timed with real keystrokes: CSS edits apply in 150ms, HTML edits paint in 550ms, a manual Run in 61ms. The loop is debounce-bound, not render-bound.",
+  "c": "Blog"
  }
 ]
