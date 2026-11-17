@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 17, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End",
+  link: "https://peerlist.io/scroll/post/ACTHMQ6EA87DOQEEB1Q67GER6NQM9M"
+},
+  {
+  date: "Nov 17, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
