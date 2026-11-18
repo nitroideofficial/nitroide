@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 18, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "No Build Step: The Compile That Never Runs",
+  link: "https://nitroide.hashnode.dev/no-build-step-the-compile-that-never-runs"
+},
+  {
+  date: "Nov 18, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
