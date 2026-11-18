@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 18, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "No Build Step: The Compile That Never Runs",
+  link: "https://peerlist.io/scroll/post/ACTHBARKOGBEJBEGEFKRN67AMOM8N7"
+},
+  {
+  date: "Nov 18, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
