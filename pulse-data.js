@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 18, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "No Build Step: The Compile That Never Runs",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7528797573562892288/"
+},
+  {
   date: "Nov 17, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
