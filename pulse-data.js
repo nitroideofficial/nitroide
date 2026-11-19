@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 19, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes",
+  link: "https://coderlegion.com/35321/error-messages-that-teach-turning-preview-errors-into-next-step-fixes"
+},
+  {
+  date: "Nov 19, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
