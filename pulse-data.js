@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 19, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes",
+  link: "https://peerlist.io/scroll/post/ACTHGNQ7K9RENEAKEIK7GGJEADMGRJ"
+},
+  {
+  date: "Nov 19, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
