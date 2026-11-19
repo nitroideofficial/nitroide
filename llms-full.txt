@@ -1,6 +1,6 @@
 # NitroIDE — full context for LLMs
 
-> Version: 2026-11-17 (v30.5). This file is updated on every release.
+> Version: 2026-11-19 (v30.5). This file is updated on every release.
 > NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no installation — your code runs only in your browser.
 
 ## Scope (important)
@@ -14,10 +14,10 @@
 
 ## What's new in v30.5 (October 2026)
 - Listed on 9 software directories (DevHunt, AlternativeTo, SaaSHub, SourceForge, directree, IndieTools, Fazier, NoLogin, TinyShelf) with a redesigned homepage badge row.
-- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 51 articles.
+- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 52 articles.
 - Trust and support: Trustpilot profile with public reviews, Ko-fi donations live, GitHub Sponsors approved.
 - Whole-site light-mode readability: light values for brand and code colors, fixed contact inputs, palette, footer, modal and stop-button contrast, dark variants for all article accent colors.
-- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 100 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
+- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 101 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
 - Directory badges fixed after a browser-isolation header blocked cross-origin images (header now credentialless, WebContainer WASM unaffected).
 - Templates "Open in NitroIDE" buttons readable in both themes.
 
@@ -150,6 +150,7 @@
 - How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects: https://nitroide.com/blog/preview-sandbox-shared-links.html
 - TypeScript Online Compiler: The Honest Answer: https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html
 - Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End: https://nitroide.com/blog/measuring-feedback-loop.html
+- Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes: https://nitroide.com/blog/error-messages-that-teach.html
 
 ## Full article text
 
@@ -3286,6 +3287,67 @@ Because of the 500ms debounce. Each HTML rebuild is a new iframe and a fresh Jav
 ### Does a bigger page slow the preview down?
 
 Yes, in the rebuild step: big JavaScript, CDN scripts and a large DOM all land in the 50-70ms rebuild, which grows with your document. The 150ms and 500ms debounces are constants from the code and hold everywhere, whatever you type.
+
+---
+
+### Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes
+Source: https://nitroide.com/blog/error-messages-that-teach.html
+Date: November 2026
+
+Most error messages tell you something broke. The good ones tell you where — and put your cursor there.
+
+I build NitroIDE, a browser IDE with a live preview. When your code throws inside that preview, the error doesn't just print. It travels a four-step path that ends with your cursor sitting on the exact line that broke. Here's the path, and the honest boundary where it stops.
+
+## Step 1: the preview catches it
+
+Your code runs inside a generated document — your HTML, CSS, and JS wrapped in injected markup. Before your script runs, the injected script installs the traps:
+
+Nothing escapes to a blank preview. Every failure lands in NitroIDE's console panel, in the same place your own console.log output goes.
+
+## Step 2: the line number is yours, not the wrapper's
+
+This is the step most tools skip. The raw line number from window.onerror points at the generated document — your script might start on line 40 of a file you never wrote. Useless.
+
+So the injected script counts the lines of the wrapper it put before your code and subtracts them. The count is patched into the injected script itself (JS_OFFSET), and the error is reported as line - JS_OFFSET. The number you see is your script.js line.
+
+Take the classic:
+
+const total = cart.reduce((sum, item) => sum + item.price, 0);
+with cart never defined. You get Uncaught ReferenceError: cart is not defined — on the line where you wrote it, not on line 47 of a generated file.
+
+## Step 3: it's a jump, not a printout
+
+The console entry renders a clickable [Line N] link. Click it and the editor scrolls that line to the center, puts your cursor at the start of it, focuses the editor, and highlights the whole line for 2.5 seconds. You're editing the broken line before you've finished reading the error.
+
+Two more things happen at the same moment. The status bar switches to Error on line N — and it stays there. Unlike the "Saved" or "Preview updated" messages that fade back to "Ready" after a couple of seconds, an error status is sticky until your next run. And if the console panel is closed when the error fires, a badge appears on the console tab, so the error doesn't sit unseen behind a closed panel.
+
+That's the whole design: an error message should be a next step, not a dead end. Where, what, and one click to the fix.
+
+## Step 4, honestly: what it can't catch
+
+This only catches what the browser reports as an error. A missing </div> renders wrong silently. A typo'd CSS property does nothing, quietly. A promise rejection and a failed image load arrive without a line number at all — there is no line to point at, so you get the message and the URL and nothing clickable.
+
+That's the boundary, and it's the next thing to tackle: a lint pass before run that flags the silent cases — unclosed tags, unknown CSS properties — the way the console flags the loud ones. Direction, not a promise. But the principle is set: if the tool knows something is wrong, it should show you where, and take you there.
+
+## Try it
+
+I build NitroIDE — a browser-based IDE where your code never leaves your machine: nitroide.com
+
+⭐ If you enjoyed this, star NitroIDE on GitHub: github.com/nitroideofficial/nitroide
+
+## Frequently asked questions
+
+### How does NitroIDE know which line of my code threw the error?
+
+Your code runs inside a generated document, so the raw line number points at that document, not your script. The injected script counts the lines of its own wrapper and subtracts them (JS_OFFSET), so the reported line is your script.js line.
+
+### What happens when an error fires in the preview?
+
+Three things at once: the status bar switches to a sticky "Error on line N", the console shows a clickable [Line N] link that scrolls the editor to the line, focuses it and highlights it for 2.5 seconds, and a badge appears on the console tab if the panel is closed.
+
+### What errors can't NitroIDE's preview catch?
+
+Anything the browser doesn't report as an error. A missing closing tag renders wrong silently, a typo'd CSS property does nothing, and promise rejections and failed resource loads arrive without a line number at all.
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.

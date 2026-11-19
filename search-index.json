@@ -574,5 +574,11 @@
   "u": "/blog/measuring-feedback-loop.html",
   "d": "NitroIDE's live preview, timed with real keystrokes: CSS edits apply in 150ms, HTML edits paint in 550ms, a manual Run in 61ms. The loop is debounce-bound, not render-bound.",
   "c": "Blog"
+ },
+ {
+  "t": "Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes.",
+  "u": "/blog/error-messages-that-teach.html",
+  "d": "NitroIDE's preview catches runtime errors, maps the line back to your script.js, and jumps your cursor to the exact line with a 2.5s highlight.",
+  "c": "Blog"
  }
 ]

@@ -9,6 +9,13 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes | NitroIDE</title>
+      <link>https://nitroide.com/blog/error-messages-that-teach.html</link>
+      <guid>https://nitroide.com/blog/error-messages-that-teach.html</guid>
+      <description>NitroIDE's preview catches runtime errors, maps the line number back to your script.js, and jumps your cursor to the exact line with a 2.5s highlight. Plus the honest boundary: HTML and CSS typos stay silent.</description>
+      <pubDate>Thu, 19 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End | NitroIDE</title>
       <link>https://nitroide.com/blog/measuring-feedback-loop.html</link>
       <guid>https://nitroide.com/blog/measuring-feedback-loop.html</guid>
