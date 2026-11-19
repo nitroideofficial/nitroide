@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 19, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes",
+  link: "https://nitroide.hashnode.dev/error-messages-that-teach-turning-preview-errors-into-next-step-fixes"
+},
+  {
   date: "Nov 18, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
