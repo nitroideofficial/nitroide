@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 19, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7529161180804919296/"
+},
+  {
+  date: "Nov 19, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
   color: "#7c3aed",
