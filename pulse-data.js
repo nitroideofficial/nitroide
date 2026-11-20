@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 20, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "From Playground to Portfolio: Shipping a Small Site Straight From the Browser",
+  link: "https://peerlist.io/scroll/post/ACTHDNDMEQBGJ9KRJ27NDMNPNGNARQ"
+},
+  {
+  date: "Nov 20, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
