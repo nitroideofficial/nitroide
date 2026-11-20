@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 20, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "From Playground to Portfolio: Shipping a Small Site Straight From the Browser",
+  link: "https://coderlegion.com/35447/from-playground-to-portfolio-shipping-a-small-site-straight-from-the-browser"
+},
+  {
+  date: "Nov 20, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
