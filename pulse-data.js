@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 20, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "From Playground to Portfolio: Shipping a Small Site Straight From the Browser",
+  link: "https://nitroide.hashnode.dev/from-playground-to-portfolio-shipping-a-small-site-straight-from-the-browser"
+},
+  {
   date: "Nov 19, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
