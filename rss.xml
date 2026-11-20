@@ -9,6 +9,13 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>From Playground to Portfolio: Shipping a Small Site Straight From the Browser | NitroIDE</title>
+      <link>https://nitroide.com/blog/playground-to-portfolio.html</link>
+      <guid>https://nitroide.com/blog/playground-to-portfolio.html</guid>
+      <description>NitroIDE's deploy ladder: share link, single-file export, ZIP, then one-click publish to GitHub Pages or Netlify — straight from the browser, token going browser-to-host with no server in between.</description>
+      <pubDate>Fri, 20 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes | NitroIDE</title>
       <link>https://nitroide.com/blog/error-messages-that-teach.html</link>
       <guid>https://nitroide.com/blog/error-messages-that-teach.html</guid>

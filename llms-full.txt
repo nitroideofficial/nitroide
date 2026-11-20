@@ -1,6 +1,6 @@
 # NitroIDE — full context for LLMs
 
-> Version: 2026-11-19 (v30.5). This file is updated on every release.
+> Version: 2026-11-20 (v30.5). This file is updated on every release.
 > NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no installation — your code runs only in your browser.
 
 ## Scope (important)
@@ -14,10 +14,10 @@
 
 ## What's new in v30.5 (October 2026)
 - Listed on 9 software directories (DevHunt, AlternativeTo, SaaSHub, SourceForge, directree, IndieTools, Fazier, NoLogin, TinyShelf) with a redesigned homepage badge row.
-- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 52 articles.
+- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 53 articles.
 - Trust and support: Trustpilot profile with public reviews, Ko-fi donations live, GitHub Sponsors approved.
 - Whole-site light-mode readability: light values for brand and code colors, fixed contact inputs, palette, footer, modal and stop-button contrast, dark variants for all article accent colors.
-- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 101 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
+- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 102 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
 - Directory badges fixed after a browser-isolation header blocked cross-origin images (header now credentialless, WebContainer WASM unaffected).
 - Templates "Open in NitroIDE" buttons readable in both themes.
 
@@ -151,6 +151,7 @@
 - TypeScript Online Compiler: The Honest Answer: https://nitroide.com/blog/typescript-online-compiler-multi-file-ide.html
 - Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End: https://nitroide.com/blog/measuring-feedback-loop.html
 - Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes: https://nitroide.com/blog/error-messages-that-teach.html
+- From Playground to Portfolio: Shipping a Small Site Straight From the Browser: https://nitroide.com/blog/playground-to-portfolio.html
 
 ## Full article text
 
@@ -3348,6 +3349,72 @@ Three things at once: the status bar switches to a sticky "Error on line N", the
 ### What errors can't NitroIDE's preview catch?
 
 Anything the browser doesn't report as an error. A missing closing tag renders wrong silently, a typo'd CSS property does nothing, and promise rejections and failed resource loads arrive without a line number at all.
+
+---
+
+### From Playground to Portfolio: Shipping a Small Site Straight From the Browser
+Source: https://nitroide.com/blog/playground-to-portfolio.html
+Date: November 2026
+
+Most playground code dies in the tab.
+
+You open an editor, build something that actually works — a little landing page, a demo, a portfolio draft — and then the tab closes. The code was never saved anywhere real, never had a URL of its own. It existed, it impressed you for an afternoon, and then it was gone. Every online playground has this graveyard. The gap between "it runs" and "it's live" is where most small sites go to die.
+
+I build NitroIDE, a browser IDE where your code never leaves your machine. The whole point is that the playground is real: a full editor, live preview, console. But a playground that can't ship is still a dead end. So the tool has a ladder out — four exits, in order of commitment, from a link you can throw away to a site on your own URL.
+
+## Exit 1: the share link
+
+The cheapest exit costs nothing. One click makes a ?code= link — your whole workspace URL-encoded — and anyone who opens it gets the running app instantly, no signup. It's the exit for "look at this", not "this is live". The code still lives only in that link. Close the tab, lose the link, lose the work. Useful, and honest about what it is.
+
+## Exit 2: the single file
+
+One step up: export the whole thing as a single HTML file, CSS and JS inlined. Now it survives on your disk. Email it, drop it in a Drive folder, open it anywhere with a double-click. It's still not a website — it's a file — but it's yours in a form no tab close can kill.
+
+## Exit 3: the ZIP
+
+The full workspace as a folder: every file, CDN links re-injected, ready to drop into any host. I wrote about this one in depth a few weeks ago — the mechanics of bundling a browser session into a ZIP without a server. The point for today is only that it's the middle rung: portable, host-agnostic, and exactly one manual step away from live.
+
+## Exit 4: one-click deploy
+
+This is the rung that closes the loop. The deploy modal — "Deploy — One-Click Publish" — has two tabs: GitHub Pages and Netlify.
+
+GitHub Pages gives you free hosting at username.github.io/repo. You paste a classic personal access token with the repo scope and a site name, and one click does the whole dance: it validates the token, creates the repo, uploads every file in your workspace, adds an empty .nojekyll, enables Pages, and waits for the first build — usually a minute or two. Netlify is the same shape with a different destination: a personal access token, a site name, free hosting at name.netlify.app on their CDN. Behind that click, the browser builds a ZIP of your files with a small hand-written ZIP writer — CRC32 and all, no library — and uploads it to Netlify's API.
+
+The detail I care about most is where your token goes. It's sent by a client-side fetch straight from your browser to GitHub or Netlify. NitroIDE has no server, so there is no server that ever sees your token or your code. The only destination is the host you chose. That's the same local-first architecture as everything else in the tool — the deploy is just the part where your machine talks to someone else's hosting, directly.
+
+## The honest boundaries
+
+Two, and they're both printed in the modal itself, not buried in docs.
+
+First, this is static sites only. No backend, no database, no server-side anything. If your site needs a server, this path is not it — the deploy would happily ship your files and your server code would sit there doing nothing.
+
+Second, the tokens are powerful by design. The GitHub repo scope can touch all your repos. The Netlify token has full account access. The modal says so, in plain words, next to the input: use a short expiry, and delete the token after deploying. That's the trade for one-click publishing without an OAuth app in the middle — you hold the key, you retire it when you're done.
+
+## The move: build the portfolio in the tool that ships it
+
+Here's the part that changed how I think about the playground. A portfolio site is a static site. It's HTML, CSS, a little JS — exactly what the playground is for. So build it there, in the same tab, with the live preview showing you every change as you make it. And when it's ready, deploy it from the same tab. The playground becomes the portfolio: the thing you built, at a URL you own, made by the tool it lives on.
+
+That's the real ladder. Not "prototype here, rebuild there" — the prototype IS the site. The share link was the sketch, the ZIP was the backup, and the deploy button is the moment the sketch gets an address.
+
+## Try it
+
+I build NitroIDE — a browser-based IDE where your code never leaves your machine: nitroide.com
+
+⭐ If you enjoyed this, star NitroIDE on GitHub: github.com/nitroideofficial/nitroide
+
+## Frequently asked questions
+
+### How does NitroIDE deploy a site without a server?
+
+Your browser talks to the host directly. For GitHub Pages it validates your token, creates the repo, uploads every file through the Contents API, adds an empty .nojekyll, enables Pages and polls the first build. For Netlify it builds a ZIP of your files in the browser — with a small hand-written ZIP writer, CRC32 and all — and uploads it to Netlify's API.
+
+### What kinds of sites can I deploy from NitroIDE?
+
+Static sites only: HTML, CSS and JavaScript. No backend, no database, no server-side code. A portfolio, a landing page, a demo — anything that runs entirely in the browser. If your site needs a server, this deploy path is not it.
+
+### Is it safe to paste a GitHub or Netlify token into NitroIDE?
+
+The token is sent by a client-side fetch straight from your browser to the host you chose — NitroIDE has no server, so no server ever sees it. But the tokens are powerful by design: the GitHub repo scope can touch all your repos and the Netlify token has full account access. Use a short expiry and delete the token after deploying, exactly as the modal warns.
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.

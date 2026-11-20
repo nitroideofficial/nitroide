@@ -580,5 +580,11 @@
   "u": "/blog/error-messages-that-teach.html",
   "d": "NitroIDE's preview catches runtime errors, maps the line back to your script.js, and jumps your cursor to the exact line with a 2.5s highlight.",
   "c": "Blog"
+ },
+ {
+  "t": "From Playground to Portfolio: Shipping a Small Site Straight From the Browser.",
+  "u": "/blog/playground-to-portfolio.html",
+  "d": "NitroIDE's deploy ladder: share link, single-file export, ZIP, then one-click publish to GitHub Pages or Netlify — straight from the browser.",
+  "c": "Blog"
  }
 ]

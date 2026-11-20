@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Playground to Portfolio: Shipping a Small Site Straight From the Browser</title>
+  <meta name="title" content="From Playground to Portfolio: Shipping a Small Site Straight From the Browser">
+  <meta name="description" content="NitroIDE's deploy ladder: share link, single-file export, ZIP, then one-click publish to GitHub Pages or Netlify — straight from the browser, token going browser-to-host with no server in between.">
+  <meta name="keywords" content="NitroIDE deploy, one-click deploy GitHub Pages, Netlify deploy from browser, share link code playground, static site deployment, browser IDE deploy">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#84cc16">
+  <link rel="canonical" href="https://nitroide.com/blog/playground-to-portfolio.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/playground-to-portfolio.html">
+  <meta property="og:title" content="From Playground to Portfolio: Shipping a Small Site Straight From the Browser">
+  <meta property="og:description" content="NitroIDE's deploy ladder: share link, single-file export, ZIP, then one-click publish to GitHub Pages or Netlify — straight from the browser, token going browser-to-host with no server in between.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-11-20-playground-to-portfolio.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="From Playground to Portfolio — Build it in the browser. Ship it live.">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-11-20">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/playground-to-portfolio.html">
+  <meta name="twitter:title" content="From Playground to Portfolio: Shipping a Small Site Straight From the Browser">
+  <meta name="twitter:description" content="NitroIDE's preview catches runtime errors, maps the line number back to your script.js, and jumps your cursor to the exact line with a 2.5s highlight.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-11-20-playground-to-portfolio.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-20-playground-to-portfolio.webp","headline":"From Playground to Portfolio: Shipping a Small Site Straight From the Browser","description":"NitroIDE's deploy ladder: share link, single-file export, ZIP, then one-click publish to GitHub Pages or Netlify — straight from the browser, token going browser-to-host with no server in between.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/playground-to-portfolio.html","mainEntityOfPage":"https://nitroide.com/blog/playground-to-portfolio.html","datePublished":"2026-11-20","dateModified":"2026-11-20"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How does NitroIDE deploy a site without a server?", "acceptedAnswer": {"@type": "Answer", "text": "Your browser talks to the host directly. For GitHub Pages it validates your token, creates the repo, uploads every file through the Contents API, adds an empty .nojekyll, enables Pages and polls the first build. For Netlify it builds a ZIP of your files in the browser — with a small hand-written ZIP writer, CRC32 and all — and uploads it to Netlify's API."}}, {"@type": "Question", "name": "What kinds of sites can I deploy from NitroIDE?", "acceptedAnswer": {"@type": "Answer", "text": "Static sites only: HTML, CSS and JavaScript. No backend, no database, no server-side code. A portfolio, a landing page, a demo — anything that runs entirely in the browser. If your site needs a server, this deploy path is not it."}}, {"@type": "Question", "name": "Is it safe to paste a GitHub or Netlify token into NitroIDE?", "acceptedAnswer": {"@type": "Answer", "text": "The token is sent by a client-side fetch straight from your browser to the host you chose — NitroIDE has no server, so no server ever sees it. But the tokens are powerful by design: the GitHub repo scope can touch all your repos and the Netlify token has full account access. Use a short expiry and delete the token after deploying, exactly as the modal warns."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #84cc16; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">DEPLOYMENT • <time datetime="2026-11-20">November 20, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-11-20">November 20, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">From Playground to Portfolio: Shipping a Small Site Straight From the Browser.</h1>
+
+<p>Most playground code dies in the tab.</p>
+<p>You open an editor, build something that actually works — a little landing page, a demo, a portfolio draft — and then the tab closes. The code was never saved anywhere real, never had a URL of its own. It existed, it impressed you for an afternoon, and then it was gone. Every online playground has this graveyard. The gap between "it runs" and "it's live" is where most small sites go to die.</p>
+<p>I build NitroIDE, a browser IDE where your code never leaves your machine. The whole point is that the playground is real: a full editor, live preview, console. But a playground that can't ship is still a dead end. So the tool has a ladder out — four exits, in order of commitment, from a link you can throw away to a site on your own URL.</p>
+
+<h2>Exit 1: the share link</h2>
+<p>The cheapest exit costs nothing. One click makes a <code>?code=</code> link — your whole workspace URL-encoded — and anyone who opens it gets the running app instantly, no signup. It's the exit for "look at this", not "this is live". The code still lives only in that link. Close the tab, lose the link, lose the work. Useful, and honest about what it is.</p>
+
+<h2>Exit 2: the single file</h2>
+<p>One step up: export the whole thing as a single HTML file, CSS and JS inlined. Now it survives on your disk. Email it, drop it in a Drive folder, open it anywhere with a double-click. It's still not a website — it's a file — but it's yours in a form no tab close can kill.</p>
+
+<h2>Exit 3: the ZIP</h2>
+<p>The full workspace as a folder: every file, CDN links re-injected, ready to drop into any host. I wrote about this one in depth a few weeks ago — the mechanics of bundling a browser session into a ZIP without a server. The point for today is only that it's the middle rung: portable, host-agnostic, and exactly one manual step away from live.</p>
+
+<h2>Exit 4: one-click deploy</h2>
+<p>This is the rung that closes the loop. The deploy modal — "Deploy — One-Click Publish" — has two tabs: GitHub Pages and Netlify.</p>
+<p>GitHub Pages gives you free hosting at <code>username.github.io/repo</code>. You paste a classic personal access token with the <code>repo</code> scope and a site name, and one click does the whole dance: it validates the token, creates the repo, uploads every file in your workspace, adds an empty <code>.nojekyll</code>, enables Pages, and waits for the first build — usually a minute or two. Netlify is the same shape with a different destination: a personal access token, a site name, free hosting at <code>name.netlify.app</code> on their CDN. Behind that click, the browser builds a ZIP of your files with a small hand-written ZIP writer — CRC32 and all, no library — and uploads it to Netlify's API.</p>
+<p>The detail I care about most is where your token goes. It's sent by a client-side fetch straight from your browser to GitHub or Netlify. NitroIDE has no server, so there is no server that ever sees your token or your code. The only destination is the host you chose. That's the same local-first architecture as everything else in the tool — the deploy is just the part where your machine talks to someone else's hosting, directly.</p>
+
+<h2>The honest boundaries</h2>
+<p>Two, and they're both printed in the modal itself, not buried in docs.</p>
+<p>First, this is static sites only. No backend, no database, no server-side anything. If your site needs a server, this path is not it — the deploy would happily ship your files and your server code would sit there doing nothing.</p>
+<p>Second, the tokens are powerful by design. The GitHub <code>repo</code> scope can touch all your repos. The Netlify token has full account access. The modal says so, in plain words, next to the input: use a short expiry, and delete the token after deploying. That's the trade for one-click publishing without an OAuth app in the middle — you hold the key, you retire it when you're done.</p>
+
+<h2>The move: build the portfolio in the tool that ships it</h2>
+<p>Here's the part that changed how I think about the playground. A portfolio site is a static site. It's HTML, CSS, a little JS — exactly what the playground is for. So build it there, in the same tab, with the live preview showing you every change as you make it. And when it's ready, deploy it from the same tab. The playground becomes the portfolio: the thing you built, at a URL you own, made by the tool it lives on.</p>
+<p>That's the real ladder. Not "prototype here, rebuild there" — the prototype IS the site. The share link was the sketch, the ZIP was the backup, and the deploy button is the moment the sketch gets an address.</p>
+
+<h2>Try it</h2>
+<p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-11-20" style="color: #84cc16; text-decoration: none;">nitroide.com</a></p>
+
+<p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #84cc16; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+<h2>Frequently asked questions</h2>
+<h3>How does NitroIDE deploy a site without a server?</h3>
+<p>Your browser talks to the host directly. For GitHub Pages it validates your token, creates the repo, uploads every file through the Contents API, adds an empty .nojekyll, enables Pages and polls the first build. For Netlify it builds a ZIP of your files in the browser — with a small hand-written ZIP writer, CRC32 and all — and uploads it to Netlify's API.</p>
+<h3>What kinds of sites can I deploy from NitroIDE?</h3>
+<p>Static sites only: HTML, CSS and JavaScript. No backend, no database, no server-side code. A portfolio, a landing page, a demo — anything that runs entirely in the browser. If your site needs a server, this deploy path is not it.</p>
+<h3>Is it safe to paste a GitHub or Netlify token into NitroIDE?</h3>
+<p>The token is sent by a client-side fetch straight from your browser to the host you chose — NitroIDE has no server, so no server ever sees it. But the tokens are powerful by design: the GitHub repo scope can touch all your repos and the Netlify token has full account access. Use a short expiry and delete the token after deploying, exactly as the modal warns.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="export-to-zip.html" style="color: #84cc16; text-decoration: none; font-weight: 500;">Export to ZIP: From Browser Session to Deployed Site</a></li>
+      <li><a href="preview-sandbox-shared-links.html" style="color: #84cc16; text-decoration: none; font-weight: 500;">How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects</a></li>
+      <li><a href="zero-backend-accounts.html" style="color: #84cc16; text-decoration: none; font-weight: 500;">Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>
