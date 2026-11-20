@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 20, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "From Playground to Portfolio: Shipping a Small Site Straight From the Browser",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7529523704238649344/"
+},
+  {
+  date: "Nov 20, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
   color: "#7c3aed",
