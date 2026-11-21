@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 21, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "Copy-Paste Is a Feature: The Clipboard Round-Trip Between Tabs",
+  link: "https://peerlist.io/scroll/post/ACTHDNDMERJML7G6PH7NDMNPQJNJGM"
+},
+  {
+  date: "Nov 21, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
