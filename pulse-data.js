@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 21, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "Copy-Paste Is a Feature: The Clipboard Round-Trip Between Tabs",
+  link: "https://nitroide.hashnode.dev/copy-paste-is-a-feature-the-clipboard-round-trip-between-tabs"
+},
+  {
   date: "Nov 20, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
