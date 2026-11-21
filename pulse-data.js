@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 21, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "Copy-Paste Is a Feature: The Clipboard Round-Trip Between Tabs",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7529883828954402816/"
+},
+  {
+  date: "Nov 21, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
