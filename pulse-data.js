@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 22, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "What's the smallest thing you ever shipped from a browser tab?",
+  link: "https://nitroide.hashnode.dev/what-s-the-smallest-thing-you-ever-shipped-from-a-browser-tab"
+},
+  {
+  date: "Nov 22, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
