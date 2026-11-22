@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 22, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "What's the smallest thing you ever shipped from a browser tab?",
+  link: "https://peerlist.io/scroll/post/ACTHQ7MLMR9R9RKERCB9QM67RLBGBQ"
+},
+  {
+  date: "Nov 22, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
