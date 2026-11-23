@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 23, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The 550ms pause: why your preview waits",
+  link: "https://peerlist.io/scroll/post/ACTHR8DMDM8KAQO9J1MOOP9M777AMK"
+},
+  {
+  date: "Nov 23, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
