@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 23, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The 550ms pause: why your preview waits",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7530608481196916736/"
+},
+  {
   date: "Nov 22, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
