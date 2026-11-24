@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 24, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7530973167587205120/"
+},
+  {
   date: "Nov 23, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
