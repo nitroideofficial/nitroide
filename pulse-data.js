@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 24, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site",
+  link: "https://coderlegion.com/35892/the-pwa-recipe-manifest-service-worker-and-install-prompt-for-a-static-site"
+},
+  {
+  date: "Nov 24, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
   color: "#00aa45",
