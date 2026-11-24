@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 24, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site",
+  link: "https://peerlist.io/scroll/post/ACTHP6LKRAONQN7KGIM88EOKAGDLL7"
+},
+  {
+  date: "Nov 24, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
