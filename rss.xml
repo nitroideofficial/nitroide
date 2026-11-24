@@ -9,6 +9,13 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site | NitroIDE</title>
+      <link>https://nitroide.com/blog/pwa-recipe.html</link>
+      <guid>https://nitroide.com/blog/pwa-recipe.html</guid>
+      <description>The three-piece PWA recipe for a static site: a 15-line manifest, a two-cache service worker (network-first pages, cache-first vendor), and an install prompt with an iOS fallback — as shipped on NitroIDE.</description>
+      <pubDate>Tue, 24 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>From Playground to Portfolio: Shipping a Small Site Straight From the Browser | NitroIDE</title>
       <link>https://nitroide.com/blog/playground-to-portfolio.html</link>
       <guid>https://nitroide.com/blog/playground-to-portfolio.html</guid>

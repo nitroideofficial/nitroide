@@ -586,5 +586,11 @@
   "u": "/blog/playground-to-portfolio.html",
   "d": "NitroIDE's deploy ladder: share link, single-file export, ZIP, then one-click publish to GitHub Pages or Netlify — straight from the browser.",
   "c": "Blog"
+ },
+ {
+  "t": "The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site",
+  "u": "/blog/pwa-recipe.html",
+  "d": "The three-piece PWA recipe for a static site: a 15-line manifest, a two-cache service worker (network-first pages, cache-first vendor), and an install prompt with an iOS fallback.",
+  "c": "Blog"
  }
 ]

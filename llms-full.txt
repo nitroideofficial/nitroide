@@ -1,6 +1,6 @@
 # NitroIDE — full context for LLMs
 
-> Version: 2026-11-20 (v30.5). This file is updated on every release.
+> Version: 2026-11-24 (v30.5). This file is updated on every release.
 > NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no installation — your code runs only in your browser.
 
 ## Scope (important)
@@ -14,10 +14,10 @@
 
 ## What's new in v30.5 (October 2026)
 - Listed on 9 software directories (DevHunt, AlternativeTo, SaaSHub, SourceForge, directree, IndieTools, Fazier, NoLogin, TinyShelf) with a redesigned homepage badge row.
-- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 53 articles.
+- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 54 articles.
 - Trust and support: Trustpilot profile with public reviews, Ko-fi donations live, GitHub Sponsors approved.
 - Whole-site light-mode readability: light values for brand and code colors, fixed contact inputs, palette, footer, modal and stop-button contrast, dark variants for all article accent colors.
-- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 102 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
+- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 103 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
 - Directory badges fixed after a browser-isolation header blocked cross-origin images (header now credentialless, WebContainer WASM unaffected).
 - Templates "Open in NitroIDE" buttons readable in both themes.
 
@@ -152,6 +152,7 @@
 - Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End: https://nitroide.com/blog/measuring-feedback-loop.html
 - Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes: https://nitroide.com/blog/error-messages-that-teach.html
 - From Playground to Portfolio: Shipping a Small Site Straight From the Browser: https://nitroide.com/blog/playground-to-portfolio.html
+- The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site: https://nitroide.com/blog/pwa-recipe.html
 
 ## Full article text
 
@@ -3415,6 +3416,88 @@ Static sites only: HTML, CSS and JavaScript. No backend, no database, no server-
 ### Is it safe to paste a GitHub or Netlify token into NitroIDE?
 
 The token is sent by a client-side fetch straight from your browser to the host you chose — NitroIDE has no server, so no server ever sees it. But the tokens are powerful by design: the GitHub repo scope can touch all your repos and the Netlify token has full account access. Use a short expiry and delete the token after deploying, exactly as the modal warns.
+
+---
+
+### The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site
+Source: https://nitroide.com/blog/pwa-recipe.html
+Date: November 2026
+
+A PWA is not a framework. It is three small pieces that agree with each other: a manifest that describes your app, a service worker that controls its network, and an install prompt that appears at the right moment. No app store, no build step, no backend — which is exactly why it fits a static site. I run NitroIDE, a browser IDE, as a PWA on GitHub Pages, and the whole recipe is three files and one event listener. Here it is, with the traps I actually hit.
+
+## Piece 1: the manifest — fifteen lines that make you an app
+
+The manifest is a JSON file that tells the browser what your site is when it stops being a tab. Mine is short enough to quote in full:
+
+{
+ "name": "NitroIDE",
+ "short_name": "NitroIDE",
+ "description": "Zero-latency, client-side browser IDE for HTML, CSS, and JS.",
+ "start_url": "/index.html",
+ "display": "standalone",
+ "background_color": "#0a0a0a",
+ "theme_color": "#0a0a0a",
+ "orientation": "any",
+ "icons": [
+ { "src": "/favicon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+ { "src": "/favicon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+ { "src": "/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+ ]
+}
+Linked from the page with <link rel="manifest" href="manifest.json">. The fields that actually matter: display: "standalone" removes the browser chrome so the installed app feels like an app, not a bookmark; start_url is where the app opens; theme_color paints the status bar; and the icons need both a 192 and a 512, with one marked maskable so Android can crop it into its adaptive icon shape without cutting off your logo. Skip the maskable entry and your icon arrives pre-cropped by the OS, which is how nice logos end up with their corners eaten.
+
+## Piece 2: the service worker — two caches, two strategies
+
+The service worker is the piece people overbuild. Mine does four things: precache the app shell, serve pages network-first, serve heavy vendor files cache-first, and never cache anything it shouldn't.
+
+The shape that matters is the two-cache split. The app-shell cache (nitroide-v375, bumped on every deploy) holds the pages, CSS, JS, fonts and icons. The vendor cache (nitroide-vendor-v1, bumped only when a file under /vendor/ actually changes) holds the big stable stuff. The reason is deploy frequency: the site's publishing pipeline bumps the app cache several times a day, and every wipe used to force a full re-download of Monaco — about 10MB — on the next editor visit. Separating the caches means deploys stay cheap and the editor stays fast.
+
+The fetch handler is two strategies, chosen per request:
+
+And three rules that guard the whole thing:
+
+Two more decisions worth stealing. First, Monaco is not precached anymore. A homepage visitor who never opens the IDE used to download ~10MB of editor during service-worker install; now it is runtime-cached on first IDE use. Precaching is for the shell, not for the heaviest thing you own. Second, a failed precache fails the install — loudly. If one file in the app shell 404s, the worker throws, the old worker keeps serving, and the browser retries on the next navigation. A half-populated cache is worse than no update at all.
+
+## Piece 3: the install prompt — catch the event, don't chase it
+
+The browser fires beforeinstallprompt when your site is installable, and it fires it once. If you don't catch it, the browser shows its own mini-infobar and you get no second chance in that session. The recipe is to catch it, stash it, and show your own button:
+
+window.addEventListener('beforeinstallprompt', (e) => {
+ e.preventDefault();
+ deferredPrompt = e;
+ showInstallButton();
+});
+NitroIDE's install lives in the IDE itself — an "Install App" item in the Prefs menu — because that is where a user decides the tool is worth keeping. The button appears when the event fires and disappears on appinstalled. The part people forget is the platforms that never fire the event at all: iOS has no beforeinstallprompt, so the same menu item shows a hint instead — "To install on iOS: tap Share, then 'Add to Home Screen'." And on desktop browsers without the event, the fallback points at the browser menu. One menu item, three paths, no dead ends.
+
+## The update dance — the part that traps users on old code
+
+A new service worker does not take over immediately. It installs, waits, and only activates when every tab using the old one closes — which, for a tool people leave open, can be never. The fix is a small handshake: the worker calls skipWaiting() after a successful precache, and the page listens for controllerchange and shows a toast — "New version available" with a Refresh button. Registration itself is two lines with one guard that matters: only on HTTPS, and updateViaCache: "none" so the browser always checks for a new worker instead of serving a cached copy of the worker itself. Skip that option and your update check can be cached for a day, which is exactly how users end up running last week's code and reporting bugs you already fixed.
+
+## The checklist
+
+If you are adding this to a static site, the whole recipe fits on an index card:
+
+That is the whole thing. No store review, no binary, no backend — a static site that installs like an app, works offline, and updates itself with a toast instead of a trap.
+
+## Try it
+
+I build NitroIDE — a browser-based IDE where your code never leaves your machine: nitroide.com
+
+⭐ If you enjoyed this, star NitroIDE on GitHub: github.com/nitroideofficial/nitroide
+
+## Frequently asked questions
+
+### Why does NitroIDE use two service worker caches?
+
+The app-shell cache is bumped on every deploy, which happens several times a day — and every wipe used to force a full re-download of Monaco, about 10MB, on the next editor visit. The vendor cache only changes when a file under /vendor/ actually changes, so deploys stay cheap and the editor stays fast.
+
+### Why isn't Monaco precached?
+
+A homepage visitor who never opens the IDE used to download ~10MB of editor during service-worker install. Now Monaco is runtime-cached on first IDE use instead. Precaching is for the app shell, not for the heaviest thing you own.
+
+### How do I install NitroIDE on iOS?
+
+iOS has no beforeinstallprompt event, so there is no install button to catch. In the IDE, open the Prefs menu and choose "Install App" — on iOS it shows the hint instead: tap Share, then "Add to Home Screen".
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.

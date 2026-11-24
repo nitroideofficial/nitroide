@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site</title>
+  <meta name="title" content="The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site">
+  <meta name="description" content="The three-piece PWA recipe for a static site: a 15-line manifest, a two-cache service worker (network-first pages, cache-first vendor), and an install prompt with an iOS fallback — as shipped on NitroIDE.">
+  <meta name="keywords" content="PWA recipe static site, manifest service worker install prompt, beforeinstallprompt iOS, service worker two caches, GitHub Pages PWA, installable web app">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#38bdf8">
+  <link rel="canonical" href="https://nitroide.com/blog/pwa-recipe.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/pwa-recipe.html">
+  <meta property="og:title" content="The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site">
+  <meta property="og:description" content="The three-piece PWA recipe for a static site: a 15-line manifest, a two-cache service worker (network-first pages, cache-first vendor), and an install prompt with an iOS fallback — as shipped on NitroIDE.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-11-24-pwa-recipe.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The PWA Recipe — Manifest. Service worker. Install prompt.">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-11-24">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/pwa-recipe.html">
+  <meta name="twitter:title" content="The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site">
+  <meta name="twitter:description" content="The three-piece PWA recipe for a static site: a 15-line manifest, a two-cache service worker (network-first pages, cache-first vendor), and an install prompt with an iOS fallback — as shipped on NitroIDE.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-11-24-pwa-recipe.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-24-pwa-recipe.webp","headline":"The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site","description":"The three-piece PWA recipe for a static site: a 15-line manifest, a two-cache service worker (network-first pages, cache-first vendor), and an install prompt with an iOS fallback — as shipped on NitroIDE.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/pwa-recipe.html","mainEntityOfPage":"https://nitroide.com/blog/pwa-recipe.html","datePublished":"2026-11-24","dateModified":"2026-11-24"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why does NitroIDE use two service worker caches?", "acceptedAnswer": {"@type": "Answer", "text": "The app-shell cache is bumped on every deploy, which happens several times a day \u2014 and every wipe used to force a full re-download of Monaco, about 10MB, on the next editor visit. The vendor cache only changes when a file under /vendor/ actually changes, so deploys stay cheap and the editor stays fast."}}, {"@type": "Question", "name": "Why isn't Monaco precached?", "acceptedAnswer": {"@type": "Answer", "text": "A homepage visitor who never opens the IDE used to download ~10MB of editor during service-worker install. Now Monaco is runtime-cached on first IDE use instead. Precaching is for the app shell, not for the heaviest thing you own."}}, {"@type": "Question", "name": "How do I install NitroIDE on iOS?", "acceptedAnswer": {"@type": "Answer", "text": "iOS has no beforeinstallprompt event, so there is no install button to catch. In the IDE, open the Prefs menu and choose \"Install App\" \u2014 on iOS it shows the hint instead: tap Share, then \"Add to Home Screen\"."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #38bdf8; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">PWA • <time datetime="2026-11-24">November 24, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-11-24">November 24, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site.</h1>
+
+<p>A PWA is not a framework. It is three small pieces that agree with each other: a manifest that describes your app, a service worker that controls its network, and an install prompt that appears at the right moment. No app store, no build step, no backend — which is exactly why it fits a static site. I run NitroIDE, a browser IDE, as a PWA on GitHub Pages, and the whole recipe is three files and one event listener. Here it is, with the traps I actually hit.</p>
+
+<h2>Piece 1: the manifest — fifteen lines that make you an app</h2>
+<p>The manifest is a JSON file that tells the browser what your site is when it stops being a tab. Mine is short enough to quote in full:</p>
+<pre><code>{
+  "name": "NitroIDE",
+  "short_name": "NitroIDE",
+  "description": "Zero-latency, client-side browser IDE for HTML, CSS, and JS.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "orientation": "any",
+  "icons": [
+    { "src": "/favicon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/favicon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}</code></pre>
+<p>Linked from the page with <code>&lt;link rel="manifest" href="manifest.json"&gt;</code>. The fields that actually matter: <code>display: "standalone"</code> removes the browser chrome so the installed app feels like an app, not a bookmark; <code>start_url</code> is where the app opens; <code>theme_color</code> paints the status bar; and the icons need both a 192 and a 512, with one marked <code>maskable</code> so Android can crop it into its adaptive icon shape without cutting off your logo. Skip the maskable entry and your icon arrives pre-cropped by the OS, which is how nice logos end up with their corners eaten.</p>
+
+<h2>Piece 2: the service worker — two caches, two strategies</h2>
+<p>The service worker is the piece people overbuild. Mine does four things: precache the app shell, serve pages network-first, serve heavy vendor files cache-first, and never cache anything it shouldn't.</p>
+<p>The shape that matters is the two-cache split. The app-shell cache (<code>nitroide-v375</code>, bumped on every deploy) holds the pages, CSS, JS, fonts and icons. The vendor cache (<code>nitroide-vendor-v1</code>, bumped only when a file under <code>/vendor/</code> actually changes) holds the big stable stuff. The reason is deploy frequency: the site's publishing pipeline bumps the app cache several times a day, and every wipe used to force a full re-download of Monaco — about 10MB — on the next editor visit. Separating the caches means deploys stay cheap and the editor stays fast.</p>
+<p>The fetch handler is two strategies, chosen per request:</p>
+<ul>
+<li><strong>Network-first for documents and the main bundles</strong> (pages, <code>script.js</code>, <code>styles.css</code>). A deploy shows up on the next refresh instead of hiding behind the cache. The cache is the offline fallback, not the source of truth.</li>
+<li><strong>Cache-first for vendor assets</strong> (fonts, icons, Monaco). These change rarely and cost the most to fetch, so a cache hit is the fast path.</li>
+</ul>
+<p>And three rules that guard the whole thing:</p>
+<ol>
+<li><strong>Only same-origin GET requests.</strong> The worker never touches anything else — no cross-origin fetches, no POSTs.</li>
+<li><strong>Never cache a failed response.</strong> A cached 404 or 500 keeps serving the failure after the network recovers. The handler checks <code>response.ok</code> before every <code>cache.put</code>.</li>
+<li><strong>Never cache what must stay live.</strong> <code>/api/*</code> (the forms backend), <code>ads.txt</code>, <code>llms.txt</code>, the RSS feeds and the dev.to snapshot are all bypassed. Share links (<code>?code=...</code>) are cached under the bare path, so a thousand unique share URLs can't bloat the cache with a thousand copies of the same shell.</li>
+</ol>
+<p>Two more decisions worth stealing. First, Monaco is <em>not</em> precached anymore. A homepage visitor who never opens the IDE used to download ~10MB of editor during service-worker install; now it is runtime-cached on first IDE use. Precaching is for the shell, not for the heaviest thing you own. Second, a failed precache fails the install — loudly. If one file in the app shell 404s, the worker throws, the old worker keeps serving, and the browser retries on the next navigation. A half-populated cache is worse than no update at all.</p>
+
+<h2>Piece 3: the install prompt — catch the event, don't chase it</h2>
+<p>The browser fires <code>beforeinstallprompt</code> when your site is installable, and it fires it once. If you don't catch it, the browser shows its own mini-infobar and you get no second chance in that session. The recipe is to catch it, stash it, and show your own button:</p>
+<pre><code>window.addEventListener('beforeinstallprompt', (e) =&gt; {
+  e.preventDefault();
+  deferredPrompt = e;
+  showInstallButton();
+});</code></pre>
+<p>NitroIDE's install lives in the IDE itself — an "Install App" item in the Prefs menu — because that is where a user decides the tool is worth keeping. The button appears when the event fires and disappears on <code>appinstalled</code>. The part people forget is the platforms that never fire the event at all: iOS has no <code>beforeinstallprompt</code>, so the same menu item shows a hint instead — "To install on iOS: tap Share, then 'Add to Home Screen'." And on desktop browsers without the event, the fallback points at the browser menu. One menu item, three paths, no dead ends.</p>
+
+<h2>The update dance — the part that traps users on old code</h2>
+<p>A new service worker does not take over immediately. It installs, waits, and only activates when every tab using the old one closes — which, for a tool people leave open, can be never. The fix is a small handshake: the worker calls <code>skipWaiting()</code> after a successful precache, and the page listens for <code>controllerchange</code> and shows a toast — "New version available" with a Refresh button. Registration itself is two lines with one guard that matters: only on HTTPS, and <code>updateViaCache: "none"</code> so the browser always checks for a new worker instead of serving a cached copy of the worker itself. Skip that option and your update check can be cached for a day, which is exactly how users end up running last week's code and reporting bugs you already fixed.</p>
+
+<h2>The checklist</h2>
+<p>If you are adding this to a static site, the whole recipe fits on an index card:</p>
+<ol>
+<li>Manifest with <code>standalone</code>, a <code>start_url</code>, theme color, and 192 + 512 icons including one <code>maskable</code>.</li>
+<li>Service worker, HTTPS only, <code>updateViaCache: "none"</code>.</li>
+<li>Two caches: one for the app shell (bumped per deploy), one for stable vendor files.</li>
+<li>Network-first for pages and main bundles; cache-first for heavy vendor assets.</li>
+<li>Never cache failures, never cache <code>/api/*</code> or anything that must stay live, and never precache your heaviest dependency.</li>
+<li>Catch <code>beforeinstallprompt</code>, show your own install button, and write the iOS hint by hand — it will never fire there.</li>
+<li><code>skipWaiting</code> after a successful precache, and a "New version available" toast on <code>controllerchange</code>.</li>
+</ol>
+<p>That is the whole thing. No store review, no binary, no backend — a static site that installs like an app, works offline, and updates itself with a toast instead of a trap.</p>
+
+<h2>Try it</h2>
+<p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-11-24" style="color: #38bdf8; text-decoration: none;">nitroide.com</a></p>
+
+<p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #38bdf8; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+<h2>Frequently asked questions</h2>
+<h3>Why does NitroIDE use two service worker caches?</h3>
+<p>The app-shell cache is bumped on every deploy, which happens several times a day — and every wipe used to force a full re-download of Monaco, about 10MB, on the next editor visit. The vendor cache only changes when a file under /vendor/ actually changes, so deploys stay cheap and the editor stays fast.</p>
+<h3>Why isn't Monaco precached?</h3>
+<p>A homepage visitor who never opens the IDE used to download ~10MB of editor during service-worker install. Now Monaco is runtime-cached on first IDE use instead. Precaching is for the app shell, not for the heaviest thing you own.</p>
+<h3>How do I install NitroIDE on iOS?</h3>
+<p>iOS has no beforeinstallprompt event, so there is no install button to catch. In the IDE, open the Prefs menu and choose "Install App" — on iOS it shows the hint instead: tap Share, then "Add to Home Screen".</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="offline-first-github-pages.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">Offline-First on GitHub Pages: What Works, Where It Ends</a></li>
+      <li><a href="export-to-zip.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">Export to ZIP: From Browser Session to Deployed Site</a></li>
+      <li><a href="zero-backend-accounts.html" style="color: #38bdf8; text-decoration: none; font-weight: 500;">Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>
