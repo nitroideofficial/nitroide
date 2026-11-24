@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 24, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site",
+  link: "https://nitroide.hashnode.dev/the-pwa-recipe-manifest-service-worker-and-install-prompt-for-a-static-site"
+},
+  {
+  date: "Nov 24, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
