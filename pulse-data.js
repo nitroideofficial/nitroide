@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 25, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The Longest One-Line Fix",
+  link: "https://nitroide.hashnode.dev/the-longest-one-line-fix"
+},
+  {
+  date: "Nov 25, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
