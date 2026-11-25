@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 25, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The longest one-line fix",
+  link: "https://peerlist.io/scroll/post/ACTHLKLDMD8OPOG9R1EQQBGEG6K86J"
+},
+  {
+  date: "Nov 25, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
