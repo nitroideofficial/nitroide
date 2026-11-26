@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 26, 2026",
+  platform: "CoderLegion",
+  icon: "ph-globe",
+  color: "#7c3aed",
+  title: "The ?code= URL, Part Two: What URL-Encoded Code Can't Do",
+  link: "https://coderlegion.com/36170/the-code-url-part-two-what-url-encoded-code-cant-do"
+},
+  {
+  date: "Nov 26, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
   color: "#00aa45",
