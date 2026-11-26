@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 26, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "The ?code= URL, part two: what URL-encoded code can't do",
+  link: "https://peerlist.io/scroll/post/ACTH9OB7EOG6BPAMMF6JKLKDBRKRAP"
+},
+  {
+  date: "Nov 26, 2026",
   platform: "Hashnode",
   icon: "ph-hash",
   color: "#2962ff",
