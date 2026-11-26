@@ -1,6 +1,6 @@
 # NitroIDE — full context for LLMs
 
-> Version: 2026-11-24 (v30.5). This file is updated on every release.
+> Version: 2026-11-26 (v30.5). This file is updated on every release.
 > NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no installation — your code runs only in your browser.
 
 ## Scope (important)
@@ -14,10 +14,10 @@
 
 ## What's new in v30.5 (October 2026)
 - Listed on 9 software directories (DevHunt, AlternativeTo, SaaSHub, SourceForge, directree, IndieTools, Fazier, NoLogin, TinyShelf) with a redesigned homepage badge row.
-- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 54 articles.
+- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 55 articles.
 - Trust and support: Trustpilot profile with public reviews, Ko-fi donations live, GitHub Sponsors approved.
 - Whole-site light-mode readability: light values for brand and code colors, fixed contact inputs, palette, footer, modal and stop-button contrast, dark variants for all article accent colors.
-- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 103 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
+- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 104 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
 - Directory badges fixed after a browser-isolation header blocked cross-origin images (header now credentialless, WebContainer WASM unaffected).
 - Templates "Open in NitroIDE" buttons readable in both themes.
 
@@ -153,6 +153,7 @@
 - Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes: https://nitroide.com/blog/error-messages-that-teach.html
 - From Playground to Portfolio: Shipping a Small Site Straight From the Browser: https://nitroide.com/blog/playground-to-portfolio.html
 - The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site: https://nitroide.com/blog/pwa-recipe.html
+- The ?code= URL, Part Two: What URL-Encoded Code Can't Do: https://nitroide.com/blog/code-url-part-two.html
 
 ## Full article text
 
@@ -3498,6 +3499,80 @@ A homepage visitor who never opens the IDE used to download ~10MB of editor duri
 ### How do I install NitroIDE on iOS?
 
 iOS has no beforeinstallprompt event, so there is no install button to catch. In the IDE, open the Prefs menu and choose "Install App" — on iOS it shows the hint instead: tap Share, then "Add to Home Screen".
+
+---
+
+### The ?code= URL, Part Two: What URL-Encoded Code Can't Do
+Source: https://nitroide.com/blog/code-url-part-two.html
+Date: November 2026
+
+In part one I showed how NitroIDE shares a whole workspace in a link: the three files and the CDN list get JSON-stringified, compressed with LZ-string, and stuffed into a ?code= query parameter. No server, no database, no account — the URL is the database. Readers liked it. Several asked the obvious follow-up: what breaks? A URL is a terrible database, and I measured exactly where it stops working.
+
+Here are the limits, with numbers I ran against the real code — not guesses.
+
+## Limit 1: compression can make your link longer
+
+LZ-string is a dictionary compressor. It earns its keep on repetition and pays overhead on everything else. The dictionary itself costs characters, so for small payloads the "compressed" output is bigger than the input.
+
+I measured it with the site's own vendored copy of lz-string. A small demo workspace — 367 bytes of JSON across three files — compresses to 417 characters. Ratio: 0.88x. The link got longer. If you share a ten-line snippet, the compression is pure overhead; the raw code would have been shorter in the URL than the compressed version.
+
+Flip the input and the same code looks like magic. A 200KB workspace of repetitive markup compresses to 1,913 characters — 104x. And high-entropy content goes the other way: 20KB of random-ish text comes out at 28,676 characters, about 40% bigger than the raw JSON. Minified blobs, base64 data, long random strings — the things that look most like "data" are the worst case for this scheme.
+
+The shape of your code decides whether the link shrinks or grows, and you never see that decision happen. The Share button doesn't warn you.
+
+## Limit 2: nothing checks the length
+
+There is no length guard in the share path. buildShareUrl takes the JSON, compresses it, and concatenates the URL. A varied, realistic project — about 3,000 short statements of JavaScript — produces a 17,587-character URL, and nothing anywhere says "that's too long."
+
+Your browser will happily accept it. The middle of the internet will not. Proxies, CDNs and chat apps commonly cap or truncate request lines around 8KB — far below what a browser tolerates. The link works on your machine, in your browser, and then dies somewhere between you and the person you sent it to.
+
+## Limit 3: a broken link fails silently
+
+This is the one that actually costs people work. Here is the entire decode path, in the site's real code:
+
+sharedCode = urlParams.get("code");
+if (sharedCode && typeof LZString !== "undefined") try {
+ const e = LZString.decompressFromEncodedURIComponent(sharedCode);
+ const t = JSON.parse(e);
+ // ... restore workspace, then strip ?code= from the address bar
+} catch (e) {
+ console.error("Failed to parse shared link.");
+}
+A truncated payload decompresses to null, JSON.parse throws, and the catch swallows it. I verified this: a 17,587-character payload cut to 2,000 characters fails exactly this way. What the recipient sees is the default empty workspace — indistinguishable from opening the IDE fresh. No error toast, no "this link is broken" state. Your recipient assumes you sent them an empty project.
+
+There is a second silent failure hiding in the same function. The payload has no version field — it is exactly {vfs, activeFiles, cdnLinks}. If the format ever changes, old links have no way to be detected as old. They just stop parsing, and the catch swallows that too.
+
+## The one trap that is already defused
+
+The encoding itself looks like it should break. The LZ-string URI-safe alphabet includes +, and in a query string + means space. In 200 sample payloads I generated, 62 contained a + — so this is not a corner case, it is a third of all links. And URLSearchParams does exactly what you'd fear: the round-trip is not identical, the + comes back as a space.
+
+But the decode still works, because the library anticipates the mangling: decompressFromEncodedURIComponent opens with r.replace(/ /g, "+"), converting spaces back before it decompresses. Double percent-encoding round-trips fine too — I verified that as well. The one encoding trap everyone expects is the one that's already handled. Credit to the library, not to me.
+
+## What to do instead
+
+For a workspace too big for a URL, the codebase already has the escape hatch: ?gist=<id> and ?url=<raw-url> imports fetch the code from GitHub Gist or any raw URL instead of carrying it in the address bar. Same zero-backend philosophy, different transport — the URL becomes a pointer again instead of the whole database. And for embeds, ?embed=1&code= keeps the same payload but drops the IDE chrome, so the link at least fails small.
+
+The honest summary: the ?code= link is brilliant for demos, snippets, and the "try this" moment — small, repetitive, human-written code compresses beautifully and opens instantly. It is the wrong transport for a real project. The failure isn't loud, and that's the problem: a share link should either carry your code or tell you it can't. Right now it does neither — it just opens an empty editor and lets you assume the worst about your own work.
+
+## Try it
+
+I build NitroIDE — a browser-based IDE where your code never leaves your machine: nitroide.com
+
+⭐ If you enjoyed this, star NitroIDE on GitHub: github.com/nitroideofficial/nitroide
+
+## Frequently asked questions
+
+### Why does compression make small share links longer?
+
+LZ-string is a dictionary compressor, and the dictionary itself costs characters. For a small payload the overhead is bigger than the savings — a 367-byte demo workspace compresses to 417 characters. Repetition is what the compressor eats; short snippets have almost none.
+
+### What happens when a NitroIDE share link gets truncated?
+
+The truncated payload decompresses to null, JSON.parse throws, and the catch swallows the error. The recipient sees the default empty workspace — indistinguishable from opening the IDE fresh. There is no error message and no way to tell a broken link from an empty one.
+
+### How do I share a workspace that is too big for a URL?
+
+Use the escape hatches already in the codebase: ?gist=<id> imports from GitHub Gist, and ?url=<raw-url> fetches code from any raw URL. The URL becomes a pointer again instead of carrying the whole workspace.
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.

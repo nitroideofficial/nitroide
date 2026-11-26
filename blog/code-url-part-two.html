@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The ?code= URL, Part Two: What URL-Encoded Code Can't Do</title>
+  <meta name="title" content="The ?code= URL, Part Two: What URL-Encoded Code Can't Do">
+  <meta name="description" content="Measured limits of NitroIDE's URL-encoded share links: small payloads expand, big projects hit 17,587-character URLs, and a truncated link fails silently into an empty editor — plus the escape hatches.">
+  <meta name="keywords" content="NitroIDE share link, ?code= URL, LZ-string compression, URL length limits, share link truncation, gist import, browser IDE sharing">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#22d3ee">
+  <link rel="canonical" href="https://nitroide.com/blog/code-url-part-two.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/code-url-part-two.html">
+  <meta property="og:title" content="The ?code= URL, Part Two: What URL-Encoded Code Can't Do">
+  <meta property="og:description" content="Measured limits of NitroIDE's URL-encoded share links: small payloads expand, big projects hit 17,587-character URLs, and a truncated link fails silently into an empty editor — plus the escape hatches.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-11-26-code-url-part-two.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The ?code= URL, part two — what a share link can't carry.">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-11-26">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/code-url-part-two.html">
+  <meta name="twitter:title" content="The ?code= URL, Part Two: What URL-Encoded Code Can't Do">
+  <meta name="twitter:description" content="Measured limits of NitroIDE's URL-encoded share links: small payloads expand, big projects hit 17,587-character URLs, and a truncated link fails silently into an empty editor — plus the escape hatches.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-11-26-code-url-part-two.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-26-code-url-part-two.webp","headline":"The ?code= URL, Part Two: What URL-Encoded Code Can't Do","description":"Measured limits of NitroIDE's URL-encoded share links: small payloads expand, big projects hit 17,587-character URLs, and a truncated link fails silently into an empty editor — plus the escape hatches.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/code-url-part-two.html","mainEntityOfPage":"https://nitroide.com/blog/code-url-part-two.html","datePublished":"2026-11-26","dateModified":"2026-11-26"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why does compression make small share links longer?", "acceptedAnswer": {"@type": "Answer", "text": "LZ-string is a dictionary compressor, and the dictionary itself costs characters. For a small payload the overhead is bigger than the savings — a 367-byte demo workspace compresses to 417 characters. Repetition is what the compressor eats; short snippets have almost none."}}, {"@type": "Question", "name": "What happens when a NitroIDE share link gets truncated?", "acceptedAnswer": {"@type": "Answer", "text": "The truncated payload decompresses to null, JSON.parse throws, and the catch swallows the error. The recipient sees the default empty workspace — indistinguishable from opening the IDE fresh. There is no error message and no way to tell a broken link from an empty one."}}, {"@type": "Question", "name": "How do I share a workspace that is too big for a URL?", "acceptedAnswer": {"@type": "Answer", "text": "Use the escape hatches already in the codebase: ?gist=<id> imports from GitHub Gist, and ?url=<raw-url> fetches code from any raw URL. The URL becomes a pointer again instead of carrying the whole workspace."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #22d3ee; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">NO-SERVER ARCHITECTURE • <time datetime="2026-11-26">November 26, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-11-26">November 26, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">The ?code= URL, Part Two: What URL-Encoded Code Can't Do.</h1>
+
+<p>In part one I showed how NitroIDE shares a whole workspace in a link: the three files and the CDN list get JSON-stringified, compressed with LZ-string, and stuffed into a <code>?code=</code> query parameter. No server, no database, no account — the URL <em>is</em> the database. Readers liked it. Several asked the obvious follow-up: what breaks? A URL is a terrible database, and I measured exactly where it stops working.</p>
+
+<p>Here are the limits, with numbers I ran against the real code — not guesses.</p>
+
+<h2>Limit 1: compression can make your link longer</h2>
+<p>LZ-string is a dictionary compressor. It earns its keep on repetition and pays overhead on everything else. The dictionary itself costs characters, so for small payloads the "compressed" output is bigger than the input.</p>
+<p>I measured it with the site's own vendored copy of lz-string. A small demo workspace — 367 bytes of JSON across three files — compresses to 417 characters. Ratio: 0.88x. The link got <em>longer</em>. If you share a ten-line snippet, the compression is pure overhead; the raw code would have been shorter in the URL than the compressed version.</p>
+<p>Flip the input and the same code looks like magic. A 200KB workspace of repetitive markup compresses to 1,913 characters — 104x. And high-entropy content goes the other way: 20KB of random-ish text comes out at 28,676 characters, about 40% <em>bigger</em> than the raw JSON. Minified blobs, base64 data, long random strings — the things that look most like "data" are the worst case for this scheme.</p>
+<p>The shape of your code decides whether the link shrinks or grows, and you never see that decision happen. The Share button doesn't warn you.</p>
+
+<h2>Limit 2: nothing checks the length</h2>
+<p>There is no length guard in the share path. <code>buildShareUrl</code> takes the JSON, compresses it, and concatenates the URL. A varied, realistic project — about 3,000 short statements of JavaScript — produces a 17,587-character URL, and nothing anywhere says "that's too long."</p>
+<p>Your browser will happily accept it. The middle of the internet will not. Proxies, CDNs and chat apps commonly cap or truncate request lines around 8KB — far below what a browser tolerates. The link works on your machine, in your browser, and then dies somewhere between you and the person you sent it to.</p>
+
+<h2>Limit 3: a broken link fails silently</h2>
+<p>This is the one that actually costs people work. Here is the entire decode path, in the site's real code:</p>
+<pre><code>sharedCode = urlParams.get(&quot;code&quot;);
+if (sharedCode &amp;&amp; typeof LZString !== &quot;undefined&quot;) try {
+  const e = LZString.decompressFromEncodedURIComponent(sharedCode);
+  const t = JSON.parse(e);
+  // ... restore workspace, then strip ?code= from the address bar
+} catch (e) {
+  console.error(&quot;Failed to parse shared link.&quot;);
+}</code></pre>
+<p>A truncated payload decompresses to <code>null</code>, <code>JSON.parse</code> throws, and the catch swallows it. I verified this: a 17,587-character payload cut to 2,000 characters fails exactly this way. What the recipient sees is the default empty workspace — indistinguishable from opening the IDE fresh. No error toast, no "this link is broken" state. Your recipient assumes you sent them an empty project.</p>
+<p>There is a second silent failure hiding in the same function. The payload has no version field — it is exactly <code>{vfs, activeFiles, cdnLinks}</code>. If the format ever changes, old links have no way to be detected as old. They just stop parsing, and the catch swallows that too.</p>
+
+<h2>The one trap that is already defused</h2>
+<p>The encoding itself looks like it should break. The LZ-string URI-safe alphabet includes <code>+</code>, and in a query string <code>+</code> means space. In 200 sample payloads I generated, 62 contained a <code>+</code> — so this is not a corner case, it is a third of all links. And <code>URLSearchParams</code> does exactly what you'd fear: the round-trip is not identical, the <code>+</code> comes back as a space.</p>
+<p>But the decode still works, because the library anticipates the mangling: <code>decompressFromEncodedURIComponent</code> opens with <code>r.replace(/ /g, "+")</code>, converting spaces back before it decompresses. Double percent-encoding round-trips fine too — I verified that as well. The one encoding trap everyone expects is the one that's already handled. Credit to the library, not to me.</p>
+
+<h2>What to do instead</h2>
+<p>For a workspace too big for a URL, the codebase already has the escape hatch: <code>?gist=&lt;id&gt;</code> and <code>?url=&lt;raw-url&gt;</code> imports fetch the code from GitHub Gist or any raw URL instead of carrying it in the address bar. Same zero-backend philosophy, different transport — the URL becomes a pointer again instead of the whole database. And for embeds, <code>?embed=1&amp;code=</code> keeps the same payload but drops the IDE chrome, so the link at least fails small.</p>
+<p>The honest summary: the <code>?code=</code> link is brilliant for demos, snippets, and the "try this" moment — small, repetitive, human-written code compresses beautifully and opens instantly. It is the wrong transport for a real project. The failure isn't loud, and that's the problem: a share link should either carry your code or tell you it can't. Right now it does neither — it just opens an empty editor and lets you assume the worst about your own work.</p>
+
+<h2>Try it</h2>
+<p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-11-26" style="color: #22d3ee; text-decoration: none;">nitroide.com</a></p>
+
+<p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #22d3ee; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+<h2>Frequently asked questions</h2>
+<h3>Why does compression make small share links longer?</h3>
+<p>LZ-string is a dictionary compressor, and the dictionary itself costs characters. For a small payload the overhead is bigger than the savings — a 367-byte demo workspace compresses to 417 characters. Repetition is what the compressor eats; short snippets have almost none.</p>
+<h3>What happens when a NitroIDE share link gets truncated?</h3>
+<p>The truncated payload decompresses to null, JSON.parse throws, and the catch swallows the error. The recipient sees the default empty workspace — indistinguishable from opening the IDE fresh. There is no error message and no way to tell a broken link from an empty one.</p>
+<h3>How do I share a workspace that is too big for a URL?</h3>
+<p>Use the escape hatches already in the codebase: <code>?gist=&lt;id&gt;</code> imports from GitHub Gist, and <code>?url=&lt;raw-url&gt;</code> fetches code from any raw URL. The URL becomes a pointer again instead of carrying the whole workspace.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="preview-sandbox-shared-links.html" style="color: #22d3ee; text-decoration: none; font-weight: 500;">How the Preview Sandbox Keeps a Shared Link From Touching Your Saved Projects</a></li>
+      <li><a href="export-to-zip.html" style="color: #22d3ee; text-decoration: none; font-weight: 500;">Export to ZIP: From Browser Session to Deployed Site</a></li>
+      <li><a href="zero-backend-accounts.html" style="color: #22d3ee; text-decoration: none; font-weight: 500;">Zero-Backend Accounts: What NitroIDE Gives Up by Never Asking You to Log In</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

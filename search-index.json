@@ -592,5 +592,11 @@
   "u": "/blog/pwa-recipe.html",
   "d": "The three-piece PWA recipe for a static site: a 15-line manifest, a two-cache service worker (network-first pages, cache-first vendor), and an install prompt with an iOS fallback.",
   "c": "Blog"
+ },
+ {
+  "t": "The ?code= URL, Part Two: What URL-Encoded Code Can't Do",
+  "u": "/blog/code-url-part-two.html",
+  "d": "Measured limits of NitroIDE's URL-encoded share links: small payloads expand, big projects hit 17,587-character URLs, and a truncated link fails silently into an empty editor.",
+  "c": "Blog"
  }
 ]

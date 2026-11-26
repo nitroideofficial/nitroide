@@ -9,6 +9,13 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>The ?code= URL, Part Two: What URL-Encoded Code Can't Do | NitroIDE</title>
+      <link>https://nitroide.com/blog/code-url-part-two.html</link>
+      <guid>https://nitroide.com/blog/code-url-part-two.html</guid>
+      <description>Measured limits of NitroIDE's URL-encoded share links: small payloads expand, big projects hit 17,587-character URLs, and a truncated link fails silently into an empty editor — plus the escape hatches.</description>
+      <pubDate>Thu, 26 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site | NitroIDE</title>
       <link>https://nitroide.com/blog/pwa-recipe.html</link>
       <guid>https://nitroide.com/blog/pwa-recipe.html</guid>
