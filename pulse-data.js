@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 26, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "The ?code= URL, Part Two: What URL-Encoded Code Can't Do",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7531699120097443841/"
+},
+  {
   date: "Nov 25, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
