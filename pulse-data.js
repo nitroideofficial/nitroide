@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 26, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "The ?code= URL, Part Two: What URL-Encoded Code Can't Do",
+  link: "https://nitroide.hashnode.dev/the-code-url-part-two-what-url-encoded-code-can-t-do"
+},
+  {
+  date: "Nov 26, 2026",
   platform: "LinkedIn",
   icon: "ph-linkedin-logo",
   color: "#0a66c2",
