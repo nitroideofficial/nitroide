@@ -1,6 +1,14 @@
 // pulse-data.js,  Your Central Ecosystem Database
 const pulseLogs = [
   {
+  date: "Nov 27, 2026",
+  platform: "Peerlist",
+  icon: "ph-leaf",
+  color: "#00aa45",
+  title: "How NitroIDE Versions in Public: The Honest Changelog Habit",
+  link: "https://peerlist.io/scroll/post/ACTH9OB7EDERJ97QQC6PR8L9DG8E8D"
+},
+  {
   date: "Nov 26, 2026",
   platform: "CoderLegion",
   icon: "ph-globe",
