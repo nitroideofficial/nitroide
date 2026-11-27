@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 27, 2026",
+  platform: "LinkedIn",
+  icon: "ph-linkedin-logo",
+  color: "#0a66c2",
+  title: "How NitroIDE Versions in Public: The Honest Changelog Habit",
+  link: "https://www.linkedin.com/feed/update/urn:li:activity:7532098840729006081/"
+},
+  {
+  date: "Nov 27, 2026",
   platform: "Peerlist",
   icon: "ph-leaf",
   color: "#00aa45",
