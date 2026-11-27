@@ -2,6 +2,14 @@
 const pulseLogs = [
   {
   date: "Nov 27, 2026",
+  platform: "Hashnode",
+  icon: "ph-hash",
+  color: "#2962ff",
+  title: "How NitroIDE Versions in Public: The Honest Changelog Habit",
+  link: "https://nitroide.hashnode.dev/how-nitroide-versions-in-public-the-honest-changelog-habit"
+},
+  {
+  date: "Nov 27, 2026",
   platform: "Coder Legion",
   icon: "ph-code",
   color: "#2962ff",
