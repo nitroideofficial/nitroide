@@ -598,5 +598,11 @@
   "u": "/blog/code-url-part-two.html",
   "d": "Measured limits of NitroIDE's URL-encoded share links: small payloads expand, big projects hit 17,587-character URLs, and a truncated link fails silently into an empty editor.",
   "c": "Blog"
+ },
+ {
+  "t": "How NitroIDE Versions in Public: The Honest Changelog Habit",
+  "u": "/blog/versions-in-public.html",
+  "d": "Fifteen named versions, three version counters, and one rule that makes the whole list believable: record what you removed, not just what you added.",
+  "c": "Blog"
  }
 ]

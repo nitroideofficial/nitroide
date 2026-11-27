@@ -9,6 +9,13 @@
     <description>Deep dives into client-side architecture, frontend tutorials, and official patch notes for your favorite browser IDE.</description>
     <language>en-us</language>
 <item>
+      <title>How NitroIDE Versions in Public: The Honest Changelog Habit | NitroIDE</title>
+      <link>https://nitroide.com/blog/versions-in-public.html</link>
+      <guid>https://nitroide.com/blog/versions-in-public.html</guid>
+      <description>Fifteen named versions, three version counters, and one rule that makes the whole list believable: record what you removed, not just what you added.</description>
+      <pubDate>Fri, 27 Nov 2026 00:00:00 +0000</pubDate>
+    </item>
+<item>
       <title>The ?code= URL, Part Two: What URL-Encoded Code Can't Do | NitroIDE</title>
       <link>https://nitroide.com/blog/code-url-part-two.html</link>
       <guid>https://nitroide.com/blog/code-url-part-two.html</guid>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How NitroIDE Versions in Public: The Honest Changelog Habit</title>
+  <meta name="title" content="How NitroIDE Versions in Public: The Honest Changelog Habit">
+  <meta name="description" content="Fifteen named versions, three version counters, and one rule that makes the whole list believable: record what you removed, not just what you added.">
+  <meta name="keywords" content="NitroIDE changelog, versioning in public, build in public, changelog habit, service worker update toast, public changelog, open source versioning">
+  <meta name="author" content="NitroIDE">
+  <meta name="theme-color" content="#22d3ee">
+  <link rel="canonical" href="https://nitroide.com/blog/versions-in-public.html">
+  <link rel="alternate" type="application/rss+xml" title="NitroIDE Blog" href="/rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://nitroide.com/blog/versions-in-public.html">
+  <meta property="og:title" content="How NitroIDE Versions in Public: The Honest Changelog Habit">
+  <meta property="og:description" content="Fifteen named versions, three version counters, and one rule that makes the whole list believable: record what you removed, not just what you added.">
+  <meta property="og:image" content="https://nitroide.com/assets/pulse/2026-11-27-versions-in-public.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Versions in public — the honest changelog habit.">
+  <meta property="og:site_name" content="NitroIDE">
+  <meta property="article:published_time" content="2026-11-27">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://nitroide.com/blog/versions-in-public.html">
+  <meta name="twitter:title" content="How NitroIDE Versions in Public: The Honest Changelog Habit">
+  <meta name="twitter:description" content="Fifteen named versions, three version counters, and one rule that makes the whole list believable: record what you removed, not just what you added.">
+  <meta name="twitter:image" content="https://nitroide.com/assets/pulse/2026-11-27-versions-in-public.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","image":"https://nitroide.com/assets/pulse/2026-11-27-versions-in-public.webp","headline":"How NitroIDE Versions in Public: The Honest Changelog Habit","description":"Fifteen named versions, three version counters, and one rule that makes the whole list believable: record what you removed, not just what you added.","author":{"@type":"Person","name":"Yash Panchal","url":"https://nitroide.com/about.html#author"},"publisher":{"@type":"Organization","name":"NitroIDE","logo":{"@type":"ImageObject","url":"https://nitroide.com/logo/logo_white.png"}},"url":"https://nitroide.com/blog/versions-in-public.html","mainEntityOfPage":"https://nitroide.com/blog/versions-in-public.html","datePublished":"2026-11-27","dateModified":"2026-11-27"}
+  </script>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why does NitroIDE have three version numbers?", "acceptedAnswer": {"@type": "Answer", "text": "Because they change at different rates. The product version (v30.5) moves slowly and deliberately with named releases; the main script counter (293) moves with every patch; and the service worker cache (v387) gets bumped every time any shipped file changes. Forcing all three onto one number would mean either renaming the product every Tuesday or shipping fixes without any version trace."}}, {"@type": "Question", "name": "Why record removals in a changelog?", "acceptedAnswer": {"@type": "Answer", "text": "Removals are the entries that prove the rest of the list is real. A changelog that only ever grows is a brochure. Writing down what was removed — 9 unused Monaco language packs in v29, the beta bar in v30, dead visitor counters in v25 — gives readers a reason to believe the additions too."}}, {"@type": "Question", "name": "How do users find out about a new version?", "acceptedAnswer": {"@type": "Answer", "text": "They don't have to open the changelog page. When the service worker activates a new version, the site shows a \"New version available\" toast with a Refresh button and a dismiss X. The changelog is the record; the toast is the delivery."}}]}
+  </script>
+
+  <link rel="icon" type="image/png" href="../logo/logo_white.png">
+  <link rel="apple-touch-icon" href="../logo/logo_white.png">
+  <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/vendor/icons/phosphor/bold/style.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/vendor/icons/phosphor/fill/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<nitro-header></nitro-header>
+
+<div class="bg-grid"></div>
+<div class="ambient-glow"></div>
+
+<main id="main" tabindex="-1" class="docs-container relative-z">
+  <div class="docs-content" style="margin: 0 auto; max-width: 800px; padding-top: 60px;">
+
+    <a href="index.html" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;"><i class="ph-bold ph-arrow-left"></i> Back to Hub</a>
+
+    <div style="font-size: 0.85rem; color: #22d3ee; margin-bottom: 15px; font-weight: 700; letter-spacing: 1px;">BUILD IN PUBLIC • <time datetime="2026-11-27">November 27, 2026</time></div>
+
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">By <a href="https://nitroide.com/about.html#author" style="color: inherit; text-decoration: underline;">Yash Panchal</a> · Last updated: <time datetime="2026-11-27">November 27, 2026</time></div>
+
+    <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -1.5px;">How NitroIDE Versions in Public: The Honest Changelog Habit.</h1>
+
+<p>The most honest page on my site isn't the landing page. It's the changelog.</p>
+
+<p>Fifteen named versions, from v16.0 "Initial Beta" in May to v30.5 "The Reach &amp; Reliability Update" in October. Eighty-six change bullets, every one tagged NEW, UPDATE, FIX or POLISH, every version dated and described in one plain-English line. Anyone can open it and see exactly what changed, when, and what it cost. That's the whole habit: version in public, and write the changelog like someone you respect is going to read it — because they are.</p>
+
+<p>Here is how the system actually works, including the parts that are messier than the theory.</p>
+
+<h2>Three numbers, not one</h2>
+<p>NitroIDE doesn't have one version number. It has three, and they measure different things.</p>
+<p>The product version is v30.5 — the one users see, on a "v30.5 Live" badge on the homepage. The main script carries its own counter, currently 293. The service worker cache is on v387. A release commit ties them together with a name: "Release v30.5 — The Reach &amp; Reliability Update (changelog + version across site)."</p>
+<p>Why three? Because they change at different rates. The script gets patched far more often than the product gets a named release — bug fixes, small polish, a Sentry recovery change — and the service worker cache gets bumped every time any shipped file changes, which is more often still. Forcing all three onto one number would mean either renaming the product every Tuesday or shipping fixes without any version trace at all. So the public number moves slowly and deliberately, and the internal counters move whenever the code does. Users see one clean number; the machines keep the receipts.</p>
+<p>Git tags back this up: v24.1 through v30.5, one tag per named release. If a version ever needs to be rebuilt or blamed, the tag is there.</p>
+
+<h2>The rules the changelog follows</h2>
+<p>Four rules, none of them clever:</p>
+<p><strong>Every release gets a name.</strong> Not just a number — a name that says what the release was <em>for</em>. "The AI Update." "The Performance Update." "The Reach &amp; Reliability Update." A name forces a decision: if you can't name what the release is about, you don't have a release, you have a pile of commits. The name is also the first thing a returning user reads, so it has to be true. "The Performance Update" shipped 3.5MB lighter with zero features touched — the name would have been a lie otherwise.</p>
+<p><strong>One line, plain English.</strong> Every version opens with a single sentence describing it. "A full AI pair-programmer rebuilt from the ground up: it picks the right file itself, edits surgically, and never touches what you didn't ask for." No jargon, no "leveraging synergies", no superlatives. If the sentence needs a second sentence to make sense, the release is doing too many things.</p>
+<p><strong>Every change gets a tag.</strong> NEW, UPDATE, FIX, POLISH. The tag is a promise about what kind of change it is, and it keeps me honest: a bug fix dressed up as NEW is a lie the reader can spot in one glance. The tags also make the changelog scannable — a user hunting for "did they fix the thing that broke my workflow" can read the FIX lines and skip the rest.</p>
+<p><strong>Record removals, not just additions.</strong> This is the rule that makes the whole thing trustworthy. A changelog that only ever grows is a brochure. Ours says, in plain text: v29 removed 9 unused Monaco language packs and 77 unneeded editor languages. v30 removed the beta bar, with the reason given in the same line — "NitroIDE has real users now." v25 removed dead visitor counters from the landing pages and softened "fastest" claims I couldn't prove. Removals are the entries that prove the rest of the list is real. If I only wrote about what I added, you'd have no reason to believe any of it.</p>
+
+<h2>The trim</h2>
+<p>The changelog didn't always look like this. In September it was 114 scattered entries — every small change its own line, undated, ungrouped, unreadable. A changelog nobody can read is a changelog that doesn't exist, so v25 cut it down to a grouped list of named versions. The information didn't change; the shape did. Fifteen versions you can scan in a minute beat a hundred entries nobody finishes.</p>
+<p>That trim is itself in the changelog, by the way. The habit eats its own dog food.</p>
+
+<h2>Users don't read changelogs</h2>
+<p>Here's the part the system would fail without: nobody actually opens the changelog page. Versioning in public only works if people <em>get</em> the new version, not just if the new version is documented somewhere.</p>
+<p>So the site tells them. When the service worker activates a new version, a toast appears at the bottom of the screen: "New version available", with a Refresh button and a dismiss X. I verified it end to end in a headless browser — old version loaded, new version pushed, toast appeared on navigation. The changelog is the record; the toast is the delivery. One without the other is half a system.</p>
+
+<h2>What's still sloppy</h2>
+<p>Public versioning exposes the sloppiness too, and it should. The dates are month-level — "October 2026", not the 14th — because for most of this project's life I grouped releases by month and never went back to pin exact days. And in the changelog's own source, the v25 entry sits under an HTML comment that reads "THE NEW V24.1 UPDATE". The heading is correct; the comment is mislabeled. A visitor reading the page sees nothing wrong. A visitor reading the source sees a typo in the very file that claims to be careful.</p>
+<p>I'm leaving that typo in the article because it's the point: an honest changelog isn't a perfect one. It's a public one, with the mistakes visible next to the fixes. The moment I start polishing the record to look good, it stops being a record.</p>
+
+<h2>Why bother</h2>
+<p>A changelog is a trust feature, and trust is the only thing a no-signup, no-server tool has to sell. You can't inspect my company — there isn't one. You can't read my privacy policy and feel reassured — well, you can, but words are cheap. What you can do is open the changelog and watch the project change in public, version by version, with the removals and the tradeoffs written down next to the features. Fifteen versions of evidence beats one paragraph of promises.</p>
+<p>That's the habit. Name the release. Write one true sentence. Tag every change. Record what you removed. And tell the user when there's something new to refresh to — because a changelog nobody ever sees is just a diary.</p>
+
+<h2>Try it</h2>
+<p>I build NitroIDE — a browser-based IDE where your code never leaves your machine: <a href="https://nitroide.com?utm_source=blog&amp;utm_medium=article&amp;utm_campaign=daily-2026-11-27" style="color: #22d3ee; text-decoration: none;">nitroide.com</a></p>
+
+<p>&#11088; If you enjoyed this, star NitroIDE on GitHub: <a href="https://github.com/nitroideofficial/nitroide" style="color: #22d3ee; text-decoration: none;">github.com/nitroideofficial/nitroide</a></p>
+
+<h2>Frequently asked questions</h2>
+<h3>Why does NitroIDE have three version numbers?</h3>
+<p>Because they change at different rates. The product version (v30.5) moves slowly and deliberately with named releases; the main script counter (293) moves with every patch; and the service worker cache (v387) gets bumped every time any shipped file changes. Forcing all three onto one number would mean either renaming the product every Tuesday or shipping fixes without any version trace.</p>
+<h3>Why record removals in a changelog?</h3>
+<p>Removals are the entries that prove the rest of the list is real. A changelog that only ever grows is a brochure. Writing down what was removed — 9 unused Monaco language packs in v29, the beta bar in v30, dead visitor counters in v25 — gives readers a reason to believe the additions too.</p>
+<h3>How do users find out about a new version?</h3>
+<p>They don't have to open the changelog page. When the service worker activates a new version, the site shows a "New version available" toast with a Refresh button and a dismiss X. The changelog is the record; the toast is the delivery.</p>
+
+    <!-- Newsletter signup -->
+    <div class="newsletter-block" style="max-width: 640px; margin: 40px auto 0; padding: 24px; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; background: rgba(255,255,255,0.02); text-align: center;">
+      <p style="margin: 0 0 4px; font-weight: 600; font-size: 16px;">Get new articles in your inbox</p>
+      <p style="margin: 0 0 16px; font-size: 14px; color: var(--text-muted);">One short email when we publish. No spam, unsubscribe anytime.</p>
+      <form action="https://buttondown.email/api/emails/embed-subscribe/nitroide" method="post" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; max-width: 520px; margin: 0 auto;">
+        <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address" style="flex: 1 1 240px; min-width: 0; height: 50px; padding: 0 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.4); color: #fff; font-size: 15px; box-sizing: border-box;">
+        <button type="submit" style="flex: 0 0 auto; height: 50px; padding: 0 26px; border-radius: 10px; border: none; background: #fff; color: #000; font-weight: 600; font-size: 14px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Subscribe</button>
+      </form>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--text-muted);">Your email is used only for new-article notifications — see the <a href="../legal.html" style="color: inherit; text-decoration: underline;">privacy policy</a>.</p>
+    </div>
+    <div class="related-articles" style="max-width: 640px; margin: 50px auto 0; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08);">
+      <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--text);;">Related articles</h3>
+      <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 10px;">
+      <li><a href="error-messages-that-teach.html" style="color: #22d3ee; text-decoration: none; font-weight: 500;">Error Messages That Teach: Turning Preview Errors Into Next-Step Fixes</a></li>
+      <li><a href="measuring-feedback-loop.html" style="color: #22d3ee; text-decoration: none; font-weight: 500;">Measuring the Feedback Loop: Keystroke to Pixels, Timed End to End</a></li>
+      <li><a href="privacy-as-a-feature.html" style="color: #22d3ee; text-decoration: none; font-weight: 500;">Privacy as a Feature: Your Code Never Leaves Your Machine</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+<nitro-footer></nitro-footer>
+<nitro-modals></nitro-modals>
+<script src="../script.js" defer></script>
+
+</body>
+</html>

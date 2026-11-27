@@ -1,6 +1,6 @@
 # NitroIDE — full context for LLMs
 
-> Version: 2026-11-26 (v30.5). This file is updated on every release.
+> Version: 2026-11-27 (v30.5). This file is updated on every release.
 > NitroIDE is a free, open-source, client-side browser IDE. Write HTML, CSS, and JavaScript with the Monaco editor, see live preview with hot module replacement, inject CDN libraries, and export your project as a ZIP — no account, no installation — your code runs only in your browser.
 
 ## Scope (important)
@@ -14,10 +14,10 @@
 
 ## What's new in v30.5 (October 2026)
 - Listed on 9 software directories (DevHunt, AlternativeTo, SaaSHub, SourceForge, directree, IndieTools, Fazier, NoLogin, TinyShelf) with a redesigned homepage badge row.
-- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 55 articles.
+- Daily publishing across X, LinkedIn, Peerlist, Hashnode and Coder Legion, mirrored on the Ecosystem Pulse page; blog library now 56 articles.
 - Trust and support: Trustpilot profile with public reviews, Ko-fi donations live, GitHub Sponsors approved.
 - Whole-site light-mode readability: light values for brand and code colors, fixed contact inputs, palette, footer, modal and stop-button contrast, dark variants for all article accent colors.
-- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 104 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
+- Deep audit pass (68 files): sitemap trimmed to 91 URLs in the Oct 31 audit pass; now 105 URLs, RSS fixed, icon fonts cut from 403KB to 19KB, service worker and forms hardened.
 - Directory badges fixed after a browser-isolation header blocked cross-origin images (header now credentialless, WebContainer WASM unaffected).
 - Templates "Open in NitroIDE" buttons readable in both themes.
 
@@ -154,6 +154,7 @@
 - From Playground to Portfolio: Shipping a Small Site Straight From the Browser: https://nitroide.com/blog/playground-to-portfolio.html
 - The PWA Recipe: Manifest, Service Worker, and Install Prompt for a Static Site: https://nitroide.com/blog/pwa-recipe.html
 - The ?code= URL, Part Two: What URL-Encoded Code Can't Do: https://nitroide.com/blog/code-url-part-two.html
+- How NitroIDE Versions in Public: The Honest Changelog Habit: https://nitroide.com/blog/versions-in-public.html
 
 ## Full article text
 
@@ -3573,6 +3574,84 @@ The truncated payload decompresses to null, JSON.parse throws, and the catch swa
 ### How do I share a workspace that is too big for a URL?
 
 Use the escape hatches already in the codebase: ?gist=<id> imports from GitHub Gist, and ?url=<raw-url> fetches code from any raw URL. The URL becomes a pointer again instead of carrying the whole workspace.
+
+---
+
+### How NitroIDE Versions in Public: The Honest Changelog Habit
+Source: https://nitroide.com/blog/versions-in-public.html
+Date: November 2026
+
+The most honest page on my site isn't the landing page. It's the changelog.
+
+Fifteen named versions, from v16.0 "Initial Beta" in May to v30.5 "The Reach & Reliability Update" in October. Eighty-six change bullets, every one tagged NEW, UPDATE, FIX or POLISH, every version dated and described in one plain-English line. Anyone can open it and see exactly what changed, when, and what it cost. That's the whole habit: version in public, and write the changelog like someone you respect is going to read it — because they are.
+
+Here is how the system actually works, including the parts that are messier than the theory.
+
+## Three numbers, not one
+
+NitroIDE doesn't have one version number. It has three, and they measure different things.
+
+The product version is v30.5 — the one users see, on a "v30.5 Live" badge on the homepage. The main script carries its own counter, currently 293. The service worker cache is on v387. A release commit ties them together with a name: "Release v30.5 — The Reach & Reliability Update (changelog + version across site)."
+
+Why three? Because they change at different rates. The script gets patched far more often than the product gets a named release — bug fixes, small polish, a Sentry recovery change — and the service worker cache gets bumped every time any shipped file changes, which is more often still. Forcing all three onto one number would mean either renaming the product every Tuesday or shipping fixes without any version trace at all. So the public number moves slowly and deliberately, and the internal counters move whenever the code does. Users see one clean number; the machines keep the receipts.
+
+Git tags back this up: v24.1 through v30.5, one tag per named release. If a version ever needs to be rebuilt or blamed, the tag is there.
+
+## The rules the changelog follows
+
+Four rules, none of them clever:
+
+Every release gets a name. Not just a number — a name that says what the release was for. "The AI Update." "The Performance Update." "The Reach & Reliability Update." A name forces a decision: if you can't name what the release is about, you don't have a release, you have a pile of commits. The name is also the first thing a returning user reads, so it has to be true. "The Performance Update" shipped 3.5MB lighter with zero features touched — the name would have been a lie otherwise.
+
+One line, plain English. Every version opens with a single sentence describing it. "A full AI pair-programmer rebuilt from the ground up: it picks the right file itself, edits surgically, and never touches what you didn't ask for." No jargon, no "leveraging synergies", no superlatives. If the sentence needs a second sentence to make sense, the release is doing too many things.
+
+Every change gets a tag. NEW, UPDATE, FIX, POLISH. The tag is a promise about what kind of change it is, and it keeps me honest: a bug fix dressed up as NEW is a lie the reader can spot in one glance. The tags also make the changelog scannable — a user hunting for "did they fix the thing that broke my workflow" can read the FIX lines and skip the rest.
+
+Record removals, not just additions. This is the rule that makes the whole thing trustworthy. A changelog that only ever grows is a brochure. Ours says, in plain text: v29 removed 9 unused Monaco language packs and 77 unneeded editor languages. v30 removed the beta bar, with the reason given in the same line — "NitroIDE has real users now." v25 removed dead visitor counters from the landing pages and softened "fastest" claims I couldn't prove. Removals are the entries that prove the rest of the list is real. If I only wrote about what I added, you'd have no reason to believe any of it.
+
+## The trim
+
+The changelog didn't always look like this. In September it was 114 scattered entries — every small change its own line, undated, ungrouped, unreadable. A changelog nobody can read is a changelog that doesn't exist, so v25 cut it down to a grouped list of named versions. The information didn't change; the shape did. Fifteen versions you can scan in a minute beat a hundred entries nobody finishes.
+
+That trim is itself in the changelog, by the way. The habit eats its own dog food.
+
+## Users don't read changelogs
+
+Here's the part the system would fail without: nobody actually opens the changelog page. Versioning in public only works if people get the new version, not just if the new version is documented somewhere.
+
+So the site tells them. When the service worker activates a new version, a toast appears at the bottom of the screen: "New version available", with a Refresh button and a dismiss X. I verified it end to end in a headless browser — old version loaded, new version pushed, toast appeared on navigation. The changelog is the record; the toast is the delivery. One without the other is half a system.
+
+## What's still sloppy
+
+Public versioning exposes the sloppiness too, and it should. The dates are month-level — "October 2026", not the 14th — because for most of this project's life I grouped releases by month and never went back to pin exact days. And in the changelog's own source, the v25 entry sits under an HTML comment that reads "THE NEW V24.1 UPDATE". The heading is correct; the comment is mislabeled. A visitor reading the page sees nothing wrong. A visitor reading the source sees a typo in the very file that claims to be careful.
+
+I'm leaving that typo in the article because it's the point: an honest changelog isn't a perfect one. It's a public one, with the mistakes visible next to the fixes. The moment I start polishing the record to look good, it stops being a record.
+
+## Why bother
+
+A changelog is a trust feature, and trust is the only thing a no-signup, no-server tool has to sell. You can't inspect my company — there isn't one. You can't read my privacy policy and feel reassured — well, you can, but words are cheap. What you can do is open the changelog and watch the project change in public, version by version, with the removals and the tradeoffs written down next to the features. Fifteen versions of evidence beats one paragraph of promises.
+
+That's the habit. Name the release. Write one true sentence. Tag every change. Record what you removed. And tell the user when there's something new to refresh to — because a changelog nobody ever sees is just a diary.
+
+## Try it
+
+I build NitroIDE — a browser-based IDE where your code never leaves your machine: nitroide.com
+
+⭐ If you enjoyed this, star NitroIDE on GitHub: github.com/nitroideofficial/nitroide
+
+## Frequently asked questions
+
+### Why does NitroIDE have three version numbers?
+
+Because they change at different rates. The product version (v30.5) moves slowly and deliberately with named releases; the main script counter (293) moves with every patch; and the service worker cache (v387) gets bumped every time any shipped file changes. Forcing all three onto one number would mean either renaming the product every Tuesday or shipping fixes without any version trace.
+
+### Why record removals in a changelog?
+
+Removals are the entries that prove the rest of the list is real. A changelog that only ever grows is a brochure. Writing down what was removed — 9 unused Monaco language packs in v29, the beta bar in v30, dead visitor counters in v25 — gives readers a reason to believe the additions too.
+
+### How do users find out about a new version?
+
+They don't have to open the changelog page. When the service worker activates a new version, the site shows a "New version available" toast with a Refresh button and a dismiss X. The changelog is the record; the toast is the delivery.
 
 ## Facts for AI answers
 - Pricing: 100% free, no account required, no paywall.
